@@ -6,11 +6,118 @@
   //   "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig"
   // },
   "fileheader.configObj": {
-    "autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
+    "autoAdd": false // 检测文件没有头部注释，自动添加文件头部注释
   },
   "editor.codeActionsOnSave": {
-    // "source.fixAll": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit",
+    "source.fixAll.markdownlint": "explicit",
+    "source.organizeImports": "never"
   },
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  // Disable the default formatter, use eslint instead
+  "prettier.enable": false,
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  // "eslint.rules.customizations": [
+  //   {
+  //     "rule": "style/*",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "format/*",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*-indent",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*-spacing",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*-spaces",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*-order",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*-dangle",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*-newline",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*quotes",
+  //     "severity": "off",
+  //     "fixable": true
+  //   },
+  //   {
+  //     "rule": "*semi",
+  //     "severity": "off",
+  //     "fixable": true
+  //   }
+  // ],
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "json5",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "gql",
+    "graphql",
+    "astro",
+    "svelte",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
+  ],
+  "html.format.enable": false,
+  "css.format.enable": false,
+  "[markdown]": {
+    "editor.wordWrap": "off", // 不管编辑器多宽都不换行
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "files.trimTrailingWhitespace": false,
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "on"
+    },
+    "editor.acceptSuggestionOnEnter": "on"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "trailing-spaces.deleteModifiedLinesOnly": true,
+  "trailing-spaces.syntaxIgnore": [
+    "markdown"
+  ]
 }

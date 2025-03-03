@@ -3,6 +3,9 @@
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "DavidAnson.vscode-markdownlint",
+    "vscode.json-language-features",
+    "shardulm94.trailing-spaces"
   ]
 }
