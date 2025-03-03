@@ -6,6 +6,8 @@
 
 ## todo
 
+- 需不需要 `eslint-plugin-prettier`
+
 ### Lint Staged
 
 ```bash
