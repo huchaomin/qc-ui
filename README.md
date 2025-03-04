@@ -3,6 +3,7 @@
 ## eslint
 
 - `@prettier/plugin-xml` 格式化xml、svg文件
+- `jiti` [eslint 配置相关](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files)
 
 ## todo
 

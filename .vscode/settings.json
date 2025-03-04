@@ -8,12 +8,6 @@
   "fileheader.configObj": {
     "autoAdd": false // 检测文件没有头部注释，自动添加文件头部注释
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit",
-    "source.fixAll.markdownlint": "explicit",
-    "source.organizeImports": "never"
-  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // Disable the default formatter, use eslint instead
   "prettier.enable": false,
@@ -70,6 +64,7 @@
   //     "fixable": true
   //   }
   // ],
+  "eslint.useFlatConfig": true,
   // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",
