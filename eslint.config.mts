@@ -1,5 +1,8 @@
-import antfu from '@antfu/eslint-config'
+import antfu, { perfectionist as perfectionistConfigFn } from '@antfu/eslint-config'
+import perfectionist from 'eslint-plugin-perfectionist'
 import prettierOptions from './prettier.config.mts'
+
+const perfectionistConfig = await perfectionistConfigFn()
 
 /**
  * @description: 更高级配置也可以使用这个工具: @antfu/eslint-flat-config-utils
@@ -28,21 +31,34 @@ export default antfu({
   stylistic: {},
   // https://typescript-eslint.io/rules/
   typescript: {
+
+    // other rules
+    overrides: {
+
+    },
     // type checked rules
     overridesTypeAware: {
       'ts/strict-boolean-expressions': [
         'error',
         {
+          allowAny: false,
           allowNullableBoolean: true,
+          allowNullableEnum: false,
           allowNullableNumber: true,
+          allowNullableObject: true,
           allowNullableString: true,
+          allowNumber: true,
+          allowRuleToRunWithoutStrictNullChecksIKnowWhatIAmDoing: false,
+          allowString: true,
         },
       ],
     },
-    // other rules
-    overrides: {
-
-    },
     tsconfigPath: 'tsconfig.json', // Linting with Type Information https://typescript-eslint.io/getting-started/typed-linting/
+  },
+  // perfectionist antfu 开启的配置比较少，这里全量配置 recommended-natural 的配置
+}).override(perfectionistConfig[0].name!, {
+  rules: {
+    ...perfectionist.configs['recommended-natural'].rules,
+    ...perfectionistConfig[0].rules,
   },
 })
