@@ -7,7 +7,11 @@ import ToolingIcon from './icons/IconTooling.vue'
 import WelcomeItem from './WelcomeItem.vue'
 
 function openReadmeInEditor() {
-  return fetch('/__open-in-editor?file=README.md')
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  return fetch ('/__open-in-editor?file=README.md')
 }
 </script>
 
@@ -16,6 +20,7 @@ function openReadmeInEditor() {
     <template #icon>
       <DocumentationIcon />
     </template>
+
     <template #heading>
       Documentation
     </template>

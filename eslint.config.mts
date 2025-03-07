@@ -29,20 +29,20 @@ export default antfu({
   // https://typescript-eslint.io/rules/
   typescript: {
     // type checked rules
-    // overridesTypeAware: {
-    //   'ts/strict-boolean-expressions': [
-    //     'error',
-    //     {
-    //       allowNullableBoolean: true,
-    //       allowNullableNumber: true,
-    //       allowNullableString: true,
-    //     },
-    //   ],
-    // },
+    overridesTypeAware: {
+      'ts/strict-boolean-expressions': [
+        'error',
+        {
+          allowNullableBoolean: true,
+          allowNullableNumber: true,
+          allowNullableString: true,
+        },
+      ],
+    },
     // other rules
     overrides: {
 
     },
-    // tsconfigPath: 'tsconfig.json', // Linting with Type Information https://typescript-eslint.io/getting-started/typed-linting/
+    tsconfigPath: 'tsconfig.json', // Linting with Type Information https://typescript-eslint.io/getting-started/typed-linting/
   },
 })

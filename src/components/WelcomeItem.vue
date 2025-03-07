@@ -33,6 +33,7 @@ i {
   height: 32px;
 
   color: var(--color-text);
+
 }
 
 h3 {

@@ -111,8 +111,4 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "trailing-spaces.deleteModifiedLinesOnly": true,
-  "trailing-spaces.syntaxIgnore": [
-    "markdown"
-  ]
 }

@@ -4,8 +4,6 @@
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
-    "DavidAnson.vscode-markdownlint",
-    "vscode.json-language-features",
-    "shardulm94.trailing-spaces"
+    "DavidAnson.vscode-markdownlint"
   ]
 }
