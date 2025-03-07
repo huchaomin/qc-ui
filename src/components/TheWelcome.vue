@@ -4,6 +4,7 @@ import DocumentationIcon from './icons/IconDocumentation.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import SupportIcon from './icons/IconSupport.vue'
 import ToolingIcon from './icons/IconTooling.vue'
+
 import WelcomeItem from './WelcomeItem.vue'
 
 function openReadmeInEditor() {

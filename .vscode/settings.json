@@ -6,7 +6,7 @@
   //   "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig"
   // },
   "fileheader.configObj": {
-    "autoAdd": false // 检测文件没有头部注释，自动添加文件头部注释
+    "autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // Disable the default formatter, use eslint instead
@@ -88,7 +88,7 @@
     "less",
     "scss",
     "pcss",
-    "postcss"
+    "postcss",
   ],
   "html.format.enable": false,
   "css.format.enable": false,
@@ -99,16 +99,8 @@
     "editor.quickSuggestions": {
       "other": "on",
       "comments": "off",
-      "strings": "on"
+      "strings": "on",
     },
-    "editor.acceptSuggestionOnEnter": "on"
-  },
-  "[json]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[jsonc]": {
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.acceptSuggestionOnEnter": "on",
   },
 }

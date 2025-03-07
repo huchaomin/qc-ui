@@ -1,11 +1,11 @@
 {
-  "files": [],
   "references": [ // https://www.typescriptlang.org/docs/handbook/project-references.html#what-is-a-project-reference
     {
-      "path": "./tsconfig.node.json"
+      "path": "./tsconfig.node.json",
     },
     {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+      "path": "./tsconfig.app.json",
+    },
+  ],
+  "files": [ ],
 }

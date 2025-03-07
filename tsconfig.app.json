@@ -1,18 +1,28 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "compilerOptions": {
+    "composite": true, // 启用复合项目 incremental(增量编译) 自动为 true
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "paths": {
       "@/*": [
-        "./src/*"
-      ]
-    }
+        "./src/*",
+      ],
+      "img/*": [
+        "./src/assets/images/*",
+      ],
+    },
+    "types": [
+      "vite/client",
+      // TODO 识别 ttf 字体文件
+      // "vite-plugin-font/src/font"
+    ],
+    "isolatedModules": true,
   },
   "include": [
     "env.d.ts",
-    "src/**/*"
+    "src/**/*",
   ],
   "exclude": [
-    "src/**/__tests__/*"
-  ]
+    "src/**/__tests__/*",
+  ],
 }

@@ -1,6 +1,6 @@
 import antfu, { perfectionist as perfectionistConfigFn } from '@antfu/eslint-config'
 import perfectionist from 'eslint-plugin-perfectionist'
-import prettierOptions from './prettier.config.mts'
+import prettierOptions from './prettier.config.ts'
 
 const perfectionistConfig = await perfectionistConfigFn()
 
@@ -25,10 +25,20 @@ export default antfu({
     'types/env.d.ts',
     'folder-alias.json',
   ],
+  jsonc: {
+    overrides: {
+      'jsonc/comma-dangle': ['error', {
+        arrays: 'always-multiline',
+        objects: 'always-multiline',
+      }],
+    },
+  },
   // jsonc: true, // 配合 vscode.json-language-features 一起使用 (默认为true) [jsonc: true 排序， vscode.json-language-features 截断好一点]
   // markdown: true, // 1、 Enable linting for **code snippets** in Markdown. 2. 也会把上面的 formatters.markdown 设置为true 3. 默认为true
   // https://eslint.style/packages/default#rules
-  stylistic: {},
+  stylistic: {
+    // padding-line-between-statements
+  },
   // https://typescript-eslint.io/rules/
   typescript: {
 
@@ -55,7 +65,6 @@ export default antfu({
     },
     tsconfigPath: 'tsconfig.json', // Linting with Type Information https://typescript-eslint.io/getting-started/typed-linting/
   },
-  // perfectionist antfu 开启的配置比较少，这里全量配置 recommended-natural 的配置
 }).override(perfectionistConfig[0].name!, {
   rules: {
     ...perfectionist.configs['recommended-natural'].rules,

@@ -1,21 +1,28 @@
 {
   "extends": "@tsconfig/node-lts/tsconfig.json",
   "compilerOptions": {
+    "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "resolveJsonModule": true,
     "types": [
-      "node"
+      "node",
     ],
     "allowImportingTsExtensions": true,
-    "noEmit": true
+    "noEmit": true,
+    "isolatedModules": true,
   },
   "include": [
     "vite.config.*",
+    "nightwatch.conf.*",
     "vitest.config.*",
     "cypress.config.*",
-    "nightwatch.conf.*",
     "playwright.config.*",
-    "eslint.config.*"
-  ]
+    "prettier.config.*",
+    "stylelint.config.*",
+    ".vitepress/config.*",
+    // "eslint.config.*",
+  ],
 }
