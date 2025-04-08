@@ -1,4 +1,5 @@
 import type { Config } from 'prettier'
+
 /**
  * @description: https://prettier.io/docs/en/options
  * @description: 这里面有些配置不是 prettier 的配置，而是 antfu prettierOptions 里面的配置

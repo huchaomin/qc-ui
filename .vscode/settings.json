@@ -92,6 +92,16 @@
   ],
   "html.format.enable": false,
   "css.format.enable": false,
+  "json.validate.enable": false,
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
+  "[json5]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  },
   "[markdown]": {
     "editor.wordWrap": "off", // 不管编辑器多宽都不换行
     "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",

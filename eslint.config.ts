@@ -3,6 +3,7 @@ import perfectionist from 'eslint-plugin-perfectionist'
 import prettierOptions from './prettier.config.ts'
 
 const perfectionistConfig = await perfectionistConfigFn()
+
 /**
  * @description: 更高级配置也可以使用这个工具: @antfu/eslint-flat-config-utils
  * @return {*}
@@ -40,7 +41,7 @@ export default antfu(
       indent: 2,
       jsx: true,
       overrides: { // TODO padding
-        'style/padding-line-between-statements': ['error', { blankLine: 'never', next: '*', prev: '*' }, { blankLine: 'always', next: '*', prev: 'import' }, { blankLine: 'never', next: 'import', prev: 'import' }],
+        'style/padding-line-between-statements': ['error', { blankLine: 'never', next: '*', prev: '*' }, { blankLine: 'always', next: '*', prev: 'import' }, { blankLine: 'never', next: 'import', prev: 'import' }, { blankLine: 'always', next: 'export', prev: '*' }],
       },
       quotes: 'single',
       semi: false,
