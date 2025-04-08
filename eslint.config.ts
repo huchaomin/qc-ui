@@ -1,13 +1,11 @@
+// eslint-disable-next-line unused-imports/no-unused-imports
+import type { composer } from 'eslint-flat-config-utils' // 不能删除
 import antfu, { perfectionist as perfectionistConfigFn } from '@antfu/eslint-config'
 import perfectionist from 'eslint-plugin-perfectionist'
 import prettierOptions from './prettier.config.ts'
 
 const perfectionistConfig = await perfectionistConfigFn()
 
-/**
- * @description: 更高级配置也可以使用这个工具: @antfu/eslint-flat-config-utils
- * @return {*}
- */
 export default antfu(
   {
     formatters: {

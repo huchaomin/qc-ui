@@ -1,14 +1,17 @@
 # readme
 
-## eslint
+## 库
 
 - `@prettier/plugin-xml` 格式化xml、svg文件
 - `jiti` [eslint 配置相关](https://eslint.org/docs/latest/use/configure/configuration-files#typescript-configuration-files)
 - `eslint-plugin-format` 格式化css, html 等文件
+- `postcss-html` 被 `stylelint-config-recommended-vue` 依赖
+- `postcss-markdown` 用于 stylelint 格式化 markdown 中的 css 代码块
 
 ## todo
 
 - 需不需要 `eslint-plugin-prettier`
+- stylelint `unit-allowed-list`、`declaration-property-unit-allowed-list`
 
 ### Lint Staged
 

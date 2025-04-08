@@ -13,7 +13,6 @@
     "allowImportingTsExtensions": true,
     "noEmit": true,
     "isolatedModules": true,
-    "preserveSymlinks": true, // 保留符号链接 eslint.config.* 文件报错：果不引用“Y”，则无法命名推断类型“X”。这可能是不可移植的。类型注释是必需的
   },
   "include": [
     "vite.config.*",
