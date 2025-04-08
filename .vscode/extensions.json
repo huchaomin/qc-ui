@@ -1,8 +1,11 @@
 {
-  "recommendations": [
+  "recommendations": [ // 不区分大小写
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
     "DavidAnson.vscode-markdownlint",
+    "rikka.folder-alias",
+    "esbenp.prettier-vscode",
+    "stylelint.vscode-stylelint",
   ],
 }
