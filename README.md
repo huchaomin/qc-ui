@@ -7,6 +7,7 @@
 - `eslint-plugin-format` 格式化css, html 等文件
 - `postcss-html` 被 `stylelint-config-recommended-vue` 依赖
 - `postcss-markdown` 用于 stylelint 格式化 markdown 中的 css 代码块
+- `npm-run-all2` 项目 script 运行命令时，需要用到的包
 
 ## todo
 

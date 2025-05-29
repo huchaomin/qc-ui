@@ -12,14 +12,13 @@
       ],
     },
     "types": [
-      "vite/client",
       // TODO 识别 ttf 字体文件
       // "vite-plugin-font/src/font"
     ],
-    "isolatedModules": true,
+    "isolatedModules": true, // 确保你的代码能够被单文件转译工具（如 Babel、swc、esbuild 等）正确处理, 强制每个文件必须是独立模块
   },
   "include": [
-    "env.d.ts",
+    "types/**/*",
     "src/**/*",
   ],
   "exclude": [

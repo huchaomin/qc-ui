@@ -3,10 +3,10 @@
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "resolveJsonModule": true,
+    "target": "ESNext", // 指定编译后的 JavaScript 目标版本: 前沿、动态、可能变化
+    "module": "NodeNext", // 指定生成的 JavaScript 模块系统格式: 更通用的 Node.js 模块策略，自动适配 当前和未来 Node.js 版本
+    "moduleResolution": "NodeNext", // 用于控制模块的解析策略
+    "resolveJsonModule": true, // 它允许 TypeScript 项目直接导入 JSON 文件作为模块
     "types": [
       "node",
     ],

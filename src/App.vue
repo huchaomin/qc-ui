@@ -26,8 +26,8 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <style scoped>
 header {
-  line-height: 1.5;
   max-height: 100vh;
+  line-height: 1.5;
 }
 
 .logo {
@@ -37,30 +37,30 @@ header {
 
 nav {
   width: 100%;
+  margin-top: 2rem;
   font-size: 12px;
   text-align: center;
-  margin-top: 2rem;
+
+  & a {
+    display: inline-block;
+    padding: 0 1rem;
+    border-left: 1px solid var(--color-border);
+
+    &.router-link-exact-active {
+      color: var(--color-text);
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+
+    &:first-of-type {
+      border: 0;
+    }
+  }
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
+@media (width >= 1024px) {
   header {
     display: flex;
     place-items: center;
@@ -73,17 +73,16 @@ nav a:first-of-type {
 
   header .wrapper {
     display: flex;
-    place-items: flex-start;
     flex-wrap: wrap;
+    place-items: flex-start;
   }
 
   nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
     padding: 1rem 0;
     margin-top: 1rem;
+    margin-left: -1rem;
+    font-size: 1rem;
+    text-align: left;
   }
 }
 </style>
