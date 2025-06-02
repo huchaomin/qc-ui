@@ -12,6 +12,7 @@
 ## todo
 
 - 需不需要 `eslint-plugin-prettier`
+- 怎么格式化 tailwindcss 使用 prettier 或者 vscode 插件
 - stylelint `unit-allowed-list`、`declaration-property-unit-allowed-list`
 
 ### Lint Staged

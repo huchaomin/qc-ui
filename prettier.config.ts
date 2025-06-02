@@ -3,6 +3,7 @@ import type { Config } from 'prettier'
 /**
  * @description: https://prettier.io/docs/en/options
  * @description: 这里面有些配置不是 prettier 的配置，而是 antfu prettierOptions 里面的配置
+ * @description: 还有些是 prettier-plugin-tailwindcss 的配置 https://github.com/tailwindlabs/prettier-plugin-tailwindcss
  */
 const config: Config = {
   $schema: 'https://json.schemastore.org/prettierrc',
@@ -23,6 +24,7 @@ const config: Config = {
   singleAttributePerLine: false, // 会在 HTML、JSX、Vue 和 Angular 中格式化为每个属性单独占一行。
   singleQuote: true, // 使用单引号
   tabWidth: 2, // 缩进长度
+  tailwindStylesheet: './src/assets/tailwindcss.css',
   trailingComma: 'all', // 多行时尽可能打印尾随逗号
   useTabs: false, // 使用空格代替tab缩进
   vueIndentScriptAndStyle: false, // 不对vue中的script及style标签缩进
