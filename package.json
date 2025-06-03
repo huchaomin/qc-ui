@@ -46,6 +46,7 @@
     "stylelint-use-nesting": "^6.0.0",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
+    "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-vue-devtools": "^7.7.6",
     "vue-tsc": "^2.2.10"
   }

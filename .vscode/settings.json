@@ -7,6 +7,7 @@
   // },
   "fileheader.configObj": {
     "autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
+    "createHeader": false, // 新建文件自动添加头部注释
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   // Disable the default formatter, use eslint instead

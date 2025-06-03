@@ -15,6 +15,7 @@
     "isolatedModules": true,
   },
   "include": [
+    "build/**/*",
     "vite.config.*",
     "nightwatch.conf.*",
     "vitest.config.*",
@@ -24,5 +25,8 @@
     "stylelint.config.*",
     ".vitepress/config.*",
     "eslint.config.*",
+  ],
+  "exclude": [
+    "build/.cache",
   ],
 }

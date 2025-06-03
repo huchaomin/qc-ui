@@ -28,3 +28,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+/build/.cache
+
+/types/env.d.ts
