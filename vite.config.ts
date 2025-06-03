@@ -5,6 +5,7 @@ import browserslist from 'browserslist'
 import { browserslistToTargets } from 'lightningcss'
 import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig, loadEnv } from 'vite'
+import { compression } from 'vite-plugin-compression2'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolvePath } from './build/utils/index.ts'
@@ -31,6 +32,9 @@ export default defineConfig(({ command, mode }) => {
       transformer: 'lightningcss',
     },
     envDir, // 将 env 文件里面的变量注入到 import.meta.env 里面
+    esbuild: {
+      drop: mode === 'production' ? ['console', 'debugger'] : [],
+    },
     plugins: [
       vue(),
       vueJsx(),
@@ -45,6 +49,7 @@ export default defineConfig(({ command, mode }) => {
         ),
         open: true,
       }),
+      compression(),
     ],
     resolve: {
       alias: {
