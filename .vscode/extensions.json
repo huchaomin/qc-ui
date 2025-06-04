@@ -9,5 +9,10 @@
     "stylelint.vscode-stylelint",
     "bradlc.vscode-tailwindcss",
     "omkarbhede.tailwindcss-tune",
+    "vunguyentuan.vscode-css-variables",
+    "streetsidesoftware.code-spell-checker",
+  ],
+  "unwantedRecommendations": [
+    "octref.vetur", // 和 volar 冲突
   ],
 }

@@ -7,6 +7,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig, loadEnv } from 'vite'
 import { compression } from 'vite-plugin-compression2'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
+import { createHtmlPlugin } from 'vite-plugin-html'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolvePath } from './build/utils/index.ts'
 
@@ -36,13 +37,18 @@ export default defineConfig(({ command, mode }) => {
       drop: mode === 'production' ? ['console', 'debugger'] : [],
     },
     plugins: [
-      vue(),
-      vueJsx(),
-      vueDevTools(),
-      tailwindcss(),
       envParse({
         dtsPath: resolvePath('types/env.d.ts'),
       }),
+      createHtmlPlugin({
+        entry: '../src/main.ts',
+        minify: true,
+        template: 'build/index.html',
+      }),
+      tailwindcss(),
+      vue(),
+      vueJsx(),
+      vueDevTools(),
       visualizer({
         filename: resolvePath(
           'build/.cache/visualizer/report.html',

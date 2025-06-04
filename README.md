@@ -15,6 +15,7 @@
 - 怎么格式化 tailwindcss 使用 prettier 或者 vscode 插件
 - stylelint `unit-allowed-list`、`declaration-property-unit-allowed-list`
 - .stylelintignore
+- 整理[setting.json](https://github.com/vbenjs/vue-vben-admin/blob/main/.vscode/settings.json)
 
 ### Lint Staged
 
