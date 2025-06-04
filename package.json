@@ -50,7 +50,19 @@
     "vite-plugin-compression2": "^1.4.0",
     "vite-plugin-env-parse": "^1.0.15",
     "vite-plugin-html": "^3.2.2",
+    "vite-plugin-imagemin": "^0.6.1",
     "vite-plugin-vue-devtools": "^7.7.6",
     "vue-tsc": "^2.2.10"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "cwebp-bin",
+      "esbuild",
+      "gifsicle",
+      "jpegtran-bin",
+      "mozjpeg",
+      "optipng-bin",
+      "pngquant-bin"
+    ]
   }
 }

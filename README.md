@@ -9,6 +9,14 @@
 - `postcss-markdown` 用于 stylelint 格式化 markdown 中的 css 代码块
 - `npm-run-all2` 项目 script 运行命令时，需要用到的包
 
+## 注意
+
+1. Ignored build scripts ** Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts
+    ```md
+    pnpm approve-builds
+    ```
+    运行上述命令选择允许哪些依赖包在安装时自动执行生命周期脚本
+
 ## todo
 
 - 需不需要 `eslint-plugin-prettier`
