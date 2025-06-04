@@ -24,6 +24,7 @@
 - stylelint `unit-allowed-list`、`declaration-property-unit-allowed-list`
 - .stylelintignore
 - 整理[setting.json](https://github.com/vbenjs/vue-vben-admin/blob/main/.vscode/settings.json)
+- 有时间尝试一下这个打包分析工具[https://sonda.dev/](https://sonda.dev/)
 
 ### Lint Staged
 

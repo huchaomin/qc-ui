@@ -1,9 +1,11 @@
+import type { PluginOption } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import browserslist from 'browserslist'
 import { browserslistToTargets } from 'lightningcss'
 import { visualizer } from 'rollup-plugin-visualizer'
+import smvp from 'speed-measure-vite-plugin'
 import { defineConfig, loadEnv } from 'vite'
 import { compression } from 'vite-plugin-compression2'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
@@ -37,7 +39,7 @@ export default defineConfig(({ command, mode }) => {
     esbuild: {
       drop: mode === 'production' ? ['console', 'debugger'] : [],
     },
-    plugins: [
+    plugins: smvp([
       envParse({
         dtsPath: resolvePath('types/env.d.ts'),
       }),
@@ -90,7 +92,7 @@ export default defineConfig(({ command, mode }) => {
         open: true,
       }),
       compression(),
-    ],
+    ] as PluginOption[]),
     resolve: {
       alias: {
         '@': resolvePath('./src'),
