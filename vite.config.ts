@@ -52,7 +52,7 @@ export default defineConfig(({ command, mode }) => {
       tailwindcss(),
       vue(),
       vueJsx(),
-      AutoImport({
+      AutoImport({ // 用于自动导入 函数/工具库 的 API
         dts: resolvePath('types/auto-imports.d.ts'),
         resolvers: [
           ...(isProduction
@@ -62,7 +62,7 @@ export default defineConfig(({ command, mode }) => {
             : []),
         ],
       }),
-      Components({
+      Components({ // 用于自动导入 Vue 组件
         dts: resolvePath('types/components.d.ts'),
         resolvers: [
           ...(isProduction

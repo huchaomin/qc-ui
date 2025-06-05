@@ -5,3 +5,4 @@ import 'tdesign-vue-next/dist/tdesign.min.css'
 
 // eslint-disable-next-line ts/no-unsafe-argument
 app.use(TDesign)
+app.mount('#app')
