@@ -117,4 +117,7 @@
   "files.associations": { // 深度合并
     "*.css": "tailwindcss",
   },
+  "cSpell.words": [
+    "tdesign"
+  ],
 }
