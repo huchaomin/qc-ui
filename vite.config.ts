@@ -5,6 +5,9 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import browserslist from 'browserslist'
 import { browserslistToTargets } from 'lightningcss'
 import smvp from 'speed-measure-vite-plugin'
+import AutoImport from 'unplugin-auto-import/vite'
+import { TDesignResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
@@ -49,6 +52,26 @@ export default defineConfig(({ command, mode }) => {
       tailwindcss(),
       vue(),
       vueJsx(),
+      AutoImport({
+        dts: resolvePath('types/auto-imports.d.ts'),
+        resolvers: [
+          ...(isProduction
+            ? [TDesignResolver({
+                library: 'vue-next',
+              })]
+            : []),
+        ],
+      }),
+      Components({
+        dts: resolvePath('types/components.d.ts'),
+        resolvers: [
+          ...(isProduction
+            ? [TDesignResolver({
+                library: 'vue-next',
+              })]
+            : []),
+        ],
+      }),
       ...vitePlugins[isProduction ? 'production' : 'development'],
     ] as PluginOption[]),
     resolve: {
