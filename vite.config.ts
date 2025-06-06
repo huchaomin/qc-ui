@@ -6,6 +6,9 @@ import browserslist from 'browserslist'
 import { browserslistToTargets } from 'lightningcss'
 import smvp from 'speed-measure-vite-plugin'
 import AutoImport from 'unplugin-auto-import/vite'
+import { FileSystemIconLoader } from 'unplugin-icons/loaders'
+import IconsResolver from 'unplugin-icons/resolver'
+import Icons from 'unplugin-icons/vite'
 import { TDesignResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
@@ -53,7 +56,13 @@ export default defineConfig(({ command, mode }) => {
       vue(),
       vueJsx(),
       AutoImport({ // 用于自动导入 函数/工具库 的 API
+        defaultExportByFilename: true,
+        dirs: [resolvePath('src/plugins/autoImport'), resolvePath('src/hooks')],
         dts: resolvePath('types/auto-imports.d.ts'),
+        imports: [
+          'vue',
+          'pinia',
+        ],
         resolvers: [
           ...(isProduction
             ? [TDesignResolver({
@@ -61,8 +70,12 @@ export default defineConfig(({ command, mode }) => {
               })]
             : []),
         ],
+        vueTemplate: true,
       }),
       Components({ // 用于自动导入 Vue 组件
+        dirs: [
+          resolvePath('src/components/autoImport'),
+        ],
         dts: resolvePath('types/components.d.ts'),
         resolvers: [
           ...(isProduction
@@ -70,7 +83,20 @@ export default defineConfig(({ command, mode }) => {
                 library: 'vue-next',
               })]
             : []),
+          IconsResolver({
+            customCollections: ['custom'],
+            // enabledCollections: ['mdi', 'line-md', 'material-symbols'],
+          }),
         ],
+      }),
+      Icons({
+        customCollections: {
+          custom: FileSystemIconLoader(resolvePath('src/assets/icons')),
+        },
+        iconCustomizer: (collection, icon, props) => {
+          props.width = props.width ?? '24'
+          props.height = props.width ?? '24'
+        },
       }),
       ...vitePlugins[isProduction ? 'production' : 'development'],
     ] as PluginOption[]),

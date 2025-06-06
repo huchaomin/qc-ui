@@ -1,0 +1,28 @@
+{
+  "vue props": {
+    "prefix": "props",
+    "scope": "typescript",
+    "body": [
+      "const props = withDefaults(",
+      "  defineProps<{",
+      "    switchLabel?: string",
+      "  }>(),",
+      "  {",
+      "    switchLabel: undefined,",
+      "  },",
+      ")"
+    ],
+    "description": "vue props"
+  },
+  "vue emit": {
+    "prefix": "emit",
+    "scope": "typescript",
+    "body": [
+      "const emit = defineEmits<{",
+      "  'update:modelValue': [id: number]",
+      "  click: [value: string]",
+      "}>()"
+    ],
+    "description": "vue emit"
+  }
+}
