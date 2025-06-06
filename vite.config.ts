@@ -1,10 +1,8 @@
-import type { PluginOption } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import browserslist from 'browserslist'
 import { browserslistToTargets } from 'lightningcss'
-import smvp from 'speed-measure-vite-plugin'
 import AutoImport from 'unplugin-auto-import/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
@@ -43,7 +41,12 @@ export default defineConfig(({ command, mode }) => {
     esbuild: {
       drop: isProduction ? ['console', 'debugger'] : [],
     },
-    plugins: smvp([
+    optimizeDeps: {
+      include: [
+        'tdesign-vue-next/dist/tdesign.min.js',
+      ],
+    },
+    plugins: [
       envParse({
         dtsPath: resolvePath('types/env.d.ts'),
       }),
@@ -61,6 +64,7 @@ export default defineConfig(({ command, mode }) => {
         dts: resolvePath('types/auto-imports.d.ts'),
         imports: [
           'vue',
+          'vue-router',
           'pinia',
         ],
         resolvers: [
@@ -99,7 +103,7 @@ export default defineConfig(({ command, mode }) => {
         },
       }),
       ...vitePlugins[isProduction ? 'production' : 'development'],
-    ] as PluginOption[]),
+    ],
     resolve: {
       alias: {
         '@': resolvePath('./src'),
