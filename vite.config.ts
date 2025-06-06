@@ -1,3 +1,6 @@
+import type * as http from 'node:http'
+import type { ProxyOptions } from 'vite'
+import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
@@ -15,10 +18,24 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
+function bypass(req: http.IncomingMessage, res: http.ServerResponse | undefined, options: ProxyOptions): void {
+  if (req.url !== undefined && options.rewrite !== undefined && typeof options.target === 'string' && res !== undefined) {
+    const reqUrl = req.url
+    const proxyUrl = new URL(options.rewrite(reqUrl), options.target).href
+    res.setHeader('X-Res-ProxyUrl', proxyUrl) // 查看真实的请求地址
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
   const envDir = resolvePath('build/env')
-  const env = parseLoadedEnv(loadEnv(mode, envDir))
+  const env = parseLoadedEnv(loadEnv(mode, envDir)) as ImportMetaEnv
+  const {
+    VITE_API_PREFIX,
+    VITE_BASE_URL,
+    VITE_SERVER_PORT,
+    VITE_SERVER_URL,
+  } = env
   console.log({
     command,
     env,
@@ -112,6 +129,22 @@ export default defineConfig(({ command, mode }) => {
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
       // 不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
       extensions: ['.ts'],
+    },
+    server: {
+      // vite preview 也会走该代理
+      host: '0.0.0.0', // 可以用ip访问
+      open: false,
+      port: VITE_SERVER_PORT + 1000,
+      proxy: {
+        [path.posix.join(VITE_BASE_URL, VITE_API_PREFIX)]: {
+          bypass,
+          changeOrigin: true,
+          rewrite: (p) => {
+            return VITE_BASE_URL === '/' ? p : p.replace(new RegExp(VITE_BASE_URL), '')
+          },
+          target: VITE_SERVER_URL,
+        },
+      },
     },
   }
 })
