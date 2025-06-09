@@ -83,6 +83,15 @@ export default defineConfig(({ command, mode }) => {
           'vue',
           'vue-router',
           'pinia',
+          {
+            from: isProduction ? 'tdesign-vue-next' : '@/plugins/tdesign-vue-next-for-dev',
+            imports: [
+              'DialogPlugin',
+              'LoadingPlugin',
+              'MessagePlugin',
+              'NotifyPlugin',
+            ],
+          },
         ],
         resolvers: [
           ...(isProduction

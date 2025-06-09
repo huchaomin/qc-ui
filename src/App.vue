@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const component = resolveComponent('i-line-md:check-list-3-twotone')
+
 const globalConfig = {
 
 }
