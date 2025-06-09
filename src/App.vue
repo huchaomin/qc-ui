@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const component = resolveComponent('i-line-md:check-list-3-twotone')
 const globalConfig = {
 
 }
@@ -12,6 +13,7 @@ const globalConfig = {
         <THeader>Header</THeader>
         <TContent>
           <i-line-md:alert-loop></i-line-md:alert-loop>
+          <component :is="component"></component>
         </TContent>
       </TLayout>
     </TLayout>

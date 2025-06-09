@@ -19,7 +19,18 @@
 
 2. icons
 
-选择地址[https://icones.js.org/collection/mdi?variant=Outline](https://icones.js.org/collection/mdi?variant=Outline)
+- 选择地址[https://icones.js.org/collection/mdi?variant=Outline](https://icones.js.org/collection/mdi?variant=Outline)
+- 使用方法
+    ```vue
+    <script setup lang="ts">
+    const component = resolveComponent('i-line-md:check-list-3-twotone')
+    </script>
+
+    <template>
+      <i-line-md:alert-loop></i-line-md:alert-loop>
+      <component :is="component"></component>
+    </template>
+    ```
 
 ## todo
 
