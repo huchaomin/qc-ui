@@ -70,6 +70,30 @@ export default antfu(
       },
       tsconfigPath: 'tsconfig.json', // Linting with Type Information https://typescript-eslint.io/getting-started/typed-linting/
     },
+    vue: {
+      overrides: {
+        'vue/component-name-in-template-casing': [
+          'error',
+          'PascalCase',
+          {
+            ignores: ['/^i-/'],
+            registeredComponentsOnly: false,
+          },
+        ], // 组件名必须为PascalCase
+        'vue/html-self-closing': [
+          'error',
+          {
+            html: {
+              component: 'never',
+              normal: 'never',
+              void: 'always', // 常见的 HTML 空元素 br, hr...
+            },
+            math: 'always',
+            svg: 'always',
+          },
+        ], // html标签不要自闭合
+      },
+    },
   },
   {
     files: ['package.json'],
