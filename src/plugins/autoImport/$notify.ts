@@ -29,7 +29,9 @@ async function create(
     ...(options ?? {}),
   }
   return NotifyPlugin[type]({
+    closeBtn: true,
     content,
+    duration: 0,
     title: '提示',
     ...obj,
   })

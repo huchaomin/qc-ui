@@ -31,6 +31,8 @@
       <component :is="component"></component>
     </template>
     ```
+3. 重要的通知用 $notify, 需用户手动关闭
+4. 轻提示用 $msg
 
 ## todo
 

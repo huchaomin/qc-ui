@@ -32,6 +32,7 @@ export default defineConfig(({ command, mode }) => {
   const env = parseLoadedEnv(loadEnv(mode, envDir)) as ImportMetaEnv
   const {
     VITE_API_PREFIX,
+    VITE_APP_NAME,
     VITE_BASE_URL,
     VITE_SERVER_PORT,
     VITE_SERVER_URL,
@@ -69,6 +70,11 @@ export default defineConfig(({ command, mode }) => {
       }),
       createHtmlPlugin({
         entry: `../src/main.${isProduction ? 'prod' : 'dev'}.ts`,
+        inject: {
+          data: {
+            title: VITE_APP_NAME,
+          },
+        },
         minify: true,
         template: 'build/index.html',
       }),
@@ -90,6 +96,7 @@ export default defineConfig(({ command, mode }) => {
               'LoadingPlugin',
               'MessagePlugin',
               'NotifyPlugin',
+              'TMessage',
             ],
           },
         ],

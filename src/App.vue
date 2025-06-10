@@ -1,6 +1,17 @@
 <script setup lang="ts">
-const component = resolveComponent('i-line-md:check-list-3-twotone')
-
+const component = resolveComponent('TMessage')
+$loading.show('aaa')
+setTimeout(() => {
+  $loading.show('bbb')
+  setTimeout(() => {
+    $loading.show()
+    setTimeout(() => {
+      $loading.hide()
+      $loading.hide()
+      $loading.hide()
+    }, 1000)
+  }, 1000)
+}, 1000)
 const globalConfig = {
 
 }

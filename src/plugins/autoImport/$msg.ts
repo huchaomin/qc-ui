@@ -9,7 +9,8 @@ enum MessageCreateType {
   success = 'success',
   warning = 'warning',
 }
-type CreateMessageFnType = (
+
+export type CreateMessageFnType = (
   content: MessageOptions['content'],
   options?: Omit<MessageOptions, 'content' | 'theme'>,
 ) => Promise<MessageInstance>
@@ -32,6 +33,7 @@ async function create(
   }
   return MessagePlugin[type]({
     content,
+    duration: type === 'loading' ? 0 : 3600,
     ...obj,
   })
 }
