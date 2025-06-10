@@ -15,6 +15,7 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
+import autoImportStoreList from './build/autoImportStores.ts'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
@@ -62,6 +63,7 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps: {
       include: [
         'tdesign-vue-next/dist/tdesign.min.js',
+        'nprogress',
       ],
     },
     plugins: [
@@ -99,6 +101,7 @@ export default defineConfig(({ command, mode }) => {
               'Message',
             ],
           },
+          autoImportStoreList,
         ],
         resolvers: [
           ...(isProduction
