@@ -8,9 +8,9 @@ import type _default from 'tdesign-vue-next'
 import _TDesign, {
   // DialogPlugin as _DialogPlugin,
   LoadingPlugin as _LoadingPlugin,
+  Message as _Message,
   MessagePlugin as _MessagePlugin,
   NotifyPlugin as _NotifyPlugin,
-  Message,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
 
@@ -19,13 +19,13 @@ const LoadingPlugin = _LoadingPlugin as LoadingPluginType
 const MessagePlugin = _MessagePlugin as MessagePluginType
 const NotifyPlugin = _NotifyPlugin as NotificationPluginType
 const TDesign = _TDesign as typeof _default
-const TMessage = Message as typeof import('tdesign-vue-next')['Message']
+const Message = _Message as typeof import('tdesign-vue-next')['Message']
 
 export {
   // DialogPlugin,
   LoadingPlugin,
+  Message,
   MessagePlugin,
   NotifyPlugin,
   TDesign,
-  TMessage,
 }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const component = resolveComponent('TMessage')
 $loading.show('aaa')
 setTimeout(() => {
   $loading.show('bbb')
@@ -25,7 +24,6 @@ const globalConfig = {
         <THeader>Header</THeader>
         <TContent>
           <i-line-md:alert-loop></i-line-md:alert-loop>
-          <component :is="component"></component>
         </TContent>
       </TLayout>
     </TLayout>

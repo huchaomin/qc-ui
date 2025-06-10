@@ -19,7 +19,7 @@ class LoadingService {
               return null
             }
 
-            return h(TMessage, {
+            return h(Message, {
               content: this.loadingText.value,
               duration: 0,
               theme: 'loading',

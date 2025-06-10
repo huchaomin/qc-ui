@@ -96,7 +96,7 @@ export default defineConfig(({ command, mode }) => {
               'LoadingPlugin',
               'MessagePlugin',
               'NotifyPlugin',
-              'TMessage',
+              'Message',
             ],
           },
         ],
