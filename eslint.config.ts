@@ -19,9 +19,6 @@ export default antfu(
     // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
     // GLOB_EXCLUDE 已经包括了大部分的忽略文件，遵守 gitignore 规则
     ignores: [
-      'types/auto-import.d.ts',
-      'types/components.d.ts',
-      'types/env.d.ts',
       'folder-alias.json',
     ],
     jsonc: {
@@ -38,8 +35,7 @@ export default antfu(
     stylistic: {
       indent: 2,
       jsx: true,
-      overrides: { // TODO padding
-        'antfu/consistent-list-newline': 'off',
+      overrides: {
         'style/padding-line-between-statements': ['error',
           { blankLine: 'never', next: '*', prev: '*' },
           { blankLine: 'always', next: '*', prev: 'import' },
@@ -105,6 +101,12 @@ export default antfu(
           },
         ], // html标签不要自闭合
       },
+    },
+  },
+  {
+    rules: {
+      'antfu/consistent-list-newline': 'off',
+      'no-console': 'off',
     },
   },
   {

@@ -1,16 +1,10 @@
-/*
- * @Author       : peter peter@qingcongai.com
- * @Date         : 2024-11-08 09:30:06
- * @LastEditors  : peter peter@qingcongai.com
- * @LastEditTime : 2025-06-09 09:56:49
- * @Description  : 添加 fetch 通用请求 配置
- */
 import type { Arg } from 'alova'
 import { createAlova } from 'alova'
 import adapterFetch from 'alova/fetch'
 import VueHook from 'alova/vue'
 import sysPath from 'path-browserify'
 
+const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'
 type AddMethodMetaType = Omit<
   Parameters<NonNullable<Parameters<typeof createAlova>[0]['beforeRequest']>>[0],
@@ -19,8 +13,9 @@ type AddMethodMetaType = Omit<
   meta: MetaType
 }
 interface MetaType {
+  use600Alert: boolean
   useDataResult: boolean
-  useDownload: string
+  useDownload?: string
   useEmptyData: boolean
   useEmptyParams: boolean
   useFailMsg: boolean
@@ -38,6 +33,7 @@ export default createAlova({
     const method = m as unknown as AddMethodMetaType
     method.meta = {
       ...{
+        use600Alert: true,
         useDataResult: true,
         useEmptyData: false,
         useEmptyParams: true,
@@ -50,8 +46,8 @@ export default createAlova({
       },
       ...(method.meta ?? {}),
     }
-    const userStore = useUserStore(piniaInstance)
-    const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } = method.meta
+    const userStore = useUserStore()
+    const { useEmptyData, useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } = method.meta
 
     if (useToken) {
       if (userStore.token) {
@@ -66,54 +62,61 @@ export default createAlova({
       $loading.show()
     }
 
-    if (useEmptyParams) {
-      const obj = method.config.params
-      Object.keys(obj).forEach((key) => {
-        // eslint-disable-next-line ts/no-unsafe-argument
-        if (['', null, undefined].includes(obj[key])) {
-          delete obj[key]
+    // 处理 params 参数
+    const params = method.config.params
+
+    if (typeof params !== 'string') {
+      const paramsCopy: Record<string, any> = {}
+      Object.keys(params).forEach((key: string) => {
+        if (_.isNumber(params[key]) || _.isString(params[key]) || _.isBoolean(params[key]) || !useEmptyParams) {
+          paramsCopy[encodeURIComponent(key)] = encodeURIComponent(params[key] as string)
         }
       })
+      method.config.params = paramsCopy
     }
 
+    // 处理 data 参数
     if (useEmptyData) {
-      const obj = (method.data ?? {}) as Arg
-      Object.keys(obj).forEach((key) => {
-        // eslint-disable-next-line ts/no-unsafe-argument
-        if (['', null, undefined].includes(obj[key])) {
+      const obj = {
+        ...(method.data as Arg),
+      }
+      Object.keys(obj).forEach((key: string) => {
+        if (isFalsy(obj[key])) {
           delete obj[key]
         }
       })
+      method.data = obj
     }
 
+    // 处理 formData 参数
     if (useFormData) {
-      const obj = (method.data ?? {}) as Arg
       const formData = new FormData()
-      Object.keys(obj).forEach((key) => {
-        // eslint-disable-next-line ts/no-unsafe-argument
-        formData.append(key, obj[key])
+      Object.keys(method.data as Arg).forEach((key: string) => {
+        formData.append(key, method.data![key as keyof typeof method.data])
       })
       method.data = formData
+    }
+
+    // TODO 上传或者下载，不设置超时
+    if (method.config.timeout === TIMEOUT && (useResponseBlob || useFormData)) {
+      method.config.timeout = 0
     }
   },
   cacheFor: null, // 全局关闭全部请求缓存
   requestAdapter: adapterFetch(),
-  // https://alova.js.org/zh-CN/tutorial/getting-started/basic/global-interceptor
   responded: {
     // 不论是成功、失败、还是命中缓存
     onComplete: (m) => {
       const method = m as unknown as AddMethodMetaType
 
       if (method.meta.useLoading) {
-        $loading.hide() // TODO 这个loading 消失的时机准，transformData 可以为异步，异步结束之后才走这里，官方的流程图不准
+        $loading.hide() // TODO 这个loading 消失的时机
       }
     },
 
-    // TODO transformData 抛出的错误不会走这里
-    // 这里必须抛出错误, 要不然await method 会 resolve undefined
+    // 由于window.fetch的特点，只有在连接超时或连接中断时才会触发onError拦截器，其他情况均会触发onSuccess拦截器
+    // 这里必须抛出错误, 要不然将认为请求是成功的，且不会获得响应数据(undefined)
     onError: async (err) => {
-      console.log('err', err)
-
       if (err instanceof Error) {
         const { message } = err
 
@@ -123,19 +126,15 @@ export default createAlova({
         }
 
         if (message.toLowerCase().includes('timeout')) {
-          $notify.error('请求超时')
+          void $msg.error('请求超时')
           return Promise.reject(err)
         }
       }
 
-      $notify.error(NETWORK_ERR_MSG)
+      void $msg.error(NETWORK_ERR_MSG)
       return Promise.reject(err)
     },
 
-    /*  当接收到一个代表错误的 HTTP 状态码时，从 fetch() 返回的 Promise 不会被标记为 reject，
-    即使响应的 HTTP 状态码是 404 或 500。
-    相反，它会将 Promise 状态标记为 resolve（如果响应的 HTTP 状态码不在 200 - 299 的范围内，则设置 resolve 返回值的 ok 属性为 false），
-    仅当网络故障时或请求被阻止时，才会标记为 reject */
     // TODO onSuccess 中抛出错误不会触发 onError（与hook级别不一样哦）
     // 当捕获错误但没有抛出错误或返回 reject 状态的 Promise 实例，将认为请求是成功的，且不会获得响应数据。
     // 代码直接报错那当然，请求是失败的
@@ -143,28 +142,27 @@ export default createAlova({
       const method = m as unknown as AddMethodMetaType
       const { headers, ok, status } = response
 
+      // 状态码在 200-299 范围内
       if (ok === false) {
         const map: Record<number, string> = {
           403: '当前操作没有权限',
           404: '访问资源不存在',
+          500: '服务不可用，请稍后再试或联系管理员！',
         }
         const m = map[status] ?? NETWORK_ERR_MSG
-        $notify.error(m)
+        void $msg.error(m)
         return Promise.reject(response)
       }
 
-      const { useDataResult, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta
+      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
-        const { useDownload } = method.meta
-
-        if (useDownload) {
-          // TODO
-          // saveAs(new Blob([resData]), useDownload)
+        if (useDownload !== undefined) {
+          void saveAs(await response.blob(), useDownload)
         }
 
-        return response
+        return response.blob()
       }
 
       // eslint-disable-next-line ts/no-unsafe-assignment
@@ -178,12 +176,28 @@ export default createAlova({
         }
 
         if (code >= 400) {
-          if (code === 401) {
-            useUserStore(piniaInstance).clearSession()
+          if (code === 600) {
+            // $alert( // TODO 600 的弹窗
+            //   {
+            //     content: parseRes.msg,
+            //     html: true,
+            //   },
+            //   {
+            //     title: '提示',
+            //     width: 660,
+            //   },
+            // )
+            if (!useResponseBlob) {
+              // eslint-disable-next-line ts/no-unsafe-return
+              return resData
+            }
+          }
+          else if (code === 401) {
+            useUserStore().clearSession()
           }
           else {
             if (useFailMsg) {
-              $notify.error(msg)
+              void $msg.error(msg)
             }
           }
 
@@ -191,11 +205,11 @@ export default createAlova({
         }
         else {
           if (useSuccessMsg) {
-            $notify(msg)
+            void $msg(msg)
           }
 
           // eslint-disable-next-line ts/no-unsafe-return, ts/no-unsafe-member-access
-          return useDataResult ? (resData.data ?? resData) : resData
+          return useDataResult ? (resData.data === undefined ? resData : resData.data) : resData
         }
       }
 
@@ -205,5 +219,5 @@ export default createAlova({
   },
   shareRequest: true, // 全局开启请求共享,相同请求结果会沿用上一次未完成请求的结果
   statesHook: VueHook,
-  timeout: 15000,
+  timeout: TIMEOUT,
 })

@@ -11,11 +11,11 @@ type CreateNotificationFnType = (
   content: NotificationOptions['content'],
   options?: Omit<NotificationOptions, 'content' | 'theme'>,
 ) => Promise<NotificationInstance>
-type CreateNotificationType = CreateNotificationFnType &
-  {
+type CreateNotificationType = CreateNotificationFnType
+  & {
     [value in NotificationCreateType]: CreateNotificationFnType
-  } &
-  {
+  }
+  & {
     close: NotificationPluginType['close']
     closeAll: NotificationPluginType['closeAll']
   }
