@@ -6,31 +6,11 @@ import sysPath from 'path-browserify'
 
 const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'
-type AddMethodMetaType = Omit<
-  Parameters<NonNullable<Parameters<typeof createAlova>[0]['beforeRequest']>>[0],
-  'meta'
-> & {
-  meta: MetaType
-}
-interface MetaType {
-  use600Alert: boolean
-  useDataResult: boolean
-  useDownload?: string
-  useEmptyData: boolean
-  useEmptyParams: boolean
-  useFailMsg: boolean
-  useFormData: boolean
-  useLoading: boolean
-  useResponseBlob: boolean
-  useSuccessMsg: boolean
-  useToken: boolean
-}
 
 export default createAlova({
   baseURL: sysPath.join(import.meta.env.VITE_BASE_URL, import.meta.env.VITE_API_PREFIX),
   // 请求前拦截器 可以为异步函数
-  beforeRequest(m) {
-    const method = m as unknown as AddMethodMetaType
+  beforeRequest(method) {
     method.meta = {
       ...{
         use600Alert: true,
@@ -106,11 +86,9 @@ export default createAlova({
   requestAdapter: adapterFetch(),
   responded: {
     // 不论是成功、失败、还是命中缓存
-    onComplete: (m) => {
-      const method = m as unknown as AddMethodMetaType
-
-      if (method.meta.useLoading) {
-        $loading.hide() // TODO 这个loading 消失的时机
+    onComplete: (method) => {
+      if (method.meta!.useLoading) {
+        $loading.hide() // 这个loading 消失的时机
       }
     },
 
@@ -135,11 +113,9 @@ export default createAlova({
       return Promise.reject(err)
     },
 
-    // TODO onSuccess 中抛出错误不会触发 onError（与hook级别不一样哦）
     // 当捕获错误但没有抛出错误或返回 reject 状态的 Promise 实例，将认为请求是成功的，且不会获得响应数据。
     // 代码直接报错那当然，请求是失败的
-    onSuccess: async (response, m) => {
-      const method = m as unknown as AddMethodMetaType
+    onSuccess: async (response, method) => {
       const { headers, ok, status } = response
 
       // 状态码在 200-299 范围内
@@ -154,7 +130,7 @@ export default createAlova({
         return Promise.reject(response)
       }
 
-      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta
+      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta!
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
