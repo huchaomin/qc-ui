@@ -20,6 +20,10 @@ export default antfu(
     // GLOB_EXCLUDE 已经包括了大部分的忽略文件，遵守 gitignore 规则
     ignores: [
       'folder-alias.json',
+      'src/plugins/alova/generate/pl-admin/apiDefinitions.ts',
+      'src/plugins/alova/generate/pl-admin/createApis.ts',
+      'src/plugins/alova/generate/pl-admin/globals.d.ts',
+      'src/plugins/alova/generate/pl-admin.swagger.json',
     ],
     jsonc: {
       overrides: {

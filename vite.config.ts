@@ -64,6 +64,9 @@ export default defineConfig(({ command, mode }) => {
       include: [
         'tdesign-vue-next/dist/tdesign.min.js',
         'nprogress',
+        'path-browserify',
+        'file-saver',
+        'lodash-es',
       ],
     },
     plugins: [
@@ -100,6 +103,9 @@ export default defineConfig(({ command, mode }) => {
               'NotifyPlugin',
               'Message',
             ],
+          },
+          {
+            '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
           },
           autoImportStoreList,
         ],

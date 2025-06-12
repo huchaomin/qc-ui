@@ -25,6 +25,7 @@
     "stylelint.config.*",
     ".vitepress/config.*",
     "eslint.config.*",
+    "alova.config.*",
     "types/env.d.ts",
   ],
   "exclude": [

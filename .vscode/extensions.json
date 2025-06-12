@@ -11,6 +11,7 @@
     "omkarbhede.tailwindcss-tune",
     "vunguyentuan.vscode-css-variables",
     "streetsidesoftware.code-spell-checker",
+    "Alova.alova-vscode-extension",
   ],
   "unwantedRecommendations": [
     "octref.vetur", // 和 volar 冲突
