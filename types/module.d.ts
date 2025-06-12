@@ -1,8 +1,63 @@
-// https://github.com/vitejs/vite/discussions/9431
-declare module '*.vue' {
-  import type { DefineComponent } from 'vue'
+import 'vue-router'
+import 'alova'
 
-  const component: DefineComponent
-
-  export default component
+export {}
+declare module 'vue-router' {
+  interface RouteMeta {
+  }
+}
+declare module 'alova' {
+  export interface AlovaCustomTypes {
+    meta: {
+      /**
+       * 是否使用600弹窗 默认true
+       */
+      use600Alert?: boolean
+      /**
+       * 是否使用返回数据里面的data 默认true
+       */
+      useDataResult?: boolean
+      /**
+       * 是下载blob 默认undefined,
+       * 如果为true 则从响应头获取文件名
+       * 如果为string 则使用string作为文件名
+       * 如果为false 或 undefined 则不下载
+       */
+      useDownload?: boolean | string
+      /**
+       * 是否去除 data 里面 isFalsy 的值， 默认false
+       */
+      useEmptyData?: boolean
+      /**
+       * 是否去除 params 里面非 string boolean number 的值， 默认true
+       */
+      useEmptyParams?: boolean
+      /**
+       * 接口调用失败是否弹出 msg 默认true
+       */
+      useFailMsg?: boolean
+      /**
+       * 是否使用formData 默认false
+       */
+      useFormData?: boolean
+      /**
+       * 请求接口时是否使用loading 默认true
+       * 如果为string 则使用 string 作为 loading 的文本
+       * 如果为false 则不使用loading
+       */
+      useLoading?: boolean | string
+      /**
+       * 是否使用响应blob 默认false
+       */
+      useResponseBlob?: boolean
+      /**
+       * 接口调用成功是否弹出 msg 默认false
+       */
+      useSuccessMsg?: boolean
+      /**
+       * 是否在请求头添加 token 默认true
+       */
+      useToken?: boolean
+    }
+  }
 }

@@ -7,7 +7,7 @@ setTimeout(() => {
     setTimeout(() => {
       $loading.hide()
       $loading.hide()
-      // $loading.hide()
+      $loading.hide()
     }, 1000)
   }, 1000)
 }, 1000)
