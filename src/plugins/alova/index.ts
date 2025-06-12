@@ -1,4 +1,4 @@
-import type { Arg } from 'alova'
+import type { AlovaCustomTypes, Arg } from 'alova'
 import { createAlova } from 'alova'
 import adapterFetch from 'alova/fetch'
 import VueHook from 'alova/vue'
@@ -6,6 +6,9 @@ import sysPath from 'path-browserify'
 
 const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'
+type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']> & {
+  useDownload?: boolean | string
+}
 
 export default createAlova({
   baseURL: sysPath.join(import.meta.env.VITE_BASE_URL, import.meta.env.VITE_API_PREFIX),
@@ -27,7 +30,7 @@ export default createAlova({
       ...(method.meta ?? {}),
     }
     const userStore = useUserStore()
-    const { useEmptyData, useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } = method.meta
+    const { useEmptyData, useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } = method.meta as ThisAlovaCustomTypes
 
     if (useToken) {
       if (userStore.token) {
@@ -38,8 +41,8 @@ export default createAlova({
       }
     }
 
-    if (useLoading) {
-      $loading.show()
+    if (useLoading !== false) {
+      $loading.show(useLoading === true ? undefined : useLoading)
     }
 
     // 处理 params 参数
@@ -87,7 +90,7 @@ export default createAlova({
   responded: {
     // 不论是成功、失败、还是命中缓存
     onComplete: (method) => {
-      if (method.meta!.useLoading) {
+      if ((method.meta as ThisAlovaCustomTypes).useLoading !== false) {
         $loading.hide() // 这个loading 消失的时机
       }
     },
@@ -130,12 +133,12 @@ export default createAlova({
         return Promise.reject(response)
       }
 
-      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta!
+      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta as ThisAlovaCustomTypes
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
-        if (useDownload !== undefined) {
-          void saveAs(await response.blob(), useDownload)
+        if (useDownload !== undefined && useDownload !== false) {
+          void saveAs(await response.blob(), useDownload as string) // TODO true 从响应头获取文件名
         }
 
         return response.blob()
@@ -153,7 +156,7 @@ export default createAlova({
 
         if (code >= 400) {
           if (code === 600) {
-            // $alert( // TODO 600 的弹窗
+            // $alert( // TODO 600 的弹窗 use600Alert
             //   {
             //     content: parseRes.msg,
             //     html: true,

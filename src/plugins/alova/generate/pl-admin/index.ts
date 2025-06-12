@@ -1,8 +1,10 @@
 import alovaInstance from '../../index'
-import { createApis, withConfigType } from './createApis'
+import { createApis } from './createApis'
+import userConfig from './userConfig'
 
-export const $$userConfigMap = withConfigType({})
+export {
+  userConfig as $$userConfigMap,
+  alovaInstance,
+}
 
-export default createApis(alovaInstance, $$userConfigMap)
-
-export { alovaInstance }
+export default createApis(alovaInstance, userConfig)
