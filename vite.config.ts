@@ -10,12 +10,13 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { FileSystemIconLoader } from 'unplugin-icons/loaders'
 import IconsResolver from 'unplugin-icons/resolver'
 import Icons from 'unplugin-icons/vite'
-import { TDesignResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import autoImportStoreList from './build/autoImportStores.ts'
+import tDesignAutoImport from './build/tDesignAutoImport.ts'
+import TDesignResolver from './build/tDesignResolver.ts'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
@@ -94,16 +95,7 @@ export default defineConfig(({ command, mode }) => {
           'vue',
           'vue-router',
           'pinia',
-          {
-            from: isProduction ? 'tdesign-vue-next' : '@/plugins/tdesign-vue-next-for-dev',
-            imports: [
-              'DialogPlugin',
-              'LoadingPlugin',
-              'MessagePlugin',
-              'NotifyPlugin',
-              'Message',
-            ],
-          },
+          tDesignAutoImport(isProduction),
           {
             '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
           },
