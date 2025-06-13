@@ -25,7 +25,7 @@ export default (options: Parameters<typeof TDesignResolver>[0] = {}): ReturnType
       if (tDesignResetComponentsName.includes(name)) {
         return {
           from: `@/components/tDesignReset/${name}.vue`,
-          name,
+          name: 'default',
         }
       }
 
