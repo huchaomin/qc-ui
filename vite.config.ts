@@ -129,7 +129,7 @@ export default defineConfig(({ command, mode }) => {
       }),
       Icons({
         customCollections: {
-          custom: FileSystemIconLoader(resolvePath('src/assets/icons')),
+          custom: FileSystemIconLoader(resolvePath('src/assets/svgIcons')),
         },
         iconCustomizer: (collection, icon, props) => {
           props.width = props.width ?? '24'

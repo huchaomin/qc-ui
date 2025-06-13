@@ -1,6 +1,7 @@
 <script setup lang="ts">
-const globalConfig = {
+import type { GlobalConfigProvider } from 'tdesign-vue-next'
 
+const globalConfig: GlobalConfigProvider = {
 }
 </script>
 

@@ -6,6 +6,7 @@ import type {
 } from 'tdesign-vue-next'
 import type _default from 'tdesign-vue-next'
 import _TDesign, {
+  Card as _Card,
   Image as _Image,
   // DialogPlugin as _DialogPlugin,
   LoadingPlugin as _LoadingPlugin,
@@ -22,8 +23,10 @@ const NotifyPlugin = _NotifyPlugin as NotificationPluginType
 const TDesign = _TDesign as typeof _default
 const Message = _Message as typeof import('tdesign-vue-next')['Message']
 const Image = _Image as typeof import('tdesign-vue-next')['Image']
+const Card = _Card as typeof import('tdesign-vue-next')['Card']
 
 export {
+  Card,
   Image,
   // DialogPlugin,
   LoadingPlugin,

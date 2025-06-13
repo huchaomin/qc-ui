@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import notFound from '@/assets/images/404.png'
+import notFound from 'img/404.png'
 
 const router = useRouter()
 

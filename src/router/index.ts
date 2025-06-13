@@ -59,6 +59,21 @@ const router = createRouter({
   sensitive: true,
   strict: true,
 })
+// router.beforeEach(async (to) => {
+//   if (to.name === 'Login') {
+//     return
+//   }
+
+//   const userStore = useUserStore()
+
+//   if (userStore.token === '') {
+//     return ({ name: 'Login' })
+//   }
+//   else {
+
+//   }
+// })
+
 router.afterEach((to, from, failure) => {
   if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
     void $msg.info('导航被中断')

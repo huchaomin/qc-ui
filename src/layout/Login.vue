@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import LoginBg from './modules/LoginBg.vue'
+</script>
+
 <template>
-  登录
+  <LoginBg>
+    登录
+  </LoginBg>
 </template>

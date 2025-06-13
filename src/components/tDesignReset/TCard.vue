@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { ImageProps } from 'tdesign-vue-next'
+import type { CardProps } from 'tdesign-vue-next'
 
 const props = withDefaults(
-  defineProps<ImageProps>(),
+  defineProps<CardProps>(),
   {
-    lazy: true,
+    shadow: true,
   },
 )
-const compo = Image
+const compo = Card
 </script>
 
 <template>
@@ -17,9 +17,3 @@ const compo = Image
     </template>
   </component>
 </template>
-
-<style scoped>
-.t-image__wrapper{
-  background: transparent;
-}
-</style>
