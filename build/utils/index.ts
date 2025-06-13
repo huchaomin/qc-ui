@@ -1,6 +1,5 @@
 import path from 'node:path'
 import process from 'node:process'
-import fg from 'fast-glob'
 import _ from 'lodash'
 
 type FilterPattern = null | ReadonlyArray<RegExp | string> | RegExp | string

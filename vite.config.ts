@@ -14,11 +14,9 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
-import svgLoader from 'vite-svg-loader'
 import autoImportStoreList from './build/autoImportStores.ts'
 import tDesignAutoImport from './build/tDesignAutoImport.ts'
 import TDesignResolver from './build/tDesignResolver.ts'
-import { svgoConfig } from './build/utils/config.ts'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
@@ -89,10 +87,6 @@ export default defineConfig(({ command, mode }) => {
       tailwindcss(),
       vue(),
       vueJsx(),
-      svgLoader({
-        defaultImport: 'component',
-        svgoConfig,
-      }),
       AutoImport({ // 用于自动导入 函数/工具库 的 API
         defaultExportByFilename: true,
         dirs: [resolvePath('src/plugins/autoImport'), resolvePath('src/hooks'), resolvePath('src/utils')],
