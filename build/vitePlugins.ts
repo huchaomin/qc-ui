@@ -3,6 +3,7 @@ import { visualizer } from 'rollup-plugin-visualizer'
 import { compression } from 'vite-plugin-compression2'
 import viteImagemin from 'vite-plugin-imagemin'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import { svgoConfig } from './utils/config.ts'
 import { resolvePath } from './utils/index.ts'
 
 export default {
@@ -26,19 +27,8 @@ export default {
         quality: [0.65, 0.8], // 压缩后的图片质量范围[最小, 最大]
         speed: 4,
       },
-      svgo: {
-        datauri: 'base64', // 'base64'|'enc'|'unenc' 指定如何将 SVG 转换为 Data URI 格式
-        js2svg: { // 控制 SVG 输出的格式
-          indent: 4, // 缩进空格数
-          pretty: false, // 是否美化输出格式
-        },
-        multipass: false, // 是否启用多遍优化: false 表示只进行单遍优化，true 会重复优化直到无法进一步优化, 设置为 true 的话可能优化的更大
-        plugins: [
-          {
-            name: 'preset-default',
-          },
-        ],
-      },
+      // @ts-expect-error viteImagemin 类型不全
+      svgo: svgoConfig,
       webp: {
         quality: 80, // 图片质量(0-100)
       },

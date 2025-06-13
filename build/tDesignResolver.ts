@@ -1,5 +1,6 @@
 import type { TDesignResolver } from 'unplugin-vue-components/resolvers'
-import { isExclude, tDesignResetComponentsName } from './utils/index.ts'
+import { tDesignResetComponentsName } from './utils/config.ts'
+import { isExclude } from './utils/index.ts'
 
 export default (options: Parameters<typeof TDesignResolver>[0] = {}): ReturnType<typeof TDesignResolver> => {
   const pluginList = [

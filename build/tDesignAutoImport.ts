@@ -1,4 +1,4 @@
-import { tDesignResetComponentsName } from './utils/index.ts'
+import { tDesignResetComponentsName } from './utils/config.ts'
 
 export default (isProduction: boolean) => {
   return {
