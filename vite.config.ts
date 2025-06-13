@@ -140,7 +140,7 @@ export default defineConfig(({ command, mode }) => {
     ],
     resolve: {
       alias: {
-        '@': resolvePath('./src'),
+        '@': resolvePath('src'),
         'img': resolvePath('src/assets/images'),
       },
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
