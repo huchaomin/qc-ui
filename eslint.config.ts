@@ -104,6 +104,7 @@ export default antfu(
             svg: 'always',
           },
         ], // html标签不要自闭合
+        'vue/singleline-html-element-content-newline': 'off',
       },
     },
   },

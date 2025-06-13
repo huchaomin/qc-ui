@@ -44,6 +44,8 @@
 - 有时间尝试一下这个打包分析工具[https://sonda.dev/](https://sonda.dev/)
 - [server.warmup配置](https://mp.weixin.qq.com/s?__biz=Mzk0MDUyMDI4OA==&mid=2247484020&idx=1&sn=7d0c88c1b10c001b1d7724ace76d1b7a&chksm=c3b7c9155a69b2bf2e966e2bfbf55b40fa40c63d1e893d43d3ee0b452e25d7ad36bae8fe02d2&mpshare=1&scene=24&srcid=1007A1bipuxBSqdRkfwltAzs&sharer_shareinfo=a95b5998c3c2f0d944a89b04af59f319&sharer_shareinfo_first=a95b5998c3c2f0d944a89b04af59f319#rd)
 - [tdesign-starter](https://tdesign.tencent.com/starter/vue-next/dashboard/base)
+- 404 页面搞好看一点
+- 添加 waiting 动画
 
 ### 分析包大小
 

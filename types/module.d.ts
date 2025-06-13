@@ -1,9 +1,10 @@
-import 'vue-router'
 import 'alova'
 
 export {}
 declare module 'vue-router' {
   interface RouteMeta {
+    hidden?: boolean
+    title?: string
   }
 }
 declare module 'alova' {
