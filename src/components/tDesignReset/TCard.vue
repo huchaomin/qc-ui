@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CardProps } from 'tdesign-vue-next'
+import { h } from 'vue'
 
 const props = withDefaults(
   defineProps<CardProps>(),
@@ -7,13 +8,21 @@ const props = withDefaults(
     shadow: true,
   },
 )
-const compo = Card
+const compo = _Card
+const vm = getCurrentInstance()!
+
+function compoRef(instance: any) {
+  vm.exposed = instance ?? {}
+  vm.exposeProxy = instance ?? {}
+}
 </script>
 
 <template>
-  <component :is="compo" v-bind="props">
-    <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
-      <slot :name="k" v-bind="slotScope"></slot>
-    </template>
+  <component
+    :is="h(compo, {
+      ...props,
+      ref: compoRef,
+    }, $slots)"
+  >
   </component>
 </template>
