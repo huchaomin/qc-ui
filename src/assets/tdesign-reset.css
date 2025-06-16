@@ -1,3 +1,17 @@
-body > .t-loading__overlay {
-  background-color: rgb(255 255 255 / 10%);
+body {
+  > .t-loading__overlay {
+    background-color: rgb(255 255 255 / 10%);
+  }
+
+  .t-checkbox__input {
+    width: 20px;
+    height: 20px;
+  }
+
+  .t-checkbox.t-is-checked .t-checkbox__input::after {
+    top: 8px;
+    left: 3px;
+    width: 8px;
+    height: 14px;
+  }
 }

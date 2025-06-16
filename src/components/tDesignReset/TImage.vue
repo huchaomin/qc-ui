@@ -21,6 +21,7 @@ function compoRef(instance: any) {
   <component
     :is="h(compo, {
       ...props,
+      ...$attrs,
       ref: compoRef,
     }, $slots)"
   >
@@ -28,7 +29,7 @@ function compoRef(instance: any) {
 </template>
 
 <style scoped>
-.t-image__wrapper{
+.t-image__wrapper {
   background: transparent;
 }
 </style>

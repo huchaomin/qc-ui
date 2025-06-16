@@ -19,7 +19,6 @@
   },
   "include": [
     "types/**/*",
-    "node_modules/tdesign-vue-next/global.d.ts", // TODO 识别 tdesign 组件库的类型
     "src/**/*",
   ],
   "exclude": [

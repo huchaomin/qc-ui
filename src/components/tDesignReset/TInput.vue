@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import type { CardProps } from 'tdesign-vue-next'
+import type { InputProps } from 'tdesign-vue-next'
 import { h } from 'vue'
 
 const props = withDefaults(
-  defineProps<CardProps>(),
+  defineProps<InputProps>(),
   {
-    shadow: true,
+    autocomplete: 'off',
+    clearable: true,
   },
 )
-const compo = _Card
+const compo = _Input
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {

@@ -33,6 +33,9 @@
     ```
 3. 重要的通知用 $notify, 需用户手动关闭
 4. 轻提示用 $msg
+5. 升级 tdesign 组件库时
+    - 手动对比 `node_modules/tdesign-vue-next/global.d.ts`
+    - 手动对比 `tDesignResolver`
 
 ## todo
 
@@ -46,6 +49,7 @@
 - [tdesign-starter](https://tdesign.tencent.com/starter/vue-next/dashboard/base)
 - 404 页面搞好看一点
 - 添加 waiting 动画
+- form reset 时，清空数据， show 为 false 的会不会一起reset?
 
 ### 分析包大小
 
