@@ -1,5 +1,5 @@
 <script type="text/babel">
-import { reqCheck, reqGet } from './../api/index.ts'
+import { checkCaptcha, getCaptcha } from '@/api/captcha'
 /**
  * VerifySlide
  * @description 滑块
@@ -75,7 +75,7 @@ export default {
             : JSON.stringify({ x: moveLeftDistance, y: 5.0 }),
           token: this.backToken,
         }
-        reqCheck(data).then((res) => {
+        checkCaptcha(data).then((res) => {
           if (res.repCode == '0000') {
             this.moveBlockBackgroundColor = '#5cb85c'
             this.leftBarBorderColor = '#5cb85c'
@@ -131,7 +131,7 @@ export default {
         clientUid: localStorage.getItem('slider'),
         ts: Date.now(), // 现在的时间戳
       }
-      reqGet(data).then((res) => {
+      getCaptcha(data).then((res) => {
         if (res.repCode == '0000') {
           this.backImgBase = res.repData.originalImageBase64
           this.blockBackImgBase = res.repData.jigsawImageBase64
