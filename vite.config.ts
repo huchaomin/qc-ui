@@ -68,6 +68,8 @@ export default defineConfig(({ command, mode }) => {
         'path-browserify',
         'file-saver',
         'lodash-es',
+        'jsencrypt',
+        'pinia-plugin-persistedstate',
       ],
     },
     plugins: [

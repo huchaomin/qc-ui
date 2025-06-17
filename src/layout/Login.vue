@@ -2,6 +2,7 @@
 import type { FormInstanceFunctions } from 'tdesign-vue-next'
 import LoginBg from './modules/LoginBg.vue'
 
+const loginStore = useLoginStore()
 const form = ref<FormInstanceFunctions>()
 const appName = import.meta.env.VITE_APP_NAME
 const formData = reactive({
@@ -10,12 +11,31 @@ const formData = reactive({
   username: '',
 })
 
-function onReset() {
-  void $msg('重置成功')
+async function initLoginData() {
+  formData.username = await decrypt(loginStore.username) ?? ''
+  formData.password = await decrypt(loginStore.password) ?? ''
+  formData.rememberMe = loginStore.rememberMe
 }
 
-function onSubmit(...arg: any[]) {
-  console.log(arg)
+initLoginData()
+const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
+
+function onSubmit() {
+  if (formData.username === '') {
+    $msg.error('请输入账户名')
+    return
+  }
+
+  if (formData.password === '') {
+    $msg.error('请输入密码')
+  }
+
+  // if (useCaptcha) {
+  //   verify.value!.show()
+  // }
+  // else {
+  //   loginSubmit(formData)
+  // }
 }
 
 const formItems: FormItemType[] = [
@@ -35,7 +55,6 @@ const formItems: FormItemType[] = [
   },
   {
     componentProps: {
-      autocomplete: 'on',
       clearable: false,
       placeholder: '密码',
       prefixIcon(h) {
@@ -65,7 +84,7 @@ const formItems: FormItemType[] = [
 <template>
   <LoginBg>
     <TTypographyTitle level="h2">{{ appName }}</TTypographyTitle>
-    <TForm ref="form" :data="formData" :items="formItems" @reset="onReset" @submit="onSubmit">
+    <TForm ref="form" :data="formData" :items="formItems" @submit="onSubmit">
       <template #submitBtn>
         <TButton type="submit" block size="large">登录</TButton>
       </template>

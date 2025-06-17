@@ -31,6 +31,7 @@ const props = withDefaults(
     colon: true,
     labelAlign: 'top',
     labelWidth: 'fit-content',
+    preventSubmitDefault: true,
     resetType: 'initial',
   },
 )
