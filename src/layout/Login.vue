@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { FormInstanceFunctions } from 'tdesign-vue-next'
+import Captcha from '@/components/captcha/Index.vue'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
@@ -12,13 +13,14 @@ const formData = reactive({
 })
 
 async function initLoginData() {
-  formData.username = await decrypt(loginStore.username) ?? ''
-  formData.password = await decrypt(loginStore.password) ?? ''
+  formData.username = await aesDecrypt(loginStore.username)
+  formData.password = await aesDecrypt(loginStore.password)
   formData.rememberMe = loginStore.rememberMe
 }
 
 initLoginData()
 const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
+const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 
 function onSubmit() {
   if (formData.username === '') {
@@ -30,12 +32,12 @@ function onSubmit() {
     $msg.error('请输入密码')
   }
 
-  // if (useCaptcha) {
-  //   verify.value!.show()
-  // }
-  // else {
-  //   loginSubmit(formData)
-  // }
+  if (useCaptcha) {
+    captchaRef.value!.show()
+  }
+  else {
+    // loginSubmit(formData)
+  }
 }
 
 const formItems: FormItemType[] = [
@@ -89,5 +91,11 @@ const formItems: FormItemType[] = [
         <TButton type="submit" block size="large">登录</TButton>
       </template>
     </TForm>
+    <Captcha
+      v-if="useCaptcha"
+      ref="captchaRef"
+      mode="pop"
+      captcha-type="blockPuzzle"
+    ></Captcha>
   </LoginBg>
 </template>
