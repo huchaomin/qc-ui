@@ -1,16 +1,16 @@
 import type {
-  // DialogPluginType,
   LoadingPluginType,
   MessagePluginType,
   NotificationPluginType,
 } from 'tdesign-vue-next'
 import type _default from 'tdesign-vue-next'
+import type { DialogPluginType } from 'tdesign-vue-next/es/dialog/plugin.d.ts'
 import _TDesign, {
   Card as _Card,
+  DialogPlugin as _DialogPlugin,
   Form as _Form,
   Image as _Image,
   Input as _Input,
-  // DialogPlugin as _DialogPlugin,
   LoadingPlugin as _LoadingPlugin,
   Message as _Message,
   MessagePlugin as _MessagePlugin,
@@ -18,7 +18,7 @@ import _TDesign, {
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
 
-// const DialogPlugin = _DialogPlugin as DialogPluginType
+const DialogPlugin = _DialogPlugin as DialogPluginType
 const LoadingPlugin = _LoadingPlugin as LoadingPluginType
 const MessagePlugin = _MessagePlugin as MessagePluginType
 const NotifyPlugin = _NotifyPlugin as NotificationPluginType
@@ -31,10 +31,10 @@ const Input = _Input as typeof import('tdesign-vue-next')['Input']
 
 export {
   Card,
+  DialogPlugin,
   Form,
   Image,
   Input,
-  // DialogPlugin,
   LoadingPlugin,
   Message,
   MessagePlugin,
