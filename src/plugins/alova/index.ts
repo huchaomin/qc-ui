@@ -80,8 +80,7 @@ export default createAlova({
       method.data = formData
     }
 
-    // TODO 上传或者下载，不设置超时
-    if (method.config.timeout === TIMEOUT && (useResponseBlob || useFormData)) {
+    if (method.config.timeout === TIMEOUT && (useFormData || method.data instanceof FormData)) {
       method.config.timeout = 0
     }
   },

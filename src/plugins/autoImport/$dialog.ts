@@ -7,8 +7,7 @@ enum DialogCreateType {
 }
 
 export type CreateDialogFnType = (
-  body: DialogOptions['body'],
-  options?: Omit<DialogOptions, 'body' | 'default'>,
+  options?: Omit<DialogOptions, 'default'>,
   context?: AppContext
 ) => DialogInstance
 type CreateDialogType = CreateDialogFnType
@@ -18,12 +17,16 @@ type CreateDialogType = CreateDialogFnType
 
 function create(
   type: `${DialogCreateType}` | undefined,
-  body: Parameters<CreateDialogFnType>[0],
-  options: Parameters<CreateDialogFnType>[1],
-  context: Parameters<CreateDialogFnType>[2],
+  options: Parameters<CreateDialogFnType>[0],
+  context: Parameters<CreateDialogFnType>[1],
 ) {
   const obj = {
-    body,
+    closeOnEscKeydown: false,
+    closeOnOverlayClick: false,
+    destroyOnClose: true,
+    draggable: true,
+    placement: 'center' as const,
+    width: 'fit-content',
     ...(options ?? {}),
   }
 
