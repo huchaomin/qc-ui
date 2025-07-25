@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstanceFunctions } from 'tdesign-vue-next'
-import Captcha from '@/components/captcha/Index.vue'
+import Captcha from '@/components/captcha/Verify/verifySlide.vue'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
@@ -20,7 +20,6 @@ async function initLoginData() {
 
 initLoginData()
 const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
-const captchaRef = ref<InstanceType<typeof Captcha> | null>(null)
 
 function onSubmit() {
   if (formData.username === '') {
@@ -33,7 +32,11 @@ function onSubmit() {
   }
 
   if (useCaptcha) {
-    captchaRef.value!.show()
+    $dialog({
+      body: () => h(Captcha),
+      footer: false,
+      header: '请完成安全验证',
+    })
   }
   else {
     // loginSubmit(formData)
@@ -91,11 +94,5 @@ const formItems: FormItemType[] = [
         <TButton type="submit" block size="large">登录</TButton>
       </template>
     </TForm>
-    <Captcha
-      v-if="useCaptcha"
-      ref="captchaRef"
-      mode="pop"
-      captcha-type="blockPuzzle"
-    ></Captcha>
   </LoginBg>
 </template>

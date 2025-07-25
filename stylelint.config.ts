@@ -22,6 +22,9 @@ export default defineConfig({
   // null (to turn the rule off)
   rules: {
     '@stylistic/declaration-block-trailing-semicolon': ['always'],
+    'at-rule-no-unknown': [true, {
+      ignoreAtRules: ['theme'],
+    }],
     'csstools/use-nesting': [
       'always',
       {

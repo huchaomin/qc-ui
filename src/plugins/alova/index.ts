@@ -30,7 +30,7 @@ export default createAlova({
       ...(method.meta ?? {}),
     }
     const userStore = useUserStore()
-    const { useEmptyData, useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } = method.meta as ThisAlovaCustomTypes
+    const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } = method.meta as ThisAlovaCustomTypes
 
     if (useToken) {
       if (userStore.token) {
@@ -154,6 +154,7 @@ export default createAlova({
         }
 
         if (code >= 400) {
+          // 600 的弹窗在普通请求就是成功的， useResponseBlob 请求就是失败的
           if (code === 600) {
             // $alert( // TODO 600 的弹窗 use600Alert
             //   {
@@ -191,8 +192,9 @@ export default createAlova({
         }
       }
 
-      console.log('response', response)
-      return response
+      console.log('resData', resData)
+      // eslint-disable-next-line ts/no-unsafe-return
+      return resData
     },
   },
   shareRequest: true, // 全局开启请求共享,相同请求结果会沿用上一次未完成请求的结果

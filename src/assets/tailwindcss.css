@@ -1,1 +1,5 @@
-@import "tailwindcss" important;
+@import "tailwindcss";
+
+@theme {
+  --color-primary: var(--td-brand-color-active);
+}
