@@ -1,0 +1,33 @@
+{
+  "useRequest alova": {
+    "prefix": "useRequest",
+    "body": [
+      "const { data, loading, send } = useRequest(xxx, {",
+      "  initialData: [],",
+      "  immediate: false,",
+      "})"
+    ],
+    "description": "useRequest alova"
+  },
+  "useWatcher alova": {
+    "prefix": "useWatcher",
+    "body": [
+      "const { data, onSuccess } = useWatcher(",
+      "  () =>",
+      "    xxx({",
+      "      projId: props.id,",
+      "    }),",
+      "  [() => props.id],",
+      "  {",
+      "    initialData: [],",
+      "    immediate: true,",
+      "    sendable: () => {",
+      "      return !!props.id",
+      "    },",
+      "  },",
+      ")",
+      ""
+    ],
+    "description": "useWatcher alova"
+  },
+}

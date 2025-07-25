@@ -70,6 +70,9 @@ export default defineConfig(({ command, mode }) => {
         'lodash-es',
         'crypto-js',
         'pinia-plugin-persistedstate',
+        'alova',
+        'alova/fetch',
+        'alova/vue',
       ],
     },
     plugins: [
@@ -97,7 +100,12 @@ export default defineConfig(({ command, mode }) => {
           'vue',
           'vue-router',
           'pinia',
+          '@vueuse/core',
           tDesignAutoImport(isProduction),
+          {
+            from: 'alova/client',
+            imports: ['useRequest', 'useWatcher'],
+          },
           {
             '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
           },

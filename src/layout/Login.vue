@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormInstanceFunctions } from 'tdesign-vue-next'
-import Captcha from '@/components/captcha/Verify/verifySlide.vue'
+import captcha from '@/plugins/captcha'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
@@ -21,7 +21,7 @@ async function initLoginData() {
 initLoginData()
 const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
 
-function onSubmit() {
+async function onSubmit() {
   if (formData.username === '') {
     $msg.error('请输入账户名')
     return
@@ -32,11 +32,7 @@ function onSubmit() {
   }
 
   if (useCaptcha) {
-    $dialog({
-      body: () => h(Captcha),
-      footer: false,
-      header: '请完成安全验证',
-    })
+    await captcha()
   }
   else {
     // loginSubmit(formData)
