@@ -35,8 +35,9 @@ declare module 'alova' {
       useEmptyParams?: boolean
       /**
        * 接口调用失败是否弹出 msg 默认true
+       * 如果传string的话，失败就弹出string
        */
-      useFailMsg?: boolean
+      useFailMsg?: boolean | string
       /**
        * 是否使用formData 默认false
        */

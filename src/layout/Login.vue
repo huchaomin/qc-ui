@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { FormInstanceFunctions } from 'tdesign-vue-next'
+import type { LoginData } from '@/store/modules/login'
 import captcha from '@/plugins/captcha'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
 const form = ref<FormInstanceFunctions>()
 const appName = import.meta.env.VITE_APP_NAME
-const formData = reactive({
+const formData = reactive<LoginData>({
   password: '',
   rememberMe: true,
   username: '',
@@ -21,21 +22,27 @@ async function initLoginData() {
 initLoginData()
 const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
 
+async function loginSubmit(formData: LoginData) {
+  await loginStore.login(formData)
+}
+
 async function onSubmit() {
   if (formData.username === '') {
     $msg.error('请输入账户名')
-    return
+    await Promise.reject()
   }
 
   if (formData.password === '') {
     $msg.error('请输入密码')
+    await Promise.reject()
   }
 
   if (useCaptcha) {
-    await captcha()
+    formData.code = await captcha()
+    loginSubmit(formData)
   }
   else {
-    // loginSubmit(formData)
+    loginSubmit(formData)
   }
 }
 

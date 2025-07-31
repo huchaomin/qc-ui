@@ -2,7 +2,7 @@
 import { checkCaptcha, getCaptcha } from './api'
 
 const emit = defineEmits<{
-  success: []
+  success: [captchaVerification: string]
 }>()
 const imgHeight = 155
 const sizeConfig = {
@@ -103,9 +103,9 @@ async function end() {
         (endMoveTime - startMoveTime.value)
         / 1000
       ).toFixed(2)}s验证成功`
-      setTimeout(() => {
-        emit('success')
-      }, 1000)
+      setTimeout(async () => {
+        emit('success', await aesEncrypt(`${backToken.value}---${JSON.stringify({ x: moveLeftDistance, y: 5.0 })}`, secretKey.value))
+      }, 500)
     }
     else {
       checkState.value = 'fail'

@@ -29,12 +29,12 @@ export default createAlova({
       },
       ...(method.meta ?? {}),
     }
-    const userStore = useUserStore()
+    const loginStore = useLoginStore()
     const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } = method.meta as ThisAlovaCustomTypes
 
     if (useToken) {
-      if (userStore.token) {
-        method.config.headers.Authorization = userStore.token
+      if (loginStore.token) {
+        method.config.headers.Authorization = loginStore.token
       }
       else {
         method.abort()
@@ -175,8 +175,8 @@ export default createAlova({
             useUserStore().clearSession()
           }
           else {
-            if (useFailMsg) {
-              void $msg.error(msg)
+            if (useFailMsg !== false) {
+              void $msg.error(useFailMsg === true ? msg : useFailMsg)
             }
           }
 

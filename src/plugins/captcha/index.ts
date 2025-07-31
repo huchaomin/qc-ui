@@ -1,10 +1,10 @@
-export default function (): Promise<void> {
+export default function (): Promise<string> {
   return new Promise((resolve) => {
     const dialogInstance = $dialog({
       body: () => h(defineAsyncComponent(() => import('./Index.vue')), {
-        onSuccess: () => {
+        onSuccess: (captchaVerification: string) => {
           dialogInstance.hide()
-          resolve()
+          resolve(captchaVerification)
         },
       }),
       footer: false,

@@ -61,7 +61,12 @@ export default antfu(
 
       // other rules
       overrides: {
-
+        'prefer-promise-reject-errors': [
+          'error',
+          {
+            allowEmptyReject: true, // 允许空的 Promise.reject()
+          },
+        ],
       },
       // type checked rules
       overridesTypeAware: {

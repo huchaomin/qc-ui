@@ -110,6 +110,9 @@ export default defineConfig(({ command, mode }) => {
             '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
           },
           {
+            '@/plugins/alova/index.ts': [['default', 'alovaInst']],
+          },
+          {
             from: '@/components/tDesignReset/TForm.vue',
             imports: ['FormItemType'],
             type: true,
