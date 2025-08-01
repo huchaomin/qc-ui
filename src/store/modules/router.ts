@@ -1,18 +1,10 @@
 import type { Component } from 'vue'
+import type { RouteRecordRaw as _RouteRecordRaw } from 'vue-router'
 import { getTopRoute } from '@/router/index'
 
-export interface ResRouterItem extends Omit<RouteRecordRaw, 'children' | 'component' | 'meta' | 'redirect'> {
-  children?: ResRouterItem[]
-  component?: Component | LazyRouterImport | string
-  hidden?: boolean
-  meta?: {
-    hidden?: boolean
-    noCache?: boolean
-    title: string
-  }
-}
-
-export type RouteRecordRaw = {
+export interface RouteRecordRaw {
+  children?: RouteRecordRaw[]
+  component?: Component | LazyRouterImport
   meta: {
     hidden: boolean
     noCache: boolean
@@ -24,12 +16,20 @@ export type RouteRecordRaw = {
   redirect?: {
     name: string
   }
-  children?: RouteRecordRaw[]
-  component?: Component | LazyRouterImport
 }
 type LazyRouterImport = () => Promise<{
   default: Component
 }>
+interface ResRouterItem extends Omit<RouteRecordRaw, 'children' | 'component' | 'meta' | 'redirect'> {
+  children?: ResRouterItem[]
+  component?: Component | LazyRouterImport | string
+  hidden?: boolean
+  meta?: {
+    hidden?: boolean
+    noCache?: boolean
+    title: string
+  }
+}
 
 export function getRoutersMethod() {
   return alovaInst.Get<ResRouterItem[]>('getRouters', {
@@ -127,7 +127,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
     return tmpArr
   }
 
-  const p = getTopRoute()
+  const p = getTopRoute() as ResRouterItem
   p.children!.splice(-1, 0, ...routers)
   return fn([p], null)
 }
@@ -187,10 +187,20 @@ export default defineStore(
   'router',
   () => {
     const routersRaw: Ref<RouteRecordRaw[]> = ref([])
+    const router = useRouter()
 
     async function getRouters() {
       const res = await getRoutersMethod()
       routersRaw.value = markRaw(raiseHiddenRoutes(process(preprocess(res))))
+
+      if (router.hasRoute('Index')) {
+        router.removeRoute('Index')
+      }
+
+      routersRaw.value.forEach((item) => {
+        router.addRoute(item as _RouteRecordRaw)
+      })
+      // useRecentRoutersStore().init() TODO
     }
 
     return {

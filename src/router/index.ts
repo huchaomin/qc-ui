@@ -2,12 +2,11 @@
  * 路由守卫 可选的第三个参数 next，将会被移除
  * hasNecessaryRoute 与 hasRoute
  */
-import type { ResRouterItem } from '@/store/modules/router'
-import type { RouteRecordSingleView , RouteRecordSingleViewWithChildren } from 'vue-router'
+import type { RouteRecordSingleView, RouteRecordSingleViewWithChildren } from 'vue-router'
 import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from 'vue-router'
 import Index from '@/layout/Index.vue'
 
-export function getTopRoute(): ResRouterItem {
+export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWithChildren {
   return {
     children: [
       {
@@ -16,6 +15,8 @@ export function getTopRoute(): ResRouterItem {
             component: () => import('@/layout/profile/Index.vue'),
             meta: {
               hidden: true,
+              noCache: false,
+              parentName: '',
               title: '个人中心',
             },
             name: 'Profile',
@@ -23,7 +24,12 @@ export function getTopRoute(): ResRouterItem {
           },
         ],
         component: () => import('@/layout/Home.vue'),
-        meta: { title: '首页' },
+        meta: {
+          hidden: false,
+          noCache: false,
+          parentName: '',
+          title: '首页',
+        },
         name: 'Home',
         path: 'home',
       },
@@ -37,7 +43,7 @@ export function getTopRoute(): ResRouterItem {
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
-    getTopRoute() as RouteRecordSingleView | RouteRecordSingleViewWithChildren,
+    getTopRoute(),
     {
       component: () => import('@/layout/Login.vue'),
       meta: {
