@@ -2,17 +2,18 @@
  * 路由守卫 可选的第三个参数 next，将会被移除
  * hasNecessaryRoute 与 hasRoute
  */
-import type { RouteRecordRaw } from 'vue-router'
+import type { ResRouterItem } from '@/store/modules/router'
+import type { RouteRecordSingleView , RouteRecordSingleViewWithChildren } from 'vue-router'
 import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from 'vue-router'
 import Index from '@/layout/Index.vue'
 
-export function getTopRoute(): RouteRecordRaw {
+export function getTopRoute(): ResRouterItem {
   return {
     children: [
       {
         children: [
           {
-            component: async () => import('@/layout/profile/Index.vue'),
+            component: () => import('@/layout/profile/Index.vue'),
             meta: {
               hidden: true,
               title: '个人中心',
@@ -21,7 +22,7 @@ export function getTopRoute(): RouteRecordRaw {
             path: 'profile',
           },
         ],
-        component: async () => import('@/layout/Home.vue'),
+        component: () => import('@/layout/Home.vue'),
         meta: { title: '首页' },
         name: 'Home',
         path: 'home',
@@ -36,20 +37,24 @@ export function getTopRoute(): RouteRecordRaw {
 const router = createRouter({
   history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: [
-    getTopRoute(),
+    getTopRoute() as RouteRecordSingleView | RouteRecordSingleViewWithChildren,
     {
-      component: async () => import('@/layout/Login.vue'),
+      component: () => import('@/layout/Login.vue'),
       meta: {
         hidden: true,
+        noCache: false,
+        parentName: '',
         title: '登录',
       },
       name: 'Login',
       path: '/login',
     },
     {
-      component: async () => import('@/layout/NotFound.vue'),
+      component: () => import('@/layout/NotFound.vue'),
       meta: {
         hidden: true,
+        noCache: false,
+        parentName: '',
         title: '404',
       },
       name: 'NotFound',

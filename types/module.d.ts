@@ -1,10 +1,26 @@
 import 'alova'
+import 'vue-router'
 
 export {}
+
 declare module 'vue-router' {
   interface RouteMeta {
-    hidden?: boolean
-    title?: string
+    /**
+     * @description: 是否左侧在菜单中隐藏 默认 false
+     */
+    hidden: boolean
+    /**
+     * @description: 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
+     */
+    noCache: boolean
+    /**
+     * @description: 父级路由名称
+     */
+    parentName: string
+    /**
+     * @description: 路由标题
+     */
+    title: string
   }
 }
 declare module 'alova' {

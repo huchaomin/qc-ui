@@ -117,6 +117,11 @@ export default defineConfig(({ command, mode }) => {
             imports: ['FormItemType'],
             type: true,
           },
+          {
+            from: '@/store/modules/router.ts',
+            imports: ['RouteRecordRaw'],
+            type: true,
+          },
           autoImportStoreList,
         ],
         resolvers: [
