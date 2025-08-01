@@ -22,7 +22,7 @@ const logoUrl = Object.values(
   >
     <div class="bg_inner flex items-stretch justify-between">
       <TImage class="left_banner" :src="url" style="transform: scale(1.2);"></TImage>
-      <TCard class="login_form_wrapper flex flex-col items-center justify-center flex-shrink-0">
+      <TCard class="login_form_wrapper flex-shrink-0 !px-4">
         <slot></slot>
       </TCard>
     </div>
@@ -46,8 +46,6 @@ const logoUrl = Object.values(
 
 .login_form_wrapper {
   width: 430px;
-  padding: 0 48px;
-  border-radius: 8px;
 }
 
 @media screen and (width <= 1100px) {

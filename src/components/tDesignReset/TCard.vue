@@ -5,6 +5,7 @@ import { h } from 'vue'
 const props = withDefaults(
   defineProps<CardProps>(),
   {
+    headerBordered: true,
     shadow: true,
   },
 )

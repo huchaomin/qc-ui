@@ -44,6 +44,13 @@ function getComponent(compo: string | undefined): Component {
   return resolveComponent('TInput') as Component
 }
 
+const bindProps = computed(() => {
+  const obj: Record<string, any> = {
+    ...props,
+  }
+  delete obj.items
+  return obj
+})
 const compo = _Form
 const vm = getCurrentInstance()!
 
@@ -58,7 +65,7 @@ function compoRef(instance: any) {
   <component
     :is="compo"
     v-bind="{
-      ...props,
+      ...bindProps,
       ...$attrs,
     }"
     :ref="compoRef"

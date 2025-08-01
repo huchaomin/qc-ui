@@ -5,6 +5,7 @@ import captcha from '@/plugins/captcha'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
+const router = useRouter()
 const form = ref<FormInstanceFunctions>()
 const appName = import.meta.env.VITE_APP_NAME
 const formData = reactive<LoginData>({
@@ -16,14 +17,29 @@ const formData = reactive<LoginData>({
 async function initLoginData() {
   formData.username = await aesDecrypt(loginStore.username)
   formData.password = await aesDecrypt(loginStore.password)
-  formData.rememberMe = loginStore.rememberMe
 }
 
-initLoginData()
+if (loginStore.rememberMe) {
+  initLoginData()
+}
+
 const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
 
 async function loginSubmit(formData: LoginData) {
   await loginStore.login(formData)
+
+  if (formData.rememberMe) {
+    await loginStore.storeLoginData({
+      password: formData.password,
+      rememberMe: formData.rememberMe,
+      username: formData.username,
+    })
+  }
+  else {
+    loginStore.clearLoginData()
+  }
+
+  router.replace({ name: 'Index' })
 }
 
 async function onSubmit() {
@@ -91,10 +107,10 @@ const formItems: FormItemType[] = [
 
 <template>
   <LoginBg>
-    <TTypographyTitle level="h2">{{ appName }}</TTypographyTitle>
-    <TForm ref="form" :data="formData" :items="formItems" @submit="onSubmit">
+    <TTypographyTitle level="h2" class="text-center">{{ appName }}</TTypographyTitle>
+    <TForm ref="form" class="!mt-8" :data="formData" :items="formItems" @submit="onSubmit">
       <template #submitBtn>
-        <TButton type="submit" block size="large">登录</TButton>
+        <TButton type="submit" block size="large" class="!mt-4">登录</TButton>
       </template>
     </TForm>
   </LoginBg>

@@ -22,7 +22,7 @@ export default defineStore(
   () => {
     const username = ref('')
     const password = ref('')
-    const rememberMe = ref(true)
+    const rememberMe = ref(false)
     const token = ref('')
 
     async function login(data: LoginData) {
@@ -31,10 +31,24 @@ export default defineStore(
       await useUserStore().getUserInfo()
     }
 
+    async function storeLoginData(data: Omit<LoginData, 'code'>) {
+      username.value = await aesEncrypt(data.username)
+      password.value = await aesEncrypt(data.password)
+      rememberMe.value = data.rememberMe
+    }
+
+    async function clearLoginData() {
+      username.value = ''
+      password.value = ''
+      rememberMe.value = false
+    }
+
     return {
+      clearLoginData,
       login,
       password,
       rememberMe,
+      storeLoginData,
       token,
       username,
     }
