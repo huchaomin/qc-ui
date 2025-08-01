@@ -170,6 +170,12 @@ function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
       = typeof component === 'string'
         ? modules[`/src/views/${component}.vue`]
         : component
+
+    if (fn === undefined) {
+      void $notify.error(`路由组件/src/views/${component as string}.vue不存在`)
+      return undefined
+    }
+
     return () =>
       fn().then((comp) => {
         return {

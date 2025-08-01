@@ -51,7 +51,6 @@
 - 404 页面搞好看一点
 - 添加 waiting 动画
 - form reset 时，清空数据， show 为 false 的会不会一起reset?
-- @vueuse/integrations/useNProgress
 
 ### 分析包大小
 

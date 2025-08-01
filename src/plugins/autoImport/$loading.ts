@@ -1,9 +1,9 @@
 import type { LoadingInstance } from 'tdesign-vue-next'
 import type { CreateMessageFnType } from './$msg'
-import NProgress from 'nprogress'
+import { useNProgress } from '@vueuse/integrations/useNProgress'
 import 'nprogress/nprogress.css'
 
-NProgress.configure({
+const { done, start } = useNProgress(undefined, {
   showSpinner: false,
   trickleSpeed: 100,
 })
@@ -32,7 +32,7 @@ class LoadingService {
             })
           },
         })
-        NProgress.start()
+        start()
       }
     }
     else {
@@ -43,7 +43,7 @@ class LoadingService {
       this.loadingInstance!.hide()
       this.loadingInstance = null
       this.loadingText.value = undefined
-      NProgress.done()
+      done()
     }
   }
 
