@@ -42,7 +42,7 @@ export default defineStore(
     async function clearSession() {
       useLoginStore().token = ''
       await router.push({ name: 'Login' })
-      // useRecentRoutersStore().clear() // TODO
+      useRecentRoutersStore().clear()
       useRouterStore().clearRouters()
       clearUser()
     }

@@ -6,7 +6,9 @@ export interface RouteRecordRaw {
   children?: RouteRecordRaw[]
   component?: Component | LazyRouterImport
   meta: {
+    fullScreen: boolean
     hidden: boolean
+    icon: string
     noCache: boolean
     parentName: string
     title: string
@@ -25,8 +27,11 @@ interface ResRouterItem extends Omit<RouteRecordRaw, 'children' | 'component' | 
   component?: Component | LazyRouterImport | string
   hidden?: boolean
   meta?: {
+    fullScreen?: boolean
     hidden?: boolean
-    noCache?: boolean
+    icon: string
+    link?: null | string
+    noCache: boolean
     title: string
   }
 }
@@ -90,7 +95,9 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
     arr.forEach((item) => {
       const newItem: RouteRecordRaw = {
         meta: {
+          fullScreen: item.meta?.fullScreen ?? (item.meta?.link !== null),
           hidden: item.hidden ?? item.meta?.hidden ?? false,
+          icon: item.meta?.icon === '#' ? '' : item.meta?.icon ?? '',
           noCache: item.meta?.noCache ?? false,
           parentName: '',
           title: item.meta?.title ?? '',
@@ -206,7 +213,7 @@ export default defineStore(
       routersRaw.value.forEach((item) => {
         router.addRoute(item as _RouteRecordRaw)
       })
-      // useRecentRoutersStore().init() TODO
+      useRecentRoutersStore().init()
     }
 
     function clearRouters() {

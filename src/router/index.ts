@@ -14,7 +14,9 @@ export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWith
           {
             component: () => import('@/layout/profile/Index.vue'),
             meta: {
+              fullScreen: false,
               hidden: true,
+              icon: '',
               noCache: false,
               parentName: '',
               title: '个人中心',
@@ -25,7 +27,9 @@ export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWith
         ],
         component: () => import('@/layout/Home.vue'),
         meta: {
+          fullScreen: false,
           hidden: false,
+          icon: 'i-material-symbols:home-outline-rounded',
           noCache: false,
           parentName: '',
           title: '首页',
@@ -47,7 +51,9 @@ const router = createRouter({
     {
       component: () => import('@/layout/Login.vue'),
       meta: {
+        fullScreen: false,
         hidden: true,
+        icon: '',
         noCache: false,
         parentName: '',
         title: '登录',
@@ -58,7 +64,9 @@ const router = createRouter({
     {
       component: () => import('@/layout/NotFound.vue'),
       meta: {
+        fullScreen: false,
         hidden: true,
+        icon: '',
         noCache: false,
         parentName: '',
         title: '404',
@@ -91,6 +99,31 @@ router.beforeEach(async (to) => {
   }
 })
 router.afterEach((to, from, failure) => {
+  const { meta, name } = to as RouteRecordRaw
+  const { fullScreen, parentName, title } = meta
+
+  if (title !== '') {
+    document.title = title
+  }
+
+  if (!['Login', 'NotFound'].includes(name) && !fullScreen) {
+    const recentRoutersStore = useRecentRoutersStore()
+
+    // 如果从面包屑进入，则删除当前下一层级路由
+    if (to.query._fromBreadcrumb === 'true') {
+      recentRoutersStore.remove(from.name)
+    }
+
+    const fromName
+      = parentName === from.name || to.query._fromLeftTree !== 'true' ? from.name : undefined
+    recentRoutersStore.add(fromName, {
+      name,
+      query: to.query,
+    })
+    // 从不缓存列表中移除
+    recentRoutersStore.removeExcludeKPname(name)
+  }
+
   if (import.meta.env.DEV) {
     if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
       void $msg.info('导航被中断')

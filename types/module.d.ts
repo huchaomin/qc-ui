@@ -2,13 +2,20 @@ import 'alova'
 import 'vue-router'
 
 export {}
-
 declare module 'vue-router' {
   interface RouteMeta {
+    /**
+     * @description: 是否全屏显示 默认 false
+     */
+    fullScreen: boolean
     /**
      * @description: 是否左侧在菜单中隐藏 默认 false
      */
     hidden: boolean
+    /**
+     * @description: 菜单icon
+     */
+    icon: string
     /**
      * @description: 如果设置为true，则不会被 <keep-alive> 缓存(默认 false)
      */
