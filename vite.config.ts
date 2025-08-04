@@ -157,7 +157,7 @@ export default defineConfig(({ command, mode }) => {
         },
         iconCustomizer: (collection, icon, props) => {
           props.width = props.width ?? '24'
-          props.height = props.width ?? '24'
+          props.height = props.height ?? '24'
         },
       }),
       ...vitePlugins[isProduction ? 'production' : 'development'],

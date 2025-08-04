@@ -40,3 +40,25 @@ console.log(routerStore.routersRaw)
     </TMenu>
   </TAside>
 </template>
+
+<style scoped>
+:deep() {
+  .t-default-menu__inner {
+    .t-menu {
+      padding: 4px 0;
+    }
+  }
+
+  .t-default-menu {
+    .t-menu__item {
+      height: var(--td-comp-size-xl);
+      padding: 0 10px;
+      line-height: var(--td-comp-size-xl);
+
+      &.t-is-active {
+        color: var(--td-brand-color);
+      }
+    }
+  }
+}
+</style>
