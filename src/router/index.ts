@@ -91,14 +91,16 @@ router.beforeEach(async (to) => {
   }
 })
 router.afterEach((to, from, failure) => {
-  if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
-    void $msg.info('导航被中断')
-  }
-  else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
-    void $msg.info('导航被取消，因为有一个新的导航')
-  }
-  else if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
-    void $msg.info('导航被阻止，因为我们已经在目标位置了')
+  if (import.meta.env.DEV) {
+    if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
+      void $msg.info('导航被中断')
+    }
+    else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+      void $msg.info('导航被取消，因为有一个新的导航')
+    }
+    else if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+      void $msg.info('导航被阻止，因为我们已经在目标位置了')
+    }
   }
 })
 

@@ -2,7 +2,6 @@
 import MenuNode from './MenuNode.vue'
 
 const route = useRoute()
-const router = useRouter()
 const appName = import.meta.env.VITE_APP_NAME
 const logoUrl = Object.values(
   import.meta.glob('img/side_logo.*', {
@@ -15,31 +14,26 @@ const routerStore = useRouterStore()
 const defaultExpanded = computed(() => {
   return route.matched.map(item => item.name as string)
 })
-const value = computed({
-  get() {
-    const meta = route.meta
-    const { hidden, parentName } = meta
+const value = computed(() => {
+  const meta = route.meta
+  const { hidden, parentName } = meta
 
-    if (parentName !== '' && hidden === true) {
-      return parentName
-    }
+  if (parentName !== '' && hidden === true) {
+    return parentName
+  }
 
-    return route.name as string
-  },
-  set(val: string) {
-    router.push({ name: val })
-  },
+  return route.name as string
 })
 console.log(routerStore.routersRaw)
 </script>
 
 <template>
   <TAside>
-    <TMenu v-model="value" :default-expanded="defaultExpanded">
+    <TMenu :value="value" :default-expanded="defaultExpanded">
       <template #logo>
         <div class="flex items-center">
           <TImage :src="logoUrl" class="logo" style="width: 32px; height: 32px;"></TImage>
-          <TTypographyTitle level="h4" class="!ml-2 !my-0">{{ appName }}</TTypographyTitle>
+          <TTypographyTitle level="h4">{{ appName }}</TTypographyTitle>
         </div>
       </template>
       <MenuNode :model="routerStore.routersRaw[0].children!"></MenuNode>

@@ -99,10 +99,6 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
         path: item.path.startsWith('/') && parent !== null ? item.path.slice(1) : item.path,
       }
 
-      if (newItem.name.includes('-')) {
-        void $notify.error(`路由名称不能包含-: ${newItem.name}`)
-      }
-
       if (item.children !== undefined) {
         const result = fn(item.children, newItem)
 
