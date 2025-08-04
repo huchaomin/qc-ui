@@ -48,8 +48,10 @@ class LoadingService {
   }
 
   hide() {
-    this.loadingCount--
-    this.changeView()
+    setTimeout(() => {
+      this.loadingCount--
+      this.changeView()
+    }, 200)
   }
 
   show(text?: LoadingText) {

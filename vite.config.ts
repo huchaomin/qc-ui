@@ -73,6 +73,7 @@ export default defineConfig(({ command, mode }) => {
         'alova',
         'alova/fetch',
         'alova/vue',
+        '@vueuse/integrations/useNProgress',
       ],
     },
     plugins: [

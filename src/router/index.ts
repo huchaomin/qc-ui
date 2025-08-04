@@ -70,21 +70,26 @@ const router = createRouter({
   sensitive: true,
   strict: true,
 })
-// router.beforeEach(async (to) => {
-//   if (to.name === 'Login') {
-//     return
-//   }
+router.beforeEach(async (to) => {
+  if (to.name === 'Login') {
+    return
+  }
 
-//   const userStore = useUserStore()
+  if (useLoginStore().token === '') {
+    return ({ name: 'Login' })
+  }
+  else {
+    if (useRouterStore().routersRaw.length > 0) {
+      return
+    }
 
-//   if (userStore.token === '') {
-//     return ({ name: 'Login' })
-//   }
-//   else {
-
-//   }
-// })
-
+    await useUserStore().getUserInfo()
+    return router.resolve({
+      path: to.path,
+      query: to.query,
+    })
+  }
+})
 router.afterEach((to, from, failure) => {
   if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
     void $msg.info('导航被中断')

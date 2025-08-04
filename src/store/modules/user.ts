@@ -21,22 +21,37 @@ export function getUserInfoMethod() {
   })
 }
 
+const defaultUserInfo: UserInfo = {
+  dept: {
+    deptName: '',
+  },
+  needChangePwd: 0, // 是否需要修改密码 0 否， 1 是
+  nickName: '',
+  userId: '',
+  userName: '',
+}
+
 export default defineStore(
   'user',
   () => {
-    const userInfo: Ref<UserInfo> = ref({
-      dept: {
-        deptName: '',
-      },
-      needChangePwd: 0, // 是否需要修改密码 0 否， 1 是
-      nickName: '',
-      userId: '',
-      userName: '',
-    })
+    const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
     const permissions: Ref<string[]> = ref([])
     const roles: Ref<string[]> = ref([])
+    const router = useRouter()
 
-    function clearSession() {} // TODO
+    async function clearSession() {
+      useLoginStore().token = ''
+      await router.push({ name: 'Login' })
+      // useRecentRoutersStore().clear() // TODO
+      useRouterStore().clearRouters()
+      clearUser()
+    }
+
+    function clearUser() {
+      userInfo.value = _.cloneDeep(defaultUserInfo)
+      permissions.value = []
+      roles.value = []
+    }
 
     async function getUserInfo() {
       const res = await getUserInfoMethod()

@@ -13,6 +13,6 @@ function toIndex(): void {
 <template>
   <div class="h-full flex flex-col items-center justify-center">
     <img style="width: 500px;" :src="notFound" />
-    <TButton class="mt-8" @click="toIndex">返回首页</TButton>
+    <TButton class="!mt-8" @click="toIndex">返回首页</TButton>
   </div>
 </template>

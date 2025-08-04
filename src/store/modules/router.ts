@@ -99,6 +99,10 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
         path: item.path.startsWith('/') && parent !== null ? item.path.slice(1) : item.path,
       }
 
+      if (newItem.name.includes('-')) {
+        void $notify.error(`路由名称不能包含-: ${newItem.name}`)
+      }
+
       if (item.children !== undefined) {
         const result = fn(item.children, newItem)
 
@@ -128,7 +132,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
   }
 
   const p = getTopRoute() as ResRouterItem
-  p.children!.splice(-1, 0, ...routers)
+  p.children!.push(...routers)
   return fn([p], null)
 }
 
@@ -173,7 +177,7 @@ function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
 
     if (fn === undefined) {
       void $notify.error(`路由组件/src/views/${component as string}.vue不存在`)
-      return undefined
+      return () => import('@/layout/NotFound.vue')
     }
 
     return () =>
@@ -209,8 +213,17 @@ export default defineStore(
       // useRecentRoutersStore().init() TODO
     }
 
+    function clearRouters() {
+      routersRaw.value.forEach((item) => {
+        router.removeRoute(item.name)
+      })
+      routersRaw.value = []
+    }
+
     return {
+      clearRouters,
       getRouters,
+      routersRaw,
     }
   },
 )
