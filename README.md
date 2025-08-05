@@ -19,16 +19,11 @@
 
 2. icons
 
-- 选择地址[https://icones.js.org/collection/mdi?variant=Outline](https://icones.js.org/collection/mdi?variant=Outline)
+- 选择地址[https://icon-sets.iconify.design/?category=UI+24px](https://icon-sets.iconify.design/?category=UI+24px)
 - 使用方法
     ```vue
-    <script setup lang="ts">
-    const component = resolveComponent('i-line-md:check-list-3-twotone')
-    </script>
-
     <template>
-      <i-line-md:alert-loop></i-line-md:alert-loop>
-      <component :is="component"></component>
+      <Icon icon="material-symbols-light:refresh"></Icon>
     </template>
     ```
 3. 重要的通知用 $notify, 需用户手动关闭

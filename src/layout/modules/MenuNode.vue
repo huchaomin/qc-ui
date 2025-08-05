@@ -9,13 +9,8 @@ withDefaults(
   },
 )
 
-// TODO
 function getIcon(item: RouteRecordRaw) {
-  if (item.meta.icon) {
-    return resolveComponent(item.meta.icon)
-  }
-
-  return resolveComponent('i-material-symbols:nest-clock-farsight-analog-outline')
+  return item.meta.icon || 'solar:menu-dots-bold-duotone'
 }
 </script>
 
@@ -30,7 +25,7 @@ export default {
     <template v-if="item.meta.hidden !== true">
       <TSubmenu v-if="item.children" :value="item.name" :title="item.meta.title">
         <template v-if="level === 0" #icon>
-          <component :is="getIcon(item)" class="mr-2.5"></component>
+          <Icon :icon="getIcon(item)" class="mr-2.5"></Icon>
         </template>
         <MenuNode :model="item.children" :level="level + 1"></MenuNode>
       </TSubmenu>
@@ -41,7 +36,7 @@ export default {
         :value="item.name"
       >
         <template v-if="level === 0" #icon>
-          <component :is="getIcon(item)" class="mr-2.5"></component>
+          <Icon :icon="getIcon(item)" class="mr-2.5"></Icon>
         </template>
         {{ item.meta.title }}
       </TMenuItem>

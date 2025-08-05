@@ -29,7 +29,7 @@ export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWith
         meta: {
           fullScreen: false,
           hidden: false,
-          icon: 'i-material-symbols:home-outline-rounded',
+          icon: 'tabler:home',
           noCache: false,
           parentName: '',
           title: '首页',

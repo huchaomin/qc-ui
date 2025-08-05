@@ -94,7 +94,6 @@ export default antfu(
           'error',
           'PascalCase',
           {
-            ignores: ['/^i-/'],
             registeredComponentsOnly: false,
           },
         ], // 组件名必须为PascalCase

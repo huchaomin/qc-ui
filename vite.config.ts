@@ -7,9 +7,6 @@ import vueJsx from '@vitejs/plugin-vue-jsx'
 import browserslist from 'browserslist'
 import { browserslistToTargets } from 'lightningcss'
 import AutoImport from 'unplugin-auto-import/vite'
-import { FileSystemIconLoader } from 'unplugin-icons/loaders'
-import IconsResolver from 'unplugin-icons/resolver'
-import Icons from 'unplugin-icons/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
@@ -145,20 +142,7 @@ export default defineConfig(({ command, mode }) => {
                 library: 'vue-next',
               })]
             : []),
-          IconsResolver({
-            customCollections: ['custom'],
-            // enabledCollections: ['mdi', 'line-md', 'material-symbols'],
-          }),
         ],
-      }),
-      Icons({
-        customCollections: {
-          custom: FileSystemIconLoader(resolvePath('src/assets/svgIcons')),
-        },
-        iconCustomizer: (collection, icon, props) => {
-          props.width = props.width ?? '24'
-          props.height = props.height ?? '24'
-        },
       }),
       ...vitePlugins[isProduction ? 'production' : 'development'],
     ],

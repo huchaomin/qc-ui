@@ -204,7 +204,7 @@ function refresh() {
         @click="refresh"
       >
         <template #icon>
-          <i-material-symbols:refresh></i-material-symbols:refresh>
+          <Icon icon="material-symbols-light:refresh"></Icon>
         </template>
       </TButton>
       <span
@@ -242,9 +242,9 @@ function refresh() {
           @touchstart="start"
           @mousedown="start"
         >
-          <i-material-symbols:check v-if="styleByState.icon === 'icon-check'" :style="{ color: styleByState.color }"></i-material-symbols:check>
-          <i-material-symbols:chevron-right v-if="styleByState.icon === 'icon-right'" :style="{ color: styleByState.color }"></i-material-symbols:chevron-right>
-          <i-material-symbols:cancel-outline-rounded v-if="styleByState.icon === 'icon-close'" :style="{ color: styleByState.color }"></i-material-symbols:cancel-outline-rounded>
+          <Icon v-if="styleByState.icon === 'icon-check'" icon="mdi:check" :style="{ color: styleByState.color }"></Icon>
+          <Icon v-if="styleByState.icon === 'icon-right'" icon="mdi:chevron-right" :style="{ color: styleByState.color }"></Icon>
+          <Icon v-if="styleByState.icon === 'icon-close'" icon="mdi:close" :style="{ color: styleByState.color }"></Icon>
         </div>
         <div
           class="absolute left-0"

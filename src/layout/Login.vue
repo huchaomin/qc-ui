@@ -68,7 +68,9 @@ const formItems: FormItemType[] = [
       clearable: false,
       placeholder: '账号',
       prefixIcon(h) {
-        return h(resolveComponent('i-mdi:account-circle-outline'))
+        return h(resolveComponent('icon'), {
+          icon: 'mdi:shield-account-outline',
+        })
       },
       size: 'large',
     },
@@ -82,7 +84,9 @@ const formItems: FormItemType[] = [
       clearable: false,
       placeholder: '密码',
       prefixIcon(h) {
-        return h(resolveComponent('i-solar:lock-password-linear'))
+        return h(resolveComponent('icon'), {
+          icon: 'mdi:password-outline',
+        })
       },
       size: 'large',
       type: 'password',
