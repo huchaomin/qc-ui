@@ -31,7 +31,6 @@
   "devDependencies": {
     "@alova/wormhole": "^1.0.8",
     "@antfu/eslint-config": "^4.18.0",
-    "@iconify/json": "^2.2.362",
     "@iconify/vue": "^5.0.0",
     "@prettier/plugin-xml": "^3.4.2",
     "@stylistic/stylelint-config": "^3.0.0",
@@ -41,7 +40,6 @@
     "@types/file-saver": "^2.0.7",
     "@types/lodash": "^4.17.20",
     "@types/node": "^24.1.0",
-    "@types/nprogress": "^0.2.3",
     "@types/path-browserify": "^1.0.3",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitejs/plugin-vue-jsx": "^5.0.1",
