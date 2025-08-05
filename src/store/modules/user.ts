@@ -1,4 +1,5 @@
 interface UserInfo {
+  admin: boolean
   dept: {
     deptName: string
   }
@@ -22,6 +23,7 @@ export function getUserInfoMethod() {
 }
 
 const defaultUserInfo: UserInfo = {
+  admin: false,
   dept: {
     deptName: '',
   },
@@ -44,6 +46,8 @@ export default defineStore(
       roles.value = []
     }
 
+    const isAdmin = computed(() => userInfo.value.admin)
+
     async function getUserInfo() {
       const res = await getUserInfoMethod()
       userInfo.value = res.user
@@ -55,6 +59,10 @@ export default defineStore(
     return {
       clear,
       getUserInfo,
+      isAdmin,
+      permissions,
+      roles,
+      userInfo,
     }
   },
 )
