@@ -9,7 +9,6 @@ export default defineStore(
   'recentRouters',
   () => {
     const recentRouters = ref<recentRoutersConfig[]>([])
-    const excludeKPname: string[] = reactive([]) // TODO 不缓存的路由name
     const router = useRouter()
 
     // 每次进来用户权限可能发生变化，需要重新过滤路由
@@ -22,7 +21,7 @@ export default defineStore(
     function add(fromName: RouteRecordNameGeneric, options: recentRoutersConfig): void {
       const copyOptions = _.cloneDeep(options)
       const index = recentRouters.value.findIndex(item => item.name === copyOptions.name)
-      // TODO
+      // TODO 想要刷新缓存 可用 excludeKPnameStore 控制
       delete copyOptions.query._fromLeftTree
       delete copyOptions.query._fromBreadcrumb
       delete copyOptions.query._refresh
@@ -52,30 +51,14 @@ export default defineStore(
 
     function clear(): void {
       recentRouters.value = []
-      excludeKPname.length = 0
-    }
-
-    function addExcludeKPname(name: string): void {
-      excludeKPname.push(name)
-    }
-
-    function removeExcludeKPname(name: string): void {
-      const index = excludeKPname.findIndex(item => item === name)
-
-      if (index !== -1) {
-        excludeKPname.splice(index, 1)
-      }
     }
 
     return {
       add,
-      addExcludeKPname,
       clear,
-      excludeKPname,
       init,
       recentRouters,
       remove,
-      removeExcludeKPname,
     }
   },
   {

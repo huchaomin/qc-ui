@@ -3,6 +3,7 @@ import Aside from './modules/Aside.vue'
 
 const router = useRouter()
 const recentRoutersStore = useRecentRoutersStore()
+const excludeKPnameStore = useExcludeKPnameStore()
 const recentRoutersNames = computed(() =>
   recentRoutersStore.recentRouters
     .filter((r) => {
@@ -23,7 +24,7 @@ const recentRoutersNames = computed(() =>
       <THeader>Header</THeader>
       <TContent>
         <RouterView v-slot="{ Component }">
-          <KeepAlive :include="recentRoutersNames" :exclude="recentRoutersStore.excludeKPname">
+          <KeepAlive :include="recentRoutersNames" :exclude="excludeKPnameStore.excludeKPname">
             <Component :is="Component"></Component>
           </KeepAlive>
         </RouterView>

@@ -37,17 +37,8 @@ export default defineStore(
     const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
     const permissions: Ref<string[]> = ref([])
     const roles: Ref<string[]> = ref([])
-    const router = useRouter()
 
-    async function clearSession() {
-      useLoginStore().token = ''
-      await router.push({ name: 'Login' })
-      useRecentRoutersStore().clear()
-      useRouterStore().clearRouters()
-      clearUser()
-    }
-
-    function clearUser() {
+    function clear() {
       userInfo.value = _.cloneDeep(defaultUserInfo)
       permissions.value = []
       roles.value = []
@@ -62,7 +53,7 @@ export default defineStore(
     }
 
     return {
-      clearSession,
+      clear,
       getUserInfo,
     }
   },

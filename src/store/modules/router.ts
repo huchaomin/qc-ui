@@ -216,7 +216,7 @@ export default defineStore(
       useRecentRoutersStore().init()
     }
 
-    function clearRouters() {
+    function clear() {
       routersRaw.value.forEach((item) => {
         router.removeRoute(item.name)
       })
@@ -224,7 +224,7 @@ export default defineStore(
     }
 
     return {
-      clearRouters,
+      clear,
       getRouters,
       routersRaw,
     }

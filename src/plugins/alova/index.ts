@@ -172,7 +172,7 @@ export default createAlova({
             }
           }
           else if (code === 401) {
-            useUserStore().clearSession()
+            void useLoginStore().clearSession()
           }
           else {
             if (useFailMsg !== false) {

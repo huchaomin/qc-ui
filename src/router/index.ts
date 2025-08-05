@@ -121,7 +121,7 @@ router.afterEach((to, from, failure) => {
       query: to.query,
     })
     // 从不缓存列表中移除
-    recentRoutersStore.removeExcludeKPname(name)
+    useExcludeKPnameStore().remove(name)
   }
 
   if (import.meta.env.DEV) {

@@ -24,6 +24,7 @@ export default defineStore(
     const password = ref('')
     const rememberMe = ref(false)
     const token = ref('')
+    const router = useRouter()
 
     async function login(data: LoginData) {
       const res = await loginMethod(data)
@@ -43,8 +44,18 @@ export default defineStore(
       rememberMe.value = false
     }
 
+    async function clearSession() {
+      token.value = ''
+      await router.push({ name: 'Login' })
+      useRecentRoutersStore().clear()
+      useExcludeKPnameStore().clear()
+      useRouterStore().clear()
+      useUserStore().clear()
+    }
+
     return {
       clearLoginData,
+      clearSession,
       login,
       password,
       rememberMe,
