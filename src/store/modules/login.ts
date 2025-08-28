@@ -10,7 +10,6 @@ function loginMethod(data: LoginData) {
     token: string
   }>('login', data, {
     meta: {
-      useFailMsg: '登录失败',
       useLoading: '登录中...',
       useToken: false,
     },
