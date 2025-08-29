@@ -10,8 +10,7 @@
     "createHeader": false, // 新建文件自动添加头部注释
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  // Disable the default formatter, use eslint instead
-  "prettier.enable": false,
+  "prettier.enable": true,
   // Silent the stylistic rules in you IDE, but still auto fix them
   // "eslint.rules.customizations": [
   //   {

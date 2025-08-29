@@ -2,6 +2,7 @@
 import type { composer } from 'eslint-flat-config-utils' // 不能删除
 import antfu, { perfectionist as perfectionistConfigFn } from '@antfu/eslint-config'
 import perfectionist from 'eslint-plugin-perfectionist'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import prettierOptions from './prettier.config.ts'
 
 const perfectionistConfig = await perfectionistConfigFn()
@@ -113,8 +114,11 @@ export default antfu(
       },
     },
   },
+  // https://github.com/prettier/eslint-plugin-prettier
+  eslintPluginPrettierRecommended,
   {
     rules: {
+      'prettier/prettier': ['error'],
       'antfu/consistent-list-newline': 'off',
       'no-console': 'off',
     },
