@@ -1,5 +1,5 @@
 function getFilenameFromUrl(url: string, withExt: boolean = false): string {
-  const name = (url.split('/').pop() ?? '').split('?')[0]
+  const name = (url.split('/').pop() ?? '').split('?')[0]!
 
   if (withExt) {
     return name

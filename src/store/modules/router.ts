@@ -75,7 +75,7 @@ function preprocess(arr: ResRouterItem[]): ResRouterItem[] {
   arr.forEach((item) => {
     if (item.path === '/') {
       tmp.push({
-        ...item.children![0],
+        ...item.children![0]!,
         hidden: item.hidden,
       })
     }
@@ -145,7 +145,7 @@ function raiseHiddenRoutes(routers: RouteRecordRaw[]): RouteRecordRaw[] {
     const length = arr.length
 
     for (let i = length - 1; i >= 0; i--) {
-      const current = arr[i]
+      const current = arr[i]!
 
       if (current.children !== undefined) {
         // 说明current是一个菜单，而不是一个目录，里面所有的隐藏菜单都必须与父菜单平级
@@ -173,13 +173,14 @@ const modules = import.meta.glob('@/views/**/index.vue') as Record<string, LazyR
 function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
   if (typeof item.component === 'function' || typeof item.component === 'string') {
     const component = item.component as LazyRouterImport | string
-    const fn: LazyRouterImport
+    const fn: LazyRouterImport | undefined
       = typeof component === 'string'
         ? modules[`/src/views/${component}.vue`]
         : component
 
     if (fn === undefined) {
-      void $notify.error(`路由组件/src/views/${component as string}.vue不存在`)
+      // void $notify.error(`路由组件/src/views/${component as string}.vue不存在`) TODO
+      console.error(`路由组件/src/views/${component as string}.vue不存在`)
       return () => import('@/layout/NotFound.vue')
     }
 

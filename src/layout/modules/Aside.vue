@@ -36,7 +36,7 @@ console.log(routerStore.routersRaw)
           <TTypographyTitle level="h4">{{ appName }}</TTypographyTitle>
         </div>
       </template>
-      <MenuNode :model="routerStore.routersRaw[0].children!"></MenuNode>
+      <MenuNode :model="routerStore.routersRaw[0]!.children!"></MenuNode>
     </TMenu>
   </TAside>
 </template>

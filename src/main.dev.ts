@@ -11,6 +11,6 @@ app.use(TDesign)
 Object.keys(compos).forEach((key) => {
   const name = getFilenameFromUrl(key)
   delete app._context.components[name]
-  app.component(name, compos[key])
+  app.component(name, compos[key]!)
 })
 app.mount('#app')

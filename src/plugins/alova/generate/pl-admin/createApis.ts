@@ -39,7 +39,7 @@ const createFunctionalProxy = (array: (string | symbol)[], alovaInstance: Alova<
       };
       const [method, url] = apiItem;
       const pathParams = mergedConfig.pathParams;
-      const urlReplaced = url.replace(/\{([^}]+)\}/g, (_, key) => {
+      const urlReplaced = url!.replace(/\{([^}]+)\}/g, (_, key) => {
         const pathParam = pathParams[key];
         return pathParam;
       });
@@ -56,7 +56,7 @@ const createFunctionalProxy = (array: (string | symbol)[], alovaInstance: Alova<
         }
         data = hasBlobData ? formData : data;
       }
-      return new Method(method.toUpperCase() as MethodType, alovaInstance, urlReplaced, mergedConfig, data);
+      return new Method(method!.toUpperCase() as MethodType, alovaInstance, urlReplaced, mergedConfig, data);
     }
   });
 };
