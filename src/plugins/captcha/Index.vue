@@ -21,7 +21,7 @@ function getEx(e: MouseEvent | TouchEvent) {
 
   if ((e as TouchEvent).touches) {
   // 兼容移动端
-    x = (e as TouchEvent).touches[0].clientX
+    x = (e as TouchEvent).touches[0]!.clientX
   }
   else {
   // 兼容PC端
@@ -122,7 +122,7 @@ const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(getCaptc
 })
 
 async function getPicture() {
-  const res = await getCaptchaSend({})
+  const res = await getCaptchaSend()
 
   if (res.repCode === '0000') {
     backImgBase64.value = res.repData.originalImageBase64
