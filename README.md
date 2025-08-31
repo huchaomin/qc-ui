@@ -12,20 +12,24 @@
 ## 注意
 
 1. Ignored build scripts ** Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts
+
     ```md
     pnpm approve-builds
     ```
+
     运行上述命令选择允许哪些依赖包在安装时自动执行生命周期脚本
 
 2. icons
 
-- 选择地址[https://icon-sets.iconify.design/?category=UI+24px](https://icon-sets.iconify.design/?category=UI+24px)
-- 使用方法
-    ```vue
-    <template>
-      <Icon icon="material-symbols-light:refresh"></Icon>
-    </template>
-    ```
+    - 选择地址[https://icon-sets.iconify.design/?category=UI+24px](https://icon-sets.iconify.design/?category=UI+24px)
+    - 使用方法
+
+        ```vue
+        <template>
+          <Icon icon="material-symbols-light:refresh"></Icon>
+        </template>
+        ```
+
 3. 重要的通知用 $notify, 需用户手动关闭
 4. 轻提示用 $msg
 5. 升级 tdesign 组件库时
@@ -35,7 +39,7 @@
 
 ## todo
 
-- 需不需要 `eslint-plugin-prettier` （冲突能不能使用 https://github.com/antfu/eslint-flat-config-utils#composerdisablerulesfix 解决）
+- 需不需要 `eslint-plugin-prettier` （冲突能不能使用 <https://github.com/antfu/eslint-flat-config-utils#composerdisablerulesfix> 解决）
 - 怎么格式化 tailwindcss 使用 prettier 或者 vscode 插件
 - stylelint `unit-allowed-list`、`declaration-property-unit-allowed-list`
 - .stylelintignore
@@ -46,6 +50,7 @@
 - 404 页面搞好看一点
 - 添加 waiting 动画
 - form reset 时，清空数据， show 为 false 的会不会一起reset?
+- .stylelintignore
 
 ### 分析包大小
 
@@ -68,7 +73,7 @@ npx simple-git-hooks
 ```json
 {
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged",
+    "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix",
