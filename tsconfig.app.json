@@ -4,23 +4,14 @@
     "composite": true, // 启用复合项目 incremental(增量编译) 自动为 true
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "paths": {
-      "@/*": [
-        "./src/*",
-      ],
-      "img/*": [
-        "./src/assets/images/*",
-      ],
+      "@/*": ["./src/*"],
+      "img/*": ["./src/assets/images/*"]
     },
     "types": [
       // TODO 识别 ttf 字体文件
       // "vite-plugin-font/src/font"
-    ],
+    ]
   },
-  "include": [
-    "types/**/*",
-    "src/**/*",
-  ],
-  "exclude": [
-    "src/**/__tests__/*",
-  ],
+  "include": ["types/**/*", "src/**/*"],
+  "exclude": ["src/**/__tests__/*"]
 }

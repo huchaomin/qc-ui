@@ -34,8 +34,7 @@ async function loginSubmit(formData: LoginData) {
       rememberMe: formData.rememberMe,
       username: formData.username,
     })
-  }
-  else {
+  } else {
     loginStore.clearLoginData()
   }
 
@@ -56,8 +55,7 @@ async function onSubmit() {
   if (useCaptcha) {
     formData.code = await captcha()
     loginSubmit(formData)
-  }
-  else {
+  } else {
     loginSubmit(formData)
   }
 }

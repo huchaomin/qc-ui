@@ -20,11 +20,10 @@ function getEx(e: MouseEvent | TouchEvent) {
   let x = 0
 
   if ((e as TouchEvent).touches) {
-  // 兼容移动端
+    // 兼容移动端
     x = (e as TouchEvent).touches[0]!.clientX
-  }
-  else {
-  // 兼容PC端
+  } else {
+    // 兼容PC端
     x = (e as MouseEvent).clientX
   }
 
@@ -45,22 +44,19 @@ const styleByState = computed(() => {
       color: 'var(--td-text-color-secondary)',
       icon: 'icon-right',
     }
-  }
-  else if (checkState.value === 'doing') {
+  } else if (checkState.value === 'doing') {
     return {
       bgColor: 'var(--td-brand-color-active)',
       color: '#fff',
       icon: 'icon-right',
     }
-  }
-  else if (checkState.value === 'success') {
+  } else if (checkState.value === 'success') {
     return {
       bgColor: 'var(--td-success-color)',
       color: '#fff',
       icon: 'icon-check',
     }
-  }
-  else {
+  } else {
     return {
       bgColor: '#d9534f',
       color: '#fff',
@@ -99,15 +95,17 @@ async function end() {
 
     if (res.repCode === '0000') {
       checkState.value = 'success'
-      tipWords.value = `${(
-        (endMoveTime - startMoveTime.value)
-        / 1000
-      ).toFixed(2)}s验证成功`
+      tipWords.value = `${((endMoveTime - startMoveTime.value) / 1000).toFixed(2)}s验证成功`
       setTimeout(async () => {
-        emit('success', await aesEncrypt(`${backToken.value}---${JSON.stringify({ x: moveLeftDistance, y: 5.0 })}`, secretKey.value))
+        emit(
+          'success',
+          await aesEncrypt(
+            `${backToken.value}---${JSON.stringify({ x: moveLeftDistance, y: 5.0 })}`,
+            secretKey.value,
+          ),
+        )
       }, 500)
-    }
-    else {
+    } else {
       checkState.value = 'fail'
       tipWords.value = '验证失败'
       setTimeout(() => {
@@ -117,9 +115,12 @@ async function end() {
   }
 }
 
-const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(getCaptcha, {
-  immediate: false,
-})
+const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(
+  getCaptcha,
+  {
+    immediate: false,
+  },
+)
 
 async function getPicture() {
   const res = await getCaptchaSend()
@@ -129,8 +130,7 @@ async function getPicture() {
     blockBackImgBase64.value = res.repData.jigsawImageBase64
     backToken.value = res.repData.token
     secretKey.value = res.repData.secretKey
-  }
-  else {
+  } else {
     tipWords.value = res.repMsg
   }
 
@@ -189,13 +189,12 @@ function refresh() {
     :style="{ width: `${sizeConfig.imgWidth}px` }"
     @selectstart="() => false"
   >
-    <div
-      class="relative"
-      :style="{ height: `${sizeConfig.imgHeight}px` }"
-    >
+    <div class="relative" :style="{ height: `${sizeConfig.imgHeight}px` }">
       <img
-        :src="backImgBase64 ? `data:image/png;base64,${backImgBase64}` : defaultImg"
-        class="block w-full h-full"
+        :src="
+          backImgBase64 ? `data:image/png;base64,${backImgBase64}` : defaultImg
+        "
+        class="block h-full w-full"
       />
       <TButton
         class="!absolute top-0 right-0"
@@ -211,53 +210,67 @@ function refresh() {
         v-if="tipWords"
         class="absolute bottom-0 left-0 w-full p-1 text-white"
         :class="checkState === 'success' ? 'bg-green-300/50' : 'bg-red-300/50'"
-      >{{ tipWords }}</span>
+        >{{ tipWords }}</span
+      >
     </div>
     <div
       ref="barArea"
-      class="mt-[4px] relative text-center flex items-center justify-center border border-gray-300"
+      class="relative mt-[4px] flex items-center justify-center border border-gray-300 text-center"
       :style="{
         height: `${sizeConfig.barHeight}px`,
       }"
     >
       <span v-show="checkState === 'default'">向右滑动完成验证</span>
       <div
-        class="absolute top-0 left-0 bg-[#f0fff0] border translate-x-[-1px] translate-y-[-1px]"
+        class="absolute top-0 left-0 translate-x-[-1px] translate-y-[-1px] border bg-[#f0fff0]"
         :style="{
-          'width': moveBlockLeft === 0 ? `${sizeConfig.barHeight}px` : `${moveBlockLeft}px`,
-          'height': `${sizeConfig.barHeight}px`,
+          width:
+            moveBlockLeft === 0
+              ? `${sizeConfig.barHeight}px`
+              : `${moveBlockLeft}px`,
+          height: `${sizeConfig.barHeight}px`,
           'border-color': styleByState.bgColor,
         }"
       >
         <div
-          class="absolute top-0 left-0 cursor-pointer bg-clip-content
-          border border-transparent translate-x-[-1px] translate-y-[-1px]
-          hover:text-white hover:bg-primary flex items-center justify-center"
+          class="absolute top-0 left-0 flex translate-x-[-1px] translate-y-[-1px] cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-primary hover:text-white"
           :style="{
-            'width': `${sizeConfig.barHeight}px`,
-            'height': `${sizeConfig.barHeight}px`,
+            width: `${sizeConfig.barHeight}px`,
+            height: `${sizeConfig.barHeight}px`,
             'background-color': styleByState.bgColor,
-            'left': `${moveBlockLeft}px`,
+            left: `${moveBlockLeft}px`,
           }"
           @touchstart="start"
           @mousedown="start"
         >
-          <Icon v-if="styleByState.icon === 'icon-check'" icon="mdi:check" :style="{ color: styleByState.color }"></Icon>
-          <Icon v-if="styleByState.icon === 'icon-right'" icon="mdi:chevron-right" :style="{ color: styleByState.color }"></Icon>
-          <Icon v-if="styleByState.icon === 'icon-close'" icon="mdi:close" :style="{ color: styleByState.color }"></Icon>
+          <Icon
+            v-if="styleByState.icon === 'icon-check'"
+            icon="mdi:check"
+            :style="{ color: styleByState.color }"
+          ></Icon>
+          <Icon
+            v-if="styleByState.icon === 'icon-right'"
+            icon="mdi:chevron-right"
+            :style="{ color: styleByState.color }"
+          ></Icon>
+          <Icon
+            v-if="styleByState.icon === 'icon-close'"
+            icon="mdi:close"
+            :style="{ color: styleByState.color }"
+          ></Icon>
         </div>
         <div
           class="absolute left-0"
           :style="{
-            width: `${(sizeConfig.imgWidth * 47 / 310)}px`,
+            width: `${(sizeConfig.imgWidth * 47) / 310}px`,
             height: `${sizeConfig.imgHeight}px`,
-            top: `-${(sizeConfig.imgHeight + 4)}px`,
+            top: `-${sizeConfig.imgHeight + 4}px`,
             left: `${moveBlockLeft}px`,
           }"
         >
           <img
             :src="`data:image/png;base64,${blockBackImgBase64}`"
-            class="block w-full h-full"
+            class="block h-full w-full"
           />
         </div>
       </div>

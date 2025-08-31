@@ -1,4 +1,8 @@
-import type { NotificationInstance, NotificationOptions, NotificationPluginType } from 'tdesign-vue-next'
+import type {
+  NotificationInstance,
+  NotificationOptions,
+  NotificationPluginType,
+} from 'tdesign-vue-next'
 
 // NotificationThemeList
 enum NotificationCreateType {
@@ -11,14 +15,12 @@ type CreateNotificationFnType = (
   content: NotificationOptions['content'],
   options?: Omit<NotificationOptions, 'content' | 'theme'>,
 ) => Promise<NotificationInstance>
-type CreateNotificationType = CreateNotificationFnType
-  & {
-    [value in NotificationCreateType]: CreateNotificationFnType
-  }
-  & {
-    close: NotificationPluginType['close']
-    closeAll: NotificationPluginType['closeAll']
-  }
+type CreateNotificationType = CreateNotificationFnType & {
+  [value in NotificationCreateType]: CreateNotificationFnType
+} & {
+  close: NotificationPluginType['close']
+  closeAll: NotificationPluginType['closeAll']
+}
 
 async function create(
   type: `${NotificationCreateType}`,
@@ -50,7 +52,9 @@ createNotification.closeAll = () => {
   return NotifyPlugin.closeAll()
 }
 
-createNotification.close = (...arg: Parameters<NotificationPluginType['close']>) => {
+createNotification.close = (
+  ...arg: Parameters<NotificationPluginType['close']>
+) => {
   return NotifyPlugin.close(...arg)
 }
 

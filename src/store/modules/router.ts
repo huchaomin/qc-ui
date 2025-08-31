@@ -78,8 +78,7 @@ function preprocess(arr: ResRouterItem[]): ResRouterItem[] {
         ...item.children![0]!,
         hidden: item.hidden,
       })
-    }
-    else {
+    } else {
       tmp.push(item)
     }
   })
@@ -87,17 +86,14 @@ function preprocess(arr: ResRouterItem[]): ResRouterItem[] {
 }
 
 function process(routers: ResRouterItem[]): RouteRecordRaw[] {
-  const fn: (
-    arr: ResRouterItem[],
-    parent: null | RouteRecordRaw,
-  ) => RouteRecordRaw[] = (arr, parent) => {
+  const fn: (arr: ResRouterItem[], parent: null | RouteRecordRaw) => RouteRecordRaw[] = (arr, parent) => {
     const tmpArr: RouteRecordRaw[] = []
     arr.forEach((item) => {
       const newItem: RouteRecordRaw = {
         meta: {
-          fullScreen: item.meta?.fullScreen ?? (item.meta?.link !== null),
+          fullScreen: item.meta?.fullScreen ?? item.meta?.link !== null,
           hidden: item.hidden ?? item.meta?.hidden ?? false,
-          icon: item.meta?.icon === '#' ? '' : item.meta?.icon ?? '',
+          icon: item.meta?.icon === '#' ? '' : (item.meta?.icon ?? ''),
           noCache: item.meta?.noCache ?? false,
           parentName: '',
           title: item.meta?.title ?? '',
@@ -111,7 +107,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
 
         if (result.length > 0) {
           newItem.children = result
-          const first = result.find(i => !i.meta.hidden)
+          const first = result.find((i) => !i.meta.hidden)
 
           if (first !== undefined) {
             newItem.redirect = { name: first.name }
@@ -154,8 +150,7 @@ function raiseHiddenRoutes(routers: RouteRecordRaw[]): RouteRecordRaw[] {
             arr.splice(i + 1, 0, ...fn([item]))
           })
           delete current.children
-        }
-        else {
+        } else {
           current.children = fn(current.children)
         }
       }
@@ -173,10 +168,8 @@ const modules = import.meta.glob('@/views/**/index.vue') as Record<string, LazyR
 function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
   if (typeof item.component === 'function' || typeof item.component === 'string') {
     const component = item.component as LazyRouterImport | string
-    const fn: LazyRouterImport | undefined
-      = typeof component === 'string'
-        ? modules[`/src/views/${component}.vue`]
-        : component
+    const fn: LazyRouterImport | undefined =
+      typeof component === 'string' ? modules[`/src/views/${component}.vue`] : component
 
     if (fn === undefined) {
       // void $notify.error(`路由组件/src/views/${component as string}.vue不存在`) TODO
@@ -191,43 +184,39 @@ function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
           name: item.name,
         } as Component
       })
-  }
-  else {
+  } else {
     return item.component // layout/Index
   }
 }
 
-export default defineStore(
-  'router',
-  () => {
-    const routersRaw: Ref<RouteRecordRaw[]> = ref([])
-    const router = useRouter()
+export default defineStore('router', () => {
+  const routersRaw: Ref<RouteRecordRaw[]> = ref([])
+  const router = useRouter()
 
-    async function getRouters() {
-      const res = await getRoutersMethod()
-      routersRaw.value = markRaw(raiseHiddenRoutes(process(preprocess(res))))
+  async function getRouters() {
+    const res = await getRoutersMethod()
+    routersRaw.value = markRaw(raiseHiddenRoutes(process(preprocess(res))))
 
-      if (router.hasRoute('Index')) {
-        router.removeRoute('Index')
-      }
-
-      routersRaw.value.forEach((item) => {
-        router.addRoute(item as _RouteRecordRaw)
-      })
-      useRecentRoutersStore().init()
+    if (router.hasRoute('Index')) {
+      router.removeRoute('Index')
     }
 
-    function clear() {
-      routersRaw.value.forEach((item) => {
-        router.removeRoute(item.name)
-      })
-      routersRaw.value = []
-    }
+    routersRaw.value.forEach((item) => {
+      router.addRoute(item as _RouteRecordRaw)
+    })
+    useRecentRoutersStore().init()
+  }
 
-    return {
-      clear,
-      getRouters,
-      routersRaw,
-    }
-  },
-)
+  function clear() {
+    routersRaw.value.forEach((item) => {
+      router.removeRoute(item.name)
+    })
+    routersRaw.value = []
+  }
+
+  return {
+    clear,
+    getRouters,
+    routersRaw,
+  }
+})

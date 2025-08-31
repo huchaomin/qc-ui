@@ -3,8 +3,7 @@ function getFilenameFromUrl(url: string, withExt: boolean = false): string {
 
   if (withExt) {
     return name
-  }
-  else {
+  } else {
     const arr = name.split('.')
     arr.pop()
     return arr.join('.')

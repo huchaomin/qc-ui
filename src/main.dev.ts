@@ -2,8 +2,7 @@ import { TDesign } from '@/plugins/tdesign-vue-next-for-dev'
 import app from './main'
 import 'tdesign-vue-next/dist/tdesign.min.css'
 
-const compos = import.meta.glob('./components/tDesignReset/*.vue',
-  { eager: true, import: 'default' }) as Record<
+const compos = import.meta.glob('./components/tDesignReset/*.vue', { eager: true, import: 'default' }) as Record<
   string,
   () => Promise<Component>
 >

@@ -34,8 +34,7 @@ class LoadingService {
         })
         start()
       }
-    }
-    else {
+    } else {
       if (this.loadingCount < 0) {
         throw new Error('loadingCount 不能小于 0')
       }

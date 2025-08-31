@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { GlobalConfigProvider } from 'tdesign-vue-next'
 
-const globalConfig: GlobalConfigProvider = {
-}
+const globalConfig: GlobalConfigProvider = {}
 </script>
 
 <template>

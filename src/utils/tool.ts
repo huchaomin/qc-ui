@@ -17,13 +17,13 @@ async function aesEncrypt(word: string, keyWord: string = aesKey): Promise<strin
   return encrypted.toString()
 }
 
-async function saveAs(arg1: Parameters<typeof FileSaver.saveAs>[0], arg2: Parameters<typeof FileSaver.saveAs>[1], arg3?: FileSaver.FileSaverOptions): Promise<void> {
+async function saveAs(
+  arg1: Parameters<typeof FileSaver.saveAs>[0],
+  arg2: Parameters<typeof FileSaver.saveAs>[1],
+  arg3?: FileSaver.FileSaverOptions,
+): Promise<void> {
   const { default: save } = await import('file-saver')
   save(arg1, arg2, arg3)
 }
 
-export {
-  aesDecrypt,
-  aesEncrypt,
-  saveAs,
-}
+export { aesDecrypt, aesEncrypt, saveAs }

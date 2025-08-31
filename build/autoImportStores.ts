@@ -25,7 +25,9 @@ files.forEach((p) => {
 })
 const customerImport: Record<string, [string, string][]> = {}
 piniaStoreKeys.forEach((key) => {
-  customerImport[`@/store/modules/${key}`] = [['default', `use${_.upperFirst(key)}Store`]]
+  customerImport[`@/store/modules/${key}`] = [
+    ['default', `use${_.upperFirst(key)}Store`],
+  ]
 })
 
 export default customerImport

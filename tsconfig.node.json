@@ -4,12 +4,11 @@
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "resolveJsonModule": true, // 它允许 TypeScript 项目直接导入 JSON 文件作为模块
-    "types": [
-      "node",
-    ],
+    "types": ["node"],
     "allowImportingTsExtensions": true,
+    "allowJs": true, // 引入 prettier.config.mjs
     "noEmit": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true
   },
   "include": [
     "build/**/*",
@@ -23,9 +22,7 @@
     ".vitepress/config.*",
     "eslint.config.*",
     "alova.config.*",
-    "types/env.d.ts",
+    "types/env.d.ts"
   ],
-  "exclude": [
-    "build/.cache",
-  ],
+  "exclude": ["build/.cache"]
 }

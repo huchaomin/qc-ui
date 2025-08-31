@@ -20,7 +20,13 @@ export default {
 
         apiDescriptor.url = url
         apiDescriptor.operationId = apiDescriptor.method
-        apiDescriptor.tags = [url.split('/').map(tag => tag.startsWith('{') ? `$${tag.slice(1, -1)}$` : tag).map(tag => tag.replace(/_/g, '$')).join('_')]
+        apiDescriptor.tags = [
+          url
+            .split('/')
+            .map((tag) => (tag.startsWith('{') ? `$${tag.slice(1, -1)}$` : tag))
+            .map((tag) => tag.replace(/_/g, '$'))
+            .join('_'),
+        ]
         return apiDescriptor
       },
       // input: 'src/plugins/alova/generate/pl-admin.swagger.json',

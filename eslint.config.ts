@@ -1,20 +1,22 @@
 // eslint-disable-next-line unused-imports/no-unused-imports
 import type { composer } from 'eslint-flat-config-utils' // 不能删除
-import antfu, { perfectionist as perfectionistConfigFn } from '@antfu/eslint-config'
+import antfu, {
+  perfectionist as perfectionistConfigFn,
+} from '@antfu/eslint-config'
 import perfectionist from 'eslint-plugin-perfectionist'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
-import prettierOptions from './prettier.config.ts'
+import prettierOptions from './prettier.config.mjs'
 
 const perfectionistConfig = await perfectionistConfigFn()
 
 export default antfu(
   {
     formatters: {
-    // 都默认开启了
-    // css: true, // 与 stylelint 一起
-    // html: true,
-    // markdown: true, // 使用 prettier 格式化 markdown 文件,搭配 davidAnson.vscode-markdownlint 插件一起使用
-    // xml: true, 这一项配置了 vscode 的 eslint 插件会报错, 需要 @prettier/plugin-xml 插件
+      // 都默认开启了
+      // css: true, // 与 stylelint 一起
+      html: true,
+      // markdown: true, // 使用 prettier 格式化 markdown 文件,搭配 davidAnson.vscode-markdownlint 插件一起使用
+      // xml: true, 这一项配置了 vscode 的 eslint 插件会报错, 需要 @prettier/plugin-xml 插件
       prettierOptions, // 配置 prettier 的配置,这里不会读 ignorePath 这个配置,否则 ignorePath 里面配置的文件都不会被 prettier 格式化了
     },
     // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
@@ -28,10 +30,7 @@ export default antfu(
     ],
     jsonc: {
       overrides: {
-        'jsonc/comma-dangle': ['error', {
-          arrays: 'always-multiline',
-          objects: 'always-multiline',
-        }],
+        'jsonc/comma-dangle': 'off', // 与 prettier 保持一致
       },
     },
     // jsonc: true, // 配合 vscode.json-language-features 一起使用 (默认为true) [jsonc: true 排序， vscode.json-language-features 截断好一点]
@@ -41,7 +40,8 @@ export default antfu(
       indent: 2,
       jsx: true,
       overrides: {
-        'style/padding-line-between-statements': ['error',
+        'style/padding-line-between-statements': [
+          'error',
           { blankLine: 'never', next: '*', prev: '*' },
           { blankLine: 'always', next: '*', prev: 'import' },
           { blankLine: 'never', next: 'import', prev: 'import' },
@@ -59,7 +59,6 @@ export default antfu(
     },
     // https://typescript-eslint.io/rules/
     typescript: {
-
       // other rules
       overrides: {
         'prefer-promise-reject-errors': [
@@ -114,24 +113,20 @@ export default antfu(
       },
     },
   },
-  // https://github.com/prettier/eslint-plugin-prettier
-  eslintPluginPrettierRecommended,
   {
     rules: {
-      'prettier/prettier': ['error'],
-      'antfu/consistent-list-newline': 'off',
+      // 'antfu/consistent-list-newline': 'off',
       'no-console': 'off',
     },
   },
-  {
-    files: ['package.json'],
+)
+  .override(perfectionistConfig[0].name!, {
     rules: {
-      'jsonc/comma-dangle': 'off',
+      ...perfectionist.configs['recommended-natural'].rules,
+      ...perfectionistConfig[0].rules,
     },
-  },
-).override(perfectionistConfig[0].name!, {
-  rules: {
-    ...perfectionist.configs['recommended-natural'].rules,
-    ...perfectionistConfig[0].rules,
-  },
-})
+  })
+  .append(
+    // https://github.com/prettier/eslint-plugin-prettier
+    eslintPluginPrettierRecommended,
+  )

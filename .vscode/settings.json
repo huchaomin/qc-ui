@@ -64,7 +64,6 @@
   //     "fixable": true
   //   }
   // ],
-  "eslint.useFlatConfig": true,
   // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",

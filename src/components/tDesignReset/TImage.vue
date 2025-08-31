@@ -2,12 +2,9 @@
 import type { ImageProps } from 'tdesign-vue-next'
 import { h } from 'vue'
 
-const props = withDefaults(
-  defineProps<ImageProps>(),
-  {
-    lazy: true,
-  },
-)
+const props = withDefaults(defineProps<ImageProps>(), {
+  lazy: true,
+})
 const compo = _Image
 const vm = getCurrentInstance()!
 
@@ -19,11 +16,17 @@ function compoRef(instance: any) {
 
 <template>
   <component
-    :is="h(compo, {
-      ...props,
-      ...$attrs,
-      ref: compoRef,
-    }, $slots)"
+    :is="
+      h(
+        compo,
+        {
+          ...props,
+          ...$attrs,
+          ref: compoRef,
+        },
+        $slots,
+      )
+    "
   >
   </component>
 </template>

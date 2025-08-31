@@ -23,11 +23,11 @@ const LoadingPlugin = _LoadingPlugin as LoadingPluginType
 const MessagePlugin = _MessagePlugin as MessagePluginType
 const NotifyPlugin = _NotifyPlugin as NotificationPluginType
 const TDesign = _TDesign as typeof _default
-const Message = _Message as typeof import('tdesign-vue-next')['Message']
-const Card = _Card as typeof import('tdesign-vue-next')['Card']
-const Form = _Form as typeof import('tdesign-vue-next')['Form']
-const Image = _Image as typeof import('tdesign-vue-next')['Image']
-const Input = _Input as typeof import('tdesign-vue-next')['Input']
+const Message = _Message as (typeof import('tdesign-vue-next'))['Message']
+const Card = _Card as (typeof import('tdesign-vue-next'))['Card']
+const Form = _Form as (typeof import('tdesign-vue-next'))['Form']
+const Image = _Image as (typeof import('tdesign-vue-next'))['Image']
+const Input = _Input as (typeof import('tdesign-vue-next'))['Input']
 
 export {
   Card,

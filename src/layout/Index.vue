@@ -13,7 +13,7 @@ const recentRoutersNames = computed(() =>
 
       return false
     })
-    .map(r => r.name),
+    .map((r) => r.name),
 )
 </script>
 

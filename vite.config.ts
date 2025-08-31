@@ -17,8 +17,17 @@ import TDesignResolver from './build/tDesignResolver.ts'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
-function bypass(req: http.IncomingMessage, res: http.ServerResponse | undefined, options: ProxyOptions): void {
-  if (req.url !== undefined && options.rewrite !== undefined && typeof options.target === 'string' && res !== undefined) {
+function bypass(
+  req: http.IncomingMessage,
+  res: http.ServerResponse | undefined,
+  options: ProxyOptions,
+): void {
+  if (
+    req.url !== undefined &&
+    options.rewrite !== undefined &&
+    typeof options.target === 'string' &&
+    res !== undefined
+  ) {
     const reqUrl = req.url
     const proxyUrl = new URL(options.rewrite(reqUrl), options.target).href
     res.setHeader('X-Res-ProxyUrl', proxyUrl) // 查看真实的请求地址
@@ -49,7 +58,7 @@ export default defineConfig(({ command, mode }) => {
     clearScreen: false, // 设为 false 可以避免 Vite 清屏而错过在终端中打印某些关键信息
     css: {
       lightningcss: {
-      // https://cn.vitejs.dev/config/shared-options#css-lightningcss
+        // https://cn.vitejs.dev/config/shared-options#css-lightningcss
         targets: browserslistToTargets(browserslist('>= 0.25%')),
       },
       transformer: 'lightningcss',
@@ -91,9 +100,14 @@ export default defineConfig(({ command, mode }) => {
       tailwindcss(),
       vue(),
       vueJsx(),
-      AutoImport({ // 用于自动导入 函数/工具库 的 API
+      AutoImport({
+        // 用于自动导入 函数/工具库 的 API
         defaultExportByFilename: true,
-        dirs: [resolvePath('src/plugins/autoImport'), resolvePath('src/hooks'), resolvePath('src/utils')],
+        dirs: [
+          resolvePath('src/plugins/autoImport'),
+          resolvePath('src/hooks'),
+          resolvePath('src/utils'),
+        ],
         dts: resolvePath('types/auto-imports.d.ts'),
         imports: [
           'vue',
@@ -106,7 +120,9 @@ export default defineConfig(({ command, mode }) => {
             imports: ['useRequest', 'useWatcher'],
           },
           {
-            '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
+            '@/plugins/alova/generate/pl-admin/index.ts': [
+              ['default', 'PlAdmin'],
+            ],
           },
           {
             '@/plugins/alova/index.ts': [['default', 'alovaInst']],
@@ -125,23 +141,26 @@ export default defineConfig(({ command, mode }) => {
         ],
         resolvers: [
           ...(isProduction
-            ? [TDesignResolver({
-                library: 'vue-next',
-              })]
+            ? [
+                TDesignResolver({
+                  library: 'vue-next',
+                }),
+              ]
             : []),
         ],
         vueTemplate: true,
       }),
-      Components({ // 用于自动导入 Vue 组件
-        dirs: [
-          resolvePath('src/components/autoImport'),
-        ],
+      Components({
+        // 用于自动导入 Vue 组件
+        dirs: [resolvePath('src/components/autoImport')],
         dts: resolvePath('types/components.d.ts'),
         resolvers: [
           ...(isProduction
-            ? [TDesignResolver({
-                library: 'vue-next',
-              })]
+            ? [
+                TDesignResolver({
+                  library: 'vue-next',
+                }),
+              ]
             : []),
         ],
       }),
@@ -150,7 +169,7 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       alias: {
         '@': resolvePath('src'),
-        'img': resolvePath('src/assets/images'),
+        img: resolvePath('src/assets/images'),
       },
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
       // 不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
@@ -166,7 +185,9 @@ export default defineConfig(({ command, mode }) => {
           bypass,
           changeOrigin: true,
           rewrite: (p) => {
-            return VITE_BASE_URL === '/' ? p : p.replace(new RegExp(VITE_BASE_URL), '')
+            return VITE_BASE_URL === '/'
+              ? p
+              : p.replace(new RegExp(VITE_BASE_URL), '')
           },
           target: VITE_SERVER_URL,
         },

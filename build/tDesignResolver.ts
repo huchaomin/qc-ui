@@ -2,7 +2,9 @@ import type { TDesignResolver } from 'unplugin-vue-components/resolvers'
 import { tDesignResetComponentsName } from './utils/config.ts'
 import { isExclude } from './utils/index.ts'
 
-export default (options: Parameters<typeof TDesignResolver>[0] = {}): ReturnType<typeof TDesignResolver> => {
+export default (
+  options: Parameters<typeof TDesignResolver>[0] = {},
+): ReturnType<typeof TDesignResolver> => {
   const pluginList = [
     'DialogPlugin',
     'LoadingPlugin',
@@ -13,8 +15,7 @@ export default (options: Parameters<typeof TDesignResolver>[0] = {}): ReturnType
     resolve: (name) => {
       const { exclude, library = 'vue' } = options
       const importFrom = options.esm ? '/esm' : ''
-      if (isExclude(name, exclude))
-        return
+      if (isExclude(name, exclude)) return
 
       if (options.resolveIcons && name.match(/[a-z]Icon$/)) {
         return {

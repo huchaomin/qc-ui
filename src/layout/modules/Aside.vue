@@ -12,7 +12,7 @@ const logoUrl = Object.values(
 )[0] as string
 const routerStore = useRouterStore()
 const defaultExpanded = computed(() => {
-  return route.matched.map(item => item.name as string)
+  return route.matched.map((item) => item.name as string)
 })
 const value = computed(() => {
   const meta = route.meta
@@ -32,7 +32,11 @@ console.log(routerStore.routersRaw)
     <TMenu :value="value" :default-expanded="defaultExpanded">
       <template #logo>
         <div class="flex items-center">
-          <TImage :src="logoUrl" class="logo" style="width: 32px; height: 32px;"></TImage>
+          <TImage
+            :src="logoUrl"
+            class="logo"
+            style="width: 32px; height: 32px"
+          ></TImage>
           <TTypographyTitle level="h4">{{ appName }}</TTypographyTitle>
         </div>
       </template>

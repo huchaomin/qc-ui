@@ -21,10 +21,15 @@ export default defineConfig({
   plugins: ['stylelint-use-nesting'],
   // null (to turn the rule off)
   rules: {
-    '@stylistic/declaration-block-trailing-semicolon': ['always'],
-    'at-rule-no-unknown': [true, {
-      ignoreAtRules: ['theme'],
-    }],
+    '@stylistic/declaration-block-trailing-semicolon': null, // 与 prettier 保持一致
+    '@stylistic/declaration-colon-newline-after': null, // 与 prettier 保持一致
+    '@stylistic/no-eol-whitespace': null, // 与 prettier 保持一致
+    'at-rule-no-unknown': [
+      true,
+      {
+        ignoreAtRules: ['theme'],
+      },
+    ],
     'csstools/use-nesting': [
       'always',
       {
@@ -40,5 +45,4 @@ export default defineConfig({
       },
     ],
   },
-
 })

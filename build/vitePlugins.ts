@@ -6,12 +6,11 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolvePath } from './utils/index.ts'
 
 export default {
-  development: [
-    vueDevTools(),
-  ] as PluginOption[],
+  development: [vueDevTools()] as PluginOption[],
   production: [
     (viteImagemin as unknown as typeof viteImagemin.default)({
-      gifsicle: { // https://github.com/imagemin/imagemin-gifsicle
+      gifsicle: {
+        // https://github.com/imagemin/imagemin-gifsicle
         colors: 256, // 指定 GIF 图像调色板（颜色表）的最大颜色数量, 可丢弃一些颜色达到更大的优化效果
         interlaced: false, // 渐进式加载效果
         optimizationLevel: 2, // 中的优化级别
@@ -28,7 +27,8 @@ export default {
       },
       svgo: {
         datauri: 'base64', // 'base64'|'enc'|'unenc' 指定如何将 SVG 转换为 Data URI 格式
-        js2svg: { // 控制 SVG 输出的格式
+        js2svg: {
+          // 控制 SVG 输出的格式
           indent: 4, // 缩进空格数
           pretty: false, // 是否美化输出格式
         },
@@ -45,9 +45,7 @@ export default {
     }),
     compression(),
     visualizer({
-      filename: resolvePath(
-        'build/.cache/visualizer/report.html',
-      ),
+      filename: resolvePath('build/.cache/visualizer/report.html'),
       open: true,
     }),
   ] as PluginOption[],

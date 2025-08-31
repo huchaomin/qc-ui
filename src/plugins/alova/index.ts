@@ -35,8 +35,7 @@ export default createAlova({
     if (useToken) {
       if (loginStore.token) {
         method.config.headers.Authorization = loginStore.token
-      }
-      else {
+      } else {
         method.abort()
       }
     }
@@ -132,7 +131,8 @@ export default createAlova({
         return Promise.reject(response)
       }
 
-      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } = method.meta as ThisAlovaCustomTypes
+      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } =
+        method.meta as ThisAlovaCustomTypes
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
@@ -170,19 +170,16 @@ export default createAlova({
               // eslint-disable-next-line ts/no-unsafe-return
               return resData
             }
-          }
-          else if (code === 401) {
+          } else if (code === 401) {
             void useLoginStore().clearSession()
-          }
-          else {
+          } else {
             if (useFailMsg !== false) {
               void $msg.error(useFailMsg === true ? msg : useFailMsg)
             }
           }
 
           return Promise.reject(resData)
-        }
-        else {
+        } else {
           if (useSuccessMsg) {
             void $msg(msg)
           }

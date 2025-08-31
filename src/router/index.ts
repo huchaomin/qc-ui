@@ -84,9 +84,8 @@ router.beforeEach(async (to) => {
   }
 
   if (useLoginStore().token === '') {
-    return ({ name: 'Login' })
-  }
-  else {
+    return { name: 'Login' }
+  } else {
     if (useRouterStore().routersRaw.length > 0) {
       return
     }
@@ -114,8 +113,7 @@ router.afterEach((to, from, failure) => {
       recentRoutersStore.remove(from.name)
     }
 
-    const fromName
-      = parentName === from.name || to.query._fromLeftTree !== 'true' ? from.name : undefined
+    const fromName = parentName === from.name || to.query._fromLeftTree !== 'true' ? from.name : undefined
     recentRoutersStore.add(fromName, {
       name,
       query: to.query,
@@ -127,11 +125,9 @@ router.afterEach((to, from, failure) => {
   if (import.meta.env.DEV) {
     if (isNavigationFailure(failure, NavigationFailureType.aborted)) {
       void $msg.info('导航被中断')
-    }
-    else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
+    } else if (isNavigationFailure(failure, NavigationFailureType.cancelled)) {
       void $msg.info('导航被取消，因为有一个新的导航')
-    }
-    else if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
+    } else if (isNavigationFailure(failure, NavigationFailureType.duplicated)) {
       void $msg.info('导航被阻止，因为我们已经在目标位置了')
     }
   }

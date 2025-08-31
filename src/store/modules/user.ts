@@ -33,36 +33,33 @@ const defaultUserInfo: UserInfo = {
   userName: '',
 }
 
-export default defineStore(
-  'user',
-  () => {
-    const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
-    const permissions: Ref<string[]> = ref([])
-    const roles: Ref<string[]> = ref([])
+export default defineStore('user', () => {
+  const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
+  const permissions: Ref<string[]> = ref([])
+  const roles: Ref<string[]> = ref([])
 
-    function clear() {
-      userInfo.value = _.cloneDeep(defaultUserInfo)
-      permissions.value = []
-      roles.value = []
-    }
+  function clear() {
+    userInfo.value = _.cloneDeep(defaultUserInfo)
+    permissions.value = []
+    roles.value = []
+  }
 
-    const isAdmin = computed(() => userInfo.value.admin)
+  const isAdmin = computed(() => userInfo.value.admin)
 
-    async function getUserInfo() {
-      const res = await getUserInfoMethod()
-      userInfo.value = res.user
-      permissions.value = res.permissions
-      roles.value = res.roles
-      await useRouterStore().getRouters()
-    }
+  async function getUserInfo() {
+    const res = await getUserInfoMethod()
+    userInfo.value = res.user
+    permissions.value = res.permissions
+    roles.value = res.roles
+    await useRouterStore().getRouters()
+  }
 
-    return {
-      clear,
-      getUserInfo,
-      isAdmin,
-      permissions,
-      roles,
-      userInfo,
-    }
-  },
-)
+  return {
+    clear,
+    getUserInfo,
+    isAdmin,
+    permissions,
+    roles,
+    userInfo,
+  }
+})

@@ -1,32 +1,42 @@
 <script setup lang="ts">
-import type { CheckboxProps, FormItemProps, FormProps, InputProps } from 'tdesign-vue-next'
+import type {
+  CheckboxProps,
+  FormItemProps,
+  FormProps,
+  InputProps,
+} from 'tdesign-vue-next'
 
 export type FormItemType = {
   show?: boolean // 是否显示
 } & (ComponentItemType | SlotItemType)
-type ComponentItemType = (
-  {
-    component: 'TCheckbox'
-    componentProps?: Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'>
-  }
-  | {
-    component?: 'TInput'
-    componentProps?: Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'>
-  }
-) & {
+type ComponentItemType = {
   formItemProps?: Omit<FormItemProps, 'name'>
   model: string
-}
+} & (
+  | {
+      component: 'TCheckbox'
+      componentProps?: Omit<
+        CheckboxProps,
+        'checked' | 'defaultChecked' | 'modelValue'
+      >
+    }
+  | {
+      component?: 'TInput'
+      componentProps?: Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'>
+    }
+)
 interface SlotItemType {
   slot: string
 }
 const props = withDefaults(
-  defineProps<Omit<FormProps, 'data'> & {
-    data: {
-      [key: string]: any
+  defineProps<
+    Omit<FormProps, 'data'> & {
+      data: {
+        [key: string]: any
+      }
+      items: FormItemType[]
     }
-    items: FormItemType[]
-  }>(),
+  >(),
   {
     colon: true,
     labelAlign: 'top',
@@ -70,9 +80,19 @@ function compoRef(instance: any) {
     }"
     :ref="compoRef"
   >
-    <template v-for="item in items.filter(item => item.show !== false)" :key="(item as ComponentItemType).model ?? (item as SlotItemType).slot">
-      <slot v-if="(item as SlotItemType).slot" :name="(item as SlotItemType).slot"></slot>
-      <TFormItem v-else v-bind="(item as ComponentItemType).formItemProps ?? {}" :name="(item as ComponentItemType).model">
+    <template
+      v-for="item in items.filter((item) => item.show !== false)"
+      :key="(item as ComponentItemType).model ?? (item as SlotItemType).slot"
+    >
+      <slot
+        v-if="(item as SlotItemType).slot"
+        :name="(item as SlotItemType).slot"
+      ></slot>
+      <TFormItem
+        v-else
+        v-bind="(item as ComponentItemType).formItemProps ?? {}"
+        :name="(item as ComponentItemType).model"
+      >
         <component
           :is="getComponent((item as ComponentItemType).component)"
           v-model="data[(item as ComponentItemType).model]"

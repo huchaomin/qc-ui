@@ -30,11 +30,7 @@ export default {
         <MenuNode :model="item.children" :level="level + 1"></MenuNode>
       </TSubmenu>
 
-      <TMenuItem
-        v-else
-        :to="{ name: item.name, query: { _fromLeftTree: 'true' } }"
-        :value="item.name"
-      >
+      <TMenuItem v-else :to="{ name: item.name, query: { _fromLeftTree: 'true' } }" :value="item.name">
         <template v-if="level === 0" #icon>
           <Icon :icon="getIcon(item)" class="mr-2.5"></Icon>
         </template>
