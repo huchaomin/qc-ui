@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Aside from './modules/Aside.vue'
+import Header from './modules/Header.vue'
 
 const router = useRouter()
 const recentRoutersStore = useRecentRoutersStore()
@@ -21,10 +22,13 @@ const recentRoutersNames = computed(() =>
   <TLayout class="h-full">
     <Aside>Aside</Aside>
     <TLayout>
-      <THeader>Header</THeader>
+      <Header></Header>
       <TContent>
         <RouterView v-slot="{ Component }">
-          <KeepAlive :include="recentRoutersNames" :exclude="excludeKPnameStore.excludeKPname">
+          <KeepAlive
+            :include="recentRoutersNames"
+            :exclude="excludeKPnameStore.excludeKPname"
+          >
             <Component :is="Component"></Component>
           </KeepAlive>
         </RouterView>

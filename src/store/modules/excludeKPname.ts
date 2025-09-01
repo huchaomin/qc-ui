@@ -1,5 +1,5 @@
 export default defineStore('excludeKPname', () => {
-  const excludeKPname: string[] = reactive([]) // 不缓存的路由name    return {
+  const excludeKPname: string[] = reactive([]) // 不缓存的路由name
 
   function clear(): void {
     excludeKPname.length = 0

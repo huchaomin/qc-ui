@@ -11,6 +11,7 @@ import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
+import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
 import autoImportStoreList from './build/autoImportStores.ts'
 import tDesignAutoImport from './build/tDesignAutoImport.ts'
 import TDesignResolver from './build/tDesignResolver.ts'
@@ -97,6 +98,9 @@ export default defineConfig(({ command, mode }) => {
         minify: true,
         template: 'build/index.html',
       }),
+      tailwindAutoReference(
+        resolvePath('src/assets/style/tailwindcss-entry.css'),
+      ),
       tailwindcss(),
       vue(),
       vueJsx(),

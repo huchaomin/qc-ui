@@ -31,11 +31,11 @@ console.log(routerStore.routersRaw)
   <TAside>
     <TMenu :value="value" :default-expanded="defaultExpanded">
       <template #logo>
-        <div class="flex items-center">
+        <div class="!ml-2 flex items-center">
           <TImage
             :src="logoUrl"
             class="logo"
-            style="width: 32px; height: 32px"
+            style="width: 28px; height: 28px"
           ></TImage>
           <TTypographyTitle level="h4" class="!my-0 !ml-2">{{
             appName
@@ -53,6 +53,14 @@ console.log(routerStore.routersRaw)
     .t-menu {
       padding: 4px 0;
     }
+  }
+
+  .t-menu__logo {
+    border-bottom: none !important;
+  }
+
+  .t-menu {
+    @apply !py-0;
   }
 
   .t-default-menu {
