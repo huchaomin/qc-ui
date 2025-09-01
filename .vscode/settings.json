@@ -7,7 +7,7 @@
   // },
   "fileheader.configObj": {
     "autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
-    "createHeader": false, // 新建文件自动添加头部注释
+    "createHeader": false // 新建文件自动添加头部注释
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.enable": true,
@@ -87,27 +87,30 @@
     "less",
     "scss",
     "pcss",
-    "postcss",
+    "postcss"
   ],
   "html.format.enable": false,
   "css.format.enable": false,
   "json.validate.enable": false,
   "[json]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[json5]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[html]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "files.associations": { // 深度合并
-    "*.css": "tailwindcss",
+  "[tailwindcss]": {
+    "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "cSpell.words": [
-    "tdesign"
-  ]
+  "files.associations": {
+    // 深度合并
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.experimental.configFile": "src/assets/style/tailwindcss-entry.css",
+  "cSpell.words": ["tdesign"]
 }

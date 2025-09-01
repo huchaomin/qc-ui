@@ -37,7 +37,9 @@ console.log(routerStore.routersRaw)
             class="logo"
             style="width: 32px; height: 32px"
           ></TImage>
-          <TTypographyTitle level="h4">{{ appName }}</TTypographyTitle>
+          <TTypographyTitle level="h4" class="!my-0 !ml-2">{{
+            appName
+          }}</TTypographyTitle>
         </div>
       </template>
       <MenuNode :model="routerStore.routersRaw[0]!.children!"></MenuNode>

@@ -27,7 +27,7 @@ export default {
   singleAttributePerLine: false, // 会在 HTML、JSX、Vue 和 Angular 中格式化为每个属性单独占一行。
   singleQuote: true, // 使用单引号
   tabWidth: 2, // 缩进长度
-  tailwindStylesheet: './src/assets/tailwindcss.css',
+  tailwindStylesheet: './src/assets/style/tailwindcss-entry.css',
   trailingComma: 'all',
   useTabs: false, // 使用空格代替tab缩进
   vueIndentScriptAndStyle: false, // 不对vue中的script及style标签缩进
