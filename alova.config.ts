@@ -29,8 +29,8 @@ export default {
         ]
         return apiDescriptor
       },
-      // input: 'src/plugins/alova/generate/pl-admin.swagger.json',
-      input: 'http://127.0.0.1:4523/export/openapi/4?version=2.0', // 以当前项目为相对目录的本地地址
+      input: 'src/plugins/alova/generate/pl-admin.swagger.json',
+      // input: 'http://127.0.0.1:4523/export/openapi/4?version=2.0', // 以当前项目为相对目录的本地地址
       output: 'src/plugins/alova/generate/pl-admin', // 输出目录
     },
   ],

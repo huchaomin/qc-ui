@@ -18,9 +18,14 @@ import type { Alova, MethodType, AlovaGenerics, AlovaMethodCreateConfig } from '
 import { Method } from 'alova';
 import apiDefinitions from './apiDefinitions';
 
+const cache = Object.create(null);
 const createFunctionalProxy = (array: (string | symbol)[], alovaInstance: Alova<AlovaGenerics>, configMap: any) => {
+  const apiPathKey = array.join('.') as keyof typeof apiDefinitions;
+  if (cache[apiPathKey]) {
+    return cache[apiPathKey];
+  }
   // create a new proxy instance
-  return new Proxy(function () {}, {
+  const proxy = new Proxy(function () {}, {
     get(_, property) {
       // record the target property, so that it can get the completed accessing paths
       const newArray = [...array, property];
@@ -28,7 +33,6 @@ const createFunctionalProxy = (array: (string | symbol)[], alovaInstance: Alova<
       return createFunctionalProxy(newArray, alovaInstance, configMap);
     },
     apply(_, __, [config]) {
-      const apiPathKey = array.join('.') as keyof typeof apiDefinitions;
       const apiItem = apiDefinitions[apiPathKey];
       if (!apiItem) {
         throw new Error(`the api path of \`${apiPathKey}\` is not found`);
@@ -59,6 +63,8 @@ const createFunctionalProxy = (array: (string | symbol)[], alovaInstance: Alova<
       return new Method(method!.toUpperCase() as MethodType, alovaInstance, urlReplaced, mergedConfig, data);
     }
   });
+  cache[apiPathKey] = proxy;
+  return proxy;
 };
 
 export const createApis = (alovaInstance: Alova<AlovaGenerics>, configMap: any) => {
@@ -67,9 +73,11 @@ export const createApis = (alovaInstance: Alova<AlovaGenerics>, configMap: any) 
       return createFunctionalProxy([property], alovaInstance, configMap);
     }
   });
+  return Apis;
+};
+export const mountApis = (Apis: PlAdmin) => {
   // define global variable `Apis`
   (globalThis as any).PlAdmin = Apis;
-  return Apis;
 };
 type MethodConfig<T> = AlovaMethodCreateConfig<
   (typeof import('./index'))['alovaInstance'] extends Alova<infer AG> ? AG : any,
@@ -85,7 +93,7 @@ type APISofParameters<Tag extends string, Url extends string> = Tag extends keyo
   : any;
 type MethodsConfigMap = {
   [P in keyof typeof import('./apiDefinitions').default]?: MethodConfig<
-    P extends `${infer Tag}.${infer Url}` ? Parameters<APISofParameters<Tag, Url>[0]['transform']>[0] : any
+    P extends `${infer Tag}.${infer Url}` ? Parameters<NonNullable<APISofParameters<Tag, Url>[0]>['transform']>[0] : any
   >;
 };
 export const withConfigType = <Config extends MethodsConfigMap>(config: Config) => config;

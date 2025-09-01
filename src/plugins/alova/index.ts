@@ -11,7 +11,10 @@ type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']> & {
 }
 
 export default createAlova({
-  baseURL: sysPath.join(import.meta.env.VITE_BASE_URL, import.meta.env.VITE_API_PREFIX),
+  baseURL: sysPath.join(
+    import.meta.env.VITE_BASE_URL,
+    import.meta.env.VITE_API_PREFIX,
+  ),
   // 请求前拦截器 可以为异步函数
   beforeRequest(method) {
     method.meta = {
@@ -30,7 +33,8 @@ export default createAlova({
       ...(method.meta ?? {}),
     }
     const loginStore = useLoginStore()
-    const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } = method.meta as ThisAlovaCustomTypes
+    const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } =
+      method.meta as ThisAlovaCustomTypes
 
     if (useToken) {
       if (loginStore.token) {
@@ -50,8 +54,15 @@ export default createAlova({
     if (typeof params !== 'string') {
       const paramsCopy: Record<string, any> = {}
       Object.keys(params).forEach((key: string) => {
-        if (_.isNumber(params[key]) || _.isString(params[key]) || _.isBoolean(params[key]) || !useEmptyParams) {
-          paramsCopy[encodeURIComponent(key)] = encodeURIComponent(params[key] as string)
+        if (
+          _.isNumber(params[key]) ||
+          _.isString(params[key]) ||
+          _.isBoolean(params[key]) ||
+          !useEmptyParams
+        ) {
+          paramsCopy[encodeURIComponent(key)] = encodeURIComponent(
+            params[key] as string,
+          )
         }
       })
       method.config.params = paramsCopy
@@ -79,7 +90,10 @@ export default createAlova({
       method.data = formData
     }
 
-    if (method.config.timeout === TIMEOUT && (useFormData || method.data instanceof FormData)) {
+    if (
+      method.config.timeout === TIMEOUT &&
+      (useFormData || method.data instanceof FormData)
+    ) {
       method.config.timeout = 0
     }
   },
@@ -131,11 +145,19 @@ export default createAlova({
         return Promise.reject(response)
       }
 
-      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } =
-        method.meta as ThisAlovaCustomTypes
+      const {
+        useDataResult,
+        useDownload,
+        useFailMsg,
+        useResponseBlob,
+        useSuccessMsg,
+      } = method.meta as ThisAlovaCustomTypes
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
-      if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
+      if (
+        useResponseBlob &&
+        !headers.get('content-type')?.includes('application/json')
+      ) {
         if (useDownload !== undefined && useDownload !== false) {
           void saveAs(await response.blob(), useDownload as string) // TODO true 从响应头获取文件名
         }
@@ -148,8 +170,10 @@ export default createAlova({
 
       // eslint-disable-next-line ts/no-unsafe-member-access
       if (resData?.code !== undefined) {
-        const { code, msg } = resData as {
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        const { code, data, msg } = resData as {
           code: number
+          data?: any
           msg: string
         }
 
@@ -184,8 +208,8 @@ export default createAlova({
             void $msg(msg)
           }
 
-          // eslint-disable-next-line ts/no-unsafe-return, ts/no-unsafe-member-access
-          return useDataResult ? (resData.data === undefined ? resData : resData.data) : resData
+          // eslint-disable-next-line ts/no-unsafe-return
+          return useDataResult ? (data === undefined ? resData : data) : resData
         }
       }
 

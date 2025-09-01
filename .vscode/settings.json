@@ -101,16 +101,8 @@
   "[json5]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   },
-  "[markdown]": {
-    "editor.wordWrap": "off", // 不管编辑器多宽都不换行
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "files.trimTrailingWhitespace": false,
-    "editor.quickSuggestions": {
-      "other": "on",
-      "comments": "off",
-      "strings": "on",
-    },
-    "editor.acceptSuggestionOnEnter": "on",
+  "[html]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "files.associations": { // 深度合并
     "*.css": "tailwindcss",

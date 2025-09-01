@@ -15,9 +15,12 @@ export default (
     resolve: (name) => {
       const { exclude, library = 'vue' } = options
       const importFrom = options.esm ? '/esm' : ''
-      if (isExclude(name, exclude)) return
 
-      if (options.resolveIcons && name.match(/[a-z]Icon$/)) {
+      if (isExclude(name, exclude)) {
+        return
+      }
+
+      if (options.resolveIcons && name.match(/[a-z]Icon$/) !== null) {
         return {
           from: `tdesign-icons-${library}${importFrom}`,
           name,
@@ -38,8 +41,8 @@ export default (
         }
       }
 
-      if (name.match(/^T[A-Z]/) || pluginList.includes(name)) {
-        const importName = name.match(/^T[A-Z]/) ? name.slice(1) : name
+      if (name.match(/^T[A-Z]/) !== null || pluginList.includes(name)) {
+        const importName = name.match(/^T[A-Z]/) !== null ? name.slice(1) : name
         return {
           from: `tdesign-${library}${importFrom}`,
           name: importName,

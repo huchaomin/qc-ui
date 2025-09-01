@@ -126,7 +126,8 @@ export default antfu(
       ...perfectionistConfig[0].rules,
     },
   })
-  .append(
+  .append({
+    ignores: ['**/*.md', '**/*.html'],
     // https://github.com/prettier/eslint-plugin-prettier
-    eslintPluginPrettierRecommended,
-  )
+    ...eslintPluginPrettierRecommended,
+  })

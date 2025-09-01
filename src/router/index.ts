@@ -2,11 +2,21 @@
  * 路由守卫 可选的第三个参数 next，将会被移除
  * hasNecessaryRoute 与 hasRoute
  */
-import type { RouteRecordSingleView, RouteRecordSingleViewWithChildren } from 'vue-router'
-import { createRouter, createWebHistory, isNavigationFailure, NavigationFailureType } from 'vue-router'
+import type {
+  RouteRecordSingleView,
+  RouteRecordSingleViewWithChildren,
+} from 'vue-router'
+import {
+  createRouter,
+  createWebHistory,
+  isNavigationFailure,
+  NavigationFailureType,
+} from 'vue-router'
 import Index from '@/layout/Index.vue'
 
-export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWithChildren {
+export function getTopRoute():
+  | RouteRecordSingleView
+  | RouteRecordSingleViewWithChildren {
   return {
     children: [
       {
@@ -113,7 +123,10 @@ router.afterEach((to, from, failure) => {
       recentRoutersStore.remove(from.name)
     }
 
-    const fromName = parentName === from.name || to.query._fromLeftTree !== 'true' ? from.name : undefined
+    const fromName =
+      parentName === from.name || to.query._fromLeftTree !== 'true'
+        ? from.name
+        : undefined
     recentRoutersStore.add(fromName, {
       name,
       query: to.query,

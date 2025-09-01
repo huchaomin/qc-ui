@@ -88,12 +88,7 @@ type Alova2Method<
       >
     : never;
 
-export type QcResult_boolean_ = {
-  code?: number;
-  data?: boolean;
-  msg?: string;
-};
-export type _61 = {
+export interface _61 {
   /**
    * 导入批次
    */
@@ -170,46 +165,8 @@ export type _61 = {
    * 用户数
    */
   userQty?: number;
-};
-export type QcResult_List_38 = {
-  code?: number;
-  data?: _61[];
-  msg?: string;
-};
-export type QcResult = {
-  code?: number;
-  data?: object;
-  msg?: string;
-};
-export type BasePage_43 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _61[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_38 = {
-  code?: number;
-  /**
-   * 账户导入记录对象
-   * ---
-   * 账户导入记录实体
-   */
-  data?: _61;
-  msg?: string;
-};
-export type _70 = {
+}
+export interface _70 {
   /**
    * 导入批次
    */
@@ -250,155 +207,8 @@ export type _70 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_45 = {
-  code?: number;
-  data?: _70[];
-  msg?: string;
-};
-export type BasePage_51 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _70[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_46 = {
-  code?: number;
-  /**
-   * 还款账号操作记录对象
-   * ---
-   * 还款账号操作记录实体
-   */
-  data?: _70;
-  msg?: string;
-};
-export type _json = {
-  /**
-   * 核对材料类型id
-   */
-  checkTypeId?: number;
-  /**
-   * 核对材料类型
-   */
-  checkTypeName?: string;
-  /**
-   * 合同号
-   */
-  contractNo?: string;
-  /**
-   * 文件路径
-   */
-  fileUrl?: string;
-  /**
-   * 是否缺失 1-是 0-否
-   */
-  isShort?: string;
-};
-export type _34 = {
-  /**
-   * 核对结果明细json
-   */
-  checkJson?: _json[];
-  /**
-   * 合同号
-   */
-  contractNo?: string;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 合同文件路径
-   */
-  filePath?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 导入批次
-   */
-  importBatch?: string;
-  /**
-   * 资产包
-   */
-  pkgId?: string;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-  /**
-   * 用户身份证号
-   */
-  userIdNo?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-};
-export type QcResult_List_18 = {
-  code?: number;
-  data?: _34[];
-  msg?: string;
-};
-export type BasePage_22 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _34[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_19 = {
-  code?: number;
-  /**
-   * 材料核对详情对象
-   * ---
-   * 材料核对详情实体
-   */
-  data?: _34;
-  msg?: string;
-};
-export type QcResult_object_ = {
-  code?: number;
-  data?: object;
-  msg?: string;
-};
-export type AssetMaterialCheckReq = {
+}
+export interface AssetMaterialCheckReq {
   /**
    * 导入批次
    */
@@ -411,227 +221,8 @@ export type AssetMaterialCheckReq = {
    * 模板ID
    */
   templateId?: number;
-};
-export type Material_check_result_ = {
-  /**
-   * 核对材料类型id
-   */
-  checkTypeId?: number;
-  /**
-   * 核对材料类型
-   */
-  checkTypeName?: string;
-  /**
-   * 文件关键字
-   */
-  fileCoreWord?: string;
-  /**
-   * 缺失材料合同数
-   */
-  shortContractNum?: number;
-  /**
-   * 缺失材料用户数
-   */
-  shortUserNum?: number;
-  /**
-   * 有效材料合同数
-   */
-  validContractNum?: number;
-  /**
-   * 有效材料用户数
-   */
-  validUserNum?: number;
-};
-export type _dto = {
-  /**
-   * 申请方（债权主体）
-   */
-  applicant?: string;
-  /**
-   * 批次名称
-   */
-  caseBatchName?: string;
-  /**
-   * 案件类型
-   */
-  caseType?: number;
-  /**
-   * 材料检查明细文件url
-   */
-  checkDetailFileUrl?: string;
-  checkResultJson?: Material_check_result_[];
-  /**
-   * 合同总数
-   */
-  contractNum?: number;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 导入批次
-   */
-  importBatch?: string;
-  /**
-   * 资产包id
-   */
-  pkgId?: string;
-  /**
-   * 材料核对状态 -1-核对失败 0-未核对 1-核对中 2-核对成功
-   */
-  status?: number;
-  /**
-   * 模板ID
-   */
-  templateId?: number;
-  /**
-   * 模版名称
-   */
-  templateName?: string;
-  /**
-   * 用户总数
-   */
-  userNum?: number;
-};
-export type QcResult_dto_ = {
-  code?: number;
-  /**
-   * 材料核对结果返回dto
-   * ---
-   * 材料核对结果返回dto
-   */
-  data?: _dto;
-  msg?: string;
-};
-export type _33 = {
-  /**
-   * 材料检查明细文件url
-   */
-  checkDetailFileUrl?: string;
-  checkResultJson?: Material_check_result_[];
-  /**
-   * 合同总数
-   */
-  contractNum?: number;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 导入批次
-   */
-  importBatch?: string;
-  /**
-   * 资产包id
-   */
-  pkgId?: string;
-  /**
-   * 材料核对状态 -1-核对失败 0-未核对 1-核对中 2-核对成功
-   */
-  status?: number;
-  /**
-   * 模板ID
-   */
-  templateId?: number;
-  /**
-   * 模版名称
-   */
-  templateName?: string;
-  /**
-   * 用户总数
-   */
-  userNum?: number;
-};
-export type BasePage_21 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _33[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _42 = {
-  /**
-   * 标准字段名称
-   */
-  commonName?: string;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 字段类型 1-标准字段 2-追加字段
-   */
-  fieldType?: number;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 实际名称
-   */
-  realName?: string;
-  /**
-   * 排序
-   */
-  sort?: number;
-  /**
-   * 状态 0-生效 1-不生效
-   */
-  status?: number;
-  /**
-   * 模板ID
-   */
-  templateId?: number;
-  /**
-   * 模板名称
-   */
-  templateName?: string;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-};
-export type QcResult_List_24 = {
-  code?: number;
-  data?: _42[];
-  msg?: string;
-};
-export type _67 = {
+}
+export interface _67 {
   /**
    * 合同号
    */
@@ -668,41 +259,8 @@ export type _67 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_42 = {
-  code?: number;
-  data?: _67[];
-  msg?: string;
-};
-export type BasePage_48 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _67[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_43 = {
-  code?: number;
-  /**
-   * 资产包附加字段对象
-   * ---
-   * 资产包附加字段实体
-   */
-  data?: _67;
-  msg?: string;
-};
-export type _2 = {
+}
+export interface _2 {
   /**
    * 联系人
    */
@@ -743,13 +301,8 @@ export type _2 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_ = {
-  code?: number;
-  data?: _2[];
-  msg?: string;
-};
-export type _65 = {
+}
+export interface _65 {
   /**
    * 资产类型
    */
@@ -887,41 +440,8 @@ export type _65 = {
    * 查看合同文件
    */
   viewFileFlag?: number;
-};
-export type QcResult_List_41 = {
-  code?: number;
-  data?: _65[];
-  msg?: string;
-};
-export type BasePage_ = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _2[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_ = {
-  code?: number;
-  /**
-   * 债权主体对象
-   * ---
-   * 债权主体实体
-   */
-  data?: _2;
-  msg?: string;
-};
-export type _63 = {
+}
+export interface _63 {
   /**
    * 结清方式
    */
@@ -962,46 +482,8 @@ export type _63 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_40 = {
-  code?: number;
-  /**
-   * 资产包划账配置对象
-   * ---
-   * 资产包划账配置实体
-   */
-  data?: _63;
-  msg?: string;
-};
-export type QcResult_41 = {
-  code?: number;
-  /**
-   * 资产包对象
-   * ---
-   * 资产包实体
-   */
-  data?: _65;
-  msg?: string;
-};
-export type BasePage_46 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _65[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _64 = {
+}
+export interface _64 {
   assetType?: number;
   checkStatus?: number;
   id?: string;
@@ -1019,8 +501,8 @@ export type _64 = {
   seller?: string;
   useLastId?: boolean;
   viewFileFlag?: number;
-};
-export type _66 = {
+}
+export interface _66 {
   /**
    * 合同数
    */
@@ -1093,64 +575,58 @@ export type _66 = {
    * 用户数
    */
   userQty?: number;
-};
-export type BasePage_47 = {
+}
+export interface _42 {
   /**
-   * 消息状态码
+   * 标准字段名称
    */
-  code?: number;
+  commonName?: string;
   /**
-   * 消息内容
+   * 创建人
    */
-  msg?: string;
+  createBy?: string;
   /**
-   * 列表数据
+   * 创建时间
    */
-  rows?: _66[];
+  createTime?: string;
   /**
-   * 总记录数
+   * 字段类型 1-标准字段 2-追加字段
    */
-  total?: number;
-};
-export type QcResult_42 = {
-  code?: number;
+  fieldType?: number;
   /**
-   * 资产包导入记录对象
-   * ---
-   * 资产包导入记录实体
+   * 主键
    */
-  data?: _66;
-  msg?: string;
-};
-export type QcResult_List_40 = {
-  code?: number;
-  data?: _63[];
-  msg?: string;
-};
-export type BasePage_45 = {
+  id?: number;
   /**
-   * 消息状态码
+   * 实际名称
    */
-  code?: number;
+  realName?: string;
   /**
-   * 消息内容
+   * 排序
    */
-  msg?: string;
+  sort?: number;
   /**
-   * 列表数据
+   * 状态 0-生效 1-不生效
    */
-  rows?: _63[];
+  status?: number;
   /**
-   * 总记录数
+   * 模板ID
    */
-  total?: number;
-};
-export type QcResult_string_ = {
-  code?: number;
-  data?: string;
-  msg?: string;
-};
-export type _56 = {
+  templateId?: number;
+  /**
+   * 模板名称
+   */
+  templateName?: string;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+}
+export interface _56 {
   /**
    * 核对错误信息
    */
@@ -1211,31 +687,8 @@ export type _56 = {
    * 用户总数
    */
   userNum?: number;
-};
-export type QcResult_List_33 = {
-  code?: number;
-  data?: _56[];
-  msg?: string;
-};
-export type BasePage_38 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _56[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _40 = {
+}
+export interface _40 {
   /**
    * 轨迹类型
    */
@@ -1316,41 +769,8 @@ export type _40 = {
    * 用户姓名
    */
   userName?: string;
-};
-export type QcResult_List_23 = {
-  code?: number;
-  data?: _40[];
-  msg?: string;
-};
-export type BasePage_27 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _40[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_24 = {
-  code?: number;
-  /**
-   * 案件轨迹对象
-   * ---
-   * 案件轨迹实体
-   */
-  data?: _40;
-  msg?: string;
-};
-export type _10 = {
+}
+export interface _10 {
   /**
    * 合同号
    */
@@ -1387,41 +807,8 @@ export type _10 = {
    * 用户ID
    */
   userId?: string;
-};
-export type QcResult_List_5 = {
-  code?: number;
-  data?: _10[];
-  msg?: string;
-};
-export type BasePage_5 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _10[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_5 = {
-  code?: number;
-  /**
-   * 合同材料对象
-   * ---
-   * 合同材料实体
-   */
-  data?: _10;
-  msg?: string;
-};
-export type _35 = {
+}
+export interface _35 {
   /**
    * 操作类型
    */
@@ -1462,41 +849,8 @@ export type _35 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_19 = {
-  code?: number;
-  data?: _35[];
-  msg?: string;
-};
-export type BasePage_23 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _35[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_20 = {
-  code?: number;
-  /**
-   * 案件操作批次对象
-   * ---
-   * 案件操作批次实体
-   */
-  data?: _35;
-  msg?: string;
-};
-export type _36 = {
+}
+export interface _36 {
   /**
    * 委托日期
    */
@@ -1573,41 +927,8 @@ export type _36 = {
    * 用户姓名
    */
   userName?: string;
-};
-export type QcResult_List_20 = {
-  code?: number;
-  data?: _36[];
-  msg?: string;
-};
-export type BasePage_24 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _36[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_21 = {
-  code?: number;
-  /**
-   * 案件操作明细对象
-   * ---
-   * 案件操作明细实体
-   */
-  data?: _36;
-  msg?: string;
-};
-export type _38 = {
+}
+export interface _38 {
   /**
    * 委托日期
    */
@@ -1852,40 +1173,90 @@ export type _38 = {
    * 版本号
    */
   version?: number;
-};
-export type _71 = {
+}
+export interface _37 {
+  caseStatus?: number;
+  clearStatus?: number;
+  clearStatusArr?: number[];
+  dealType?: number;
+  diantiaoAssignBatch?: string;
+  diantiaoAssignStatus?: number;
+  diantiaoAssignedDate?: string;
+  diantiaoAssignedDateEnd?: string;
+  diantiaoAssignedDateStart?: string;
+  diantiaoExpireDate?: string;
+  diantiaoExpireDateEnd?: string;
+  diantiaoExpireDateStart?: string;
+  diantiaoFlag?: number;
+  diantiaoPartnerId?: number;
+  diantiaoPartnerName?: string;
+  diantiaoSyncStatus?: number;
+  extendUid?: string;
+  gender?: string;
+  id?: number;
+  idCardArea?: string;
+  idCardQuery?: string;
+  idList?: number[];
+  isAsc?: string;
+  lastId?: number;
+  lawsuitAssignStatus?: number;
+  lawsuitAssignedDate?: string;
+  lawsuitAssignedDateEnd?: string;
+  lawsuitAssignedDateStart?: string;
+  lawsuitExpireDate?: string;
+  lawsuitExpireDateEnd?: string;
+  lawsuitExpireDateStart?: string;
+  lawsuitFlag?: number;
+  lawsuitPartnerId?: number;
+  lawsuitPartnerName?: string;
+  lawsuitSyncStatus?: number;
+  lawsuitTagZg?: string;
+  mediationTagZg?: string;
+  nationality?: string;
   /**
-   * 账户批次
+   * 排除的案件状态
    */
-  accBatch?: string;
+  neCaseStatus?: number[];
   /**
-   * 虚户名
+   * 排除的债权主体
    */
-  accName?: string;
+  neOwners?: string[];
+  oldUserId?: string;
+  orderByColumn?: string;
+  orgPlanExpireDate?: string;
+  owner?: string;
+  pageNum?: number;
+  pageSize?: number;
+  phone?: string;
+  pkgGroup?: string;
+  pkgId?: string;
+  pkgIds?: string[];
+  registerProv?: string;
+  settleDateEnd?: string;
+  settleDateStart?: string;
+  useLastId?: boolean;
+  userId?: string;
+  userIdList?: string[];
+  userIdNo?: string;
+  userName?: string;
+}
+export interface _39 {
   /**
-   * 打款虚户号
+   * 调整后案件状态
    */
-  accNo?: string;
+  afterChangeStatus?: number;
   /**
-   * 启用状态
+   * 调整前案件状态
    */
-  accStatus?: number;
+  beforeChangeStatus?: number;
   /**
-   * 账号类型
+   * 案件ID
    */
-  accType?: number;
+  caseId?: number;
   /**
-   * 银行名
+   * 调整备注
    */
-  bankName?: string;
-  /**
-   * 开户地
-   */
-  branchCity?: string;
-  /**
-   * 分支行
-   */
-  branchName?: string;
+  changeRemark?: string;
   /**
    * 创建人
    */
@@ -1899,153 +1270,10 @@ export type _71 = {
    */
   id?: number;
   /**
-   * 债权主体
-   */
-  owner?: string;
-  /**
-   * 资产包号
-   */
-  pkgId?: string;
-  /**
-   * 二维码地址
-   */
-  qrCodeUrl?: string;
-  /**
-   * 排序
-   */
-  sortNo?: number;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-  /**
-   * 用户身份证号
-   */
-  userIdNo?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-};
-export type QcResult_List_46 = {
-  code?: number;
-  data?: _71[];
-  msg?: string;
-};
-export type _72 = {
-  /**
-   * 记账日期
-   */
-  accountingDate?: string;
-  /**
-   * 银行流水号
-   */
-  bankOrderNo?: string;
-  /**
-   * 还款附言
-   */
-  bankRemark?: string;
-  /**
-   * 导入批次ID
-   */
-  batchId?: number;
-  /**
-   * 案件ID
-   */
-  caseId?: number;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 处置类型
-   */
-  dealType?: number;
-  /**
-   * 部门id
-   */
-  deptId?: number;
-  /**
-   * 作业员ID
-   */
-  employeeId?: number;
-  /**
-   * 作业员姓名
-   */
-  employeeNickName?: string;
-  /**
-   * 对账流水ID
-   */
-  id?: number;
-  /**
-   * 原还款附言
-   */
-  orgBankRemark?: string;
-  /**
-   * 委案机构ID
-   */
-  partnerId?: number;
-  /**
-   * 委案机构名称
-   */
-  partnerName?: string;
-  /**
-   * 对方账号
-   */
-  payAccount?: string;
-  /**
-   * 还款金额
-   */
-  payAmt?: number;
-  /**
-   * 对方行名
-   */
-  payBankName?: string;
-  /**
-   * 支付渠道
-   */
-  payChannel?: string;
-  /**
-   * 还款日期
-   */
-  payDate?: string;
-  /**
-   * 还款时间
-   */
-  payDateTime?: string;
-  /**
-   * 对方户名
-   */
-  payName?: string;
-  /**
    * 资产包
    */
   pkgId?: string;
   /**
-   * 对账结果附注
-   */
-  reconMemo?: string;
-  /**
-   * 对账状态
-   */
-  reconStatus?: number;
-  /**
-   * 还款类型
-   */
-  repayType?: number;
-  /**
    * 更新人
    */
   updateBy?: string;
@@ -2053,25 +1281,8 @@ export type _72 = {
    * 更新时间
    */
   updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-  /**
-   * 收款虚户
-   */
-  userVirAcc?: string;
-};
-export type QcResult_List_47 = {
-  code?: number;
-  data?: _72[];
-  msg?: string;
-};
-export type _3 = {
+}
+export interface _3 {
   /**
    * 案件ID
    */
@@ -2176,13 +1387,8 @@ export type _3 = {
    * 用户姓名
    */
   userName?: string;
-};
-export type QcResult_List_2 = {
-  code?: number;
-  data?: _3[];
-  msg?: string;
-};
-export type _12 = {
+}
+export interface _12 {
   /**
    * 年龄
    */
@@ -2515,748 +1721,8 @@ export type _12 = {
    * 工作单位名称
    */
   workingCompName?: string;
-};
-export type QcResult_List_6 = {
-  code?: number;
-  data?: _12[];
-  msg?: string;
-};
-export type QcResult_List_21 = {
-  code?: number;
-  data?: _38[];
-  msg?: string;
-};
-export type _50 = {
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 电话
-   */
-  phone?: string;
-  /**
-   * 电话来源
-   */
-  phoneSource?: number;
-  /**
-   * 来源备注
-   */
-  sourceMemo?: string;
-  /**
-   * 是否有效
-   */
-  status?: number;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-};
-export type QcResult_List_30 = {
-  code?: number;
-  data?: _50[];
-  msg?: string;
-};
-export type _7 = {
-  /**
-   * 退案时间
-   */
-  caseExpireDate?: string;
-  /**
-   * 案件id
-   */
-  caseId?: number;
-  /**
-   * 当前欠款息费
-   */
-  curOverdueInterestFee?: number;
-  /**
-   * 当前欠款息费减免比例
-   */
-  curOverdueInterestFeeReduceRatio?: number;
-  /**
-   * 减免后当前欠款息费
-   */
-  curOverdueInterestFeeRemain?: number;
-  /**
-   * 当前欠款本金
-   */
-  curOverduePrincipal?: number;
-  /**
-   * 当前欠款本金减免比例
-   */
-  curOverduePrincipalReduceRatio?: number;
-  /**
-   * 减免后当前欠款本金
-   */
-  curOverduePrincipalRemain?: number;
-  /**
-   * 当前欠款总金额
-   */
-  curOverdueTotalamt?: number;
-  /**
-   * 当前欠款总金额减免比例
-   */
-  curOverdueTotalamtReduceRatio?: number;
-  /**
-   * 减免后当前欠款总金额
-   */
-  curOverdueTotalamtRemain?: number;
-  /**
-   * 减免到期时间
-   */
-  expireDate?: string;
-  /**
-   * 用户历史还款
-   */
-  historyRepayAmt?: number;
-  /**
-   * 原欠款息费
-   */
-  orgOverdueInterestFee?: number;
-  /**
-   * 原欠款息费减免比例
-   */
-  orgOverdueInterestFeeReduceRatio?: number;
-  /**
-   * 减免后原欠款息费
-   */
-  orgOverdueInterestFeeRemain?: number;
-  /**
-   * 原欠款本金
-   */
-  orgOverduePrincipal?: number;
-  /**
-   * 原欠款本金减免比例
-   */
-  orgOverduePrincipalReduceRatio?: number;
-  /**
-   * 减免后原欠款本金
-   */
-  orgOverduePrincipalRemain?: number;
-  /**
-   * 原欠款总金额
-   */
-  orgOverdueTotalamt?: number;
-  /**
-   * 原欠款总金额减免比例
-   */
-  orgOverdueTotalamtReduceRatio?: number;
-  /**
-   * 减免后原欠款总金额
-   */
-  orgOverdueTotalamtRemain?: number;
-  /**
-   * 是否减免初始本金
-   */
-  reduceCurPrincipal?: boolean;
-  /**
-   * 是否减免原始本金
-   */
-  reduceOrgPrincipal?: boolean;
-  /**
-   * 减免类型：1-本金以上2-本金以下
-   */
-  reductionType?: number;
-};
-export type _4 = {
-  /**
-   * 减免后待还金额
-   */
-  amtAfterReduction?: number;
-  /**
-   * 申请证明文件
-   */
-  applyFile?: string[];
-  /**
-   * 申请原因
-   */
-  applyReason?: string;
-  /**
-   * 申请时间
-   */
-  applyTime?: string;
-  /**
-   * 案件id
-   */
-  caseId?: number;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 处置方式：1-电调 2-法诉
-   */
-  dealType?: number;
-  /**
-   * 部门id
-   */
-  deptId?: number;
-  /**
-   * 申请人id
-   */
-  employeeId?: number;
-  /**
-   * 申请人姓名
-   */
-  employeeName?: string;
-  /**
-   * 减免到期日
-   */
-  expireDate?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 初审意见
-   */
-  initialReviewOpinion?: string;
-  /**
-   * 初审时间
-   */
-  initialReviewTime?: string;
-  /**
-   * 初审人
-   */
-  initialReviewer?: string;
-  /**
-   * 委案机构ID
-   */
-  partnerId?: number;
-  /**
-   * 机构名称
-   */
-  partnerName?: string;
-  /**
-   * 资产包id
-   */
-  pkgId?: string;
-  /**
-   * 复审意见
-   */
-  reReviewOpinion?: string;
-  /**
-   * 复审时间
-   */
-  reReviewTime?: string;
-  /**
-   * 复审人
-   */
-  reReviewer?: string;
-  /**
-   * 减免金额
-   */
-  reductionAmt?: number;
-  /**
-   * 减免金额详情
-   * ---
-   * 减免金额详情
-   */
-  reductionAmtDetail?: _7;
-  /**
-   * 减免期数
-   */
-  reductionPeriod?: number;
-  /**
-   * 减免类型：1-本金以上2-本金以下
-   */
-  reductionType?: number;
-  /**
-   * 减免还款方式（1：减免还款 2:减免分期还款）
-   */
-  repayType?: number;
-  /**
-   * 审批状态:1：待初审，2：初审不通过，3：待终审 4:终审不通过 5:终审通过
-   */
-  reviewStatus?: number;
-  /**
-   * 撤回人
-   */
-  revokeBy?: string;
-  /**
-   * 撤回意见
-   */
-  revokeOpinion?: string;
-  /**
-   * 撤回时间
-   */
-  revokeTime?: string;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户id
-   */
-  userId?: string;
-  /**
-   * 身份证号码
-   */
-  userIdNo?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-  /**
-   * 有效状态(1:有效,2:过期失效，3:已减免，4：覆盖失效, 5:案件失效 6：审核失效)
-   */
-  validStatus?: number;
-};
-export type QcResult_List_3 = {
-  code?: number;
-  data?: _4[];
-  msg?: string;
-};
-export type _69 = {
-  /**
-   * 记账日期
-   */
-  accountingDate?: string;
-  /**
-   * 银行订单号
-   */
-  bankOrderNo?: string;
-  /**
-   * 对账流水ID
-   */
-  bankStatementId?: number;
-  /**
-   * 导入批次ID
-   */
-  batchId?: number;
-  /**
-   * 案件ID
-   */
-  caseId?: number;
-  /**
-   * 合同号
-   */
-  contractNo?: string;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 处置类型
-   */
-  dealType?: number;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 备注
-   */
-  memo?: string;
-  /**
-   * 委案机构ID
-   */
-  partnerId?: number;
-  /**
-   * 付款人账号
-   */
-  payAccount?: string;
-  /**
-   * 付款金额
-   */
-  payAmt?: number;
-  /**
-   * 付款银行
-   */
-  payBankName?: string;
-  /**
-   * 付款日期
-   */
-  payDate?: string;
-  /**
-   * 还费用金额
-   */
-  payFee?: number;
-  /**
-   * 还利息金额
-   */
-  payInterest?: number;
-  /**
-   * 付款人姓名
-   */
-  payName?: string;
-  /**
-   * 还罚息金额
-   */
-  payPenalty?: number;
-  /**
-   * 还本金金额
-   */
-  payPrincipal?: number;
-  /**
-   * 资产包
-   */
-  pkgId?: string;
-  /**
-   * 对账状态
-   */
-  reconStatus?: number;
-  /**
-   * 还款类型
-   */
-  repayType?: number;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-};
-export type QcResult_List_44 = {
-  code?: number;
-  data?: _69[];
-  msg?: string;
-};
-export type _8 = {
-  /**
-   * 审核状态
-   */
-  auditStatus?: number;
-  /**
-   * 审核时间
-   */
-  auditTime?: string;
-  /**
-   * 案件ID
-   */
-  caseId?: number;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 部门ID
-   */
-  deptId?: number;
-  /**
-   * 作业员ID
-   */
-  employeeId?: number;
-  /**
-   * 作业员姓名
-   */
-  employeeNickName?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 备注
-   */
-  memo?: string;
-  /**
-   * 凭证
-   */
-  noteFile?: string;
-  /**
-   * 委案机构ID
-   */
-  partnerId?: number;
-  /**
-   * 委案机构名称
-   */
-  partnerName?: string;
-  /**
-   * 产品名称
-   */
-  pkgId?: string;
-  /**
-   * 对账状态
-   */
-  reconStatus?: number;
-  /**
-   * 还款流水id
-   */
-  repayBankStatementId?: number;
-  /**
-   * 还款金额
-   */
-  repaymentAmount?: number;
-  /**
-   * 付款银行卡号
-   */
-  repaymentCard?: string;
-  /**
-   * 付款银行卡类型
-   */
-  repaymentCardType?: string;
-  /**
-   * 还款日期
-   */
-  repaymentDate?: string;
-  /**
-   * 还款人
-   */
-  repaymenter?: string;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-};
-export type QcResult_List_4 = {
-  code?: number;
-  data?: _8[];
-  msg?: string;
-};
-export type _39 = {
-  /**
-   * 调整后案件状态
-   */
-  afterChangeStatus?: number;
-  /**
-   * 调整前案件状态
-   */
-  beforeChangeStatus?: number;
-  /**
-   * 案件ID
-   */
-  caseId?: number;
-  /**
-   * 调整备注
-   */
-  changeRemark?: string;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 资产包
-   */
-  pkgId?: string;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-};
-export type QcResult_List_22 = {
-  code?: number;
-  data?: _39[];
-  msg?: string;
-};
-export type BasePage_25 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _38[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _37 = {
-  caseStatus?: number;
-  clearStatus?: number;
-  clearStatusArr?: number[];
-  dealType?: number;
-  diantiaoAssignBatch?: string;
-  diantiaoAssignStatus?: number;
-  diantiaoAssignedDate?: string;
-  diantiaoAssignedDateEnd?: string;
-  diantiaoAssignedDateStart?: string;
-  diantiaoExpireDate?: string;
-  diantiaoExpireDateEnd?: string;
-  diantiaoExpireDateStart?: string;
-  diantiaoFlag?: number;
-  diantiaoPartnerId?: number;
-  diantiaoPartnerName?: string;
-  diantiaoSyncStatus?: number;
-  extendUid?: string;
-  gender?: string;
-  id?: number;
-  idCardArea?: string;
-  idCardQuery?: string;
-  idList?: number[];
-  isAsc?: string;
-  lastId?: number;
-  lawsuitAssignStatus?: number;
-  lawsuitAssignedDate?: string;
-  lawsuitAssignedDateEnd?: string;
-  lawsuitAssignedDateStart?: string;
-  lawsuitExpireDate?: string;
-  lawsuitExpireDateEnd?: string;
-  lawsuitExpireDateStart?: string;
-  lawsuitFlag?: number;
-  lawsuitPartnerId?: number;
-  lawsuitPartnerName?: string;
-  lawsuitSyncStatus?: number;
-  lawsuitTagZg?: string;
-  mediationTagZg?: string;
-  nationality?: string;
-  /**
-   * 排除的案件状态
-   */
-  neCaseStatus?: number[];
-  /**
-   * 排除的债权主体
-   */
-  neOwners?: string[];
-  oldUserId?: string;
-  orderByColumn?: string;
-  orgPlanExpireDate?: string;
-  owner?: string;
-  pageNum?: number;
-  pageSize?: number;
-  phone?: string;
-  pkgGroup?: string;
-  pkgId?: string;
-  pkgIds?: string[];
-  registerProv?: string;
-  settleDateEnd?: string;
-  settleDateStart?: string;
-  useLastId?: boolean;
-  userId?: string;
-  userIdList?: string[];
-  userIdNo?: string;
-  userName?: string;
-};
-export type QcResult_22 = {
-  code?: number;
-  /**
-   * 案件池对象
-   * ---
-   * 案件池实体
-   */
-  data?: _38;
-  msg?: string;
-};
-export type BasePage_26 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _39[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_23 = {
-  code?: number;
-  /**
-   * 案件状态变更记录对象
-   * ---
-   * 案件状态变更记录实体
-   */
-  data?: _39;
-  msg?: string;
-};
-export type BasePage_2 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _3[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_2 = {
-  code?: number;
-  /**
-   * 催记对象
-   * ---
-   * 催记实体
-   */
-  data?: _3;
-  msg?: string;
-};
-export type StreamingResponseBody = object;
-export type _9 = {
+}
+export interface _9 {
   contractNo?: string;
   fileName?: string;
   fileUrl?: string;
@@ -3270,26 +1736,8 @@ export type _9 = {
   pkgId?: string;
   useLastId?: boolean;
   userId?: string;
-};
-export type BasePage_6 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _12[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _11 = {
+}
+export interface _11 {
   clearStatus?: number;
   contractNo?: string;
   contractNoList?: string[];
@@ -3319,18 +1767,8 @@ export type _11 = {
   userIdList?: string[];
   userIdNo?: string;
   userName?: string;
-};
-export type QcResult_6 = {
-  code?: number;
-  /**
-   * 合同管理对象
-   * ---
-   * 合同管理实体
-   */
-  data?: _12;
-  msg?: string;
-};
-export type _24 = {
+}
+export interface _24 {
   /**
    * 年龄
    */
@@ -3631,31 +2069,8 @@ export type _24 = {
    * 工作单位名称
    */
   workingCompName?: string;
-};
-export type QcResult_List_13 = {
-  code?: number;
-  data?: _24[];
-  msg?: string;
-};
-export type BasePage_15 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _24[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _23 = {
+}
+export interface _23 {
   clearStatus?: number;
   contractNo?: string;
   contractNoList?: string[];
@@ -3686,18 +2101,8 @@ export type _23 = {
   userIdList?: string[];
   userIdNo?: string;
   userName?: string;
-};
-export type QcResult_13 = {
-  code?: number;
-  /**
-   * 机构合同池对象
-   * ---
-   * 机构合同池实体
-   */
-  data?: _24;
-  msg?: string;
-};
-export type _15 = {
+}
+export interface _15 {
   /**
    * 度言系统角色ID
    */
@@ -3754,242 +2159,8 @@ export type _15 = {
    * 用户id
    */
   userId?: number;
-};
-export type QcResult_List_8 = {
-  code?: number;
-  data?: _15[];
-  msg?: string;
-};
-export type _49 = {
-  /**
-   * 年龄
-   */
-  age?: number;
-  /**
-   * 出生日期
-   */
-  birthday?: string;
-  /**
-   * 职业
-   */
-  career?: string;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 学历
-   */
-  education?: string;
-  /**
-   * 性别
-   */
-  gender?: string;
-  /**
-   * 有无子女
-   */
-  hasChild?: string;
-  /**
-   * 用户ID
-   */
-  id?: string;
-  /**
-   * 身份证归属地
-   */
-  idCardArea?: string;
-  /**
-   * 身份证号后6位
-   */
-  idCardQuery?: string;
-  /**
-   * 是否涉执
-   */
-  lawsuitStatus?: number;
-  /**
-   * 居住地址
-   */
-  liveAddr?: string;
-  /**
-   * 居住省份
-   */
-  liveProv?: string;
-  /**
-   * 婚姻状况
-   */
-  maritalStatus?: string;
-  /**
-   * 民族
-   */
-  nationality?: string;
-  /**
-   * 电话
-   */
-  phone?: string;
-  /**
-   * 户籍地址
-   */
-  registerAddr?: string;
-  /**
-   * 户籍城市
-   */
-  registerCity?: string;
-  /**
-   * 户籍省份
-   */
-  registerProv?: string;
-  /**
-   * 还款标签
-   */
-  repayTag?: number;
-  /**
-   * 风险标签
-   */
-  riskTag?: number;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 身份证
-   */
-  userIdNo?: string;
-  /**
-   * 用户姓名
-   */
-  userName?: string;
-};
-export type QcResult_List_29 = {
-  code?: number;
-  data?: _49[];
-  msg?: string;
-};
-export type BasePage_9 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _15[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_8 = {
-  code?: number;
-  /**
-   * 度言用户映射对象
-   * ---
-   * 度言用户映射实体
-   */
-  data?: _15;
-  msg?: string;
-};
-export type _18 = {
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 部门id
-   */
-  deptId?: number;
-  /**
-   * 导出人id
-   */
-  employeeId?: number;
-  /**
-   * 导出人
-   */
-  employeeName?: string;
-  /**
-   * 导出文件地址
-   */
-  exportFileUrl?: string;
-  /**
-   * 导出进度
-   */
-  exportProgress?: string;
-  /**
-   * 系统来源1-资管 2-机构
-   */
-  exportSource?: number;
-  /**
-   * 导出状态0-导出中 1-导出失败 2导出成功
-   */
-  exportStatus?: number;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 机构id
-   */
-  partnerId?: number;
-  /**
-   * 机构名称
-   */
-  partnerName?: string;
-  /**
-   * 任务名称
-   */
-  taskName?: string;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-};
-export type BasePage_11 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _18[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_10 = {
-  code?: number;
-  /**
-   * 文件导出任务对象
-   * ---
-   * 文件导出任务实体
-   */
-  data?: _18;
-  msg?: string;
-};
-export type _17 = {
+}
+export interface _17 {
   /**
    * 创建人
    */
@@ -4022,41 +2193,8 @@ export type _17 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_9 = {
-  code?: number;
-  data?: _17[];
-  msg?: string;
-};
-export type BasePage_10 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _17[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_9 = {
-  code?: number;
-  /**
-   * 文件及材料对象
-   * ---
-   * 文件及材料实体
-   */
-  data?: _17;
-  msg?: string;
-};
-export type _19 = {
+}
+export interface _19 {
   /**
    * 入账状态0,2未入账 1已入账 3已冲销,不能在推送推送对账单
    */
@@ -4137,31 +2275,8 @@ export type _19 = {
    * 核销状态0未核销 1已核销 2已冲销
    */
   verificationStatus?: number;
-};
-export type QcResult_List_10 = {
-  code?: number;
-  data?: _19[];
-  msg?: string;
-};
-export type BasePage_12 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _19[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _req = {
+}
+export interface _req {
   /**
    * 银行交易流水号
    */
@@ -4196,18 +2311,8 @@ export type _req = {
    */
   transactionTimeLte?: string;
   useLastId?: boolean;
-};
-export type QcResult_11 = {
-  code?: number;
-  /**
-   * 昆朋还款流水对象
-   * ---
-   * 昆朋还款流水实体
-   */
-  data?: _19;
-  msg?: string;
-};
-export type _48 = {
+}
+export interface _48 {
   /**
    * 案件ID
    */
@@ -4296,8 +2401,8 @@ export type _48 = {
    * 用户姓名
    */
   userName?: string;
-};
-export type _47 = {
+}
+export interface _47 {
   caseId?: number;
   /**
    * 合同号
@@ -4378,46 +2483,8 @@ export type _47 = {
    * 用户姓名
    */
   userName?: string;
-};
-export type QcResult_List_string_ = {
-  code?: number;
-  data?: string[];
-  msg?: string;
-};
-export type QcResult_List_28 = {
-  code?: number;
-  data?: _48[];
-  msg?: string;
-};
-export type BasePage_32 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _48[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_29 = {
-  code?: number;
-  /**
-   * 法诉进展对象
-   * ---
-   * 法诉进展实体
-   */
-  data?: _48;
-  msg?: string;
-};
-export type _44 = {
+}
+export interface _44 {
   /**
    * 金额计算方式：1.按合同2.按用户
    */
@@ -4490,31 +2557,8 @@ export type _44 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_25 = {
-  code?: number;
-  data?: _44[];
-  msg?: string;
-};
-export type BasePage_29 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _44[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _43 = {
+}
+export interface _43 {
   /**
    * 金额计算方式：1.按合同2.按用户
    */
@@ -4554,18 +2598,8 @@ export type _43 = {
    */
   templateId?: string;
   useLastId?: boolean;
-};
-export type QcResult_26 = {
-  code?: number;
-  /**
-   * 法律文书任务对象
-   * ---
-   * 法律文书任务实体
-   */
-  data?: _44;
-  msg?: string;
-};
-export type _45 = {
+}
+export interface _45 {
   /**
    * 合同号
    */
@@ -4614,41 +2648,8 @@ export type _45 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_26 = {
-  code?: number;
-  data?: _45[];
-  msg?: string;
-};
-export type BasePage_30 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _45[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_27 = {
-  code?: number;
-  /**
-   * 法律文书明细对象
-   * ---
-   * 法律文书明细实体
-   */
-  data?: _45;
-  msg?: string;
-};
-export type _46 = {
+}
+export interface _46 {
   /**
    * 金额计算方式：1.按合同2.按用户
    */
@@ -4709,150 +2710,8 @@ export type _46 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_Map_string_string_ = {
-  code?: number;
-  data?: Array<Record<string, string>>;
-  msg?: string;
-};
-export type QcResult_List_27 = {
-  code?: number;
-  data?: _46[];
-  msg?: string;
-};
-export type BasePage_31 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _46[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_28 = {
-  code?: number;
-  /**
-   * 法律文书模板表对象
-   * ---
-   * 法律文书模板表实体
-   */
-  data?: _46;
-  msg?: string;
-};
-export type _55 = {
-  /**
-   * 验证码发送状态-1,发送失败 1-发送成功
-   */
-  codeSendStatus?: number;
-  /**
-   * 验证码发送时间
-   */
-  codeSendTime?: string;
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 产品名称
-   */
-  creditorsNames?: string;
-  /**
-   * 用户债务状态
-   */
-  debtStatus?: string;
-  /**
-   * id
-   */
-  id?: number;
-  /**
-   * 身份证号码
-   */
-  idCard?: string;
-  /**
-   * 案件剩余欠款
-   */
-  leftArrearsAmt?: number;
-  /**
-   * 登录状态 -1-未登录 1-登录成功
-   */
-  loginStatus?: number;
-  /**
-   * 登录时间
-   */
-  loginTime?: string;
-  /**
-   * 姓名
-   */
-  name?: string;
-  /**
-   * 录入手机
-   */
-  oldPhone?: string;
-  /**
-   * openid
-   */
-  openid?: string;
-  /**
-   * 操作类型：1-登录 2-查询债务
-   */
-  operateType?: number;
-  /**
-   * 登录手机
-   */
-  phone?: string;
-  /**
-   * 展示渠道：jc-金诚助手
-   */
-  showChannel?: string;
-  /**
-   * 总欠款金额
-   */
-  totalArrearsAmt?: number;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-  /**
-   * 用户ID
-   */
-  userId?: string;
-};
-export type BasePage_37 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _55[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _31 = {
+}
+export interface _31 {
   /**
    * 审批状态：0-待审批1-审批不通过2审批通过
    */
@@ -4953,26 +2812,8 @@ export type _31 = {
    * 用户数
    */
   userCount?: number;
-};
-export type BasePage_20 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _31[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type PackFileResDTO = {
+}
+export interface PackFileResDTO {
   /**
    * 业务id
    */
@@ -4985,32 +2826,8 @@ export type PackFileResDTO = {
    * 文件地址
    */
   fileUrl?: string;
-};
-export type _32 = {
-  /**
-   * 合同数
-   */
-  contractCount?: number;
-  /**
-   * 问题记录
-   */
-  errorList?: string[];
-  /**
-   * 用户数
-   */
-  userCount?: number;
-};
-export type QcResult_18 = {
-  code?: number;
-  /**
-   * 材料下载解析结果
-   * ---
-   * 材料下载解析结果
-   */
-  data?: _32;
-  msg?: string;
-};
-export type _30 = {
+}
+export interface _30 {
   /**
    * 展业地区
    */
@@ -5107,8 +2924,8 @@ export type _30 = {
    * 查看合同文件
    */
   viewFileFlag?: number;
-};
-export type SaasUserApproveReq = {
+}
+export interface SaasUserApproveReq {
   /**
    * 审批人
    */
@@ -5125,8 +2942,8 @@ export type SaasUserApproveReq = {
    * 用户id
    */
   userId?: string;
-};
-export type _29 = {
+}
+export interface _29 {
   bizArea?: string;
   contactPhone?: string;
   dealType?: number;
@@ -5154,81 +2971,8 @@ export type _29 = {
   sameDebtBind?: boolean;
   useLastId?: boolean;
   viewFileFlag?: number;
-};
-export type QcResult_List_17 = {
-  code?: number;
-  data?: _30[];
-  msg?: string;
-};
-export type _21 = {
-  /**
-   * 创建人
-   */
-  createBy?: string;
-  /**
-   * 创建时间
-   */
-  createTime?: string;
-  /**
-   * 处置类型
-   */
-  dealType?: number;
-  /**
-   * 暂停合作
-   */
-  finishFlag?: boolean;
-  /**
-   * 暂停合作的资产包
-   */
-  finishPkg?: string;
-  /**
-   * 操作范围:1.全部终止2.部分终止
-   */
-  finishScope?: number;
-  /**
-   * 主键
-   */
-  id?: number;
-  /**
-   * 操作时间
-   */
-  operateTime?: string;
-  /**
-   * 操作人
-   */
-  operator?: string;
-  /**
-   * 委案机构ID
-   */
-  partnerId?: number;
-  /**
-   * 委案机构名称
-   */
-  partnerName?: string;
-  /**
-   * 同组共债是否绑定
-   */
-  sameDebtBind?: boolean;
-  /**
-   * 更新人
-   */
-  updateBy?: string;
-  /**
-   * 更新时间
-   */
-  updateTime?: string;
-};
-export type QcResult_12 = {
-  code?: number;
-  /**
-   * 机构中止合作记录对象
-   * ---
-   * 机构中止合作记录实体
-   */
-  data?: _21;
-  msg?: string;
-};
-export type _20 = {
+}
+export interface _20 {
   /**
    * 处置类型
    */
@@ -5273,64 +3017,8 @@ export type _20 = {
    */
   sameDebtBind?: boolean;
   useLastId?: boolean;
-};
-export type QcResult_30 = {
-  code?: number;
-  /**
-   * 用户信息对象
-   * ---
-   * 用户信息实体
-   */
-  data?: _49;
-  msg?: string;
-};
-export type BasePage_33 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _49[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type BasePage_19 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _30[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_17 = {
-  code?: number;
-  /**
-   * 机构管理对象
-   * ---
-   * 机构管理实体
-   */
-  data?: _30;
-  msg?: string;
-};
-export type _26 = {
+}
+export interface _26 {
   /**
    * 创建人
    */
@@ -5387,41 +3075,8 @@ export type _26 = {
    * 月份
    */
   yearMonths?: string;
-};
-export type QcResult_List_15 = {
-  code?: number;
-  data?: _26[];
-  msg?: string;
-};
-export type BasePage_17 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _26[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_15 = {
-  code?: number;
-  /**
-   * 机构日还款对象
-   * ---
-   * 机构日还款实体
-   */
-  data?: _26;
-  msg?: string;
-};
-export type _28 = {
+}
+export interface _28 {
   /**
    * 申请月份
    */
@@ -5490,8 +3145,8 @@ export type _28 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type _27 = {
+}
+export interface _27 {
   /**
    * 申请月份
    */
@@ -5536,31 +3191,8 @@ export type _27 = {
    */
   sameDebtBind?: boolean;
   useLastId?: boolean;
-};
-export type QcResult_List_16 = {
-  code?: number;
-  data?: _28[];
-  msg?: string;
-};
-export type BasePage_18 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _28[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _51 = {
+}
+export interface _51 {
   /**
    * 留案成功后退案日期
    */
@@ -5693,18 +3325,8 @@ export type _51 = {
    * 用户名称
    */
   userName?: string;
-};
-export type QcResult_16 = {
-  code?: number;
-  /**
-   * 机构留案统计对象
-   * ---
-   * 机构留案统计实体
-   */
-  data?: _28;
-  msg?: string;
-};
-export type _25 = {
+}
+export interface _25 {
   /**
    * 创建人
    */
@@ -5761,64 +3383,66 @@ export type _25 = {
    * 月份
    */
   yearMonths?: string;
-};
-export type QcResult_List_14 = {
-  code?: number;
-  data?: _25[];
-  msg?: string;
-};
-export type BasePage_16 = {
+}
+export interface _21 {
   /**
-   * 消息状态码
+   * 创建人
    */
-  code?: number;
+  createBy?: string;
   /**
-   * 消息内容
+   * 创建时间
    */
-  msg?: string;
+  createTime?: string;
   /**
-   * 列表数据
+   * 处置类型
    */
-  rows?: _25[];
+  dealType?: number;
   /**
-   * 总记录数
+   * 暂停合作
    */
-  total?: number;
-};
-export type QcResult_14 = {
-  code?: number;
+  finishFlag?: boolean;
   /**
-   * 机构员工还款日对象
-   * ---
-   * 机构员工还款日实体
+   * 暂停合作的资产包
    */
-  data?: _25;
-  msg?: string;
-};
-export type QcResult_List_11 = {
-  code?: number;
-  data?: _21[];
-  msg?: string;
-};
-export type BasePage_13 = {
+  finishPkg?: string;
   /**
-   * 消息状态码
+   * 操作范围:1.全部终止2.部分终止
    */
-  code?: number;
+  finishScope?: number;
   /**
-   * 消息内容
+   * 主键
    */
-  msg?: string;
+  id?: number;
   /**
-   * 列表数据
+   * 操作时间
    */
-  rows?: _21[];
+  operateTime?: string;
   /**
-   * 总记录数
+   * 操作人
    */
-  total?: number;
-};
-export type _6 = {
+  operator?: string;
+  /**
+   * 委案机构ID
+   */
+  partnerId?: number;
+  /**
+   * 委案机构名称
+   */
+  partnerName?: string;
+  /**
+   * 同组共债是否绑定
+   */
+  sameDebtBind?: boolean;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+}
+export interface _6 {
   /**
    * 最大金额
    */
@@ -5835,8 +3459,8 @@ export type _6 = {
    * 排序
    */
   sort?: number;
-};
-export type _62 = {
+}
+export interface _62 {
   /**
    * 金额期数配置json
    */
@@ -5889,41 +3513,8 @@ export type _62 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_39 = {
-  code?: number;
-  data?: _62[];
-  msg?: string;
-};
-export type QcResult_39 = {
-  code?: number;
-  /**
-   * 资产包减免配置对象
-   * ---
-   * 资产包减免配置实体
-   */
-  data?: _62;
-  msg?: string;
-};
-export type BasePage_44 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _62[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _22 = {
+}
+export interface _22 {
   /**
    * 委案金额
    */
@@ -5992,8 +3583,8 @@ export type _22 = {
    * 年月yyyyMM
    */
   yearMon?: string;
-};
-export type _16 = {
+}
+export interface _16 {
   /**
    * 处置类型
    */
@@ -6006,82 +3597,8 @@ export type _16 = {
    * 资产包
    */
   pkgId?: string;
-};
-export type PartnerTotalAmtDTO = {
-  /**
-   * 资产包
-   */
-  pkgId?: string;
-  /**
-   * 总委案金额
-   */
-  totalAssignmentAmt?: number;
-  /**
-   * 总委案案件原始金额
-   */
-  totalCaseAmt?: number;
-};
-export type QcResult_PartnerTotalAmtDTO_ = {
-  code?: number;
-  /**
-   * PartnerTotalAmtDTO
-   * ---
-   */
-  data?: PartnerTotalAmtDTO;
-  msg?: string;
-};
-export type BasePage_14 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _22[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _73 = {
-  /**
-   * 机构减免限额对象
-   * ---
-   * 机构减免限额实体
-   */
-  partnerReductionManage?: _22;
-  /**
-   * 资产包
-   */
-  pkgId?: string;
-  /**
-   * 机构减免限额对象
-   * ---
-   * 机构减免限额实体
-   */
-  pkgReductionManage?: _22;
-};
-export type QcResult_49 = {
-  code?: number;
-  /**
-   * 限额详情
-   * ---
-   * 限额详情
-   */
-  data?: _73;
-  msg?: string;
-};
-export type QcResult_List_12 = {
-  code?: number;
-  data?: _22[];
-  msg?: string;
-};
-export type _ = {
+}
+export interface _ {
   /**
    * id
    */
@@ -6094,42 +3611,15 @@ export type _ = {
    * 减免比例
    */
   reductionRate?: number;
-};
-export type AccessLimitRate = {
+}
+export interface AccessLimitRate {
   detailSearchInterval?: number;
   detailSearchMaxCountPerSecond?: number;
   listSearchInterval?: number;
   listSearchMaxCountPerSecond?: number;
   saveIpAccessFlag?: number;
-};
-export type QcResult_AccessLimitRate_ = {
-  code?: number;
-  /**
-   * AccessLimitRate
-   * ---
-   */
-  data?: AccessLimitRate;
-  msg?: string;
-};
-export type BasePage_3 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _4[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type ReductionReviewDTO = {
+}
+export interface ReductionReviewDTO {
   /**
    * 减免记录IDs
    */
@@ -6146,8 +3636,8 @@ export type ReductionReviewDTO = {
    * 1：待初审，2：初审不通过，3：待终审 4:终审不通过 5:终审通过
    */
   reviewStatus?: number;
-};
-export type _5 = {
+}
+export interface _5 {
   /**
    * id
    */
@@ -6162,46 +3652,90 @@ export type _5 = {
    */
   revokeOpinion?: string;
   useLastId?: boolean;
-};
-export type QcResult_3 = {
-  code?: number;
+}
+export interface _71 {
   /**
-   * 减免对象
-   * ---
-   * 减免实体
+   * 账户批次
    */
-  data?: _4;
-  msg?: string;
-};
-export type BasePage_52 = {
+  accBatch?: string;
   /**
-   * 消息状态码
+   * 虚户名
    */
-  code?: number;
+  accName?: string;
   /**
-   * 消息内容
+   * 打款虚户号
    */
-  msg?: string;
+  accNo?: string;
   /**
-   * 列表数据
+   * 启用状态
    */
-  rows?: _71[];
+  accStatus?: number;
   /**
-   * 总记录数
+   * 账号类型
    */
-  total?: number;
-};
-export type QcResult_47 = {
-  code?: number;
+  accType?: number;
   /**
-   * 还款账户对象
-   * ---
-   * 还款账户实体
+   * 银行名
    */
-  data?: _71;
-  msg?: string;
-};
-export type _60 = {
+  bankName?: string;
+  /**
+   * 开户地
+   */
+  branchCity?: string;
+  /**
+   * 分支行
+   */
+  branchName?: string;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 债权主体
+   */
+  owner?: string;
+  /**
+   * 资产包号
+   */
+  pkgId?: string;
+  /**
+   * 二维码地址
+   */
+  qrCodeUrl?: string;
+  /**
+   * 排序
+   */
+  sortNo?: number;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户ID
+   */
+  userId?: string;
+  /**
+   * 用户身份证号
+   */
+  userIdNo?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+}
+export interface _60 {
   /**
    * 对账流水ID
    */
@@ -6294,97 +3828,248 @@ export type _60 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_37 = {
-  code?: number;
-  data?: _60[];
-  msg?: string;
-};
-export type BasePage_42 = {
+}
+export interface _72 {
   /**
-   * 消息状态码
+   * 记账日期
    */
-  code?: number;
+  accountingDate?: string;
   /**
-   * 消息内容
+   * 银行流水号
    */
-  msg?: string;
+  bankOrderNo?: string;
   /**
-   * 列表数据
+   * 还款附言
    */
-  rows?: _60[];
+  bankRemark?: string;
   /**
-   * 总记录数
+   * 导入批次ID
    */
-  total?: number;
-};
-export type QcResult_37 = {
-  code?: number;
+  batchId?: number;
   /**
-   * 调账记录对象
-   * ---
-   * 调账记录实体
+   * 案件ID
    */
-  data?: _60;
-  msg?: string;
-};
-export type BasePage_53 = {
+  caseId?: number;
   /**
-   * 消息状态码
+   * 创建人
    */
-  code?: number;
+  createBy?: string;
   /**
-   * 消息内容
+   * 创建时间
    */
-  msg?: string;
+  createTime?: string;
   /**
-   * 列表数据
+   * 处置类型
    */
-  rows?: _72[];
+  dealType?: number;
   /**
-   * 总记录数
+   * 部门id
    */
-  total?: number;
-};
-export type QcResult_48 = {
-  code?: number;
+  deptId?: number;
   /**
-   * 银行流水对象
-   * ---
-   * 银行流水实体
+   * 作业员ID
    */
-  data?: _72;
-  msg?: string;
-};
-export type BasePage_50 = {
+  employeeId?: number;
   /**
-   * 消息状态码
+   * 作业员姓名
    */
-  code?: number;
+  employeeNickName?: string;
   /**
-   * 消息内容
+   * 对账流水ID
    */
-  msg?: string;
+  id?: number;
   /**
-   * 列表数据
+   * 原还款附言
    */
-  rows?: _69[];
+  orgBankRemark?: string;
   /**
-   * 总记录数
+   * 委案机构ID
    */
-  total?: number;
-};
-export type QcResult_45 = {
-  code?: number;
+  partnerId?: number;
   /**
-   * 还款明细对象
-   * ---
-   * 还款明细实体
+   * 委案机构名称
    */
-  data?: _69;
-  msg?: string;
-};
-export type _68 = {
+  partnerName?: string;
+  /**
+   * 对方账号
+   */
+  payAccount?: string;
+  /**
+   * 还款金额
+   */
+  payAmt?: number;
+  /**
+   * 对方行名
+   */
+  payBankName?: string;
+  /**
+   * 支付渠道
+   */
+  payChannel?: string;
+  /**
+   * 还款日期
+   */
+  payDate?: string;
+  /**
+   * 还款时间
+   */
+  payDateTime?: string;
+  /**
+   * 对方户名
+   */
+  payName?: string;
+  /**
+   * 资产包
+   */
+  pkgId?: string;
+  /**
+   * 对账结果附注
+   */
+  reconMemo?: string;
+  /**
+   * 对账状态
+   */
+  reconStatus?: number;
+  /**
+   * 还款类型
+   */
+  repayType?: number;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户ID
+   */
+  userId?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+  /**
+   * 收款虚户
+   */
+  userVirAcc?: string;
+}
+export interface _69 {
+  /**
+   * 记账日期
+   */
+  accountingDate?: string;
+  /**
+   * 银行订单号
+   */
+  bankOrderNo?: string;
+  /**
+   * 对账流水ID
+   */
+  bankStatementId?: number;
+  /**
+   * 导入批次ID
+   */
+  batchId?: number;
+  /**
+   * 案件ID
+   */
+  caseId?: number;
+  /**
+   * 合同号
+   */
+  contractNo?: string;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 处置类型
+   */
+  dealType?: number;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 备注
+   */
+  memo?: string;
+  /**
+   * 委案机构ID
+   */
+  partnerId?: number;
+  /**
+   * 付款人账号
+   */
+  payAccount?: string;
+  /**
+   * 付款金额
+   */
+  payAmt?: number;
+  /**
+   * 付款银行
+   */
+  payBankName?: string;
+  /**
+   * 付款日期
+   */
+  payDate?: string;
+  /**
+   * 还费用金额
+   */
+  payFee?: number;
+  /**
+   * 还利息金额
+   */
+  payInterest?: number;
+  /**
+   * 付款人姓名
+   */
+  payName?: string;
+  /**
+   * 还罚息金额
+   */
+  payPenalty?: number;
+  /**
+   * 还本金金额
+   */
+  payPrincipal?: number;
+  /**
+   * 资产包
+   */
+  pkgId?: string;
+  /**
+   * 对账状态
+   */
+  reconStatus?: number;
+  /**
+   * 还款类型
+   */
+  repayType?: number;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户ID
+   */
+  userId?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+}
+export interface _68 {
   /**
    * 银行流水对账类型
    */
@@ -6461,69 +4146,110 @@ export type _68 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type QcResult_List_43 = {
-  code?: number;
-  data?: _68[];
-  msg?: string;
-};
-export type BasePage_49 = {
+}
+export interface _8 {
   /**
-   * 消息状态码
+   * 审核状态
    */
-  code?: number;
+  auditStatus?: number;
   /**
-   * 消息内容
+   * 审核时间
    */
-  msg?: string;
+  auditTime?: string;
   /**
-   * 列表数据
+   * 案件ID
    */
-  rows?: _68[];
+  caseId?: number;
   /**
-   * 总记录数
+   * 创建人
    */
-  total?: number;
-};
-export type QcResult_44 = {
-  code?: number;
+  createBy?: string;
   /**
-   * 还款导入批次对象
-   * ---
-   * 还款导入批次实体
+   * 创建时间
    */
-  data?: _68;
-  msg?: string;
-};
-export type BasePage_4 = {
+  createTime?: string;
   /**
-   * 消息状态码
+   * 部门ID
    */
-  code?: number;
+  deptId?: number;
   /**
-   * 消息内容
+   * 作业员ID
    */
-  msg?: string;
+  employeeId?: number;
   /**
-   * 列表数据
+   * 作业员姓名
    */
-  rows?: _8[];
+  employeeNickName?: string;
   /**
-   * 总记录数
+   * 主键
    */
-  total?: number;
-};
-export type QcResult_4 = {
-  code?: number;
+  id?: number;
   /**
-   * 凭证对账对象
-   * ---
-   * 凭证对账实体
+   * 备注
    */
-  data?: _8;
-  msg?: string;
-};
-export type _54 = {
+  memo?: string;
+  /**
+   * 凭证
+   */
+  noteFile?: string;
+  /**
+   * 委案机构ID
+   */
+  partnerId?: number;
+  /**
+   * 委案机构名称
+   */
+  partnerName?: string;
+  /**
+   * 产品名称
+   */
+  pkgId?: string;
+  /**
+   * 对账状态
+   */
+  reconStatus?: number;
+  /**
+   * 还款流水id
+   */
+  repayBankStatementId?: number;
+  /**
+   * 还款金额
+   */
+  repaymentAmount?: number;
+  /**
+   * 付款银行卡号
+   */
+  repaymentCard?: string;
+  /**
+   * 付款银行卡类型
+   */
+  repaymentCardType?: string;
+  /**
+   * 还款日期
+   */
+  repaymentDate?: string;
+  /**
+   * 还款人
+   */
+  repaymenter?: string;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户ID
+   */
+  userId?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+}
+export interface _54 {
   /**
    * 创建人
    */
@@ -6564,8 +4290,8 @@ export type _54 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type _53 = {
+}
+export interface _53 {
   /**
    * 当前ID
    */
@@ -6596,41 +4322,8 @@ export type _53 = {
    */
   retentionStart?: string;
   useLastId?: boolean;
-};
-export type QcResult_33 = {
-  code?: number;
-  /**
-   * 留案配置对象
-   * ---
-   * 留案配置实体
-   */
-  data?: _54;
-  msg?: string;
-};
-export type QcResult_List_32 = {
-  code?: number;
-  data?: _54[];
-  msg?: string;
-};
-export type BasePage_36 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _54[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _52 = {
+}
+export interface _52 {
   /**
    * 留案成功后退案日期
    */
@@ -6759,41 +4452,8 @@ export type _52 = {
    * 用户名称
    */
   userName?: string;
-};
-export type QcResult_List_31 = {
-  code?: number;
-  data?: _52[];
-  msg?: string;
-};
-export type BasePage_35 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _52[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_32 = {
-  code?: number;
-  /**
-   * 留案记录对象
-   * ---
-   * 留案记录实体
-   */
-  data?: _52;
-  msg?: string;
-};
-export type _59 = {
+}
+export interface _59 {
   /**
    * 创建人
    */
@@ -6846,41 +4506,8 @@ export type _59 = {
    * 结清证明水印
    */
   waterMark?: string;
-};
-export type QcResult_36 = {
-  code?: number;
-  /**
-   * 结清证明配置对象
-   * ---
-   * 结清证明配置实体
-   */
-  data?: _59;
-  msg?: string;
-};
-export type QcResult_List_36 = {
-  code?: number;
-  data?: _59[];
-  msg?: string;
-};
-export type BasePage_41 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _59[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type _58 = {
+}
+export interface _58 {
   /**
    * 申请时间
    */
@@ -6953,47 +4580,14 @@ export type _58 = {
    * 身份证号
    */
   userIdNo?: string;
-};
-export type QcResult_List_35 = {
-  code?: number;
-  data?: _58[];
-  msg?: string;
-};
-export type BasePage_40 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _58[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_35 = {
-  code?: number;
-  /**
-   * 结清证明记录对象
-   * ---
-   * 结清证明记录实体
-   */
-  data?: _58;
-  msg?: string;
-};
-export type LoginBody = {
+}
+export interface LoginBody {
   code?: string;
   password?: string;
   username?: string;
   uuid?: string;
-};
-export type _41 = {
+}
+export interface _41 {
   /**
    * 银行流水对账类型 1:普户，2：虚户
    */
@@ -7054,36 +4648,8 @@ export type _41 = {
    * 更新时间
    */
   updateTime?: string;
-};
-export type BasePage_28 = {
-  /**
-   * 消息状态码
-   */
-  code?: number;
-  /**
-   * 消息内容
-   */
-  msg?: string;
-  /**
-   * 列表数据
-   */
-  rows?: _41[];
-  /**
-   * 总记录数
-   */
-  total?: number;
-};
-export type QcResult_25 = {
-  code?: number;
-  /**
-   * 模板对象
-   * ---
-   * 模板实体
-   */
-  data?: _41;
-  msg?: string;
-};
-export type _57 = {
+}
+export interface _57 {
   /**
    * 创建人
    */
@@ -7144,74 +4710,156 @@ export type _57 = {
    * 上传状态:1.上传中2.上传完成
    */
   uploadStatus?: number;
-};
-export type QcResult_List_34 = {
-  code?: number;
-  data?: _57[];
-  msg?: string;
-};
-export type QcResult_Set_string_ = {
-  code?: number;
-  data?: string[];
-  msg?: string;
-};
-export type BasePage_39 = {
+}
+export interface _50 {
   /**
-   * 消息状态码
+   * 创建人
    */
-  code?: number;
+  createBy?: string;
   /**
-   * 消息内容
+   * 创建时间
    */
-  msg?: string;
+  createTime?: string;
   /**
-   * 列表数据
+   * 主键
    */
-  rows?: _57[];
+  id?: number;
   /**
-   * 总记录数
+   * 电话
    */
-  total?: number;
-};
-export type QcResult_34 = {
-  code?: number;
+  phone?: string;
   /**
-   * 结清证明上传批次对象
-   * ---
-   * 结清证明上传批次实体
+   * 电话来源
    */
-  data?: _57;
-  msg?: string;
-};
-export type BasePage_34 = {
+  phoneSource?: number;
   /**
-   * 消息状态码
+   * 来源备注
    */
-  code?: number;
+  sourceMemo?: string;
   /**
-   * 消息内容
+   * 是否有效
    */
-  msg?: string;
+  status?: number;
   /**
-   * 列表数据
+   * 更新人
    */
-  rows?: _50[];
+  updateBy?: string;
   /**
-   * 总记录数
+   * 更新时间
    */
-  total?: number;
-};
-export type QcResult_31 = {
-  code?: number;
+  updateTime?: string;
   /**
-   * 用户电话对象
-   * ---
-   * 用户电话实体
+   * 用户ID
    */
-  data?: _50;
-  msg?: string;
-};
-export type _13 = {
+  userId?: string;
+}
+export interface _49 {
+  /**
+   * 年龄
+   */
+  age?: number;
+  /**
+   * 出生日期
+   */
+  birthday?: string;
+  /**
+   * 职业
+   */
+  career?: string;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 学历
+   */
+  education?: string;
+  /**
+   * 性别
+   */
+  gender?: string;
+  /**
+   * 有无子女
+   */
+  hasChild?: string;
+  /**
+   * 用户ID
+   */
+  id?: string;
+  /**
+   * 身份证归属地
+   */
+  idCardArea?: string;
+  /**
+   * 身份证号后6位
+   */
+  idCardQuery?: string;
+  /**
+   * 是否涉执
+   */
+  lawsuitStatus?: number;
+  /**
+   * 居住地址
+   */
+  liveAddr?: string;
+  /**
+   * 居住省份
+   */
+  liveProv?: string;
+  /**
+   * 婚姻状况
+   */
+  maritalStatus?: string;
+  /**
+   * 民族
+   */
+  nationality?: string;
+  /**
+   * 电话
+   */
+  phone?: string;
+  /**
+   * 户籍地址
+   */
+  registerAddr?: string;
+  /**
+   * 户籍城市
+   */
+  registerCity?: string;
+  /**
+   * 户籍省份
+   */
+  registerProv?: string;
+  /**
+   * 还款标签
+   */
+  repayTag?: number;
+  /**
+   * 风险标签
+   */
+  riskTag?: number;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 身份证
+   */
+  userIdNo?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+}
+export interface _13 {
   /**
    * 工单添加方式1-身份证2-手机号3-案件号4-uid
    */
@@ -7360,8 +5008,2360 @@ export type _13 = {
    * 用户姓名
    */
   userName?: string;
-};
-export type QcResult_7 = {
+}
+export interface QcResult_object_ {
+  code?: number;
+  data?: object;
+  msg?: string;
+}
+export interface QcResult_boolean_ {
+  code?: number;
+  data?: boolean;
+  msg?: string;
+}
+export interface QcResult_string_ {
+  code?: number;
+  data?: string;
+  msg?: string;
+}
+export interface QcResult_List_Map_string_string_ {
+  code?: number;
+  data?: Array<Record<string, string>>;
+  msg?: string;
+}
+export interface QcResult_AccessLimitRate_ {
+  code?: number;
+  /**
+   * AccessLimitRate
+   * ---
+   */
+  data?: AccessLimitRate;
+  msg?: string;
+}
+export interface QcResult_Set_string_ {
+  code?: number;
+  data?: string[];
+  msg?: string;
+}
+export interface QcResult_List_38 {
+  code?: number;
+  data?: _61[];
+  msg?: string;
+}
+export interface BasePage_43 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _61[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult {
+  code?: number;
+  data?: object;
+  msg?: string;
+}
+export interface QcResult_38 {
+  code?: number;
+  /**
+   * 账户导入记录对象
+   * ---
+   * 账户导入记录实体
+   */
+  data?: _61;
+  msg?: string;
+}
+export interface QcResult_List_45 {
+  code?: number;
+  data?: _70[];
+  msg?: string;
+}
+export interface BasePage_51 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _70[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_46 {
+  code?: number;
+  /**
+   * 还款账号操作记录对象
+   * ---
+   * 还款账号操作记录实体
+   */
+  data?: _70;
+  msg?: string;
+}
+export interface _json {
+  /**
+   * 核对材料类型id
+   */
+  checkTypeId?: number;
+  /**
+   * 核对材料类型
+   */
+  checkTypeName?: string;
+  /**
+   * 合同号
+   */
+  contractNo?: string;
+  /**
+   * 文件路径
+   */
+  fileUrl?: string;
+  /**
+   * 是否缺失 1-是 0-否
+   */
+  isShort?: string;
+}
+export interface _34 {
+  /**
+   * 核对结果明细json
+   */
+  checkJson?: _json[];
+  /**
+   * 合同号
+   */
+  contractNo?: string;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 合同文件路径
+   */
+  filePath?: string;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 导入批次
+   */
+  importBatch?: string;
+  /**
+   * 资产包
+   */
+  pkgId?: string;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户ID
+   */
+  userId?: string;
+  /**
+   * 用户身份证号
+   */
+  userIdNo?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+}
+export interface QcResult_List_18 {
+  code?: number;
+  data?: _34[];
+  msg?: string;
+}
+export interface BasePage_22 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _34[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_19 {
+  code?: number;
+  /**
+   * 材料核对详情对象
+   * ---
+   * 材料核对详情实体
+   */
+  data?: _34;
+  msg?: string;
+}
+export interface Material_check_result_ {
+  /**
+   * 核对材料类型id
+   */
+  checkTypeId?: number;
+  /**
+   * 核对材料类型
+   */
+  checkTypeName?: string;
+  /**
+   * 文件关键字
+   */
+  fileCoreWord?: string;
+  /**
+   * 缺失材料合同数
+   */
+  shortContractNum?: number;
+  /**
+   * 缺失材料用户数
+   */
+  shortUserNum?: number;
+  /**
+   * 有效材料合同数
+   */
+  validContractNum?: number;
+  /**
+   * 有效材料用户数
+   */
+  validUserNum?: number;
+}
+export interface _dto {
+  /**
+   * 申请方（债权主体）
+   */
+  applicant?: string;
+  /**
+   * 批次名称
+   */
+  caseBatchName?: string;
+  /**
+   * 案件类型
+   */
+  caseType?: number;
+  /**
+   * 材料检查明细文件url
+   */
+  checkDetailFileUrl?: string;
+  checkResultJson?: Material_check_result_[];
+  /**
+   * 合同总数
+   */
+  contractNum?: number;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 导入批次
+   */
+  importBatch?: string;
+  /**
+   * 资产包id
+   */
+  pkgId?: string;
+  /**
+   * 材料核对状态 -1-核对失败 0-未核对 1-核对中 2-核对成功
+   */
+  status?: number;
+  /**
+   * 模板ID
+   */
+  templateId?: number;
+  /**
+   * 模版名称
+   */
+  templateName?: string;
+  /**
+   * 用户总数
+   */
+  userNum?: number;
+}
+export interface QcResult_dto_ {
+  code?: number;
+  /**
+   * 材料核对结果返回dto
+   * ---
+   * 材料核对结果返回dto
+   */
+  data?: _dto;
+  msg?: string;
+}
+export interface _33 {
+  /**
+   * 材料检查明细文件url
+   */
+  checkDetailFileUrl?: string;
+  checkResultJson?: Material_check_result_[];
+  /**
+   * 合同总数
+   */
+  contractNum?: number;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 导入批次
+   */
+  importBatch?: string;
+  /**
+   * 资产包id
+   */
+  pkgId?: string;
+  /**
+   * 材料核对状态 -1-核对失败 0-未核对 1-核对中 2-核对成功
+   */
+  status?: number;
+  /**
+   * 模板ID
+   */
+  templateId?: number;
+  /**
+   * 模版名称
+   */
+  templateName?: string;
+  /**
+   * 用户总数
+   */
+  userNum?: number;
+}
+export interface BasePage_21 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _33[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_List_24 {
+  code?: number;
+  data?: _42[];
+  msg?: string;
+}
+export interface QcResult_List_42 {
+  code?: number;
+  data?: _67[];
+  msg?: string;
+}
+export interface BasePage_48 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _67[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_43 {
+  code?: number;
+  /**
+   * 资产包附加字段对象
+   * ---
+   * 资产包附加字段实体
+   */
+  data?: _67;
+  msg?: string;
+}
+export interface QcResult_List_ {
+  code?: number;
+  data?: _2[];
+  msg?: string;
+}
+export interface QcResult_List_41 {
+  code?: number;
+  data?: _65[];
+  msg?: string;
+}
+export interface BasePage_ {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _2[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_ {
+  code?: number;
+  /**
+   * 债权主体对象
+   * ---
+   * 债权主体实体
+   */
+  data?: _2;
+  msg?: string;
+}
+export interface QcResult_40 {
+  code?: number;
+  /**
+   * 资产包划账配置对象
+   * ---
+   * 资产包划账配置实体
+   */
+  data?: _63;
+  msg?: string;
+}
+export interface QcResult_41 {
+  code?: number;
+  /**
+   * 资产包对象
+   * ---
+   * 资产包实体
+   */
+  data?: _65;
+  msg?: string;
+}
+export interface BasePage_46 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _65[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface BasePage_47 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _66[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_42 {
+  code?: number;
+  /**
+   * 资产包导入记录对象
+   * ---
+   * 资产包导入记录实体
+   */
+  data?: _66;
+  msg?: string;
+}
+export interface QcResult_List_40 {
+  code?: number;
+  data?: _63[];
+  msg?: string;
+}
+export interface BasePage_45 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _63[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_List_33 {
+  code?: number;
+  data?: _56[];
+  msg?: string;
+}
+export interface BasePage_38 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _56[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_List_23 {
+  code?: number;
+  data?: _40[];
+  msg?: string;
+}
+export interface BasePage_27 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _40[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_24 {
+  code?: number;
+  /**
+   * 案件轨迹对象
+   * ---
+   * 案件轨迹实体
+   */
+  data?: _40;
+  msg?: string;
+}
+export interface QcResult_List_5 {
+  code?: number;
+  data?: _10[];
+  msg?: string;
+}
+export interface BasePage_5 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _10[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_5 {
+  code?: number;
+  /**
+   * 合同材料对象
+   * ---
+   * 合同材料实体
+   */
+  data?: _10;
+  msg?: string;
+}
+export interface QcResult_List_19 {
+  code?: number;
+  data?: _35[];
+  msg?: string;
+}
+export interface BasePage_23 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _35[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_20 {
+  code?: number;
+  /**
+   * 案件操作批次对象
+   * ---
+   * 案件操作批次实体
+   */
+  data?: _35;
+  msg?: string;
+}
+export interface QcResult_List_20 {
+  code?: number;
+  data?: _36[];
+  msg?: string;
+}
+export interface BasePage_24 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _36[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_21 {
+  code?: number;
+  /**
+   * 案件操作明细对象
+   * ---
+   * 案件操作明细实体
+   */
+  data?: _36;
+  msg?: string;
+}
+export interface QcResult_List_46 {
+  code?: number;
+  data?: _71[];
+  msg?: string;
+}
+export interface QcResult_List_47 {
+  code?: number;
+  data?: _72[];
+  msg?: string;
+}
+export interface QcResult_List_2 {
+  code?: number;
+  data?: _3[];
+  msg?: string;
+}
+export interface QcResult_List_6 {
+  code?: number;
+  data?: _12[];
+  msg?: string;
+}
+export interface QcResult_List_21 {
+  code?: number;
+  data?: _38[];
+  msg?: string;
+}
+export interface QcResult_List_30 {
+  code?: number;
+  data?: _50[];
+  msg?: string;
+}
+export interface _7 {
+  /**
+   * 退案时间
+   */
+  caseExpireDate?: string;
+  /**
+   * 案件id
+   */
+  caseId?: number;
+  /**
+   * 当前欠款息费
+   */
+  curOverdueInterestFee?: number;
+  /**
+   * 当前欠款息费减免比例
+   */
+  curOverdueInterestFeeReduceRatio?: number;
+  /**
+   * 减免后当前欠款息费
+   */
+  curOverdueInterestFeeRemain?: number;
+  /**
+   * 当前欠款本金
+   */
+  curOverduePrincipal?: number;
+  /**
+   * 当前欠款本金减免比例
+   */
+  curOverduePrincipalReduceRatio?: number;
+  /**
+   * 减免后当前欠款本金
+   */
+  curOverduePrincipalRemain?: number;
+  /**
+   * 当前欠款总金额
+   */
+  curOverdueTotalamt?: number;
+  /**
+   * 当前欠款总金额减免比例
+   */
+  curOverdueTotalamtReduceRatio?: number;
+  /**
+   * 减免后当前欠款总金额
+   */
+  curOverdueTotalamtRemain?: number;
+  /**
+   * 减免到期时间
+   */
+  expireDate?: string;
+  /**
+   * 用户历史还款
+   */
+  historyRepayAmt?: number;
+  /**
+   * 原欠款息费
+   */
+  orgOverdueInterestFee?: number;
+  /**
+   * 原欠款息费减免比例
+   */
+  orgOverdueInterestFeeReduceRatio?: number;
+  /**
+   * 减免后原欠款息费
+   */
+  orgOverdueInterestFeeRemain?: number;
+  /**
+   * 原欠款本金
+   */
+  orgOverduePrincipal?: number;
+  /**
+   * 原欠款本金减免比例
+   */
+  orgOverduePrincipalReduceRatio?: number;
+  /**
+   * 减免后原欠款本金
+   */
+  orgOverduePrincipalRemain?: number;
+  /**
+   * 原欠款总金额
+   */
+  orgOverdueTotalamt?: number;
+  /**
+   * 原欠款总金额减免比例
+   */
+  orgOverdueTotalamtReduceRatio?: number;
+  /**
+   * 减免后原欠款总金额
+   */
+  orgOverdueTotalamtRemain?: number;
+  /**
+   * 是否减免初始本金
+   */
+  reduceCurPrincipal?: boolean;
+  /**
+   * 是否减免原始本金
+   */
+  reduceOrgPrincipal?: boolean;
+  /**
+   * 减免类型：1-本金以上2-本金以下
+   */
+  reductionType?: number;
+}
+export interface _4 {
+  /**
+   * 减免后待还金额
+   */
+  amtAfterReduction?: number;
+  /**
+   * 申请证明文件
+   */
+  applyFile?: string[];
+  /**
+   * 申请原因
+   */
+  applyReason?: string;
+  /**
+   * 申请时间
+   */
+  applyTime?: string;
+  /**
+   * 案件id
+   */
+  caseId?: number;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 处置方式：1-电调 2-法诉
+   */
+  dealType?: number;
+  /**
+   * 部门id
+   */
+  deptId?: number;
+  /**
+   * 申请人id
+   */
+  employeeId?: number;
+  /**
+   * 申请人姓名
+   */
+  employeeName?: string;
+  /**
+   * 减免到期日
+   */
+  expireDate?: string;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 初审意见
+   */
+  initialReviewOpinion?: string;
+  /**
+   * 初审时间
+   */
+  initialReviewTime?: string;
+  /**
+   * 初审人
+   */
+  initialReviewer?: string;
+  /**
+   * 委案机构ID
+   */
+  partnerId?: number;
+  /**
+   * 机构名称
+   */
+  partnerName?: string;
+  /**
+   * 资产包id
+   */
+  pkgId?: string;
+  /**
+   * 复审意见
+   */
+  reReviewOpinion?: string;
+  /**
+   * 复审时间
+   */
+  reReviewTime?: string;
+  /**
+   * 复审人
+   */
+  reReviewer?: string;
+  /**
+   * 减免金额
+   */
+  reductionAmt?: number;
+  /**
+   * 减免金额详情
+   * ---
+   * 减免金额详情
+   */
+  reductionAmtDetail?: _7;
+  /**
+   * 减免期数
+   */
+  reductionPeriod?: number;
+  /**
+   * 减免类型：1-本金以上2-本金以下
+   */
+  reductionType?: number;
+  /**
+   * 减免还款方式（1：减免还款 2:减免分期还款）
+   */
+  repayType?: number;
+  /**
+   * 审批状态:1：待初审，2：初审不通过，3：待终审 4:终审不通过 5:终审通过
+   */
+  reviewStatus?: number;
+  /**
+   * 撤回人
+   */
+  revokeBy?: string;
+  /**
+   * 撤回意见
+   */
+  revokeOpinion?: string;
+  /**
+   * 撤回时间
+   */
+  revokeTime?: string;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户id
+   */
+  userId?: string;
+  /**
+   * 身份证号码
+   */
+  userIdNo?: string;
+  /**
+   * 用户姓名
+   */
+  userName?: string;
+  /**
+   * 有效状态(1:有效,2:过期失效，3:已减免，4：覆盖失效, 5:案件失效 6：审核失效)
+   */
+  validStatus?: number;
+}
+export interface QcResult_List_3 {
+  code?: number;
+  data?: _4[];
+  msg?: string;
+}
+export interface QcResult_List_44 {
+  code?: number;
+  data?: _69[];
+  msg?: string;
+}
+export interface QcResult_List_4 {
+  code?: number;
+  data?: _8[];
+  msg?: string;
+}
+export interface QcResult_List_22 {
+  code?: number;
+  data?: _39[];
+  msg?: string;
+}
+export interface BasePage_25 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _38[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_22 {
+  code?: number;
+  /**
+   * 案件池对象
+   * ---
+   * 案件池实体
+   */
+  data?: _38;
+  msg?: string;
+}
+export interface BasePage_26 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _39[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_23 {
+  code?: number;
+  /**
+   * 案件状态变更记录对象
+   * ---
+   * 案件状态变更记录实体
+   */
+  data?: _39;
+  msg?: string;
+}
+export interface BasePage_2 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _3[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_2 {
+  code?: number;
+  /**
+   * 催记对象
+   * ---
+   * 催记实体
+   */
+  data?: _3;
+  msg?: string;
+}
+export type StreamingResponseBody = object;
+export interface BasePage_6 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _12[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_6 {
+  code?: number;
+  /**
+   * 合同管理对象
+   * ---
+   * 合同管理实体
+   */
+  data?: _12;
+  msg?: string;
+}
+export interface QcResult_List_13 {
+  code?: number;
+  data?: _24[];
+  msg?: string;
+}
+export interface BasePage_15 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _24[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_13 {
+  code?: number;
+  /**
+   * 机构合同池对象
+   * ---
+   * 机构合同池实体
+   */
+  data?: _24;
+  msg?: string;
+}
+export interface QcResult_List_8 {
+  code?: number;
+  data?: _15[];
+  msg?: string;
+}
+export interface QcResult_List_29 {
+  code?: number;
+  data?: _49[];
+  msg?: string;
+}
+export interface BasePage_9 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _15[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_8 {
+  code?: number;
+  /**
+   * 度言用户映射对象
+   * ---
+   * 度言用户映射实体
+   */
+  data?: _15;
+  msg?: string;
+}
+export interface _18 {
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 部门id
+   */
+  deptId?: number;
+  /**
+   * 导出人id
+   */
+  employeeId?: number;
+  /**
+   * 导出人
+   */
+  employeeName?: string;
+  /**
+   * 导出文件地址
+   */
+  exportFileUrl?: string;
+  /**
+   * 导出进度
+   */
+  exportProgress?: string;
+  /**
+   * 系统来源1-资管 2-机构
+   */
+  exportSource?: number;
+  /**
+   * 导出状态0-导出中 1-导出失败 2导出成功
+   */
+  exportStatus?: number;
+  /**
+   * 主键
+   */
+  id?: number;
+  /**
+   * 机构id
+   */
+  partnerId?: number;
+  /**
+   * 机构名称
+   */
+  partnerName?: string;
+  /**
+   * 任务名称
+   */
+  taskName?: string;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+}
+export interface BasePage_11 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _18[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_10 {
+  code?: number;
+  /**
+   * 文件导出任务对象
+   * ---
+   * 文件导出任务实体
+   */
+  data?: _18;
+  msg?: string;
+}
+export interface QcResult_List_9 {
+  code?: number;
+  data?: _17[];
+  msg?: string;
+}
+export interface BasePage_10 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _17[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_9 {
+  code?: number;
+  /**
+   * 文件及材料对象
+   * ---
+   * 文件及材料实体
+   */
+  data?: _17;
+  msg?: string;
+}
+export interface QcResult_List_10 {
+  code?: number;
+  data?: _19[];
+  msg?: string;
+}
+export interface BasePage_12 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _19[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_11 {
+  code?: number;
+  /**
+   * 昆朋还款流水对象
+   * ---
+   * 昆朋还款流水实体
+   */
+  data?: _19;
+  msg?: string;
+}
+export interface QcResult_List_string_ {
+  code?: number;
+  data?: string[];
+  msg?: string;
+}
+export interface QcResult_List_28 {
+  code?: number;
+  data?: _48[];
+  msg?: string;
+}
+export interface BasePage_32 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _48[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_29 {
+  code?: number;
+  /**
+   * 法诉进展对象
+   * ---
+   * 法诉进展实体
+   */
+  data?: _48;
+  msg?: string;
+}
+export interface QcResult_List_25 {
+  code?: number;
+  data?: _44[];
+  msg?: string;
+}
+export interface BasePage_29 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _44[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_26 {
+  code?: number;
+  /**
+   * 法律文书任务对象
+   * ---
+   * 法律文书任务实体
+   */
+  data?: _44;
+  msg?: string;
+}
+export interface QcResult_List_26 {
+  code?: number;
+  data?: _45[];
+  msg?: string;
+}
+export interface BasePage_30 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _45[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_27 {
+  code?: number;
+  /**
+   * 法律文书明细对象
+   * ---
+   * 法律文书明细实体
+   */
+  data?: _45;
+  msg?: string;
+}
+export interface QcResult_List_27 {
+  code?: number;
+  data?: _46[];
+  msg?: string;
+}
+export interface BasePage_31 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _46[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_28 {
+  code?: number;
+  /**
+   * 法律文书模板表对象
+   * ---
+   * 法律文书模板表实体
+   */
+  data?: _46;
+  msg?: string;
+}
+export interface _55 {
+  /**
+   * 验证码发送状态-1,发送失败 1-发送成功
+   */
+  codeSendStatus?: number;
+  /**
+   * 验证码发送时间
+   */
+  codeSendTime?: string;
+  /**
+   * 创建人
+   */
+  createBy?: string;
+  /**
+   * 创建时间
+   */
+  createTime?: string;
+  /**
+   * 产品名称
+   */
+  creditorsNames?: string;
+  /**
+   * 用户债务状态
+   */
+  debtStatus?: string;
+  /**
+   * id
+   */
+  id?: number;
+  /**
+   * 身份证号码
+   */
+  idCard?: string;
+  /**
+   * 案件剩余欠款
+   */
+  leftArrearsAmt?: number;
+  /**
+   * 登录状态 -1-未登录 1-登录成功
+   */
+  loginStatus?: number;
+  /**
+   * 登录时间
+   */
+  loginTime?: string;
+  /**
+   * 姓名
+   */
+  name?: string;
+  /**
+   * 录入手机
+   */
+  oldPhone?: string;
+  /**
+   * openid
+   */
+  openid?: string;
+  /**
+   * 操作类型：1-登录 2-查询债务
+   */
+  operateType?: number;
+  /**
+   * 登录手机
+   */
+  phone?: string;
+  /**
+   * 展示渠道：jc-金诚助手
+   */
+  showChannel?: string;
+  /**
+   * 总欠款金额
+   */
+  totalArrearsAmt?: number;
+  /**
+   * 更新人
+   */
+  updateBy?: string;
+  /**
+   * 更新时间
+   */
+  updateTime?: string;
+  /**
+   * 用户ID
+   */
+  userId?: string;
+}
+export interface BasePage_37 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _55[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface BasePage_20 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _31[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface _32 {
+  /**
+   * 合同数
+   */
+  contractCount?: number;
+  /**
+   * 问题记录
+   */
+  errorList?: string[];
+  /**
+   * 用户数
+   */
+  userCount?: number;
+}
+export interface QcResult_18 {
+  code?: number;
+  /**
+   * 材料下载解析结果
+   * ---
+   * 材料下载解析结果
+   */
+  data?: _32;
+  msg?: string;
+}
+export interface QcResult_List_17 {
+  code?: number;
+  data?: _30[];
+  msg?: string;
+}
+export interface QcResult_12 {
+  code?: number;
+  /**
+   * 机构中止合作记录对象
+   * ---
+   * 机构中止合作记录实体
+   */
+  data?: _21;
+  msg?: string;
+}
+export interface QcResult_30 {
+  code?: number;
+  /**
+   * 用户信息对象
+   * ---
+   * 用户信息实体
+   */
+  data?: _49;
+  msg?: string;
+}
+export interface BasePage_33 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _49[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface BasePage_19 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _30[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_17 {
+  code?: number;
+  /**
+   * 机构管理对象
+   * ---
+   * 机构管理实体
+   */
+  data?: _30;
+  msg?: string;
+}
+export interface QcResult_List_15 {
+  code?: number;
+  data?: _26[];
+  msg?: string;
+}
+export interface BasePage_17 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _26[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_15 {
+  code?: number;
+  /**
+   * 机构日还款对象
+   * ---
+   * 机构日还款实体
+   */
+  data?: _26;
+  msg?: string;
+}
+export interface QcResult_List_16 {
+  code?: number;
+  data?: _28[];
+  msg?: string;
+}
+export interface BasePage_18 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _28[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_16 {
+  code?: number;
+  /**
+   * 机构留案统计对象
+   * ---
+   * 机构留案统计实体
+   */
+  data?: _28;
+  msg?: string;
+}
+export interface QcResult_List_14 {
+  code?: number;
+  data?: _25[];
+  msg?: string;
+}
+export interface BasePage_16 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _25[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_14 {
+  code?: number;
+  /**
+   * 机构员工还款日对象
+   * ---
+   * 机构员工还款日实体
+   */
+  data?: _25;
+  msg?: string;
+}
+export interface QcResult_List_11 {
+  code?: number;
+  data?: _21[];
+  msg?: string;
+}
+export interface BasePage_13 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _21[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_List_39 {
+  code?: number;
+  data?: _62[];
+  msg?: string;
+}
+export interface QcResult_39 {
+  code?: number;
+  /**
+   * 资产包减免配置对象
+   * ---
+   * 资产包减免配置实体
+   */
+  data?: _62;
+  msg?: string;
+}
+export interface BasePage_44 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _62[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface PartnerTotalAmtDTO {
+  /**
+   * 资产包
+   */
+  pkgId?: string;
+  /**
+   * 总委案金额
+   */
+  totalAssignmentAmt?: number;
+  /**
+   * 总委案案件原始金额
+   */
+  totalCaseAmt?: number;
+}
+export interface QcResult_PartnerTotalAmtDTO_ {
+  code?: number;
+  /**
+   * PartnerTotalAmtDTO
+   * ---
+   */
+  data?: PartnerTotalAmtDTO;
+  msg?: string;
+}
+export interface BasePage_14 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _22[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface _73 {
+  /**
+   * 机构减免限额对象
+   * ---
+   * 机构减免限额实体
+   */
+  partnerReductionManage?: _22;
+  /**
+   * 资产包
+   */
+  pkgId?: string;
+  /**
+   * 机构减免限额对象
+   * ---
+   * 机构减免限额实体
+   */
+  pkgReductionManage?: _22;
+}
+export interface QcResult_49 {
+  code?: number;
+  /**
+   * 限额详情
+   * ---
+   * 限额详情
+   */
+  data?: _73;
+  msg?: string;
+}
+export interface QcResult_List_12 {
+  code?: number;
+  data?: _22[];
+  msg?: string;
+}
+export interface BasePage_3 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _4[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_3 {
+  code?: number;
+  /**
+   * 减免对象
+   * ---
+   * 减免实体
+   */
+  data?: _4;
+  msg?: string;
+}
+export interface BasePage_52 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _71[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_47 {
+  code?: number;
+  /**
+   * 还款账户对象
+   * ---
+   * 还款账户实体
+   */
+  data?: _71;
+  msg?: string;
+}
+export interface QcResult_List_37 {
+  code?: number;
+  data?: _60[];
+  msg?: string;
+}
+export interface BasePage_42 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _60[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_37 {
+  code?: number;
+  /**
+   * 调账记录对象
+   * ---
+   * 调账记录实体
+   */
+  data?: _60;
+  msg?: string;
+}
+export interface BasePage_53 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _72[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_48 {
+  code?: number;
+  /**
+   * 银行流水对象
+   * ---
+   * 银行流水实体
+   */
+  data?: _72;
+  msg?: string;
+}
+export interface BasePage_50 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _69[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_45 {
+  code?: number;
+  /**
+   * 还款明细对象
+   * ---
+   * 还款明细实体
+   */
+  data?: _69;
+  msg?: string;
+}
+export interface QcResult_List_43 {
+  code?: number;
+  data?: _68[];
+  msg?: string;
+}
+export interface BasePage_49 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _68[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_44 {
+  code?: number;
+  /**
+   * 还款导入批次对象
+   * ---
+   * 还款导入批次实体
+   */
+  data?: _68;
+  msg?: string;
+}
+export interface BasePage_4 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _8[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_4 {
+  code?: number;
+  /**
+   * 凭证对账对象
+   * ---
+   * 凭证对账实体
+   */
+  data?: _8;
+  msg?: string;
+}
+export interface QcResult_33 {
+  code?: number;
+  /**
+   * 留案配置对象
+   * ---
+   * 留案配置实体
+   */
+  data?: _54;
+  msg?: string;
+}
+export interface QcResult_List_32 {
+  code?: number;
+  data?: _54[];
+  msg?: string;
+}
+export interface BasePage_36 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _54[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_List_31 {
+  code?: number;
+  data?: _52[];
+  msg?: string;
+}
+export interface BasePage_35 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _52[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_32 {
+  code?: number;
+  /**
+   * 留案记录对象
+   * ---
+   * 留案记录实体
+   */
+  data?: _52;
+  msg?: string;
+}
+export interface QcResult_36 {
+  code?: number;
+  /**
+   * 结清证明配置对象
+   * ---
+   * 结清证明配置实体
+   */
+  data?: _59;
+  msg?: string;
+}
+export interface QcResult_List_36 {
+  code?: number;
+  data?: _59[];
+  msg?: string;
+}
+export interface BasePage_41 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _59[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_List_35 {
+  code?: number;
+  data?: _58[];
+  msg?: string;
+}
+export interface BasePage_40 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _58[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_35 {
+  code?: number;
+  /**
+   * 结清证明记录对象
+   * ---
+   * 结清证明记录实体
+   */
+  data?: _58;
+  msg?: string;
+}
+export interface BasePage_28 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _41[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_25 {
+  code?: number;
+  /**
+   * 模板对象
+   * ---
+   * 模板实体
+   */
+  data?: _41;
+  msg?: string;
+}
+export interface QcResult_List_34 {
+  code?: number;
+  data?: _57[];
+  msg?: string;
+}
+export interface BasePage_39 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _57[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_34 {
+  code?: number;
+  /**
+   * 结清证明上传批次对象
+   * ---
+   * 结清证明上传批次实体
+   */
+  data?: _57;
+  msg?: string;
+}
+export interface BasePage_34 {
+  /**
+   * 消息状态码
+   */
+  code?: number;
+  /**
+   * 消息内容
+   */
+  msg?: string;
+  /**
+   * 列表数据
+   */
+  rows?: _50[];
+  /**
+   * 总记录数
+   */
+  total?: number;
+}
+export interface QcResult_31 {
+  code?: number;
+  /**
+   * 用户电话对象
+   * ---
+   * 用户电话实体
+   */
+  data?: _50;
+  msg?: string;
+}
+export interface QcResult_7 {
   code?: number;
   /**
    * 工单对象
@@ -7370,13 +7370,13 @@ export type QcResult_7 = {
    */
   data?: _13;
   msg?: string;
-};
-export type QcResult_List_7 = {
+}
+export interface QcResult_List_7 {
   code?: number;
   data?: _13[];
   msg?: string;
-};
-export type BasePage_7 = {
+}
+export interface BasePage_7 {
   /**
    * 消息状态码
    */
@@ -7393,8 +7393,8 @@ export type BasePage_7 = {
    * 总记录数
    */
   total?: number;
-};
-export type _14 = {
+}
+export interface _14 {
   /**
    * 创建人
    */
@@ -7439,8 +7439,8 @@ export type _14 = {
    * 昨日新增工单数
    */
   yesterdayAddCount?: number;
-};
-export type BasePage_8 = {
+}
+export interface BasePage_8 {
   /**
    * 消息状态码
    */
@@ -7457,7 +7457,7 @@ export type BasePage_8 = {
    * 总记录数
    */
   total?: number;
-};
+}
 declare global {
   interface PlAdmin {
     repay_accImportRecord: {
@@ -7639,11 +7639,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             accBatch?: string;
             accName?: string;
@@ -7664,7 +7664,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_accImportRecord_export.post', Config>;
+      ): Alova2Method<null, 'repay_accImportRecord_export.post', Config>;
     };
     repay_accImportRecord_getList: {
       /**
@@ -7703,6 +7703,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 账户导入记录对象
+       *   // 账户导入记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 导入批次
        *     accBatch?: string
@@ -7845,12 +7849,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'repay_accImportRecord_importTemplate.post', Config>;
+      ): Alova2Method<null, 'repay_accImportRecord_importTemplate.post', Config>;
     };
     repay_accImportRecord_list: {
       /**
@@ -7893,6 +7897,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 账户导入记录对象
+       *   // 账户导入记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 导入批次
        *     accBatch?: string
@@ -8122,7 +8130,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -8143,7 +8150,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -8166,7 +8172,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -8228,7 +8233,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -8377,11 +8381,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             accBatch?: string;
             accOperType?: number;
@@ -8399,7 +8403,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_accOperRecord_export.post', Config>;
+      ): Alova2Method<null, 'repay_accOperRecord_export.post', Config>;
     };
     repay_accOperRecord_getList: {
       /**
@@ -8435,6 +8439,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款账号操作记录对象
+       *   // 还款账号操作记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 导入批次
        *     accBatch?: string
@@ -8520,6 +8528,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 还款账号操作记录对象
+       *   // 还款账号操作记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 导入批次
        *     accBatch?: string
@@ -8582,7 +8594,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -8603,7 +8614,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -8626,7 +8636,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -8670,7 +8679,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -8715,8 +8723,16 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 材料核对详情对象
+       *   // 材料核对详情实体
+       *   // [items] end
        *   data?: Array<{
        *     // 核对结果明细json
+       *     // [items] start
+       *     // [title] 材料核对详情json
+       *     // 材料核对详情json
+       *     // [items] end
        *     checkJson?: Array<{
        *       // 核对材料类型id
        *       checkTypeId?: number
@@ -8829,8 +8845,16 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 材料核对详情对象
+       *   // 材料核对详情实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 核对结果明细json
+       *     // [items] start
+       *     // [title] 材料核对详情json
+       *     // 材料核对详情json
+       *     // [items] end
        *     checkJson?: Array<{
        *       // 核对材料类型id
        *       checkTypeId?: number
@@ -8918,7 +8942,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -8933,6 +8956,10 @@ declare global {
        *   // 材料核对详情实体
        *   data?: {
        *     // 核对结果明细json
+       *     // [items] start
+       *     // [title] 材料核对详情json
+       *     // 材料核对详情json
+       *     // [items] end
        *     checkJson?: Array<{
        *       // 核对材料类型id
        *       checkTypeId?: number
@@ -8979,7 +9006,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -9043,7 +9069,6 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // 资产包id
-       *   // [required]
        *   pkgId: string
        *   // 导入批次
        *   importBatch?: string
@@ -9067,6 +9092,10 @@ declare global {
        *     caseType?: number
        *     // 材料检查明细文件url
        *     checkDetailFileUrl?: string
+       *     // [items] start
+       *     // [title] material_check_result对象
+       *     // 材料核对结果表
+       *     // [items] end
        *     checkResultJson?: Array<{
        *       // 核对材料类型id
        *       checkTypeId?: number
@@ -9113,7 +9142,6 @@ declare global {
           params: {
             /**
              * 资产包id
-             * [required]
              */
             pkgId: string;
             /**
@@ -9164,9 +9192,17 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 材料核对结果对象
+       *   // 材料核对结果实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 材料检查明细文件url
        *     checkDetailFileUrl?: string
+       *     // [items] start
+       *     // [title] material_check_result对象
+       *     // 材料核对结果表
+       *     // [items] end
        *     checkResultJson?: Array<{
        *       // 核对材料类型id
        *       checkTypeId?: number
@@ -9250,7 +9286,6 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // 资产包id
-       *   // [required]
        *   pkgId: string
        * }
        * ```
@@ -9261,6 +9296,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   data?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -9296,7 +9335,6 @@ declare global {
           params: {
             /**
              * 资产包id
-             * [required]
              */
             pkgId: string;
           };
@@ -9439,11 +9477,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             contractNo?: string;
             id?: number;
@@ -9459,7 +9497,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_assetOtherFields_export.post', Config>;
+      ): Alova2Method<null, 'asset_assetOtherFields_export.post', Config>;
     };
     asset_assetOtherFields_getList: {
       /**
@@ -9493,6 +9531,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 资产包附加字段对象
+       *   // 资产包附加字段实体
+       *   // [items] end
        *   data?: Array<{
        *     // 合同号
        *     contractNo?: string
@@ -9572,6 +9614,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 资产包附加字段对象
+       *   // 资产包附加字段实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 合同号
        *     contractNo?: string
@@ -9630,7 +9676,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -9651,7 +9696,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -9674,7 +9718,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -9716,7 +9759,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -9864,11 +9906,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             contactName?: string;
             contactPhone?: string;
@@ -9885,7 +9927,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_assetOwner_export.post', Config>;
+      ): Alova2Method<null, 'asset_assetOwner_export.post', Config>;
     };
     asset_assetOwner_getAccBatchList_$id$: {
       /**
@@ -9901,7 +9943,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -9912,6 +9953,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 账户导入记录对象
+       *   // 账户导入记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 导入批次
        *     accBatch?: string
@@ -9961,7 +10006,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -10003,6 +10047,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 债权主体对象
+       *   // 债权主体实体
+       *   // [items] end
        *   data?: Array<{
        *     // 联系人
        *     contactName?: string
@@ -10063,7 +10111,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -10074,6 +10121,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 资产包对象
+       *   // 资产包实体
+       *   // [items] end
        *   data?: Array<{
        *     // 资产类型
        *     assetType?: number
@@ -10154,7 +10205,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -10200,6 +10250,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 债权主体对象
+       *   // 债权主体实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 联系人
        *     contactName?: string
@@ -10261,7 +10315,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -10282,7 +10335,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -10305,7 +10357,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -10349,7 +10400,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -10703,11 +10753,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             assetType?: number;
             checkStatus?: number;
@@ -10730,7 +10780,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_pkg_export.post', Config>;
+      ): Alova2Method<null, 'asset_pkg_export.post', Config>;
     };
     asset_pkg_getAccList_$id$: {
       /**
@@ -10746,7 +10796,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -10757,6 +10806,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 账户导入记录对象
+       *   // 账户导入记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 导入批次
        *     accBatch?: string
@@ -10806,7 +10859,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -10854,6 +10906,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 资产包对象
+       *   // 资产包实体
+       *   // [items] end
        *   data?: Array<{
        *     // 资产类型
        *     assetType?: number
@@ -11265,12 +11321,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'asset_pkg_importOtherFieldsTemplate.post', Config>;
+      ): Alova2Method<null, 'asset_pkg_importOtherFieldsTemplate.post', Config>;
     };
     asset_pkg_importTemplate: {
       /**
@@ -11284,12 +11340,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'asset_pkg_importTemplate.post', Config>;
+      ): Alova2Method<null, 'asset_pkg_importTemplate.post', Config>;
     };
     asset_pkg_list: {
       /**
@@ -11334,6 +11390,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 资产包对象
+       *   // 资产包实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 资产类型
        *     assetType?: number
@@ -11580,7 +11640,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -11601,7 +11660,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -11624,7 +11682,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -11717,7 +11774,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -11897,11 +11953,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             id?: number;
             importBatch?: string;
@@ -11918,7 +11974,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_pkgImportRecord_export.post', Config>;
+      ): Alova2Method<null, 'asset_pkgImportRecord_export.post', Config>;
     };
     asset_pkgImportRecord_list: {
       /**
@@ -11957,6 +12013,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 资产包导入记录对象
+       *   // 资产包导入记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 合同数
        *     contQty?: number
@@ -12105,7 +12165,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -12126,7 +12185,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -12149,7 +12207,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -12209,7 +12266,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -12358,11 +12414,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseClearType?: number;
             contClearWay?: number;
@@ -12380,7 +12436,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_assetPkgRepayCfg_export.post', Config>;
+      ): Alova2Method<null, 'asset_assetPkgRepayCfg_export.post', Config>;
     };
     asset_assetPkgRepayCfg_getList: {
       /**
@@ -12416,6 +12472,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 资产包划账配置对象
+       *   // 资产包划账配置实体
+       *   // [items] end
        *   data?: Array<{
        *     // 结清方式
        *     caseClearType?: number
@@ -12501,6 +12561,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 资产包划账配置对象
+       *   // 资产包划账配置实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 结清方式
        *     caseClearType?: number
@@ -12563,7 +12627,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -12584,7 +12647,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -12607,7 +12669,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -12651,7 +12712,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -12700,6 +12760,10 @@ declare global {
        *   // 资产包文件路径
        *   pkgPath?: string
        *   // 核对模版详情
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   templateManageDetailList?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -12780,6 +12844,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 签章核对对象
+       *   // 签章核对实体
+       *   // [items] end
        *   data?: Array<{
        *     // 核对错误信息
        *     checkError?: string
@@ -12808,6 +12876,10 @@ declare global {
        *     // 资产包文件路径
        *     pkgPath?: string
        *     // 核对模版详情
+       *     // [items] start
+       *     // [title] 模板详情对象
+       *     // 模板详情实体
+       *     // [items] end
        *     templateManageDetailList?: Array<{
        *       // 标准字段名称
        *       commonName?: string
@@ -12894,6 +12966,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 签章核对对象
+       *   // 签章核对实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 核对错误信息
        *     checkError?: string
@@ -12922,6 +12998,10 @@ declare global {
        *     // 资产包文件路径
        *     pkgPath?: string
        *     // 核对模版详情
+       *     // [items] start
+       *     // [title] 模板详情对象
+       *     // 模板详情实体
+       *     // [items] end
        *     templateManageDetailList?: Array<{
        *       // 标准字段名称
        *       commonName?: string
@@ -13015,6 +13095,10 @@ declare global {
        *   // 资产包文件路径
        *   pkgPath?: string
        *   // 核对模版详情
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   templateManageDetailList?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -13079,7 +13163,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -13100,7 +13183,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -13292,11 +13374,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             assignType?: number;
             assignedDate?: string;
@@ -13317,7 +13399,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_assignRecord_export.post', Config>;
+      ): Alova2Method<null, 'case_assignRecord_export.post', Config>;
     };
     case_assignRecord_getList: {
       /**
@@ -13356,6 +13438,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件轨迹对象
+       *   // 案件轨迹实体
+       *   // [items] end
        *   data?: Array<{
        *     // 轨迹类型
        *     assignType?: number
@@ -13467,6 +13553,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 案件轨迹对象
+       *   // 案件轨迹实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 轨迹类型
        *     assignType?: number
@@ -13552,7 +13642,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -13573,7 +13662,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -13596,7 +13684,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -13660,7 +13747,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -13723,11 +13809,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             assignType?: number;
             assignTypeGte?: number;
@@ -13767,7 +13853,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_assignRecordEs_export.post', Config>;
+      ): Alova2Method<null, 'case_assignRecordEs_export.post', Config>;
     };
     case_assignRecordEs_getAssignRecordEsList: {
       /**
@@ -13825,6 +13911,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件轨迹对象
+       *   // 案件轨迹实体
+       *   // [items] end
        *   data?: Array<{
        *     // 轨迹类型
        *     assignType?: number
@@ -14065,6 +14155,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 案件轨迹对象
+       *   // 案件轨迹实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 轨迹类型
        *     assignType?: number
@@ -14367,11 +14461,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             contractNo?: string;
             fileName?: string;
@@ -14390,7 +14484,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_caseFile_export.post', Config>;
+      ): Alova2Method<null, 'case_caseFile_export.post', Config>;
     };
     case_caseFile_getList: {
       /**
@@ -14427,6 +14521,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 合同材料对象
+       *   // 合同材料实体
+       *   // [items] end
        *   data?: Array<{
        *     // 合同号
        *     contractNo?: string
@@ -14512,6 +14610,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 合同材料对象
+       *   // 合同材料实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 合同号
        *     contractNo?: string
@@ -14573,7 +14675,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -14594,7 +14695,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -14617,7 +14717,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -14659,7 +14758,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -14808,11 +14906,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseOperType?: number;
             dealType?: number;
@@ -14830,7 +14928,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_caseOperationBatch_export.post', Config>;
+      ): Alova2Method<null, 'case_caseOperationBatch_export.post', Config>;
     };
     case_caseOperationBatch_getList: {
       /**
@@ -14866,6 +14964,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件操作批次对象
+       *   // 案件操作批次实体
+       *   // [items] end
        *   data?: Array<{
        *     // 操作类型
        *     caseOperType?: number
@@ -14951,6 +15053,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 案件操作批次对象
+       *   // 案件操作批次实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 操作类型
        *     caseOperType?: number
@@ -15013,7 +15119,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -15034,7 +15139,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -15057,7 +15161,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -15101,7 +15204,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -15295,11 +15397,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             assignedDate?: string;
             caseId?: number;
@@ -15326,7 +15428,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_caseOperationRecord_export.post', Config>;
+      ): Alova2Method<null, 'case_caseOperationRecord_export.post', Config>;
     };
     case_caseOperationRecord_getList: {
       /**
@@ -15371,6 +15473,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件操作明细对象
+       *   // 案件操作明细实体
+       *   // [items] end
        *   data?: Array<{
        *     // 委托日期
        *     assignedDate?: string
@@ -15492,6 +15598,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 案件操作明细对象
+       *   // 案件操作明细实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 委托日期
        *     assignedDate?: string
@@ -15581,7 +15691,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -15602,7 +15711,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -15625,7 +15733,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -15687,7 +15794,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -16209,6 +16315,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -16228,6 +16336,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -16246,8 +16356,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -16258,12 +16372,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -16274,11 +16392,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseStatus?: number;
             clearStatus?: number;
@@ -16348,7 +16466,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_casePool_export.post', Config>;
+      ): Alova2Method<null, 'case_casePool_export.post', Config>;
     };
     case_casePool_exportAccInfo: {
       /**
@@ -16365,6 +16483,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -16384,6 +16504,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -16402,8 +16524,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -16414,12 +16540,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -16430,11 +16560,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseStatus?: number;
             clearStatus?: number;
@@ -16504,7 +16634,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_casePool_exportAccInfo.post', Config>;
+      ): Alova2Method<null, 'case_casePool_exportAccInfo.post', Config>;
     };
     case_casePool_extendCaseByIds: {
       /**
@@ -16555,6 +16685,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -16574,6 +16706,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -16592,8 +16726,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -16604,12 +16742,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -16622,6 +16764,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款账户对象
+       *   // 还款账户实体
+       *   // [items] end
        *   data?: Array<{
        *     // 账户批次
        *     accBatch?: string
@@ -16797,6 +16943,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件轨迹对象
+       *   // 案件轨迹实体
+       *   // [items] end
        *   data?: Array<{
        *     // 轨迹类型
        *     assignType?: number
@@ -16901,6 +17051,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -16920,6 +17072,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -16938,8 +17092,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -16950,12 +17108,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -16968,6 +17130,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 银行流水对象
+       *   // 银行流水实体
+       *   // [items] end
        *   data?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -17132,8 +17298,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -17161,6 +17331,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 催记对象
+       *   // 催记实体
+       *   // [items] end
        *   data?: Array<{
        *     // 案件ID
        *     caseId?: number
@@ -17273,6 +17447,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -17292,6 +17468,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -17310,8 +17488,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -17322,12 +17504,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -17340,6 +17526,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 合同管理对象
+       *   // 合同管理实体
+       *   // [items] end
        *   data?: Array<{
        *     // 年龄
        *     age?: number
@@ -17600,6 +17790,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -17619,6 +17811,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -17637,8 +17831,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -17649,12 +17847,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -17667,6 +17869,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件池对象
+       *   // 案件池实体
+       *   // [items] end
        *   data?: Array<{
        *     // 委托日期
        *     assignedDate?: string
@@ -17883,6 +18089,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -17902,6 +18110,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -17920,8 +18130,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -17932,12 +18146,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -17950,6 +18168,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 用户电话对象
+       *   // 用户电话实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -18064,6 +18286,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -18083,6 +18307,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -18101,8 +18327,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -18113,12 +18343,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -18131,10 +18365,16 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 减免对象
+       *   // 减免实体
+       *   // [items] end
        *   data?: Array<{
        *     // 减免后待还金额
        *     amtAfterReduction?: number
        *     // 申请证明文件
+       *     // [items] start
+       *     // [items] end
        *     applyFile?: string[]
        *     // 申请原因
        *     applyReason?: string
@@ -18351,6 +18591,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -18370,6 +18612,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -18388,8 +18632,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -18400,12 +18648,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -18418,6 +18670,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款明细对象
+       *   // 还款明细实体
+       *   // [items] end
        *   data?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -18568,6 +18824,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -18587,6 +18845,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -18605,8 +18865,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -18617,12 +18881,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -18635,6 +18903,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 凭证对账对象
+       *   // 凭证对账实体
+       *   // [items] end
        *   data?: Array<{
        *     // 审核状态
        *     auditStatus?: number
@@ -18779,6 +19051,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -18798,6 +19072,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -18816,8 +19092,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -18828,12 +19108,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -18846,6 +19130,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件状态变更记录对象
+       *   // 案件状态变更记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 调整后案件状态
        *     afterChangeStatus?: number
@@ -18960,6 +19248,8 @@ declare global {
        * type QueryParameters = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -18979,6 +19269,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -18997,8 +19289,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -19009,12 +19305,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -19027,6 +19327,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件池对象
+       *   // 案件池实体
+       *   // [items] end
        *   data?: Array<{
        *     // 委托日期
        *     assignedDate?: string
@@ -19336,11 +19640,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * dealType
@@ -19350,7 +19654,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_casePool_importAssignTemplate.post', Config>;
+      ): Alova2Method<null, 'case_casePool_importAssignTemplate.post', Config>;
     };
     case_casePool_importCaseStatusTemplate: {
       /**
@@ -19364,12 +19668,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'case_casePool_importCaseStatusTemplate.post', Config>;
+      ): Alova2Method<null, 'case_casePool_importCaseStatusTemplate.post', Config>;
     };
     case_casePool_importCaseTagTemplate: {
       /**
@@ -19383,12 +19687,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'case_casePool_importCaseTagTemplate.post', Config>;
+      ): Alova2Method<null, 'case_casePool_importCaseTagTemplate.post', Config>;
     };
     case_casePool_importDropCaseTemplate: {
       /**
@@ -19402,12 +19706,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'case_casePool_importDropCaseTemplate.post', Config>;
+      ): Alova2Method<null, 'case_casePool_importDropCaseTemplate.post', Config>;
     };
     case_casePool_importExtendCaseData: {
       /**
@@ -19492,6 +19796,8 @@ declare global {
        * type RequestBody = {
        *   caseStatus?: number
        *   clearStatus?: number
+       *   // [items] start
+       *   // [items] end
        *   clearStatusArr?: number[]
        *   dealType?: number
        *   diantiaoAssignBatch?: string
@@ -19511,6 +19817,8 @@ declare global {
        *   id?: number
        *   idCardArea?: string
        *   idCardQuery?: string
+       *   // [items] start
+       *   // [items] end
        *   idList?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -19529,8 +19837,12 @@ declare global {
        *   mediationTagZg?: string
        *   nationality?: string
        *   // 排除的案件状态
+       *   // [items] start
+       *   // [items] end
        *   neCaseStatus?: number[]
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   oldUserId?: string
        *   orderByColumn?: string
@@ -19541,12 +19853,16 @@ declare global {
        *   phone?: string
        *   pkgGroup?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   registerProv?: string
        *   settleDateEnd?: string
        *   settleDateStart?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -19563,6 +19879,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 案件池对象
+       *   // 案件池实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 委托日期
        *     assignedDate?: string
@@ -19844,7 +20164,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -19865,7 +20184,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -19888,7 +20206,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -20034,7 +20351,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -20089,6 +20405,8 @@ declare global {
        *   useLastId?: boolean
        *   userId?: string
        *   userIdNo?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdSet?: string[]
        *   userName?: string
        * }
@@ -20098,11 +20416,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseStatus?: number;
             clearStatus?: number;
@@ -20143,7 +20461,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_casePoolPre_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_casePoolPre_export.post', Config>;
     };
     case_caseStatusChangeRecord: {
       /**
@@ -20282,11 +20600,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseId?: number;
             id?: number;
@@ -20301,7 +20619,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_caseStatusChangeRecord_export.post', Config>;
+      ): Alova2Method<null, 'case_caseStatusChangeRecord_export.post', Config>;
     };
     case_caseStatusChangeRecord_getList: {
       /**
@@ -20334,6 +20652,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 案件状态变更记录对象
+       *   // 案件状态变更记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 调整后案件状态
        *     afterChangeStatus?: number
@@ -20413,6 +20735,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 案件状态变更记录对象
+       *   // 案件状态变更记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 调整后案件状态
        *     afterChangeStatus?: number
@@ -20472,7 +20798,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -20493,7 +20818,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -20516,7 +20840,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -20560,7 +20883,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -20753,12 +21075,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'case_contactRecord_contactRecordTemplate.post', Config>;
+      ): Alova2Method<null, 'case_contactRecord_contactRecordTemplate.post', Config>;
     };
     case_contactRecord_export: {
       /**
@@ -20783,8 +21105,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -20810,11 +21136,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseId?: number;
             contactDate?: string;
@@ -20850,7 +21176,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_contactRecord_export.post', Config>;
+      ): Alova2Method<null, 'case_contactRecord_export.post', Config>;
     };
     case_contactRecord_getList: {
       /**
@@ -20875,8 +21201,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -20904,6 +21234,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 催记对象
+       *   // 催记实体
+       *   // [items] end
        *   data?: Array<{
        *     // 案件ID
        *     caseId?: number
@@ -21224,8 +21558,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -21257,6 +21595,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 催记对象
+       *   // 催记实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 案件ID
        *     caseId?: number
@@ -21369,7 +21711,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -21390,7 +21731,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -21413,7 +21753,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -21489,7 +21828,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -21957,6 +22295,8 @@ declare global {
        * type QueryParameters = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -21981,6 +22321,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -21991,11 +22333,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             clearStatus?: number;
             contractNo?: string;
@@ -22030,7 +22372,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_contractPool_export.post', Config>;
+      ): Alova2Method<null, 'case_contractPool_export.post', Config>;
     };
     case_contractPool_getCaseFile: {
       /**
@@ -22130,6 +22472,8 @@ declare global {
        * type QueryParameters = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -22154,6 +22498,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -22166,6 +22512,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 资产包附加字段对象
+       *   // 资产包附加字段实体
+       *   // [items] end
        *   data?: Array<{
        *     // 合同号
        *     contractNo?: string
@@ -22243,6 +22593,8 @@ declare global {
        * type QueryParameters = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -22267,6 +22619,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -22279,6 +22633,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款明细对象
+       *   // 还款明细实体
+       *   // [items] end
        *   data?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -22394,6 +22752,8 @@ declare global {
        * type RequestBody = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -22418,6 +22778,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -22434,6 +22796,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 合同管理对象
+       *   // 合同管理实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 年龄
        *     age?: number
@@ -22629,7 +22995,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -22650,7 +23015,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -22673,7 +23037,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -22863,7 +23226,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -23255,6 +23617,8 @@ declare global {
        * type QueryParameters = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -23280,6 +23644,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -23290,11 +23656,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             clearStatus?: number;
             contractNo?: string;
@@ -23330,7 +23696,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'case_contractPoolPartner_export.post', Config>;
+      ): Alova2Method<null, 'case_contractPoolPartner_export.post', Config>;
     };
     case_contractPoolPartner_getList: {
       /**
@@ -23347,6 +23713,8 @@ declare global {
        * type QueryParameters = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -23372,6 +23740,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -23384,6 +23754,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构合同池对象
+       *   // 机构合同池实体
+       *   // [items] end
        *   data?: Array<{
        *     // 年龄
        *     age?: number
@@ -23594,6 +23968,8 @@ declare global {
        * type RequestBody = {
        *   clearStatus?: number
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   contractStatus?: number
        *   extendUid?: string
@@ -23619,6 +23995,8 @@ declare global {
        *   soledDate?: string
        *   useLastId?: boolean
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIdList?: string[]
        *   userIdNo?: string
        *   userName?: string
@@ -23635,6 +24013,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构合同池对象
+       *   // 机构合同池实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 年龄
        *     age?: number
@@ -23837,7 +24219,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -23858,7 +24239,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -23881,7 +24261,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -24055,7 +24434,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -24232,11 +24610,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 度言系统角色ID
@@ -24284,7 +24662,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'plAdmin_dyUserMap_export.post', Config>;
+      ): Alova2Method<null, 'plAdmin_dyUserMap_export.post', Config>;
     };
     plAdmin_dyUserMap_getList: {
       /**
@@ -24332,6 +24710,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 度言用户映射对象
+       *   // 度言用户映射实体
+       *   // [items] end
        *   data?: Array<{
        *     // 度言系统角色ID
        *     accountId?: number
@@ -24470,6 +24852,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 用户信息对象
+       *   // 用户信息实体
+       *   // [items] end
        *   data?: Array<{
        *     // 年龄
        *     age?: number
@@ -24661,6 +25047,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 度言用户映射对象
+       *   // 度言用户映射实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 度言系统角色ID
        *     accountId?: number
@@ -24761,7 +25151,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -24782,7 +25171,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -24805,7 +25193,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -24857,7 +25244,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -24906,11 +25292,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 导出人id
@@ -24950,7 +25336,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'common_exportTask_export.post', Config>;
+      ): Alova2Method<null, 'common_exportTask_export.post', Config>;
     };
     common_exportTask_list: {
       /**
@@ -24998,6 +25384,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 文件导出任务对象
+       *   // 文件导出任务实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -25092,7 +25482,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -25113,7 +25502,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -25136,7 +25524,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -25190,7 +25577,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -25213,7 +25599,6 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // 业务
-       *   // [required]
        *   biz: string
        *   // 文件类型:img-图片,video-视频,voice-录音,pdf,excel,word,other-其他
        *   fileType?: string
@@ -25243,7 +25628,6 @@ declare global {
           params: {
             /**
              * 业务
-             * [required]
              */
             biz: string;
             /**
@@ -25388,11 +25772,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             fileType?: string;
             /**
@@ -25411,7 +25795,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_fileInfo_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_fileInfo_export.post', Config>;
     };
     pladmin_fileInfo_getList: {
       /**
@@ -25446,6 +25830,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 文件及材料对象
+       *   // 文件及材料实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -25527,6 +25915,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 文件及材料对象
+       *   // 文件及材料实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -25586,7 +25978,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -25607,7 +25998,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -25630,7 +26020,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -25670,7 +26059,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -25885,11 +26273,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 入账状态0,2未入账 1已入账 3已冲销,不能在推送推送对账单
@@ -25965,7 +26353,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_kpRepayStatement_export.post', Config>;
+      ): Alova2Method<null, 'repay_kpRepayStatement_export.post', Config>;
     };
     repay_kpRepayStatement_getList: {
       /**
@@ -26027,6 +26415,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 昆朋还款流水对象
+       *   // 昆朋还款流水实体
+       *   // [items] end
        *   data?: Array<{
        *     // 入账状态0,2未入账 1已入账 3已冲销,不能在推送推送对账单
        *     accountingStatus?: number
@@ -26216,6 +26608,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 昆朋还款流水对象
+       *   // 昆朋还款流水实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 入账状态0,2未入账 1已入账 3已冲销,不能在推送推送对账单
        *     accountingStatus?: number
@@ -26411,7 +26807,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -26432,7 +26827,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -26455,7 +26849,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -26519,7 +26912,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -26621,6 +27013,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -26628,9 +27022,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -26764,6 +27162,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -26771,9 +27171,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -26814,11 +27218,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             caseId?: number;
             /**
@@ -26904,7 +27308,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_lawsuitProgress_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_lawsuitProgress_export.post', Config>;
     };
     pladmin_lawsuitProgress_getContractDetail: {
       /**
@@ -26922,6 +27326,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -26929,9 +27335,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -27172,6 +27582,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -27179,9 +27591,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -27224,6 +27640,8 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [items] end
        *   data?: string[]
        *   msg?: string
        * }
@@ -27253,6 +27671,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -27260,9 +27680,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -27305,6 +27729,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 法诉进展对象
+       *   // 法诉进展实体
+       *   // [items] end
        *   data?: Array<{
        *     // 案件ID
        *     caseId?: number
@@ -27460,6 +27888,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -27467,9 +27897,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -27510,16 +27944,16 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           data: _47;
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_lawsuitProgress_importLawProgressTemplate.post', Config>;
+      ): Alova2Method<null, 'pladmin_lawsuitProgress_importLawProgressTemplate.post', Config>;
     };
     pladmin_lawsuitProgress_list: {
       /**
@@ -27537,6 +27971,8 @@ declare global {
        *   caseId?: number
        *   // 合同号
        *   contractNo?: string
+       *   // [items] start
+       *   // [items] end
        *   contractNoList?: string[]
        *   // 当前欠款本金
        *   curOverduePrincipal?: number
@@ -27544,9 +27980,13 @@ declare global {
        *   curOverdueTotalamt?: number
        *   // 作业小组ID
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   // 作业员ID
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   // 作业员
        *   employeeNickName?: string
@@ -27593,6 +28033,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 法诉进展对象
+       *   // 法诉进展实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 案件ID
        *     caseId?: number
@@ -27747,7 +28191,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -27768,7 +28211,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -27791,7 +28233,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -27859,7 +28300,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -28051,11 +28491,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 金额计算方式：1.按合同2.按用户
@@ -28100,7 +28540,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_legalDocTask_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_legalDocTask_export.post', Config>;
     };
     pladmin_legalDocTask_getList: {
       /**
@@ -28147,6 +28587,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 法律文书任务对象
+       *   // 法律文书任务实体
+       *   // [items] end
        *   data?: Array<{
        *     // 金额计算方式：1.按合同2.按用户
        *     amtType?: number
@@ -28259,11 +28703,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * amtType
@@ -28273,7 +28717,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_legalDocTask_importLegalTaskTemplate.post', Config>;
+      ): Alova2Method<null, 'pladmin_legalDocTask_importLegalTaskTemplate.post', Config>;
     };
     pladmin_legalDocTask_list: {
       /**
@@ -28324,6 +28768,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 法律文书任务对象
+       *   // 法律文书任务实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 金额计算方式：1.按合同2.按用户
        *     amtType?: number
@@ -28487,7 +28935,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -28508,7 +28955,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -28531,7 +28977,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -28591,7 +29036,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -28742,11 +29186,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             isAsc?: string;
             lastId?: number;
@@ -28758,7 +29202,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'plsaas_legalDocTaskDetail_export.post', Config>;
+      ): Alova2Method<null, 'plsaas_legalDocTaskDetail_export.post', Config>;
     };
     plsaas_legalDocTaskDetail_getList: {
       /**
@@ -28788,6 +29232,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 法律文书明细对象
+       *   // 法律文书明细实体
+       *   // [items] end
        *   data?: Array<{
        *     // 合同号
        *     contractId?: string
@@ -28865,6 +29313,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 法律文书明细对象
+       *   // 法律文书明细实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 合同号
        *     contractId?: string
@@ -28925,7 +29377,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -28946,7 +29397,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -28969,7 +29419,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -29017,7 +29466,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -29190,11 +29638,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 金额计算方式：1.按合同2.按用户
@@ -29226,7 +29674,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_legalDocTemplate_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_legalDocTemplate_export.post', Config>;
     };
     pladmin_legalDocTemplate_getFields: {
       /**
@@ -29242,6 +29690,8 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [items] end
        *   data?: Array<Record<string, string>>
        *   msg?: string
        * }
@@ -29289,6 +29739,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 法律文书模板表对象
+       *   // 法律文书模板表实体
+       *   // [items] end
        *   data?: Array<{
        *     // 金额计算方式：1.按合同2.按用户
        *     amtType?: number
@@ -29402,6 +29856,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 法律文书模板表对象
+       *   // 法律文书模板表实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 金额计算方式：1.按合同2.按用户
        *     amtType?: number
@@ -29488,7 +29946,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -29509,7 +29966,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -29532,7 +29988,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -29586,7 +30041,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -29633,11 +30087,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 大于发送时间
@@ -29673,7 +30127,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'process_loginRecord_export.post', Config>;
+      ): Alova2Method<null, 'process_loginRecord_export.post', Config>;
     };
     process_loginRecord_list: {
       /**
@@ -29719,6 +30173,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 登录记录对象
+       *   // 登录记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 验证码发送状态-1,发送失败 1-发送成功
        *     codeSendStatus?: number
@@ -29928,11 +30386,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 审批状态：0-待审批1-审批不通过2审批通过
@@ -29964,7 +30422,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_materialDownload_export.post', Config>;
+      ): Alova2Method<null, 'asset_materialDownload_export.post', Config>;
     };
     asset_materialDownload_getPkgMaterialTemplate: {
       /**
@@ -29980,7 +30438,6 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // 资产包id
-       *   // [required]
        *   pkgId: string
        * }
        * ```
@@ -29991,6 +30448,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   data?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -30026,7 +30487,6 @@ declare global {
           params: {
             /**
              * 资产包id
-             * [required]
              */
             pkgId: string;
           };
@@ -30077,6 +30537,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 材料下载对象
+       *   // 材料下载实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 审批状态：0-待审批1-审批不通过2审批通过
        *     approveStatus?: number
@@ -30288,6 +30752,8 @@ declare global {
        *     // 合同数
        *     contractCount?: number
        *     // 问题记录
+       *     // [items] start
+       *     // [items] end
        *     errorList?: string[]
        *     // 用户数
        *     userCount?: number
@@ -30403,7 +30869,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -30424,7 +30889,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -30676,6 +31140,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -30738,6 +31204,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -30749,11 +31217,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             bizArea?: string;
             contactPhone?: string;
@@ -30786,7 +31254,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_partnerManage_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_partnerManage_export.post', Config>;
     };
     pladmin_partnerManage_freezeUnFreezeAccount: {
       /**
@@ -30824,6 +31292,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -30886,6 +31356,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -30899,6 +31371,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构管理对象
+       *   // 机构管理实体
+       *   // [items] end
        *   data?: Array<{
        *     // 展业地区
        *     bizArea?: string
@@ -31095,7 +31571,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -31171,7 +31646,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -31237,6 +31711,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 用户信息对象
+       *   // 用户信息实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 年龄
        *     age?: number
@@ -31392,6 +31870,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -31409,6 +31889,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构管理对象
+       *   // 机构管理实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 展业地区
        *     bizArea?: string
@@ -31631,6 +32115,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -31693,6 +32179,8 @@ declare global {
        *   partnerName?: string
        *   partnerType?: number
        *   personName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   sameDebtBind?: boolean
        *   useLastId?: boolean
@@ -31733,7 +32221,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -31754,7 +32241,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -31777,7 +32263,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -31849,7 +32334,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -32007,6 +32491,8 @@ declare global {
        *   partnerId?: number
        *   partnerName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIdArr?: string[]
        *   repayDate?: string
        *   repayDateEnd?: string
@@ -32022,11 +32508,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             dealType?: number;
             groupByMonths?: boolean;
@@ -32052,7 +32538,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_partnerRepayDaily_export.post', Config>;
+      ): Alova2Method<null, 'repay_partnerRepayDaily_export.post', Config>;
     };
     repay_partnerRepayDaily_getList: {
       /**
@@ -32079,6 +32565,8 @@ declare global {
        *   partnerId?: number
        *   partnerName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIdArr?: string[]
        *   repayDate?: string
        *   repayDateEnd?: string
@@ -32096,6 +32584,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构日还款对象
+       *   // 机构日还款实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -32184,6 +32676,8 @@ declare global {
        *   partnerId?: number
        *   partnerName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIdArr?: string[]
        *   repayDate?: string
        *   repayDateEnd?: string
@@ -32205,6 +32699,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构日还款对象
+       *   // 机构日还款实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -32283,7 +32781,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -32304,7 +32801,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -32327,7 +32823,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -32379,7 +32874,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -32556,6 +33050,10 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [title] 机构留案统计对象
+       *   // 机构留案统计实体
+       *   // [items] end
        *   partnerRetentionList?: Array<{
        *     // 申请月份
        *     applyMonth?: string
@@ -32699,11 +33197,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 申请月份
@@ -32820,7 +33318,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_partnerRetention_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_partnerRetention_export.post', Config>;
     };
     pladmin_partnerRetention_getList: {
       /**
@@ -32903,6 +33401,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构留案统计对象
+       *   // 机构留案统计实体
+       *   // [items] end
        *   data?: Array<{
        *     // 申请月份
        *     applyMonth?: string
@@ -33148,6 +33650,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构留案统计对象
+       *   // 机构留案统计实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 申请月份
        *     applyMonth?: string
@@ -33343,6 +33849,8 @@ declare global {
        *   // 审核结果
        *   approvalStatus?: number
        *   // 审核结果
+       *   // [items] start
+       *   // [items] end
        *   approvalStatusList?: number[]
        *   // 批次号
        *   batchNum?: string
@@ -33350,12 +33858,16 @@ declare global {
        *   caseAmtTotal?: number
        *   // 案件id
        *   caseId?: number
+       *   // [items] start
+       *   // [items] end
        *   caseIds?: number[]
        *   // 处置类型 1:电催,2:法催
        *   dealType?: number
        *   // 0表示未删除,1表示删除
        *   delFlag?: number
        *   expireDate?: string
+       *   // [items] start
+       *   // [items] end
        *   ids?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -33376,9 +33888,13 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgGroupList?: string[]
        *   // 资产包ID
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 留案截止时间
        *   retentionCutOffTime?: string
@@ -33395,6 +33911,8 @@ declare global {
        *   useLastId?: boolean
        *   // 用户ID
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIds?: string[]
        *   // 用户名称
        *   userName?: string
@@ -33434,7 +33952,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -33455,7 +33972,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -33478,7 +33994,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -33536,7 +34051,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -33708,11 +34222,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             dealType?: number;
             deptId?: number;
@@ -33737,7 +34251,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_partnerStaffRepayDaily_export.post', Config>;
+      ): Alova2Method<null, 'repay_partnerStaffRepayDaily_export.post', Config>;
     };
     repay_partnerStaffRepayDaily_getList: {
       /**
@@ -33780,6 +34294,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构员工还款日对象
+       *   // 机构员工还款日实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -33887,6 +34405,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构员工还款日对象
+       *   // 机构员工还款日实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -33964,7 +34486,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -33985,7 +34506,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -34008,7 +34528,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -34060,7 +34579,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -34239,11 +34757,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 处置类型
@@ -34293,7 +34811,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_partnerSuspendRecord_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_partnerSuspendRecord_export.post', Config>;
     };
     pladmin_partnerSuspendRecord_getList: {
       /**
@@ -34343,6 +34861,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构中止合作记录对象
+       *   // 机构中止合作记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -34482,6 +35004,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构中止合作记录对象
+       *   // 机构中止合作记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -34584,7 +35110,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -34605,7 +35130,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -34628,7 +35152,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -34680,7 +35203,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -34703,6 +35225,10 @@ declare global {
        * ```ts
        * type RequestBody = {
        *   // 金额期数配置json
+       *   // [items] start
+       *   // [title] 减免期数配置
+       *   // 减免期数配置
+       *   // [items] end
        *   amountPeriod?: Array<{
        *     // 最大金额
        *     maxAmount?: number
@@ -34771,6 +35297,10 @@ declare global {
        * ```ts
        * type RequestBody = {
        *   // 金额期数配置json
+       *   // [items] start
+       *   // [title] 减免期数配置
+       *   // 减免期数配置
+       *   // [items] end
        *   amountPeriod?: Array<{
        *     // 最大金额
        *     maxAmount?: number
@@ -34857,11 +35387,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 处置方式：1-电调 2-法诉
@@ -34881,7 +35411,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'reduction_pkgReductionCfg_export.post', Config>;
+      ): Alova2Method<null, 'reduction_pkgReductionCfg_export.post', Config>;
     };
     reduction_pkgReductionCfg_getList: {
       /**
@@ -34915,8 +35445,16 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 资产包减免配置对象
+       *   // 资产包减免配置实体
+       *   // [items] end
        *   data?: Array<{
        *     // 金额期数配置json
+       *     // [items] start
+       *     // [title] 减免期数配置
+       *     // 减免期数配置
+       *     // [items] end
        *     amountPeriod?: Array<{
        *       // 最大金额
        *       maxAmount?: number
@@ -35015,6 +35553,10 @@ declare global {
        *   // 资产包减免配置实体
        *   data?: {
        *     // 金额期数配置json
+       *     // [items] start
+       *     // [title] 减免期数配置
+       *     // 减免期数配置
+       *     // [items] end
        *     amountPeriod?: Array<{
        *       // 最大金额
        *       maxAmount?: number
@@ -35113,8 +35655,16 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 资产包减免配置对象
+       *   // 资产包减免配置实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 金额期数配置json
+       *     // [items] start
+       *     // [title] 减免期数配置
+       *     // 减免期数配置
+       *     // [items] end
        *     amountPeriod?: Array<{
        *       // 最大金额
        *       maxAmount?: number
@@ -35192,7 +35742,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -35213,7 +35762,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -35236,7 +35784,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -35251,6 +35798,10 @@ declare global {
        *   // 资产包减免配置实体
        *   data?: {
        *     // 金额期数配置json
+       *     // [items] start
+       *     // [title] 减免期数配置
+       *     // 减免期数配置
+       *     // [items] end
        *     amountPeriod?: Array<{
        *       // 最大金额
        *       maxAmount?: number
@@ -35295,7 +35846,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -35409,11 +35959,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 数据时间：1-本月 2-历史
@@ -35445,7 +35995,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'reduction_pkgReductionLimit_export.post', Config>;
+      ): Alova2Method<null, 'reduction_pkgReductionLimit_export.post', Config>;
     };
     reduction_pkgReductionLimit_fileBatchUpdate: {
       /**
@@ -35502,10 +36052,8 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // pkgId
-       *   // [required]
        *   pkgId: string
        *   // partnerId
-       *   // [required]
        *   partnerId: number
        * }
        * ```
@@ -35534,12 +36082,10 @@ declare global {
           params: {
             /**
              * pkgId
-             * [required]
              */
             pkgId: string;
             /**
              * partnerId
-             * [required]
              */
             partnerId: number;
           };
@@ -35594,6 +36140,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构减免限额对象
+       *   // 机构减免限额实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 委案金额
        *     assignmentAmount?: number
@@ -35684,7 +36234,6 @@ declare global {
        * ```ts
        * type QueryParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -35740,7 +36289,42 @@ declare global {
        *     pkgId?: string
        *     // [title] 机构减免限额对象
        *     // 机构减免限额实体
-       *     pkgReductionManage?: _22
+       *     pkgReductionManage?: {
+       *       // 委案金额
+       *       assignmentAmount?: number
+       *       // 可用额度
+       *       availableAmount?: number
+       *       // 创建人
+       *       createBy?: string
+       *       // 创建时间
+       *       createTime?: string
+       *       // 处置类型1-电催 2-法诉
+       *       dealType?: number
+       *       // 主键
+       *       id?: number
+       *       // 减免限额
+       *       limitAmount?: number
+       *       // 机构ID
+       *       partnerId?: number
+       *       // 机构名称
+       *       partnerName?: string
+       *       // 资产包
+       *       pkgId?: string
+       *       // 减免比例%
+       *       reductionRate?: number
+       *       // 分案总金额
+       *       totalCaseAmount?: number
+       *       // 类型：1-总限额，2-机构限额
+       *       type?: number
+       *       // 更新人
+       *       updateBy?: string
+       *       // 更新时间
+       *       updateTime?: string
+       *       // 已用额度
+       *       usedAmount?: number
+       *       // 年月yyyyMM
+       *       yearMon?: string
+       *     }
        *   }
        *   msg?: string
        * }
@@ -35751,7 +36335,6 @@ declare global {
           params: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -35798,6 +36381,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 机构减免限额对象
+       *   // 机构减免限额实体
+       *   // [items] end
        *   data?: Array<{
        *     // 委案金额
        *     assignmentAmount?: number
@@ -35915,6 +36502,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 机构减免限额对象
+       *   // 机构减免限额实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 委案金额
        *     assignmentAmount?: number
@@ -36130,6 +36721,8 @@ declare global {
        *   // 排除id
        *   neId?: number
        *   // 排除有效状态
+       *   // [items] start
+       *   // [items] end
        *   neValidStatusList?: number[]
        *   orderByColumn?: string
        *   pageNum?: number
@@ -36139,9 +36732,10 @@ declare global {
        *   // 机构名称
        *   partnerName?: string
        *   // 资产包id
-       *   // [required]
        *   pkgId: string
        *   // 资产包ids
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 复审时间结束
        *   reReviewTimeEnd?: string
@@ -36157,13 +36751,14 @@ declare global {
        *   updateTimeStart?: string
        *   useLastId?: boolean
        *   // 用户id
-       *   // [required]
        *   userId: string
        *   // 用户姓名
        *   userName?: string
        *   // 有效状态(1:有效,2:过期失效，3:已减免，4：覆盖失效, 5:案件失效 6：审核失效)
        *   validStatus?: number
        *   // 有效状态多个
+       *   // [items] start
+       *   // [items] end
        *   validStatusList?: number[]
        * }
        * ```
@@ -36172,11 +36767,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 案件id
@@ -36221,7 +36816,6 @@ declare global {
             partnerName?: string;
             /**
              * 资产包id
-             * [required]
              */
             pkgId: string;
             /**
@@ -36255,7 +36849,6 @@ declare global {
             useLastId?: boolean;
             /**
              * 用户id
-             * [required]
              */
             userId: string;
             /**
@@ -36274,7 +36867,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'reduction_export.post', Config>;
+      ): Alova2Method<null, 'reduction_export.post', Config>;
     };
     reduction_list: {
       /**
@@ -36304,6 +36897,8 @@ declare global {
        *   // 排除id
        *   neId?: number
        *   // 排除有效状态
+       *   // [items] start
+       *   // [items] end
        *   neValidStatusList?: number[]
        *   orderByColumn?: string
        *   pageNum?: number
@@ -36313,9 +36908,10 @@ declare global {
        *   // 机构名称
        *   partnerName?: string
        *   // 资产包id
-       *   // [required]
        *   pkgId: string
        *   // 资产包ids
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 复审时间结束
        *   reReviewTimeEnd?: string
@@ -36331,13 +36927,14 @@ declare global {
        *   updateTimeStart?: string
        *   useLastId?: boolean
        *   // 用户id
-       *   // [required]
        *   userId: string
        *   // 用户姓名
        *   userName?: string
        *   // 有效状态(1:有效,2:过期失效，3:已减免，4：覆盖失效, 5:案件失效 6：审核失效)
        *   validStatus?: number
        *   // 有效状态多个
+       *   // [items] start
+       *   // [items] end
        *   validStatusList?: number[]
        * }
        * ```
@@ -36352,10 +36949,16 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 减免对象
+       *   // 减免实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 减免后待还金额
        *     amtAfterReduction?: number
        *     // 申请证明文件
+       *     // [items] start
+       *     // [items] end
        *     applyFile?: string[]
        *     // 申请原因
        *     applyReason?: string
@@ -36531,7 +37134,6 @@ declare global {
             partnerName?: string;
             /**
              * 资产包id
-             * [required]
              */
             pkgId: string;
             /**
@@ -36565,7 +37167,6 @@ declare global {
             useLastId?: boolean;
             /**
              * 用户id
-             * [required]
              */
             userId: string;
             /**
@@ -36688,7 +37289,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -36705,6 +37305,8 @@ declare global {
        *     // 减免后待还金额
        *     amtAfterReduction?: number
        *     // 申请证明文件
+       *     // [items] start
+       *     // [items] end
        *     applyFile?: string[]
        *     // 申请原因
        *     applyReason?: string
@@ -36838,7 +37440,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -37013,12 +37614,16 @@ declare global {
        *   accNo?: string
        *   accStatus?: number
        *   accType?: number
+       *   // [items] start
+       *   // [items] end
        *   accTypeArr?: number[]
        *   bankName?: string
        *   id?: number
        *   isAsc?: string
        *   lastId?: number
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   orderByColumn?: string
        *   owner?: string
@@ -37036,11 +37641,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             accBatch?: string;
             accName?: string;
@@ -37069,7 +37674,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_repayAccount_export.post', Config>;
+      ): Alova2Method<null, 'repay_repayAccount_export.post', Config>;
     };
     repay_repayAccount_getAccListByUserId: {
       /**
@@ -37089,12 +37694,16 @@ declare global {
        *   accNo?: string
        *   accStatus?: number
        *   accType?: number
+       *   // [items] start
+       *   // [items] end
        *   accTypeArr?: number[]
        *   bankName?: string
        *   id?: number
        *   isAsc?: string
        *   lastId?: number
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   orderByColumn?: string
        *   owner?: string
@@ -37114,6 +37723,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款账户对象
+       *   // 还款账户实体
+       *   // [items] end
        *   data?: Array<{
        *     // 账户批次
        *     accBatch?: string
@@ -37210,12 +37823,16 @@ declare global {
        *   accNo?: string
        *   accStatus?: number
        *   accType?: number
+       *   // [items] start
+       *   // [items] end
        *   accTypeArr?: number[]
        *   bankName?: string
        *   id?: number
        *   isAsc?: string
        *   lastId?: number
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   orderByColumn?: string
        *   owner?: string
@@ -37235,6 +37852,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款账户对象
+       *   // 还款账户实体
+       *   // [items] end
        *   data?: Array<{
        *     // 账户批次
        *     accBatch?: string
@@ -37331,12 +37952,16 @@ declare global {
        *   accNo?: string
        *   accStatus?: number
        *   accType?: number
+       *   // [items] start
+       *   // [items] end
        *   accTypeArr?: number[]
        *   bankName?: string
        *   id?: number
        *   isAsc?: string
        *   lastId?: number
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   orderByColumn?: string
        *   owner?: string
@@ -37356,6 +37981,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款账户对象
+       *   // 还款账户实体
+       *   // [items] end
        *   data?: Array<{
        *     // 账户批次
        *     accBatch?: string
@@ -37452,12 +38081,16 @@ declare global {
        *   accNo?: string
        *   accStatus?: number
        *   accType?: number
+       *   // [items] start
+       *   // [items] end
        *   accTypeArr?: number[]
        *   bankName?: string
        *   id?: number
        *   isAsc?: string
        *   lastId?: number
        *   // 排除的债权主体
+       *   // [items] start
+       *   // [items] end
        *   neOwners?: string[]
        *   orderByColumn?: string
        *   owner?: string
@@ -37481,6 +38114,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 还款账户对象
+       *   // 还款账户实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 账户批次
        *     accBatch?: string
@@ -37574,7 +38211,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -37595,7 +38231,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -37618,7 +38253,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -37682,7 +38316,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -37899,11 +38532,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             bankStatementId?: number;
             /**
@@ -37943,7 +38576,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_repayAdjustRecord_export.post', Config>;
+      ): Alova2Method<null, 'repay_repayAdjustRecord_export.post', Config>;
     };
     repay_repayAdjustRecord_getList: {
       /**
@@ -37995,6 +38628,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 调账记录对象
+       *   // 调账记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 对账流水ID
        *     bankStatementId?: number
@@ -38144,6 +38781,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 调账记录对象
+       *   // 调账记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 对账流水ID
        *     bankStatementId?: number
@@ -38254,7 +38895,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -38275,7 +38915,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -38298,7 +38937,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -38368,7 +39006,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -38886,8 +39523,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -38906,6 +39547,8 @@ declare global {
        *   payDateStart?: string
        *   payName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 查询从库
        *   querySlave?: boolean
@@ -38922,11 +39565,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             accountingDate?: string;
             accountingDateEnd?: string;
@@ -38980,7 +39623,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_repayBankStatement_export.post', Config>;
+      ): Alova2Method<null, 'repay_repayBankStatement_export.post', Config>;
     };
     repay_repayBankStatement_getList: {
       /**
@@ -39008,8 +39651,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -39028,6 +39675,8 @@ declare global {
        *   payDateStart?: string
        *   payName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 查询从库
        *   querySlave?: boolean
@@ -39046,6 +39695,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 银行流水对象
+       *   // 银行流水实体
+       *   // [items] end
        *   data?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -39197,8 +39850,12 @@ declare global {
        *   createTimeStart?: string
        *   dealType?: number
        *   deptId?: number
+       *   // [items] start
+       *   // [items] end
        *   deptIds?: number[]
        *   employeeId?: number
+       *   // [items] start
+       *   // [items] end
        *   employeeIds?: number[]
        *   employeeNickName?: string
        *   id?: number
@@ -39217,6 +39874,8 @@ declare global {
        *   payDateStart?: string
        *   payName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 查询从库
        *   querySlave?: boolean
@@ -39239,6 +39898,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 银行流水对象
+       *   // 银行流水实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -39476,7 +40139,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -39497,7 +40159,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -39520,7 +40181,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -39606,7 +40266,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -39831,6 +40490,8 @@ declare global {
        *   payDateStart?: string
        *   payName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 查询从库
        *   querySlave?: boolean
@@ -39846,11 +40507,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             accountingDate?: string;
             accountingDateEnd?: string;
@@ -39889,7 +40550,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_repayDetails_export.post', Config>;
+      ): Alova2Method<null, 'repay_repayDetails_export.post', Config>;
     };
     repay_repayDetails_getList: {
       /**
@@ -39927,6 +40588,8 @@ declare global {
        *   payDateStart?: string
        *   payName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 查询从库
        *   querySlave?: boolean
@@ -39944,6 +40607,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款明细对象
+       *   // 还款明细实体
+       *   // [items] end
        *   data?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -40084,6 +40751,8 @@ declare global {
        *   payDateStart?: string
        *   payName?: string
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 查询从库
        *   querySlave?: boolean
@@ -40105,6 +40774,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 还款明细对象
+       *   // 还款明细实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 记账日期
        *     accountingDate?: string
@@ -40222,12 +40895,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'repay_repayDetails_repayDetailsTemplate.post', Config>;
+      ): Alova2Method<null, 'repay_repayDetails_repayDetailsTemplate.post', Config>;
     };
     repay_repayDetails_$ids$: {
       /**
@@ -40243,7 +40916,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -40264,7 +40936,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -40287,7 +40958,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -40367,7 +41037,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -40555,11 +41224,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             bankMatchType?: number;
             batchStatus?: number;
@@ -40580,7 +41249,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_repayImportBatch_export.post', Config>;
+      ): Alova2Method<null, 'repay_repayImportBatch_export.post', Config>;
     };
     repay_repayImportBatch_getList: {
       /**
@@ -40619,6 +41288,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 还款导入批次对象
+       *   // 还款导入批次实体
+       *   // [items] end
        *   data?: Array<{
        *     // 银行流水对账类型
        *     bankMatchType?: number
@@ -40886,6 +41559,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 还款导入批次对象
+       *   // 还款导入批次实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 银行流水对账类型
        *     bankMatchType?: number
@@ -41127,7 +41804,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -41148,7 +41824,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -41171,7 +41846,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -41233,7 +41907,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -41438,6 +42111,8 @@ declare global {
        *   partnerName?: string
        *   pkgId?: string
        *   // 资产包ids
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   reconStatus?: number
        *   repaymentCard?: string
@@ -41462,11 +42137,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             auditStatus?: number;
             caseId?: number;
@@ -41514,7 +42189,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'repay_repaymentNotes_export.post', Config>;
+      ): Alova2Method<null, 'repay_repaymentNotes_export.post', Config>;
     };
     repay_repaymentNotes_getList: {
       /**
@@ -41544,6 +42219,8 @@ declare global {
        *   partnerName?: string
        *   pkgId?: string
        *   // 资产包ids
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   reconStatus?: number
        *   repaymentCard?: string
@@ -41570,6 +42247,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 凭证对账对象
+       *   // 凭证对账实体
+       *   // [items] end
        *   data?: Array<{
        *     // 审核状态
        *     auditStatus?: number
@@ -41705,6 +42386,8 @@ declare global {
        *   partnerName?: string
        *   pkgId?: string
        *   // 资产包ids
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   reconStatus?: number
        *   repaymentCard?: string
@@ -41735,6 +42418,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 凭证对账对象
+       *   // 凭证对账实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 审核状态
        *     auditStatus?: number
@@ -41857,7 +42544,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -41878,7 +42564,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -41901,7 +42586,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -41975,7 +42659,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -42183,11 +42866,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 当前ID
@@ -42223,7 +42906,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_retentionConfig_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_retentionConfig_export.post', Config>;
     };
     pladmin_retentionConfig_getLastOne: {
       /**
@@ -42341,6 +43024,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 留案配置对象
+       *   // 留案配置实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -42450,6 +43137,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 留案配置对象
+       *   // 留案配置实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -42530,7 +43221,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -42551,7 +43241,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -42574,7 +43263,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -42618,7 +43306,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -42857,6 +43544,8 @@ declare global {
        *   // 审核结果
        *   approvalStatus?: number
        *   // 审核结果
+       *   // [items] start
+       *   // [items] end
        *   approvalStatusList?: number[]
        *   // 批次号
        *   batchNum?: string
@@ -42864,12 +43553,16 @@ declare global {
        *   caseAmtTotal?: number
        *   // 案件id
        *   caseId?: number
+       *   // [items] start
+       *   // [items] end
        *   caseIds?: number[]
        *   // 处置类型 1:电催,2:法催
        *   dealType?: number
        *   // 0表示未删除,1表示删除
        *   delFlag?: number
        *   expireDate?: string
+       *   // [items] start
+       *   // [items] end
        *   ids?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -42890,9 +43583,13 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgGroupList?: string[]
        *   // 资产包ID
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 留案截止时间
        *   retentionCutOffTime?: string
@@ -42909,6 +43606,8 @@ declare global {
        *   useLastId?: boolean
        *   // 用户ID
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIds?: string[]
        *   // 用户名称
        *   userName?: string
@@ -42968,6 +43667,8 @@ declare global {
        *   // 审核结果
        *   approvalStatus?: number
        *   // 审核结果
+       *   // [items] start
+       *   // [items] end
        *   approvalStatusList?: number[]
        *   // 批次号
        *   batchNum?: string
@@ -42975,12 +43676,16 @@ declare global {
        *   caseAmtTotal?: number
        *   // 案件id
        *   caseId?: number
+       *   // [items] start
+       *   // [items] end
        *   caseIds?: number[]
        *   // 处置类型 1:电催,2:法催
        *   dealType?: number
        *   // 0表示未删除,1表示删除
        *   delFlag?: number
        *   expireDate?: string
+       *   // [items] start
+       *   // [items] end
        *   ids?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -43001,9 +43706,13 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgGroupList?: string[]
        *   // 资产包ID
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 留案截止时间
        *   retentionCutOffTime?: string
@@ -43020,6 +43729,8 @@ declare global {
        *   useLastId?: boolean
        *   // 用户ID
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIds?: string[]
        *   // 用户名称
        *   userName?: string
@@ -43030,11 +43741,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 留案成功后退案日期
@@ -43172,7 +43883,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_retention_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_retention_export.post', Config>;
     };
     pladmin_retention_getList: {
       /**
@@ -43208,6 +43919,8 @@ declare global {
        *   // 审核结果
        *   approvalStatus?: number
        *   // 审核结果
+       *   // [items] start
+       *   // [items] end
        *   approvalStatusList?: number[]
        *   // 批次号
        *   batchNum?: string
@@ -43215,12 +43928,16 @@ declare global {
        *   caseAmtTotal?: number
        *   // 案件id
        *   caseId?: number
+       *   // [items] start
+       *   // [items] end
        *   caseIds?: number[]
        *   // 处置类型 1:电催,2:法催
        *   dealType?: number
        *   // 0表示未删除,1表示删除
        *   delFlag?: number
        *   expireDate?: string
+       *   // [items] start
+       *   // [items] end
        *   ids?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -43241,9 +43958,13 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgGroupList?: string[]
        *   // 资产包ID
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 留案截止时间
        *   retentionCutOffTime?: string
@@ -43260,6 +43981,8 @@ declare global {
        *   useLastId?: boolean
        *   // 用户ID
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIds?: string[]
        *   // 用户名称
        *   userName?: string
@@ -43272,6 +43995,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 留案记录对象
+       *   // 留案记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 留案成功后退案日期
        *     adjustedDate?: string
@@ -43517,6 +44244,8 @@ declare global {
        *   // 审核结果
        *   approvalStatus?: number
        *   // 审核结果
+       *   // [items] start
+       *   // [items] end
        *   approvalStatusList?: number[]
        *   // 批次号
        *   batchNum?: string
@@ -43524,12 +44253,16 @@ declare global {
        *   caseAmtTotal?: number
        *   // 案件id
        *   caseId?: number
+       *   // [items] start
+       *   // [items] end
        *   caseIds?: number[]
        *   // 处置类型 1:电催,2:法催
        *   dealType?: number
        *   // 0表示未删除,1表示删除
        *   delFlag?: number
        *   expireDate?: string
+       *   // [items] start
+       *   // [items] end
        *   ids?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -43550,9 +44283,13 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgGroupList?: string[]
        *   // 资产包ID
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 留案截止时间
        *   retentionCutOffTime?: string
@@ -43569,6 +44306,8 @@ declare global {
        *   useLastId?: boolean
        *   // 用户ID
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIds?: string[]
        *   // 用户名称
        *   userName?: string
@@ -43585,6 +44324,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 留案记录对象
+       *   // 留案记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 留案成功后退案日期
        *     adjustedDate?: string
@@ -43831,6 +44574,8 @@ declare global {
        *   // 审核结果
        *   approvalStatus?: number
        *   // 审核结果
+       *   // [items] start
+       *   // [items] end
        *   approvalStatusList?: number[]
        *   // 批次号
        *   batchNum?: string
@@ -43838,12 +44583,16 @@ declare global {
        *   caseAmtTotal?: number
        *   // 案件id
        *   caseId?: number
+       *   // [items] start
+       *   // [items] end
        *   caseIds?: number[]
        *   // 处置类型 1:电催,2:法催
        *   dealType?: number
        *   // 0表示未删除,1表示删除
        *   delFlag?: number
        *   expireDate?: string
+       *   // [items] start
+       *   // [items] end
        *   ids?: number[]
        *   isAsc?: string
        *   lastId?: number
@@ -43864,9 +44613,13 @@ declare global {
        *   partnerId?: number
        *   // 商户名称
        *   partnerName?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgGroupList?: string[]
        *   // 资产包ID
        *   pkgId?: string
+       *   // [items] start
+       *   // [items] end
        *   pkgIds?: string[]
        *   // 留案截止时间
        *   retentionCutOffTime?: string
@@ -43883,6 +44636,8 @@ declare global {
        *   useLastId?: boolean
        *   // 用户ID
        *   userId?: string
+       *   // [items] start
+       *   // [items] end
        *   userIds?: string[]
        *   // 用户名称
        *   userName?: string
@@ -43899,6 +44654,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 留案记录对象
+       *   // 留案记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 留案成功后退案日期
        *     adjustedDate?: string
@@ -44125,7 +44884,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -44146,7 +44904,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -44169,7 +44926,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -44257,7 +45013,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -44418,11 +45173,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 1.qc生成 2.外部生成
@@ -44446,7 +45201,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'asset_settleCfg_export.post', Config>;
+      ): Alova2Method<null, 'asset_settleCfg_export.post', Config>;
     };
     asset_settleCfg_getDetail: {
       /**
@@ -44577,6 +45332,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 结清证明配置对象
+       *   // 结清证明配置实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -44674,6 +45433,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 结清证明配置对象
+       *   // 结清证明配置实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -44748,7 +45511,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -44769,7 +45531,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -44792,7 +45553,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -44842,7 +45602,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -45039,11 +45798,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 申请时间
@@ -45099,7 +45858,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_settleRecord_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_settleRecord_export.post', Config>;
     };
     pladmin_settleRecord_getList: {
       /**
@@ -45151,6 +45910,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 结清证明记录对象
+       *   // 结清证明记录实体
+       *   // [items] end
        *   data?: Array<{
        *     // 申请时间
        *     applyDate?: string
@@ -45306,6 +46069,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 结清证明记录对象
+       *   // 结清证明记录实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 申请时间
        *     applyDate?: string
@@ -45422,7 +46189,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -45443,7 +46209,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -45466,7 +46231,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -45526,7 +46290,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -45602,6 +46365,10 @@ declare global {
        *   // 模板说明
        *   templateDesc?: string
        *   // 模板名细
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   templateDetails?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -45690,6 +46457,10 @@ declare global {
        *   // 模板说明
        *   templateDesc?: string
        *   // 模板名细
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   templateDetails?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -45788,11 +46559,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             bankMatchType?: number;
             /**
@@ -45830,7 +46601,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'template_manage_export.post', Config>;
+      ): Alova2Method<null, 'template_manage_export.post', Config>;
     };
     template_manage_list: {
       /**
@@ -45878,6 +46649,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 模板对象
+       *   // 模板实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 银行流水对账类型 1:普户，2：虚户
        *     bankMatchType?: number
@@ -45898,6 +46673,10 @@ declare global {
        *     // 模板说明
        *     templateDesc?: string
        *     // 模板名细
+       *     // [items] start
+       *     // [title] 模板详情对象
+       *     // 模板详情实体
+       *     // [items] end
        *     templateDetails?: Array<{
        *       // 标准字段名称
        *       commonName?: string
@@ -45995,7 +46774,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -46016,7 +46794,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -46039,7 +46816,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -46072,6 +46848,10 @@ declare global {
        *     // 模板说明
        *     templateDesc?: string
        *     // 模板名细
+       *     // [items] start
+       *     // [title] 模板详情对象
+       *     // 模板详情实体
+       *     // [items] end
        *     templateDetails?: Array<{
        *       // 标准字段名称
        *       commonName?: string
@@ -46118,7 +46898,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -46200,7 +46979,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // 模版模块：1-材料核对模板
-       *   // [required]
        *   templateModule: number
        * }
        * ```
@@ -46211,6 +46989,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   data?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -46246,7 +47028,6 @@ declare global {
           pathParams: {
             /**
              * 模版模块：1-材料核对模板
-             * [required]
              */
             templateModule: number;
           };
@@ -46273,7 +47054,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // 模版id
-       *   // [required]
        *   templateId: number
        * }
        * ```
@@ -46284,6 +47064,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 模板详情对象
+       *   // 模板详情实体
+       *   // [items] end
        *   data?: Array<{
        *     // 标准字段名称
        *     commonName?: string
@@ -46319,7 +47103,6 @@ declare global {
           pathParams: {
             /**
              * 模版id
-             * [required]
              */
             templateId: number;
           };
@@ -46342,7 +47125,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -46363,7 +47145,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -46535,11 +47316,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 文件名称
@@ -46568,7 +47349,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pladmin_uploadSettleBatch_export.post', Config>;
+      ): Alova2Method<null, 'pladmin_uploadSettleBatch_export.post', Config>;
     };
     pladmin_uploadSettleBatch_getList: {
       /**
@@ -46607,6 +47388,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 结清证明上传批次对象
+       *   // 结清证明上传批次实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -46689,6 +47474,8 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [items] end
        *   data?: string[]
        *   msg?: string
        * }
@@ -46739,6 +47526,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 结清证明上传批次对象
+       *   // 结清证明上传批次实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -46952,7 +47743,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -46973,7 +47763,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -46996,7 +47785,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -47050,7 +47838,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -47198,11 +47985,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             id?: number;
             isAsc?: string;
@@ -47219,7 +48006,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pluser_userPhone_export.post', Config>;
+      ): Alova2Method<null, 'pluser_userPhone_export.post', Config>;
     };
     pluser_userPhone_getList: {
       /**
@@ -47254,6 +48041,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 用户电话对象
+       *   // 用户电话实体
+       *   // [items] end
        *   data?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -47337,6 +48128,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 用户电话对象
+       *   // 用户电话实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string
@@ -47398,7 +48193,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -47419,7 +48213,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -47442,7 +48235,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -47486,7 +48278,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -47716,11 +48507,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             id?: string;
             /**
@@ -47775,7 +48566,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'pluser_userPool_export.post', Config>;
+      ): Alova2Method<null, 'pluser_userPool_export.post', Config>;
     };
     pluser_userPool_getList: {
       /**
@@ -47828,6 +48619,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 用户信息对象
+       *   // 用户信息实体
+       *   // [items] end
        *   data?: Array<{
        *     // 年龄
        *     age?: number
@@ -47999,6 +48794,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 用户信息对象
+       *   // 用户信息实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 年龄
        *     age?: number
@@ -48162,12 +48961,12 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
-      post<Config extends Alova2MethodConfig<unknown>>(
+      post<Config extends Alova2MethodConfig<null>>(
         config?: Config
-      ): Alova2Method<unknown, 'pluser_userPool_updateUserTemplate.post', Config>;
+      ): Alova2Method<null, 'pluser_userPool_updateUserTemplate.post', Config>;
     };
     pluser_userPool_$ids$: {
       /**
@@ -48183,7 +48982,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -48204,7 +49002,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -48227,7 +49024,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: string
        * }
        * ```
@@ -48303,7 +49099,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: string;
           };
@@ -48360,6 +49155,8 @@ declare global {
        *   // 工单标签：1-协商还款
        *   labels?: string
        *   // 工单附件
+       *   // [items] start
+       *   // [items] end
        *   orderFile?: string[]
        *   // 委案机构ID
        *   partnerId?: number
@@ -48370,6 +49167,8 @@ declare global {
        *   // 资产包
        *   pkgId?: string
        *   // 处理附件
+       *   // [items] start
+       *   // [items] end
        *   processFile?: string[]
        *   // 工单处理人
        *   processName?: string
@@ -48446,6 +49245,8 @@ declare global {
        *     // 工单标签：1-协商还款
        *     labels?: string
        *     // 工单附件
+       *     // [items] start
+       *     // [items] end
        *     orderFile?: string[]
        *     // 委案机构ID
        *     partnerId?: number
@@ -48456,6 +49257,8 @@ declare global {
        *     // 资产包
        *     pkgId?: string
        *     // 处理附件
+       *     // [items] start
+       *     // [items] end
        *     processFile?: string[]
        *     // 工单处理人
        *     processName?: string
@@ -48544,6 +49347,8 @@ declare global {
        *   // 工单标签：1-协商还款
        *   labels?: string
        *   // 工单附件
+       *   // [items] start
+       *   // [items] end
        *   orderFile?: string[]
        *   // 委案机构ID
        *   partnerId?: number
@@ -48554,6 +49359,8 @@ declare global {
        *   // 资产包
        *   pkgId?: string
        *   // 处理附件
+       *   // [items] start
+       *   // [items] end
        *   processFile?: string[]
        *   // 工单处理人
        *   processName?: string
@@ -48630,6 +49437,8 @@ declare global {
        *     // 工单标签：1-协商还款
        *     labels?: string
        *     // 工单附件
+       *     // [items] start
+       *     // [items] end
        *     orderFile?: string[]
        *     // 委案机构ID
        *     partnerId?: number
@@ -48640,6 +49449,8 @@ declare global {
        *     // 资产包
        *     pkgId?: string
        *     // 处理附件
+       *     // [items] start
+       *     // [items] end
        *     processFile?: string[]
        *     // 工单处理人
        *     processName?: string
@@ -48780,6 +49591,8 @@ declare global {
        *   // 工单标签：1-协商还款
        *   labels?: string
        *   // 工单附件
+       *   // [items] start
+       *   // [items] end
        *   orderFile?: string[]
        *   // 委案机构ID
        *   partnerId?: number
@@ -48790,6 +49603,8 @@ declare global {
        *   // 资产包
        *   pkgId?: string
        *   // 处理附件
+       *   // [items] start
+       *   // [items] end
        *   processFile?: string[]
        *   // 工单处理人
        *   processName?: string
@@ -48866,6 +49681,8 @@ declare global {
        *     // 工单标签：1-协商还款
        *     labels?: string
        *     // 工单附件
+       *     // [items] start
+       *     // [items] end
        *     orderFile?: string[]
        *     // 委案机构ID
        *     partnerId?: number
@@ -48876,6 +49693,8 @@ declare global {
        *     // 资产包
        *     pkgId?: string
        *     // 处理附件
+       *     // [items] start
+       *     // [items] end
        *     processFile?: string[]
        *     // 工单处理人
        *     processName?: string
@@ -48992,11 +49811,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             /**
              * 工单添加方式1-身份证2-手机号3-案件号4-uid
@@ -49104,7 +49923,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'process_workOrder_export.post', Config>;
+      ): Alova2Method<null, 'process_workOrder_export.post', Config>;
     };
     process_workOrder_getWorkOrderCaseInfos: {
       /**
@@ -49182,6 +50001,10 @@ declare global {
        * ```ts
        * type Response = {
        *   code?: number
+       *   // [items] start
+       *   // [title] 工单对象
+       *   // 工单实体
+       *   // [items] end
        *   data?: Array<{
        *     // 工单添加方式1-身份证2-手机号3-案件号4-uid
        *     addType?: number
@@ -49218,6 +50041,8 @@ declare global {
        *     // 工单标签：1-协商还款
        *     labels?: string
        *     // 工单附件
+       *     // [items] start
+       *     // [items] end
        *     orderFile?: string[]
        *     // 委案机构ID
        *     partnerId?: number
@@ -49228,6 +50053,8 @@ declare global {
        *     // 资产包
        *     pkgId?: string
        *     // 处理附件
+       *     // [items] start
+       *     // [items] end
        *     processFile?: string[]
        *     // 工单处理人
        *     processName?: string
@@ -49453,6 +50280,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 工单对象
+       *   // 工单实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 工单添加方式1-身份证2-手机号3-案件号4-uid
        *     addType?: number
@@ -49489,6 +50320,8 @@ declare global {
        *     // 工单标签：1-协商还款
        *     labels?: string
        *     // 工单附件
+       *     // [items] start
+       *     // [items] end
        *     orderFile?: string[]
        *     // 委案机构ID
        *     partnerId?: number
@@ -49499,6 +50332,8 @@ declare global {
        *     // 资产包
        *     pkgId?: string
        *     // 处理附件
+       *     // [items] start
+       *     // [items] end
        *     processFile?: string[]
        *     // 工单处理人
        *     processName?: string
@@ -49659,7 +50494,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // ids
-       *   // [required]
        *   ids: string
        * }
        * ```
@@ -49680,7 +50514,6 @@ declare global {
           pathParams: {
             /**
              * ids
-             * [required]
              */
             ids: string;
           };
@@ -49703,7 +50536,6 @@ declare global {
        * ```ts
        * type PathParameters = {
        *   // id
-       *   // [required]
        *   id: number
        * }
        * ```
@@ -49752,6 +50584,8 @@ declare global {
        *     // 工单标签：1-协商还款
        *     labels?: string
        *     // 工单附件
+       *     // [items] start
+       *     // [items] end
        *     orderFile?: string[]
        *     // 委案机构ID
        *     partnerId?: number
@@ -49762,6 +50596,8 @@ declare global {
        *     // 资产包
        *     pkgId?: string
        *     // 处理附件
+       *     // [items] start
+       *     // [items] end
        *     processFile?: string[]
        *     // 工单处理人
        *     processName?: string
@@ -49801,7 +50637,6 @@ declare global {
           pathParams: {
             /**
              * id
-             * [required]
              */
             id: number;
           };
@@ -49840,11 +50675,11 @@ declare global {
        *
        * **Response**
        * ```ts
-       * type Response = unknown
+       * type Response = null
        * ```
        */
       post<
-        Config extends Alova2MethodConfig<unknown> & {
+        Config extends Alova2MethodConfig<null> & {
           params: {
             isAsc?: string;
             lastId?: number;
@@ -49864,7 +50699,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<unknown, 'process_workOrderStatistics_export.post', Config>;
+      ): Alova2Method<null, 'process_workOrderStatistics_export.post', Config>;
     };
     process_workOrderStatistics_list: {
       /**
@@ -49902,6 +50737,10 @@ declare global {
        *   // 消息内容
        *   msg?: string
        *   // 列表数据
+       *   // [items] start
+       *   // [title] 工单统计对象
+       *   // 工单统计实体
+       *   // [items] end
        *   rows?: Array<{
        *     // 创建人
        *     createBy?: string

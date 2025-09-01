@@ -5,13 +5,23 @@ import _ from 'lodash'
 type FilterPattern = null | ReadonlyArray<RegExp | string> | RegExp | string
 
 function isExclude(name: string, exclude?: FilterPattern): boolean {
-  if (exclude === undefined || exclude === null) return false
-  if (typeof exclude === 'string') return name === exclude
-  if (exclude instanceof RegExp) return !!name.match(exclude)
+  if (exclude === undefined || exclude === null) {
+    return false
+  }
+
+  if (typeof exclude === 'string') {
+    return name === exclude
+  }
+
+  if (exclude instanceof RegExp) {
+    return name.match(exclude) !== null
+  }
 
   if (Array.isArray(exclude)) {
     for (const item of exclude) {
-      if (name === item || name.match(item as RegExp)) return true
+      if (name === item || name.match(item as RegExp) !== null) {
+        return true
+      }
     }
   }
 

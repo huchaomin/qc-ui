@@ -6,6 +6,4 @@ const tDesignResetComponentsName = files.map((file) => {
   return path.basename(file, '.vue')
 })
 
-export {
-  tDesignResetComponentsName,
-}
+export { tDesignResetComponentsName }
