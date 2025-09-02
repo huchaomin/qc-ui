@@ -2,6 +2,7 @@
 import MenuNode from './MenuNode.vue'
 
 const route = useRoute()
+const commonStore = useCommonStore()
 const appName = import.meta.env.VITE_APP_NAME
 const logoUrl = Object.values(
   import.meta.glob('img/side_logo.*', {
@@ -28,7 +29,10 @@ console.log(routerStore.routersRaw)
 </script>
 
 <template>
-  <TAside>
+  <TAside
+    :width="commonStore.drawerOpen ? undefined : '0px'"
+    class="overflow-hidden border-r border-r-[var(--td-border-level-2-color)]"
+  >
     <TMenu :value="value" :default-expanded="defaultExpanded">
       <template #logo>
         <div class="!ml-2 flex items-center">

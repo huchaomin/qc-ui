@@ -21,7 +21,7 @@ const recentRoutersNames = computed(() =>
 <template>
   <TLayout class="h-full">
     <Aside>Aside</Aside>
-    <TLayout>
+    <TLayout class="!flex-1 overflow-x-auto">
       <Header></Header>
       <TContent>
         <RouterView v-slot="{ Component }">
