@@ -21,10 +21,12 @@ export default (
       }
 
       if (options.resolveIcons && name.match(/[a-z]Icon$/) !== null) {
-        return {
-          from: `tdesign-icons-${library}${importFrom}`,
-          name,
-        }
+        return
+        // 不使用 tdesign-icons-vue-next
+        // return {
+        //   from: `tdesign-icons-${library}${importFrom}`,
+        //   name,
+        // }
       }
 
       if (tDesignResetComponentsName.includes(name)) {
@@ -42,6 +44,11 @@ export default (
       }
 
       if (name.match(/^T[A-Z]/) !== null || pluginList.includes(name)) {
+        // 不使用内置的 icon
+        if (name === 'TIcon') {
+          return
+        }
+
         const importName = name.match(/^T[A-Z]/) !== null ? name.slice(1) : name
         return {
           from: `tdesign-${library}${importFrom}`,

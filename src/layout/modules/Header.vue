@@ -85,8 +85,13 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
       @click="handleDropdownClick"
     >
       <TButton variant="text">
+        <template #icon>
+          <Icon icon="material-symbols:account-circle" class="mr-2" />
+        </template>
         更多
-        <template #suffix> <TIcon name="chevron-down" size="16" /></template>
+        <template #suffix>
+          <Icon icon="icon-park-outline:down" size="18" />
+        </template>
       </TButton>
     </TDropdown>
   </THeader>

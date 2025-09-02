@@ -78,6 +78,12 @@ console.log(routerStore.routersRaw)
         color: var(--td-brand-color);
       }
     }
+
+    .t-menu__sub {
+      .t-menu__item {
+        padding-left: var(--padding-left, 32px) !important;
+      }
+    }
   }
 }
 </style>

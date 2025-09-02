@@ -109,8 +109,16 @@ const formItems: FormItemType[] = [
 
 <template>
   <LoginBg>
-    <TTypographyTitle level="h2" class="text-center">{{ appName }}</TTypographyTitle>
-    <TForm ref="form" class="!mt-8" :data="formData" :items="formItems" @submit="onSubmit">
+    <TTypographyTitle level="h2" class="text-center">{{
+      appName
+    }}</TTypographyTitle>
+    <TForm
+      ref="form"
+      class="!mt-8"
+      :data="formData"
+      :items="formItems"
+      @submit="onSubmit"
+    >
       <template #submitBtn>
         <TButton type="submit" block size="large" class="!mt-4">登录</TButton>
       </template>

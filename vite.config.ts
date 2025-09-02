@@ -1,5 +1,5 @@
 import type * as http from 'node:http'
-import type { ProxyOptions } from 'vite'
+import type { Plugin, ProxyOptions } from 'vite'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
@@ -100,7 +100,7 @@ export default defineConfig(({ command, mode }) => {
       }),
       tailwindAutoReference(
         resolvePath('src/assets/style/tailwindcss-entry.css'),
-      ),
+      ) as Plugin,
       tailwindcss(),
       vue(),
       vueJsx(),
