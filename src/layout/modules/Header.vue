@@ -71,6 +71,7 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
       </TTabPanel>
     </TTabs>
     <TDropdown
+      placement="bottom"
       :options="[
         {
           content: '个人中心',
