@@ -39,10 +39,7 @@
 
 ## todo
 
-- 需不需要 `eslint-plugin-prettier` （冲突能不能使用 <https://github.com/antfu/eslint-flat-config-utils#composerdisablerulesfix> 解决）
-- 怎么格式化 tailwindcss 使用 prettier 或者 vscode 插件
 - stylelint `unit-allowed-list`、`declaration-property-unit-allowed-list`
-- .stylelintignore
 - 整理[setting.json](https://github.com/vbenjs/vue-vben-admin/blob/main/.vscode/settings.json)
 - 有时间尝试一下这个打包分析工具[https://sonda.dev/](https://sonda.dev/)
 - [server.warmup配置](https://mp.weixin.qq.com/s?__biz=Mzk0MDUyMDI4OA==&mid=2247484020&idx=1&sn=7d0c88c1b10c001b1d7724ace76d1b7a&chksm=c3b7c9155a69b2bf2e966e2bfbf55b40fa40c63d1e893d43d3ee0b452e25d7ad36bae8fe02d2&mpshare=1&scene=24&srcid=1007A1bipuxBSqdRkfwltAzs&sharer_shareinfo=a95b5998c3c2f0d944a89b04af59f319&sharer_shareinfo_first=a95b5998c3c2f0d944a89b04af59f319#rd)
@@ -50,7 +47,7 @@
 - 404 页面搞好看一点
 - 添加 waiting 动画
 - form reset 时，清空数据， show 为 false 的会不会一起reset?
-- .stylelintignore
+- [封装右键菜单](https://github.com/CyberNika/v-contextmenu/blob/main/src/directive.ts)
 
 ### 分析包大小
 

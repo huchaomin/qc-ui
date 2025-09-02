@@ -112,5 +112,13 @@
     "*.css": "tailwindcss"
   },
   "tailwindCSS.experimental.configFile": "src/assets/style/tailwindcss-entry.css",
-  "cSpell.words": ["tdesign"]
+  "cSpell.words": ["tdesign"],
+  "cssVariables.lookupFiles": [
+    "**/*.css",
+    "**/*.scss",
+    "**/*.sass",
+    "**/*.less",
+    "node_modules/tdesign-vue-next/esm/common/style/web/theme/_index.less",
+    "tdesign-vue-next/esm/common/style/web/_global.less",
+  ]
 }
