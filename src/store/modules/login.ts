@@ -16,6 +16,15 @@ function loginMethod(data: LoginData) {
   })
 }
 
+function logoutMethod() {
+  return alovaInst.Post('logout', undefined, {
+    meta: {
+      useLoading: '退出登录中...',
+      useSuccessMsg: true,
+    },
+  })
+}
+
 export default defineStore(
   'login',
   () => {
@@ -52,10 +61,16 @@ export default defineStore(
       useUserStore().clear()
     }
 
+    async function logout() {
+      await logoutMethod()
+      await clearSession()
+    }
+
     return {
       clearLoginData,
       clearSession,
       login,
+      logout,
       password,
       rememberMe,
       storeLoginData,

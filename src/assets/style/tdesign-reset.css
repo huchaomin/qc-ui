@@ -49,5 +49,10 @@ body {
         }
       }
     }
+
+    .t-tabs__operations--left,
+    .t-tabs__operations--right {
+      bottom: 0;
+    }
   }
 }

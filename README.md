@@ -48,6 +48,7 @@
 - 添加 waiting 动画
 - form reset 时，清空数据， show 为 false 的会不会一起reset?
 - [封装右键菜单](https://github.com/CyberNika/v-contextmenu/blob/main/src/directive.ts)
+- 怎么给 page 添加 lazy-view loading
 
 ### 分析包大小
 

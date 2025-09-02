@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TabsProps } from 'tdesign-vue-next'
+import type { DropdownProps, TabsProps } from 'tdesign-vue-next'
 import { getRoute } from '@/router/index'
 
 const route = useRoute()
@@ -31,13 +31,25 @@ const handleChange: TabsProps['onChange'] = (val) => {
     recentRoutersStore.recentRouters.find((item) => item.name === val)!,
   )
 }
+
+const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
+  if (data.value === 'profile') {
+    router.push({ name: 'Profile' })
+  } else if (data.value === 'logout') {
+    await $confirm('确定要退出登录吗？')
+    useLoginStore().logout()
+  }
+}
 </script>
 
 <template>
-  <THeader height="var(--td-comp-size-xxl)" class="flex items-center px-2">
+  <THeader
+    height="var(--td-comp-size-xxl)"
+    class="flex items-center border-b border-b-[var(--td-border-level-2-color)] px-2"
+  >
     <TButton
       shape="circle"
-      variant="outline"
+      variant="text"
       size="large"
       @click="commonStore.drawerOpen = !commonStore.drawerOpen"
     >
@@ -58,6 +70,25 @@ const handleChange: TabsProps['onChange'] = (val) => {
       >
       </TTabPanel>
     </TTabs>
+    <TDropdown
+      :options="[
+        {
+          content: '个人中心',
+          value: 'profile',
+        },
+        {
+          content: '退出登录',
+          value: 'logout',
+        },
+      ]"
+      trigger="click"
+      @click="handleDropdownClick"
+    >
+      <TButton variant="text">
+        更多
+        <template #suffix> <TIcon name="chevron-down" size="16" /></template>
+      </TButton>
+    </TDropdown>
   </THeader>
 </template>
 
