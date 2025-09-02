@@ -56,6 +56,7 @@ console.log(routerStore.routersRaw)
   }
 
   .t-menu__logo {
+    height: var(--td-comp-size-xxl) !important;
     border-bottom: none !important;
   }
 

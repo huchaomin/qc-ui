@@ -146,4 +146,12 @@ router.afterEach((to, from, failure) => {
   }
 })
 
+function getRoute(name: string) {
+  if (router.hasRoute(name)) {
+    return router.getRoutes().find((route) => route.name === name)
+  }
+}
+
+export { getRoute }
+
 export default router

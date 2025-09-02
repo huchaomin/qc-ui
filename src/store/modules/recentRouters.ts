@@ -1,4 +1,5 @@
 import type { LocationQuery, RouteRecordNameGeneric } from 'vue-router'
+import { getRoute } from '@/router/index'
 
 export interface recentRoutersConfig {
   name: string
@@ -18,16 +19,25 @@ export default defineStore(
       })
     }
 
-    function add(fromName: RouteRecordNameGeneric, options: recentRoutersConfig): void {
+    function add(
+      fromName: RouteRecordNameGeneric,
+      options: recentRoutersConfig,
+    ): void {
       const copyOptions = _.cloneDeep(options)
-      const index = recentRouters.value.findIndex((item) => item.name === copyOptions.name)
-      // TODO 想要刷新缓存 可用 excludeKPnameStore 控制
+      const index = recentRouters.value.findIndex(
+        (item) =>
+          item.name === copyOptions.name ||
+          getRoute(item.name)!.meta.title ===
+            getRoute(copyOptions.name)!.meta.title,
+      )
       delete copyOptions.query._fromLeftTree
       delete copyOptions.query._fromBreadcrumb
       delete copyOptions.query._refresh
 
       if (index === -1) {
-        const fromIndex = recentRouters.value.findIndex((item) => item.name === fromName)
+        const fromIndex = recentRouters.value.findIndex(
+          (item) => item.name === fromName,
+        )
 
         if (fromIndex === -1) {
           recentRouters.value.push(copyOptions)

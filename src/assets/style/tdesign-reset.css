@@ -14,4 +14,40 @@ body {
     width: 8px;
     height: 14px;
   }
+
+  .t-tabs {
+    .t-tabs__nav-item {
+      /* stylelint-disable-next-line selector-class-pattern */
+      .t-icon-close.remove-btn {
+        position: relative;
+        right: 4px;
+        padding: 2px;
+        margin-left: 0;
+        font-size: 22px;
+      }
+
+      &:not(.t-is-disabled) {
+        /* stylelint-disable-next-line selector-class-pattern */
+        .t-icon-close.remove-btn {
+          &:hover {
+            background-color: var(--td-bg-color-container-hover);
+          }
+        }
+
+        &:not(.t-is-active) {
+          &:hover {
+            .t-tabs__nav-item-wrapper {
+              background-color: inherit;
+            }
+          }
+
+          .t-tabs__nav-item-wrapper {
+            &:hover {
+              background-color: var(--td-bg-color-container-hover);
+            }
+          }
+        }
+      }
+    }
+  }
 }
