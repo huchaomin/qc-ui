@@ -65,21 +65,15 @@ const compo = _Form
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
-  vm.exposed = instance ?? {}
-  vm.exposeProxy = instance ?? {}
+  const exposed = instance ?? {}
+  vm.exposed = exposed
+  vm.exposeProxy = exposed
 }
 </script>
 
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
-  <component
-    :is="compo"
-    v-bind="{
-      ...bindProps,
-      ...$attrs,
-    }"
-    :ref="compoRef"
-  >
+  <component :is="compo" v-bind="bindProps" :ref="compoRef">
     <template
       v-for="item in items.filter((item) => item.show !== false)"
       :key="(item as ComponentItemType).model ?? (item as SlotItemType).slot"

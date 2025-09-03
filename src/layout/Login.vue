@@ -44,12 +44,12 @@ async function loginSubmit(formData: LoginData) {
 async function onSubmit() {
   if (formData.username === '') {
     $msg.error('请输入账户名')
-    await Promise.reject()
+    return
   }
 
   if (formData.password === '') {
     $msg.error('请输入密码')
-    await Promise.reject()
+    return
   }
 
   if (useCaptcha) {

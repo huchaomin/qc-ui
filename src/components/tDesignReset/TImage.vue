@@ -9,8 +9,9 @@ const compo = _Image
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
-  vm.exposed = instance ?? {}
-  vm.exposeProxy = instance ?? {}
+  const exposed = instance ?? {}
+  vm.exposed = exposed
+  vm.exposeProxy = exposed
 }
 </script>
 
@@ -21,7 +22,6 @@ function compoRef(instance: any) {
         compo,
         {
           ...props,
-          ...$attrs,
           ref: compoRef,
         },
         $slots,

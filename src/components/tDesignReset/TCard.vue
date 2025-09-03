@@ -10,9 +10,13 @@ const compo = _Card
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
-  vm.exposed = instance ?? {}
-  vm.exposeProxy = instance ?? {}
+  const exposed = instance ?? {}
+  vm.exposed = exposed
+  vm.exposeProxy = exposed
 }
+
+// webstorm 里面类型提示不生效
+// defineExpose({} as ComponentInstance<typeof compo>)
 </script>
 
 <template>
@@ -22,7 +26,6 @@ function compoRef(instance: any) {
         compo,
         {
           ...props,
-          ...$attrs,
           ref: compoRef,
         },
         $slots,
