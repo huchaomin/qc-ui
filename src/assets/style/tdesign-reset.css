@@ -63,14 +63,15 @@ body {
 
     .t-dialog {
       min-width: 320px;
+      border-radius: var(--td-radius-medium);
       box-shadow: rgb(58 53 65 / 8%) 0 11px 15px -7px,
         rgb(58 53 65 / 12%) 0 24px 38px 3px,
         rgb(58 53 65 / 4%) 0 9px 46px 8px;
-  
+
       &.t-dialog--default {
         padding: var(--td-size-7);
       }
-  
+
       .t-dialog__body {
         &:is(:last-child) {
           padding-bottom: 0;

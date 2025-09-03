@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: var(--td-brand-color-active);
+  /* 自定义变量 */
+
+  /* --color-primary: var(--td-brand-color-active); */
 }
