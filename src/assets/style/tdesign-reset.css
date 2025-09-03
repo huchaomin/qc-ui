@@ -1,3 +1,16 @@
+/* stylelint-disable custom-property-pattern */
+@layer tdesign-reset {
+  :root {
+    --td-radius-default: 4px !important;
+    --td-radius-large: 8px !important;
+  }
+
+  :root,
+  :root[theme-mode="light"] {
+    --td-font-gray-1: rgb(0 0 0 / 70%) !important;
+  }
+}
+
 body {
   > .t-loading__overlay {
     background-color: rgb(255 255 255 / 10%);
@@ -63,7 +76,7 @@ body {
 
     .t-dialog {
       min-width: 320px;
-      border-radius: var(--td-radius-medium);
+      border-radius: var(--td-radius-default);
       box-shadow: rgb(58 53 65 / 8%) 0 11px 15px -7px,
         rgb(58 53 65 / 12%) 0 24px 38px 3px,
         rgb(58 53 65 / 4%) 0 9px 46px 8px;
