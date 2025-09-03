@@ -41,9 +41,12 @@ console.log(routerStore.routersRaw)
             class="logo"
             style="width: 28px; height: 28px"
           ></TImage>
-          <TTypographyTitle level="h4" class="!my-0 !ml-2">{{
-            appName
-          }}</TTypographyTitle>
+          <GradientText
+            :text="appName"
+            :animation-speed="8"
+            :show-border="false"
+            class-name="ml-2 text-xl !font-bold"
+          />
         </div>
       </template>
       <MenuNode :model="routerStore.routersRaw[0]!.children!"></MenuNode>

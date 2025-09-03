@@ -109,9 +109,13 @@ const formItems: FormItemType[] = [
 
 <template>
   <LoginBg>
-    <TTypographyTitle level="h2" class="text-center">{{
-      appName
-    }}</TTypographyTitle>
+    <GradientText
+      :text="appName"
+      :animation-speed="8"
+      :show-border="false"
+      :colors="['#000000', '#444951', '#8791a1']"
+      class-name="text-center text-2xl !font-bold mt-8"
+    />
     <TForm
       ref="form"
       class="!mt-8"
