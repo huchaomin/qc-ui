@@ -7,12 +7,15 @@ export default (
   arg2?: Parameters<CreateDialogFnType>[1],
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
+    const config = {
+      closeBtn: false,
+      theme: 'warning',
+    } as const
     const dialogInstance =
       typeof arg1 === 'string'
         ? $dialog(
             {
               body: arg1,
-              closeBtn: false,
               onClose: () => {
                 dialogInstance.hide()
                 reject()
@@ -21,13 +24,12 @@ export default (
                 dialogInstance.hide()
                 resolve()
               },
-              theme: 'warning',
+              ...config,
             },
             arg2,
           )
         : $dialog(
             {
-              closeBtn: false,
               onClose: () => {
                 dialogInstance.hide()
                 reject()
@@ -36,7 +38,7 @@ export default (
                 dialogInstance.hide()
                 resolve()
               },
-              theme: 'warning',
+              ...config,
               ...arg1,
             },
             arg2,
