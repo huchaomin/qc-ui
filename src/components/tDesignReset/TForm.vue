@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {
   CheckboxProps,
+  FormInstanceFunctions,
   FormItemProps,
   FormProps,
   InputProps,
@@ -69,6 +70,8 @@ function compoRef(instance: any) {
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }
+
+defineExpose({} as FormInstanceFunctions)
 </script>
 
 <template>

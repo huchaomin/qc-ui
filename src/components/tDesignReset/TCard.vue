@@ -14,9 +14,6 @@ function compoRef(instance: any) {
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }
-
-// webstorm 里面类型提示不生效
-// defineExpose({} as ComponentInstance<typeof compo>)
 </script>
 
 <template>

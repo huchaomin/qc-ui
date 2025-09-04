@@ -8,16 +8,16 @@ interface GradientTextProps {
   showBorder?: boolean
   text: string
 }
-const props = withDefaults(defineProps<GradientTextProps>(), {
-  animationSpeed: 8,
-  className: '',
-  colors: () => ['#0052d9', '#4472bd', '#8791a1'],
-  showBorder: false,
-})
+const {
+  animationSpeed = 8,
+  className = '',
+  colors = ['#0052d9', '#4472bd', '#8791a1'],
+  showBorder = false,
+} = defineProps<GradientTextProps>()
 const gradientStyle = computed(() => ({
-  '--animation-duration': `${props.animationSpeed}s`,
-  animationDuration: `${props.animationSpeed}s`,
-  backgroundImage: `linear-gradient(to right, ${props.colors.join(', ')})`,
+  '--animation-duration': `${animationSpeed}s`,
+  animationDuration: `${animationSpeed}s`,
+  backgroundImage: `linear-gradient(to right, ${colors.join(', ')})`,
   backgroundSize: '300% 100%',
 }))
 const borderStyle = computed(() => ({

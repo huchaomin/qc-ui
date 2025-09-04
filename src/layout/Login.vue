@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import type { FormInstanceFunctions } from 'tdesign-vue-next'
 import type { LoginData } from '@/store/modules/login'
 import captcha from '@/plugins/captcha'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
 const router = useRouter()
-const form = ref<FormInstanceFunctions>()
 const appName = import.meta.env.VITE_APP_NAME
 const formData = reactive<LoginData>({
   password: '',
@@ -116,13 +114,7 @@ const formItems: FormItemType[] = [
       :colors="['#000000', '#444951', '#8791a1']"
       class-name="text-center text-2xl !font-bold mt-8"
     />
-    <TForm
-      ref="form"
-      class="!mt-8"
-      :data="formData"
-      :items="formItems"
-      @submit="onSubmit"
-    >
+    <TForm class="!mt-8" :data="formData" :items="formItems" @submit="onSubmit">
       <template #submitBtn>
         <TButton type="submit" block size="large" class="!mt-4">登录</TButton>
       </template>

@@ -1,28 +1,31 @@
 {
-  "vue props": {
+  "定义props vue3.5+": {
     "prefix": "props",
-    "scope": "typescript",
     "body": [
-      "const props = withDefaults(",
-      "  defineProps<{",
-      "    switchLabel?: string",
-      "  }>(),",
-      "  {",
-      "    switchLabel: undefined,",
-      "  },",
-      ")"
-    ],
-    "description": "vue props"
-  },
-  "vue emit": {
-    "prefix": "emit",
-    "scope": "typescript",
-    "body": [
-      "const emit = defineEmits<{",
-      "  'update:modelValue': [id: number]",
-      "  click: [value: string]",
+      "const { msg = 'hello' } = defineProps<{",
+      "  msg?:string",
       "}>()"
     ],
-    "description": "vue emit"
+    "description": "定义props vue3.5+"
+  },
+  "定义props": {
+    "prefix": "withDefaults",
+    "body": [
+      "const props = withDefaults(defineProps<{",
+      "  msg?:string",
+      "}>(), {",
+      "  msg: 'hello',",
+      "})"
+    ],
+    "description": "定义props"
+  },
+  "定义emits vue3.3+": {
+    "prefix": "emits",
+    "body": [
+      "const emit = defineEmits<{",
+      "  change: [id: number]",
+      "}>()"
+    ],
+    "description": "定义emits vue3.3+"
   }
 }
