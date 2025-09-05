@@ -152,7 +152,7 @@ export default defineConfig(({ command, mode }) => {
               ]
             : []),
         ],
-        vueTemplate: false, // 这个不能为 true, formInstance 会拿到奇奇怪怪的属性
+        vueTemplate: true,
       }),
       Components({
         // 用于自动导入 Vue 组件

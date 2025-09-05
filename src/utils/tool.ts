@@ -2,18 +2,30 @@ import type FileSaver from 'file-saver'
 
 const aesKey = 'XwKsGlMcdPMEhR1B'
 
-async function aesDecrypt(word: string, keyWord: string = aesKey): Promise<string> {
+async function aesDecrypt(
+  word: string,
+  keyWord: string = aesKey,
+): Promise<string> {
   const { default: CryptoJS } = await import('crypto-js')
   const key = CryptoJS.enc.Utf8.parse(keyWord)
-  const decrypted = CryptoJS.AES.decrypt(word, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 })
+  const decrypted = CryptoJS.AES.decrypt(word, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  })
   return decrypted.toString(CryptoJS.enc.Utf8)
 }
 
-async function aesEncrypt(word: string, keyWord: string = aesKey): Promise<string> {
+async function aesEncrypt(
+  word: string,
+  keyWord: string = aesKey,
+): Promise<string> {
   const { default: CryptoJS } = await import('crypto-js')
   const key = CryptoJS.enc.Utf8.parse(keyWord)
   const srcs = CryptoJS.enc.Utf8.parse(word)
-  const encrypted = CryptoJS.AES.encrypt(srcs, key, { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 })
+  const encrypted = CryptoJS.AES.encrypt(srcs, key, {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7,
+  })
   return encrypted.toString()
 }
 

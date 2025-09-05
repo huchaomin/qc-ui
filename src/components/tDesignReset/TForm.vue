@@ -76,7 +76,14 @@ defineExpose({} as FormInstanceFunctions)
 
 <template>
   <!-- eslint-disable vue/no-mutating-props -->
-  <component :is="compo" v-bind="bindProps" :ref="compoRef">
+  <component
+    :is="compo"
+    v-bind="{
+      ...bindProps,
+      ...$attrs,
+      ref: compoRef,
+    }"
+  >
     <template
       v-for="item in items.filter((item) => item.show !== false)"
       :key="(item as ComponentItemType).model ?? (item as SlotItemType).slot"

@@ -4,6 +4,7 @@ import { getRoute } from '@/router/index'
 
 const route = useRoute()
 const router = useRouter()
+const userStore = useUserStore()
 const commonStore = useCommonStore()
 const recentRoutersStore = useRecentRoutersStore()
 
@@ -89,7 +90,7 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
         <template #icon>
           <Icon icon="material-symbols:account-circle" class="mr-2" />
         </template>
-        更多
+        {{ userStore.userInfo.userName }}
         <template #suffix>
           <Icon icon="icon-park-outline:down" size="18" />
         </template>

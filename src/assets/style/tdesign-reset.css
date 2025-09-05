@@ -31,7 +31,7 @@ body {
   .t-tabs {
     .t-tabs__nav-item {
       /* stylelint-disable-next-line selector-class-pattern */
-      .t-icon-close.remove-btn {
+      .remove-btn {
         position: relative;
         right: 4px;
         padding: 2px;
@@ -41,7 +41,7 @@ body {
 
       &:not(.t-is-disabled) {
         /* stylelint-disable-next-line selector-class-pattern */
-        .t-icon-close.remove-btn {
+        .remove-btn {
           &:hover {
             background-color: var(--td-bg-color-container-hover);
           }
@@ -89,6 +89,14 @@ body {
         &:is(:last-child) {
           padding-bottom: 0;
         }
+      }
+    }
+  }
+
+  .t-list-item {
+    &:last-child {
+      &::after {
+        display: none;
       }
     }
   }
