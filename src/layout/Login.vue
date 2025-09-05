@@ -60,43 +60,33 @@ async function onSubmit() {
 
 const formItems: FormItemType[] = [
   {
-    componentProps: {
-      clearable: false,
-      placeholder: '账号',
-      prefixIcon(h) {
-        return h(resolveComponent('icon'), {
-          icon: 'mdi:shield-account-outline',
-        })
-      },
-      size: 'large',
-    },
-    formItemProps: {
-      label: '账户',
-    },
+    _label: '账户',
+    clearable: false,
     model: 'username',
+    placeholder: '账号',
+    prefixIcon(h) {
+      return h(resolveComponent('icon'), {
+        icon: 'mdi:shield-account-outline',
+      })
+    },
+    size: 'large',
   },
   {
-    componentProps: {
-      clearable: false,
-      placeholder: '密码',
-      prefixIcon(h) {
-        return h(resolveComponent('icon'), {
-          icon: 'mdi:password-outline',
-        })
-      },
-      size: 'large',
-      type: 'password',
-    },
-    formItemProps: {
-      label: '密码',
-    },
+    _label: '密码',
+    clearable: false,
     model: 'password',
+    placeholder: '密码',
+    prefixIcon(h) {
+      return h(resolveComponent('icon'), {
+        icon: 'mdi:password-outline',
+      })
+    },
+    size: 'large',
+    type: 'password',
   },
   {
     component: 'TCheckbox',
-    componentProps: {
-      label: '记住密码',
-    },
+    label: '记住密码',
     model: 'rememberMe',
   },
   {

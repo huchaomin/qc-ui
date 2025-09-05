@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import type { InputProps as _InputProps } from 'tdesign-vue-next'
+import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
 
-export type InputProps = _InputProps
-const props = withDefaults(defineProps<InputProps>(), {
-  autocomplete: 'off',
-  clearable: true,
-})
-const compo = _Input
+export type RadioGroupProps = XOR<
+  _RadioGroupProps & {
+    options: NonNullable<_RadioGroupProps['options']>
+  },
+  Omit<_RadioGroupProps, 'options'> & {
+    dicCode: string // TODO
+  }
+>
+const props = withDefaults(defineProps<RadioGroupProps>(), {})
+const compo = _RadioGroup
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {

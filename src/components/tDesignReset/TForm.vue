@@ -4,31 +4,13 @@ import type {
   FormInstanceFunctions,
   FormItemProps,
   FormProps,
-  InputProps,
 } from 'tdesign-vue-next'
+import type { InputProps } from './TInput.vue'
+import type { RadioGroupProps } from './TRadioGroup.vue'
 
 export type FormItemType = {
   show?: boolean // 是否显示
-} & (ComponentItemType | SlotItemType)
-type ComponentItemType = {
-  formItemProps?: Omit<FormItemProps, 'name'>
-  model: string
-} & (
-  | {
-      component: 'TCheckbox'
-      componentProps?: Omit<
-        CheckboxProps,
-        'checked' | 'defaultChecked' | 'modelValue'
-      >
-    }
-  | {
-      component?: 'TInput'
-      componentProps?: Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'>
-    }
-)
-interface SlotItemType {
-  slot: string
-}
+} & XOR<ComponentItemType, SlotItemType>
 const props = withDefaults(
   defineProps<
     Omit<FormProps, 'data'> & {
@@ -46,6 +28,29 @@ const props = withDefaults(
     resetType: 'initial',
   },
 )
+type ComponentItemType = {
+  [K in keyof Omit<FormItemProps, 'name'> as `_${K}`]: Omit<
+    FormItemProps,
+    'name'
+  >[K] // formItem 的属性以下划线开头
+} & XOR<
+  XOR<
+    Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+      component: 'TCheckbox'
+    },
+    Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'> & {
+      component?: 'TInput'
+    }
+  >,
+  Omit<RadioGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+    component: 'TRadioGroup'
+  }
+> & {
+    model: string
+  }
+interface SlotItemType {
+  slot: string
+}
 
 function getComponent(compo: string | undefined): Component {
   if (typeof compo === 'string') {
@@ -53,6 +58,30 @@ function getComponent(compo: string | undefined): Component {
   }
 
   return resolveComponent('TInput') as Component
+}
+
+function getComponentProps(item: FormItemType): Record<string, any> {
+  const obj: Record<string, any> = {}
+
+  for (const key in item) {
+    if (!key.startsWith('_') && !['component', 'model', 'show'].includes(key)) {
+      obj[key] = item[key as keyof FormItemType]
+    }
+  }
+
+  return obj
+}
+
+function getFormItemProps(item: FormItemType): FormItemProps {
+  const obj: Record<string, any> = {}
+
+  for (const key in item) {
+    if (key.startsWith('_')) {
+      obj[key.slice(1)] = item[key as keyof FormItemType]
+    }
+  }
+
+  return obj
 }
 
 const bindProps = computed(() => {
@@ -94,13 +123,13 @@ defineExpose({} as FormInstanceFunctions)
       ></slot>
       <TFormItem
         v-else
-        v-bind="(item as ComponentItemType).formItemProps ?? {}"
+        v-bind="getFormItemProps(item)"
         :name="(item as ComponentItemType).model"
       >
         <component
           :is="getComponent((item as ComponentItemType).component)"
           v-model="data[(item as ComponentItemType).model]"
-          v-bind="(item as ComponentItemType).componentProps ?? {}"
+          v-bind="getComponentProps(item)"
         ></component>
       </TFormItem>
     </template>

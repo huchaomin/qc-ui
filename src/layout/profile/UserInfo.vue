@@ -1,52 +1,44 @@
 <script setup lang="ts">
 const formData = reactive({
-  password: '',
-  rememberMe: true,
-  username: '',
+  email: '',
+  nickName: '',
+  phonenumber: '',
+  sex: '0',
 })
 const formItems: FormItemType[] = [
   {
-    componentProps: {
-      clearable: false,
-      placeholder: '账号',
-      prefixIcon(h) {
-        return h(resolveComponent('icon'), {
-          icon: 'mdi:shield-account-outline',
-        })
+    _label: '用户昵称',
+    maxlength: 30,
+    model: 'nickName',
+  },
+  {
+    _label: '手机号码',
+    maxlength: 11,
+    model: 'phonenumber',
+  },
+  {
+    _label: '邮箱',
+    maxlength: 50,
+    model: 'email',
+  },
+  {
+    _label: '性别',
+    component: 'TRadioGroup',
+    model: 'sex',
+    // TODO
+    options: [
+      {
+        label: '男',
+        value: '0',
       },
-      size: 'large',
-    },
-    formItemProps: {
-      label: '账户',
-    },
-    model: 'username',
-  },
-  {
-    componentProps: {
-      clearable: false,
-      placeholder: '密码',
-      prefixIcon(h) {
-        return h(resolveComponent('icon'), {
-          icon: 'mdi:password-outline',
-        })
+      {
+        label: '女',
+        value: '1',
       },
-      size: 'large',
-      type: 'password',
-    },
-    formItemProps: {
-      label: '密码',
-    },
-    model: 'password',
+    ],
   },
   {
-    component: 'TCheckbox',
-    componentProps: {
-      label: '记住密码',
-    },
-    model: 'rememberMe',
-  },
-  {
-    slot: 'submitBtn',
+    slot: 'footer',
   },
 ]
 </script>

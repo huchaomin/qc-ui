@@ -15,6 +15,7 @@ import _TDesign, {
   Message as _Message,
   MessagePlugin as _MessagePlugin,
   NotifyPlugin as _NotifyPlugin,
+  RadioGroup as _RadioGroup,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
 
@@ -28,6 +29,8 @@ const Card = _Card as (typeof import('tdesign-vue-next'))['Card']
 const Form = _Form as (typeof import('tdesign-vue-next'))['Form']
 const Image = _Image as (typeof import('tdesign-vue-next'))['Image']
 const Input = _Input as (typeof import('tdesign-vue-next'))['Input']
+const RadioGroup =
+  _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGroup']
 
 export {
   Card,
@@ -39,5 +42,6 @@ export {
   Message,
   MessagePlugin,
   NotifyPlugin,
+  RadioGroup,
   TDesign,
 }

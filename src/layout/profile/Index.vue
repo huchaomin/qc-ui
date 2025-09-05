@@ -77,6 +77,8 @@ const tabs = reactive([
           :key="item.value"
           :value="item.value"
           :label="item.label"
+          lazy
+          :destroy-on-hide="false"
         >
           <Component :is="item.component"></Component>
         </TTabPanel>

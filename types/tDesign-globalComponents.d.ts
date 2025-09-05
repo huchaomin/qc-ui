@@ -88,7 +88,7 @@ declare module 'vue' {
     TQrcode: typeof import('tdesign-vue-next')['QRCode']
     TRadio: typeof import('tdesign-vue-next')['Radio']
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton']
-    TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
+    // TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup']
     TRangeInput: typeof import('tdesign-vue-next')['RangeInput']
     TRangeInputPopup: typeof import('tdesign-vue-next')['RangeInputPopup']
     TRate: typeof import('tdesign-vue-next')['Rate']
@@ -133,6 +133,7 @@ declare module 'vue' {
     TForm: typeof import('@/components/tDesignReset/TForm.vue')['default']
     TImage: typeof import('@/components/tDesignReset/TImage.vue')['default']
     TInput: typeof import('@/components/tDesignReset/TInput.vue')['default']
+    TRadioGroup: typeof import('@/components/tDesignReset/TRadioGroup.vue')['default']
   }
 }
 
