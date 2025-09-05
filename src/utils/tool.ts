@@ -12,6 +12,7 @@ async function aesDecrypt(
     mode: CryptoJS.mode.ECB,
     padding: CryptoJS.pad.Pkcs7,
   })
+
   return decrypted.toString(CryptoJS.enc.Utf8)
 }
 
@@ -26,6 +27,7 @@ async function aesEncrypt(
     mode: CryptoJS.mode.ECB,
     padding: CryptoJS.pad.Pkcs7,
   })
+
   return encrypted.toString()
 }
 
@@ -35,6 +37,7 @@ async function saveAs(
   arg3?: FileSaver.FileSaverOptions,
 ): Promise<void> {
   const { default: save } = await import('file-saver')
+
   save(arg1, arg2, arg3)
 }
 

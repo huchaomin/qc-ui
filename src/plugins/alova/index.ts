@@ -6,6 +6,7 @@ import sysPath from 'path-browserify'
 
 const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'
+
 type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']> & {
   useDownload?: boolean | string
 }
@@ -32,6 +33,7 @@ export default createAlova({
       },
       ...(method.meta ?? {}),
     }
+
     const loginStore = useLoginStore()
     const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } =
       method.meta as ThisAlovaCustomTypes
@@ -53,6 +55,7 @@ export default createAlova({
 
     if (typeof params !== 'string') {
       const paramsCopy: Record<string, any> = {}
+
       Object.keys(params).forEach((key: string) => {
         if (
           _.isNumber(params[key]) ||
@@ -73,6 +76,7 @@ export default createAlova({
       const obj = {
         ...(method.data as Arg),
       }
+
       Object.keys(obj).forEach((key: string) => {
         if (isFalsy(obj[key])) {
           delete obj[key]
@@ -84,6 +88,7 @@ export default createAlova({
     // 处理 formData 参数
     if (useFormData) {
       const formData = new FormData()
+
       Object.keys(method.data as Arg).forEach((key: string) => {
         formData.append(key, method.data![key as keyof typeof method.data])
       })
@@ -141,6 +146,7 @@ export default createAlova({
           500: '服务不可用，请稍后再试或联系管理员！',
         }
         const m = map[status] ?? NETWORK_ERR_MSG
+
         void $msg.error(m)
         return Promise.reject(response)
       }

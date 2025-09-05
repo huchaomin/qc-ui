@@ -36,6 +36,7 @@ export default defineStore(
 
     async function login(data: LoginData) {
       const res = await loginMethod(data)
+
       token.value = res.token
       await useUserStore().getUserInfo()
     }

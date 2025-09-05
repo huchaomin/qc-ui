@@ -33,6 +33,7 @@ async function create(
   const obj = {
     ...(options ?? {}),
   }
+
   return MessagePlugin[type]({
     content,
     duration: type === 'loading' ? 0 : 3600,
@@ -43,6 +44,7 @@ async function create(
 const createMessage: CreateMessageType = async function (...arg) {
   return create('success', ...arg)
 } as CreateMessageType
+
 Object.values(MessageCreateType).forEach((type) => {
   createMessage[type] = async (...arg) => {
     return create(type, ...arg)

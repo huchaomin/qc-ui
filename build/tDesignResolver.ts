@@ -11,6 +11,7 @@ export default (
     'MessagePlugin',
     'NotifyPlugin',
   ]
+
   return {
     resolve: (name) => {
       const { exclude, library = 'vue' } = options
@@ -50,6 +51,7 @@ export default (
         }
 
         const importName = name.match(/^T[A-Z]/) !== null ? name.slice(1) : name
+
         return {
           from: `tdesign-${library}${importFrom}`,
           name: importName,

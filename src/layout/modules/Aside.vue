@@ -25,6 +25,7 @@ const value = computed(() => {
 
   return route.name as string
 })
+
 console.log(routerStore.routersRaw)
 </script>
 

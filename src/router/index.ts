@@ -88,6 +88,7 @@ const router = createRouter({
   sensitive: true,
   strict: true,
 })
+
 router.beforeEach(async (to) => {
   if (to.name === 'Login') {
     return
@@ -127,6 +128,7 @@ router.afterEach((to, from, failure) => {
       parentName === from.name || to.query._fromLeftTree !== 'true'
         ? from.name
         : undefined
+
     recentRoutersStore.add(fromName, {
       name,
       query: to.query,

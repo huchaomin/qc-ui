@@ -69,6 +69,7 @@ const startMoveTime = ref(0)
 
 function start(e: MouseEvent | TouchEvent): void {
   const x = getEx(e)
+
   startLeft.value = x - getBarAreaLeft()
   startMoveTime.value = +new Date() // 开始滑动的时间
   checkState.value = 'doing'

@@ -7,7 +7,6 @@ const router = useRouter()
 const userStore = useUserStore()
 const commonStore = useCommonStore()
 const recentRoutersStore = useRecentRoutersStore()
-
 const handleRemove: TabsProps['onRemove'] = ({ value }) => {
   const name = value as string
 
@@ -26,13 +25,11 @@ const handleRemove: TabsProps['onRemove'] = ({ value }) => {
 
   recentRoutersStore.remove(name)
 }
-
 const handleChange: TabsProps['onChange'] = (val) => {
   router.push(
     recentRoutersStore.recentRouters.find((item) => item.name === val)!,
   )
 }
-
 const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
   if (data.value === 'profile') {
     router.push({ name: 'Profile' })

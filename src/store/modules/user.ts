@@ -48,6 +48,7 @@ export default defineStore('user', () => {
 
   async function getUserInfo() {
     const res = await getUserInfoMethod()
+
     userInfo.value = res.user
     permissions.value = res.permissions
     roles.value = res.roles

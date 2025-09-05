@@ -7,6 +7,7 @@ const { done, start } = useNProgress(undefined, {
   showSpinner: false,
   trickleSpeed: 100,
 })
+
 type LoadingText = Parameters<CreateMessageFnType>[0]
 
 class LoadingService {

@@ -1,5 +1,6 @@
 {
-  "recommendations": [ // 不区分大小写
+  "recommendations": [
+    // 不区分大小写
     "Vue.volar",
     "dbaeumer.vscode-eslint",
     "EditorConfig.EditorConfig",
@@ -11,9 +12,9 @@
     "omkarbhede.tailwindcss-tune",
     "vunguyentuan.vscode-css-variables",
     "streetsidesoftware.code-spell-checker",
-    "Alova.alova-vscode-extension",
+    "Alova.alova-vscode-extension"
   ],
   "unwantedRecommendations": [
-    "octref.vetur", // 和 volar 冲突
-  ],
+    "octref.vetur" // 和 volar 冲突
+  ]
 }

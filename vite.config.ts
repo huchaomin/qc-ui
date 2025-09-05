@@ -31,6 +31,7 @@ function bypass(
   ) {
     const reqUrl = req.url
     const proxyUrl = new URL(options.rewrite(reqUrl), options.target).href
+
     res.setHeader('X-Res-ProxyUrl', proxyUrl) // 查看真实的请求地址
   }
 }
@@ -46,12 +47,15 @@ export default defineConfig(({ command, mode }) => {
     VITE_SERVER_PORT,
     VITE_SERVER_URL,
   } = env
+
   console.log({
     command,
     env,
     mode,
   })
+
   const isProduction = mode === 'production'
+
   return {
     build: {
       cssMinify: 'lightningcss',

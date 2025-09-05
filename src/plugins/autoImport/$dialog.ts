@@ -40,6 +40,7 @@ function create(
 const createDialog: CreateDialogType = function (...arg) {
   return create(undefined, ...arg)
 } as CreateDialogType
+
 Object.values(DialogCreateType).forEach((type) => {
   createDialog[type] = (...arg) => {
     return create(type, ...arg)

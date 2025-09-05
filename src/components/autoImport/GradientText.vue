@@ -6,6 +6,7 @@ interface GradientTextProps {
   showBorder?: boolean
   text: string
 }
+
 const {
   animationSpeed = 8,
   className = '',

@@ -5,6 +5,7 @@ function getFilenameFromUrl(url: string, withExt: boolean = false): string {
     return name
   } else {
     const arr = name.split('.')
+
     arr.pop()
     return arr.join('.')
   }

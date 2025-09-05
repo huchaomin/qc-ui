@@ -9,12 +9,14 @@ export type RadioGroupProps = XOR<
     dicCode: string // TODO
   }
 >
+
 const props = withDefaults(defineProps<RadioGroupProps>(), {})
 const compo = _RadioGroup
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
   const exposed = instance ?? {}
+
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }

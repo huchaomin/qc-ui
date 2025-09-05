@@ -30,6 +30,7 @@ export default defineStore(
           getRoute(item.name)!.meta.title ===
             getRoute(copyOptions.name)!.meta.title,
       )
+
       delete copyOptions.query._fromLeftTree
       delete copyOptions.query._fromBreadcrumb
       delete copyOptions.query._refresh

@@ -30,6 +30,7 @@ async function create(
   const obj = {
     ...(options ?? {}),
   }
+
   return NotifyPlugin[type]({
     closeBtn: true,
     content,
@@ -42,6 +43,7 @@ async function create(
 const createNotification: CreateNotificationType = async function (...arg) {
   return create('success', ...arg)
 } as CreateNotificationType
+
 Object.values(NotificationCreateType).forEach((type) => {
   createNotification[type] = async (...arg) => {
     return create(type, ...arg)

@@ -11,6 +11,7 @@ import type { RadioGroupProps } from './TRadioGroup.vue'
 export type FormItemType = {
   show?: boolean // 是否显示
 } & XOR<ComponentItemType, SlotItemType>
+
 const props = withDefaults(
   defineProps<
     Omit<FormProps, 'data'> & {
@@ -28,6 +29,7 @@ const props = withDefaults(
     resetType: 'initial',
   },
 )
+
 type ComponentItemType = {
   [K in keyof Omit<FormItemProps, 'name'> as `_${K}`]: Omit<
     FormItemProps,
@@ -88,6 +90,7 @@ const bindProps = computed(() => {
   const obj: Record<string, any> = {
     ...props,
   }
+
   delete obj.items
   return obj
 })
@@ -96,6 +99,7 @@ const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
   const exposed = instance ?? {}
+
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }

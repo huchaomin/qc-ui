@@ -73,6 +73,7 @@ function filterRouter(item: RouteRecordRaw): boolean {
 // }
 function preprocess(arr: ResRouterItem[]): ResRouterItem[] {
   const tmp: ResRouterItem[] = []
+
   arr.forEach((item) => {
     if (item.path === '/') {
       tmp.push({
@@ -92,6 +93,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
     parent: null | RouteRecordRaw,
   ) => RouteRecordRaw[] = (arr, parent) => {
     const tmpArr: RouteRecordRaw[] = []
+
     arr.forEach((item) => {
       const newItem: RouteRecordRaw = {
         meta: {
@@ -114,6 +116,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
 
         if (result.length > 0) {
           newItem.children = result
+
           const first = result.find((i) => !i.meta.hidden)
 
           if (first !== undefined) {
@@ -139,8 +142,8 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
     })
     return tmpArr
   }
-
   const p = getTopRoute() as ResRouterItem
+
   p.children!.push(...routers)
   return fn([p], null)
 }
@@ -215,6 +218,7 @@ export default defineStore('router', () => {
 
   async function getRouters() {
     const res = await getRoutersMethod()
+
     routersRaw.value = markRaw(raiseHiddenRoutes(process(preprocess(res))))
 
     if (router.hasRoute('Index')) {

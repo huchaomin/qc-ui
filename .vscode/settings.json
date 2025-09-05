@@ -118,7 +118,7 @@
     // "**/*.scss",
     // "**/*.sass",
     // "**/*.less",
-    "node_modules/tdesign-vue-next/esm/common/style/web/**/*.less",
+    "node_modules/tdesign-vue-next/esm/common/style/web/**/*.less"
   ],
   "cssVariables.trace.server": "messages",
   "cssVariables.languages": [
@@ -138,5 +138,5 @@
     "typescript",
     "typescriptreact",
     "source.css.styled"
-  ],
+  ]
 }

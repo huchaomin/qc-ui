@@ -20,10 +20,13 @@ const piniaStoreKeys: string[] = []
 // }
 // fileRecursion(resolvePath(__dirname, '../src/store/modules'));
 const files = fg.globSync('src/store/modules/*.ts') // 当前工作目录为根目录
+
 files.forEach((p) => {
   piniaStoreKeys.push(path.basename(p, '.ts'))
 })
+
 const customerImport: Record<string, [string, string][]> = {}
+
 piniaStoreKeys.forEach((key) => {
   customerImport[`@/store/modules/${key}`] = [
     ['default', `use${_.upperFirst(key)}Store`],
