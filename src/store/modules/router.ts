@@ -4,7 +4,7 @@ import { getTopRoute } from '@/router/index'
 
 export interface RouteRecordRaw {
   children?: RouteRecordRaw[]
-  component?: Component | LazyRouterImport
+  component?: XOR<Component, LazyRouterImport>
   meta: {
     fullScreen: boolean
     hidden: boolean
@@ -25,7 +25,7 @@ type LazyRouterImport = () => Promise<{
 interface ResRouterItem
   extends Omit<RouteRecordRaw, 'children' | 'component' | 'meta' | 'redirect'> {
   children?: ResRouterItem[]
-  component?: Component | LazyRouterImport | string
+  component?: string | XOR<Component, LazyRouterImport>
   hidden?: boolean
   meta?: {
     fullScreen?: boolean
