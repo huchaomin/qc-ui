@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
+import type { XOR } from '@/utils/types'
 
 export type RadioGroupProps = XOR<
   _RadioGroupProps & {

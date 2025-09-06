@@ -57,12 +57,7 @@ export default createAlova({
       const paramsCopy: Record<string, any> = {}
 
       Object.keys(params).forEach((key: string) => {
-        if (
-          _.isNumber(params[key]) ||
-          _.isString(params[key]) ||
-          _.isBoolean(params[key]) ||
-          !useEmptyParams
-        ) {
+        if (!isFalsy(params[key]) || !useEmptyParams) {
           paramsCopy[encodeURIComponent(key)] = encodeURIComponent(
             params[key] as string,
           )
@@ -224,7 +219,7 @@ export default createAlova({
       return resData
     },
   },
-  shareRequest: true, // 全局开启请求共享,相同请求结果会沿用上一次未完成请求的结果
+  shareRequest: false, // 全局开启请求共享,相同请求结果会沿用上一次未完成请求的结果, 有点危险
   statesHook: VueHook,
   timeout: TIMEOUT,
 })

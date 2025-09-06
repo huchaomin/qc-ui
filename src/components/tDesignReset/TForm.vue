@@ -7,6 +7,7 @@ import type {
 } from 'tdesign-vue-next'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
+import type { XOR } from '@/utils/types'
 
 export type FormItemType = {
   show?: boolean // 是否显示
