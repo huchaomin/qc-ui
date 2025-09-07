@@ -1,11 +1,10 @@
 import type { Component } from 'vue'
 import type { RouteRecordRaw as _RouteRecordRaw } from 'vue-router'
-import type { XOR } from '@/utils/types'
 import { getTopRoute } from '@/router/index'
 
 export interface RouteRecordRaw {
   children?: RouteRecordRaw[]
-  component?: XOR<Component, LazyRouterImport>
+  component?: Component | LazyRouterImport
   meta: {
     fullScreen: boolean
     hidden: boolean
@@ -26,7 +25,7 @@ type LazyRouterImport = () => Promise<{
 interface ResRouterItem
   extends Omit<RouteRecordRaw, 'children' | 'component' | 'meta' | 'redirect'> {
   children?: ResRouterItem[]
-  component?: string | XOR<Component, LazyRouterImport>
+  component?: Component | LazyRouterImport | string
   hidden?: boolean
   meta?: {
     fullScreen?: boolean

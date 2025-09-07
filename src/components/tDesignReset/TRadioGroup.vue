@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
-import type { XOR } from '@/utils/types'
 
-export type RadioGroupProps = XOR<
-  _RadioGroupProps & {
-    options: NonNullable<_RadioGroupProps['options']>
-  },
-  Omit<_RadioGroupProps, 'options'> & {
-    dicCode: string // TODO
-  }
->
+export type RadioGroupProps =
+  | (_RadioGroupProps & {
+      dicCode: string // TODO
+      options?: never
+    })
+  | (_RadioGroupProps & {
+      dicCode?: never
+      options: NonNullable<_RadioGroupProps['options']>
+    })
 
 const props = withDefaults(defineProps<RadioGroupProps>(), {})
 const compo = _RadioGroup
