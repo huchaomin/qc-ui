@@ -18,6 +18,7 @@ export type CreateMessageFnType = (
   content: MessageOptions['content'],
   options?: Omit<MessageOptions, 'content' | 'theme'>,
 ) => Promise<MessageInstance>
+
 type CreateMessageType = CreateMessageFnType & {
   [value in MessageCreateType]: CreateMessageFnType
 } & {

@@ -11,10 +11,6 @@ import type { RadioGroupProps } from './TRadioGroup.vue'
 export type FormItemType = {
   show?: boolean // 是否显示
 } & XOR<ComponentItemType, SlotItemType>
-type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
-type XOR<T, U> = T | U extends object
-  ? (T & Without<U, T>) | (U & Without<T, U>)
-  : T | U
 
 const props = withDefaults(
   defineProps<

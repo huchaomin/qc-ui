@@ -10,6 +10,7 @@ export type CreateDialogFnType = (
   options: Omit<DialogOptions, 'default'>,
   context?: AppContext,
 ) => DialogInstance
+
 type CreateDialogType = CreateDialogFnType & {
   [value in DialogCreateType]: CreateDialogFnType
 }

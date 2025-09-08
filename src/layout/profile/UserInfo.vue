@@ -24,6 +24,7 @@ const formItems: FormItemType[] = [
   {
     _label: '性别',
     component: 'TRadioGroup',
+    dicCode: 'sds',
     model: 'sex',
     // TODO
     options: [

@@ -48,6 +48,7 @@ export default antfu(
             next: '*',
             prev: [
               'import',
+              'export',
               'class',
               'function',
               'multiline-block-like',

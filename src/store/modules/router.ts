@@ -19,6 +19,7 @@ export interface RouteRecordRaw {
     name: string
   }
 }
+
 type LazyRouterImport = () => Promise<{
   default: Component
 }>
