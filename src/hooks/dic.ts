@@ -1,3 +1,5 @@
+import type { ComputedRef } from 'vue'
+
 export interface DicItem {
   dictType: string
   label: string
@@ -62,7 +64,19 @@ function getPromise(code: string): Promise<DicItem[]> {
 
 const refMap = new Map<string, Ref<DicItem[]>>()
 
-export function useDicLabel(code: string, value?: string | string[]) {
+export function useDicLabel(code: string): ComputedRef<string[]>
+
+export function useDicLabel(code: string, value: string): ComputedRef<string>
+
+export function useDicLabel(
+  code: string,
+  value: string[],
+): ComputedRef<string[]>
+
+export function useDicLabel(
+  code: string,
+  value?: string | string[],
+): ComputedRef<string | string[]> {
   const arr = useDicOptions(code)
 
   return computed(() => {

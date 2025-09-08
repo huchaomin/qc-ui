@@ -1,12 +1,7 @@
 <script setup lang="ts">
 const formData = reactive({
-  email: '',
-  nickName: '',
-  phonenumber: '',
   sex: '0',
 })
-const a = useDicOptions('status')
-const b = useDicOptions('enable')
 const formItems: FormItemType[] = [
   {
     _label: '用户昵称',
