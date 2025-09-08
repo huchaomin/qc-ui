@@ -8,30 +8,30 @@ export interface DicItem {
 const promiseMap = new Map<string, Promise<DicItem[]>>()
 
 function setPromise(codeArr: string[]): void {
+  const p = alovaInst
+    .Get<Record<string, string>[]>(
+      `system/dict/data/types/${codeArr.join(',')}`,
+      {
+        meta: {
+          useLoading: false,
+        },
+      },
+    )
+    .then((res) =>
+      res.map((item) => ({
+        dictType: item.dictType,
+        label: item.dictLabel,
+        remark: item.remark,
+        value: item.dictValue,
+      })),
+    )
+
   codeArr.forEach((code) => {
-    // TODO
     promiseMap.set(
       code,
-      alovaInst
-        .Get<Record<string, string>[]>(
-          `system/dict/data/types/${codeArr.join(',')}`,
-          {
-            meta: {
-              useLoading: false,
-            },
-          },
-        )
-        .then(
-          (res) =>
-            res
-              .map((item) => ({
-                dictType: item.dictType,
-                label: item.dictLabel,
-                remark: item.remark,
-                value: item.dictValue,
-              }))
-              .filter((item) => item.dictType === code) as DicItem[],
-        ),
+      p.then(
+        (res) => res.filter((item) => item.dictType === code) as DicItem[],
+      ),
     )
   })
 }
@@ -48,7 +48,10 @@ function getPromise(code: string): Promise<DicItem[]> {
       // 一个宏间隙里面的请求合并
       const notYet = codeQueueArr.filter((code) => !promiseMap.has(code))
 
-      setPromise(notYet)
+      if (notYet.length > 0) {
+        setPromise(notYet)
+      }
+
       codeQueueArr.length = 0
       void promiseMap.get(code)!.then((res) => {
         resolve(res)
@@ -58,6 +61,22 @@ function getPromise(code: string): Promise<DicItem[]> {
 }
 
 const refMap = new Map<string, Ref<DicItem[]>>()
+
+export function useDicLabel(code: string, value?: string | string[]) {
+  const arr = useDicOptions(code)
+
+  return computed(() => {
+    if (value === undefined) {
+      return arr.value.map((item) => item.label)
+    } else if (typeof value === 'string') {
+      return arr.value.find((item) => item.value === value)?.label ?? ''
+    } else {
+      return value.map(
+        (c) => arr.value.find((item) => item.value === c)?.label ?? '',
+      )
+    }
+  })
+}
 
 export function useDicOptions(code: string, includeArr?: string[]) {
   let arr: Ref<DicItem[]>
@@ -77,4 +96,14 @@ export function useDicOptions(code: string, includeArr?: string[]) {
       includeArr === undefined ? true : includeArr.includes(item.value),
     ),
   )
+}
+
+export function useRefreshDic(code: string): void {
+  promiseMap.delete(code)
+
+  if (refMap.has(code)) {
+    void getPromise(code).then((res) => {
+      refMap.get(code)!.value = res
+    })
+  }
 }

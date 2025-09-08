@@ -2,7 +2,7 @@
 import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
 
 export type RadioGroupProps = _RadioGroupProps & {
-  dicCode?: string // TODO
+  dicCode?: string
 }
 
 const props = withDefaults(defineProps<RadioGroupProps>(), {})
@@ -15,6 +15,27 @@ function compoRef(instance: any) {
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }
+
+const finallyOptions = computed(() => {
+  if (props.dicCode) {
+    if (props.options) {
+      $notify.error('TRadioGroup: dicCode and options cannot be used together')
+    }
+
+    return useDicOptions(props.dicCode).value
+  }
+
+  return props.options
+})
+const bindProps = computed(() => {
+  const obj: Record<string, any> = {
+    ...props,
+  }
+
+  delete obj.options
+  delete obj.dicCode
+  return obj
+})
 </script>
 
 <template>
@@ -23,8 +44,9 @@ function compoRef(instance: any) {
       h(
         compo,
         {
-          ...props,
+          ...bindProps,
           ...$attrs,
+          options: finallyOptions,
           ref: compoRef,
         },
         $slots,

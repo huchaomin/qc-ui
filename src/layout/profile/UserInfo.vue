@@ -5,6 +5,8 @@ const formData = reactive({
   phonenumber: '',
   sex: '0',
 })
+const a = useDicOptions('status')
+const b = useDicOptions('enable')
 const formItems: FormItemType[] = [
   {
     _label: '用户昵称',
@@ -24,19 +26,8 @@ const formItems: FormItemType[] = [
   {
     _label: '性别',
     component: 'TRadioGroup',
-    dicCode: 'sds',
     model: 'sex',
-    // TODO
-    options: [
-      {
-        label: '男',
-        value: '0',
-      },
-      {
-        label: '女',
-        value: '1',
-      },
-    ],
+    options: useDicOptions('sys_user_sex', ['0', '1']),
   },
   {
     slot: 'footer',

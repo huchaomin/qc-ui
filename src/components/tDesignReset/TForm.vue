@@ -8,27 +8,11 @@ import type {
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 
-export type FormItemType = {
-  show?: boolean // 是否显示
-} & XOR<ComponentItemType, SlotItemType>
-
-const props = withDefaults(
-  defineProps<
-    Omit<FormProps, 'data'> & {
-      data: {
-        [key: string]: any
-      }
-      items: FormItemType[]
-    }
-  >(),
+export type FormItemType = MaybeRefInterface<
   {
-    colon: true,
-    labelAlign: 'top',
-    labelWidth: 'fit-content',
-    preventSubmitDefault: true,
-    resetType: 'initial',
-  },
-)
+    show?: boolean // 是否显示
+  } & XOR<ComponentItemType, SlotItemType>
+>
 
 type ComponentItemType = {
   [K in keyof Omit<FormItemProps, 'name'> as `_${K}`]: Omit<
@@ -54,6 +38,29 @@ interface SlotItemType {
   slot: string
 }
 
+const props = withDefaults(
+  defineProps<
+    Omit<FormProps, 'data'> & {
+      data: {
+        [key: string]: any
+      }
+      items: FormItemType[]
+    }
+  >(),
+  {
+    colon: true,
+    labelAlign: 'top',
+    labelWidth: 'fit-content',
+    preventSubmitDefault: true,
+    resetType: 'initial',
+  },
+)
+const formItemsConfig = computed(() => {
+  return props.items.map((item) => {
+    return reactive(item)
+  })
+})
+
 function getComponent(compo: string | undefined): Component {
   if (typeof compo === 'string') {
     return resolveComponent(compo) as Component
@@ -62,24 +69,24 @@ function getComponent(compo: string | undefined): Component {
   return resolveComponent('TInput') as Component
 }
 
-function getComponentProps(item: FormItemType): Record<string, any> {
+function getComponentProps(item: ComponentItemType): Record<string, any> {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (!key.startsWith('_') && !['component', 'model', 'show'].includes(key)) {
-      obj[key] = item[key as keyof FormItemType]
+      obj[key] = item[key as keyof ComponentItemType]
     }
   }
 
   return obj
 }
 
-function getFormItemProps(item: FormItemType): FormItemProps {
+function getFormItemProps(item: ComponentItemType): FormItemProps {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (key.startsWith('_')) {
-      obj[key.slice(1)] = item[key as keyof FormItemType]
+      obj[key.slice(1)] = item[key as keyof ComponentItemType]
     }
   }
 
@@ -118,7 +125,7 @@ defineExpose({} as FormInstanceFunctions)
     }"
   >
     <template
-      v-for="item in items.filter((item) => item.show !== false)"
+      v-for="item in formItemsConfig.filter((item) => item.show !== false)"
       :key="(item as ComponentItemType).model ?? (item as SlotItemType).slot"
     >
       <slot
@@ -127,13 +134,13 @@ defineExpose({} as FormInstanceFunctions)
       ></slot>
       <TFormItem
         v-else
-        v-bind="getFormItemProps(item)"
+        v-bind="getFormItemProps(item as ComponentItemType)"
         :name="(item as ComponentItemType).model"
       >
         <component
           :is="getComponent((item as ComponentItemType).component)"
           v-model="data[(item as ComponentItemType).model]"
-          v-bind="getComponentProps(item)"
+          v-bind="getComponentProps(item as ComponentItemType)"
         ></component>
       </TFormItem>
     </template>
