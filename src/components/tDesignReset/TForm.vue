@@ -5,7 +5,7 @@ import type {
   FormItemProps,
   FormProps,
 } from 'tdesign-vue-next'
-import type { Reactive } from 'vue'
+import type { AllowedComponentProps, Reactive } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
@@ -18,29 +18,31 @@ export type FormItemType = MaybeRefInterface<
   } & XOR<ComponentItemType, SlotItemType>
 >
 
-type _FormItemProps = Omit<FormItemProps, 'labelWidth' | 'name'> & {
-  required?: boolean
-}
-type ComponentItemType = XOR<
+type _FormItemProps = AllowedComponentProps &
+  Omit<FormItemProps, 'labelWidth' | 'name'> & {
+    required?: boolean
+  }
+type ComponentItemType = AllowedComponentProps &
   XOR<
     XOR<
-      Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-        component: 'TCheckbox'
-      },
-      Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'> & {
-        component?: 'TInput'
+      XOR<
+        Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+          component: 'TCheckbox'
+        },
+        Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'> & {
+          component?: 'TInput'
+        }
+      >,
+      Omit<RadioGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+        component: 'TRadioGroup'
       }
     >,
-    Omit<RadioGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
-      component: 'TRadioGroup'
+    Omit<CheckboxGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+      component: 'TCheckboxGroup'
     }
-  >,
-  Omit<CheckboxGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
-    component: 'TCheckboxGroup'
+  > & {
+    model: string
   }
-> & {
-  model: string
-}
 interface SlotItemType {
   model?: string
   slot: string
