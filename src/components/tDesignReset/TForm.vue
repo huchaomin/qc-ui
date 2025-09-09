@@ -15,7 +15,7 @@ export type FormItemType = MaybeRefInterface<
   } & XOR<ComponentItemType, SlotItemType>
 >
 
-type _FormItemProps = Omit<FormItemProps, 'name'> & {
+type _FormItemProps = Omit<FormItemProps, 'labelWidth' | 'name'> & {
   required?: boolean
 }
 type ComponentItemType = {
@@ -46,7 +46,7 @@ interface SlotItemType {
 
 const props = withDefaults(
   defineProps<
-    Omit<FormProps, 'data'> & {
+    Omit<FormProps, 'data' | 'labelWidth'> & {
       data: {
         [key: string]: any
       }
@@ -56,7 +56,6 @@ const props = withDefaults(
   {
     colon: true,
     labelAlign: 'top',
-    labelWidth: 'fit-content',
     preventSubmitDefault: true,
     requiredMark: undefined,
     resetType: 'initial',
@@ -148,7 +147,6 @@ function getFormItemProps(item: ComponentItemType): FormItemProps {
     })
   }
 
-  console.log(obj)
   return obj
 }
 
@@ -195,6 +193,47 @@ function compoRef(instance: any) {
   vm.exposeProxy = exposed
 }
 
+const formItemLabelEls = shallowRef<HTMLCollection>()
+
+onMounted(() => {
+  formItemLabelEls.value =
+    vm.exposed!.$el.getElementsByClassName('t-form__label')
+  calcLabelWidth()
+  useMutationObserver(
+    vm.exposed!.$el,
+    () => {
+      calcLabelWidth()
+    },
+    {
+      attributeFilter: ['class'],
+      characterData: true,
+      childList: true,
+      subtree: true,
+    },
+  )
+})
+
+function calcLabelWidth() {
+  const arr = [...formItemLabelEls.value!] as HTMLElement[]
+
+  arr.forEach((el) => {
+    el.style.width = 'fit-content'
+  })
+
+  if (props.labelAlign === 'top') {
+    return
+  }
+
+  let maxWidth = 0
+
+  arr.forEach((el) => {
+    maxWidth = Math.max(maxWidth, el.offsetWidth)
+  })
+  arr.forEach((el) => {
+    el.style.width = `${maxWidth}px`
+  })
+}
+
 defineExpose({} as FormInstanceFunctions)
 </script>
 
@@ -207,6 +246,7 @@ defineExpose({} as FormInstanceFunctions)
       ...$attrs,
       ref: compoRef,
     }"
+    label-width="fit-content"
   >
     <template
       v-for="item in formItemsConfig.filter((item) => item.show !== false)"
