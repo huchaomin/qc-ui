@@ -25,7 +25,7 @@ declare module 'vue' {
     // TCard: typeof import('tdesign-vue-next')['Card']
     TCascader: typeof import('tdesign-vue-next')['Cascader']
     TCheckbox: typeof import('tdesign-vue-next')['Checkbox']
-    TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']
+    // TCheckboxGroup: typeof import('tdesign-vue-next')['CheckboxGroup']
     TCheckTag: typeof import('tdesign-vue-next')['CheckTag']
     TCheckTagGroup: typeof import('tdesign-vue-next')['CheckTagGroup']
     TCol: typeof import('tdesign-vue-next')['Col']
@@ -134,6 +134,7 @@ declare module 'vue' {
     TImage: typeof import('@/components/tDesignReset/TImage.vue')['default']
     TInput: typeof import('@/components/tDesignReset/TInput.vue')['default']
     TRadioGroup: typeof import('@/components/tDesignReset/TRadioGroup.vue')['default']
+    TCheckboxGroup: typeof import('@/components/tDesignReset/TCheckboxGroup.vue')['default']
   }
 }
 

@@ -5,6 +5,7 @@ import type {
   FormItemProps,
   FormProps,
 } from 'tdesign-vue-next'
+import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 
@@ -14,22 +15,27 @@ export type FormItemType = MaybeRefInterface<
   } & XOR<ComponentItemType, SlotItemType>
 >
 
+type _FormItemProps = Omit<FormItemProps, 'name'> & {
+  required?: boolean
+}
 type ComponentItemType = {
-  [K in keyof Omit<FormItemProps, 'name'> as `_${K}`]: Omit<
-    FormItemProps,
-    'name'
-  >[K] // formItem 的属性以下划线开头
+  [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & XOR<
   XOR<
-    Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-      component: 'TCheckbox'
-    },
-    Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'> & {
-      component?: 'TInput'
+    XOR<
+      Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+        component: 'TCheckbox'
+      },
+      Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'> & {
+        component?: 'TInput'
+      }
+    >,
+    Omit<RadioGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+      component: 'TRadioGroup'
     }
   >,
-  Omit<RadioGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
-    component: 'TRadioGroup'
+  Omit<CheckboxGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+    component: 'TCheckboxGroup'
   }
 > & {
     model: string
@@ -52,7 +58,9 @@ const props = withDefaults(
     labelAlign: 'top',
     labelWidth: 'fit-content',
     preventSubmitDefault: true,
+    requiredMark: undefined,
     resetType: 'initial',
+    showErrorMessage: true,
   },
 )
 const formItemsConfig = computed(() => {
@@ -90,12 +98,88 @@ function getFormItemProps(item: ComponentItemType): FormItemProps {
     }
   }
 
+  const isSelect = ['TCheckbox', 'TCheckboxGroup', 'TRadioGroup'].includes(
+    item.component as string,
+  )
+  const message = isSelect
+    ? `请选择${obj.label ?? ''}`
+    : `${obj.label ?? ''}必填`
+
+  if (obj.required === true) {
+    if (obj.rules === undefined) {
+      obj.rules = []
+    }
+
+    if (
+      obj.rules.find((rule: any) => rule.required === true) === undefined &&
+      props.rules?.[item.model]?.find((rule: any) => rule.required === true) ===
+        undefined
+    ) {
+      obj.rules.unshift(
+        ...[
+          {
+            message,
+            required: true,
+          },
+          {
+            message,
+            whitespace: true,
+          },
+        ],
+      )
+    }
+
+    if (obj.rules.length === 0) {
+      delete obj.rules
+    }
+
+    delete obj.required
+  }
+
+  if (
+    obj.rules?.find((rule: any) => rule.required === true) !== undefined &&
+    obj.rules.find((rule: any) => rule.whitespace === true) === undefined
+  ) {
+    obj.rules.unshift({
+      message:
+        obj.rules.find((rule: any) => rule.required === true).message ??
+        message,
+      whitespace: true,
+    })
+  }
+
+  console.log(obj)
   return obj
 }
 
 const bindProps = computed(() => {
   const obj: Record<string, any> = {
     ...props,
+  }
+
+  if (obj.rules !== undefined) {
+    const r: Record<string, any> = {}
+
+    Object.keys(obj.rules).forEach((key) => {
+      r[key] = []
+
+      const rules = obj.rules[key]
+
+      rules.forEach((rule: any) => {
+        r[key].push(rule)
+
+        if (
+          rule.required === true &&
+          rules.find((r: any) => r.whitespace === true) === undefined
+        ) {
+          r[key].push({
+            message: rule.message,
+            whitespace: true,
+          })
+        }
+      })
+    })
+    obj.rules = r
   }
 
   delete obj.items

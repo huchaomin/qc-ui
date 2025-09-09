@@ -81,7 +81,7 @@ const tabs = reactive([
           lazy
           :destroy-on-hide="false"
         >
-          <Component :is="item.component"></Component>
+          <Component :is="item.component" class="!mt-4"></Component>
         </TTabPanel>
       </TTabs>
     </TCard>

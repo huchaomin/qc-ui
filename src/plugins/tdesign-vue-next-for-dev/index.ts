@@ -7,6 +7,7 @@ import type _default from 'tdesign-vue-next'
 import type { DialogPluginType } from 'tdesign-vue-next/es/dialog/plugin.d.ts'
 import _TDesign, {
   Card as _Card,
+  CheckboxGroup as _CheckboxGroup,
   DialogPlugin as _DialogPlugin,
   Form as _Form,
   Image as _Image,
@@ -31,9 +32,12 @@ const Image = _Image as (typeof import('tdesign-vue-next'))['Image']
 const Input = _Input as (typeof import('tdesign-vue-next'))['Input']
 const RadioGroup =
   _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGroup']
+const CheckboxGroup =
+  _CheckboxGroup as (typeof import('tdesign-vue-next'))['CheckboxGroup']
 
 export {
   Card,
+  CheckboxGroup,
   DialogPlugin,
   Form,
   Image,

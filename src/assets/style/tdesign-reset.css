@@ -30,7 +30,7 @@ body {
   }
 
   .t-input--focused {
-    box-shadow: none;
+    box-shadow: none !important;
   }
 
   .t-tabs {
