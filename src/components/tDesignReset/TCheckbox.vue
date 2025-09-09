@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import type { InputProps as _InputProps } from 'tdesign-vue-next'
+import type { CheckboxProps as _CheckboxProps } from 'tdesign-vue-next'
 
-export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'>
+export type CheckboxProps = Omit<_CheckboxProps, 'checked' | 'defaultChecked'>
 
-const props = withDefaults(defineProps<InputProps>(), {
-  autocomplete: 'off',
-  clearable: true,
-})
-const compo = _Input
+const props = withDefaults(defineProps<CheckboxProps>(), {})
+const compo = _Checkbox
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {

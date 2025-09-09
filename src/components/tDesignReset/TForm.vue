@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type {
-  CheckboxProps,
   FormInstanceFunctions,
   FormItemProps,
   FormProps,
 } from 'tdesign-vue-next'
 import type { AllowedComponentProps, Reactive } from 'vue'
+import type { CheckboxProps } from './TCheckbox.vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
@@ -26,18 +26,18 @@ type ComponentItemType = AllowedComponentProps &
   XOR<
     XOR<
       XOR<
-        Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+        Omit<CheckboxProps, 'modelValue'> & {
           component: 'TCheckbox'
         },
-        Omit<InputProps, 'defaultValue' | 'modelValue' | 'value'> & {
+        Omit<InputProps, 'modelValue'> & {
           component?: 'TInput'
         }
       >,
-      Omit<RadioGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+      Omit<RadioGroupProps, 'modelValue'> & {
         component: 'TRadioGroup'
       }
     >,
-    Omit<CheckboxGroupProps, 'defaultValue' | 'modelValue' | 'value'> & {
+    Omit<CheckboxGroupProps, 'modelValue'> & {
       component: 'TCheckboxGroup'
     }
   > & {

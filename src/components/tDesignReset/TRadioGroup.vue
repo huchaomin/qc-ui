@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
 
-export type RadioGroupProps = _RadioGroupProps & {
+export type RadioGroupProps = Omit<
+  _RadioGroupProps,
+  'defaultValue' | 'value'
+> & {
   dicCode?: string
 }
 

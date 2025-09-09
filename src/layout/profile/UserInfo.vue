@@ -47,8 +47,11 @@ const formItems: FormItemType[] = [
     slot: 'footer',
   },
 ]
-const handleSubmit: FormProps['onSubmit'] = (...arg) => {
-  console.log(arg)
+const handleSubmit: FormProps['onSubmit'] = ({
+  firstError,
+  validateResult,
+}) => {
+  console.log(firstError, validateResult)
 }
 </script>
 
@@ -62,7 +65,7 @@ const handleSubmit: FormProps['onSubmit'] = (...arg) => {
   >
     <template #footer>
       <TButton type="submit">保存</TButton>
-      <TButton>关闭</TButton>
+      <TButton theme="default" class="!ml-4">关闭</TButton>
     </template>
   </TForm>
 </template>

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import type { CheckboxGroupProps as _CheckboxGroupProps } from 'tdesign-vue-next'
 
-export type CheckboxGroupProps = _CheckboxGroupProps & {
+export type CheckboxGroupProps = Omit<
+  _CheckboxGroupProps,
+  'defaultValue' | 'value'
+> & {
   dicCode?: string
   showCheckAll?: boolean
 }
