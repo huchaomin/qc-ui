@@ -5,12 +5,15 @@ import type {
   FormItemProps,
   FormProps,
 } from 'tdesign-vue-next'
+import type { Reactive } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 
 export type FormItemType = MaybeRefInterface<
   {
+    [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
+  } & {
     show?: boolean // 是否显示
   } & XOR<ComponentItemType, SlotItemType>
 >
@@ -18,9 +21,7 @@ export type FormItemType = MaybeRefInterface<
 type _FormItemProps = Omit<FormItemProps, 'labelWidth' | 'name'> & {
   required?: boolean
 }
-type ComponentItemType = {
-  [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
-} & XOR<
+type ComponentItemType = XOR<
   XOR<
     XOR<
       Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
@@ -38,9 +39,10 @@ type ComponentItemType = {
     component: 'TCheckboxGroup'
   }
 > & {
-    model: string
-  }
+  model: string
+}
 interface SlotItemType {
+  model?: string
   slot: string
 }
 
@@ -56,6 +58,7 @@ const props = withDefaults(
   {
     colon: true,
     labelAlign: 'top',
+    layout: 'inline',
     preventSubmitDefault: true,
     requiredMark: undefined,
     resetType: 'initial',
@@ -76,24 +79,25 @@ function getComponent(compo: string | undefined): Component {
   return resolveComponent('TInput') as Component
 }
 
-function getComponentProps(item: ComponentItemType): Record<string, any> {
+function getComponentProps(item: Reactive<FormItemType>): Record<string, any> {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (!key.startsWith('_') && !['component', 'model', 'show'].includes(key)) {
-      obj[key] = item[key as keyof ComponentItemType]
+      // @ts-expect-error 类型实例化过深，且可能无限
+      obj[key] = item[key as keyof Reactive<FormItemType>]
     }
   }
 
   return obj
 }
 
-function getFormItemProps(item: ComponentItemType): FormItemProps {
+function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (key.startsWith('_')) {
-      obj[key.slice(1)] = item[key as keyof ComponentItemType]
+      obj[key.slice(1)] = item[key as keyof Reactive<FormItemType>]
     }
   }
 
@@ -111,8 +115,9 @@ function getFormItemProps(item: ComponentItemType): FormItemProps {
 
     if (
       obj.rules.find((rule: any) => rule.required === true) === undefined &&
-      props.rules?.[item.model]?.find((rule: any) => rule.required === true) ===
-        undefined
+      props.rules?.[item.model ?? '']?.find(
+        (rule: any) => rule.required === true,
+      ) === undefined
     ) {
       obj.rules.unshift(
         ...[
@@ -217,7 +222,7 @@ function calcLabelWidth() {
   const arr = [...formItemLabelEls.value!] as HTMLElement[]
 
   arr.forEach((el) => {
-    el.style.width = 'fit-content'
+    el.style.minWidth = 'auto'
   })
 
   if (props.labelAlign === 'top') {
@@ -230,7 +235,7 @@ function calcLabelWidth() {
     maxWidth = Math.max(maxWidth, el.offsetWidth)
   })
   arr.forEach((el) => {
-    el.style.width = `${maxWidth}px`
+    el.style.minWidth = `${maxWidth}px`
   })
 }
 
@@ -248,25 +253,26 @@ defineExpose({} as FormInstanceFunctions)
     }"
     label-width="fit-content"
   >
-    <template
+    <TFormItem
       v-for="item in formItemsConfig.filter((item) => item.show !== false)"
-      :key="(item as ComponentItemType).model ?? (item as SlotItemType).slot"
+      :key="item.model ?? item.slot"
+      v-bind="getFormItemProps(item)"
+      :name="item.model"
+      :class="{
+        no_label_item: isFalsy(item._label),
+        empty_label_item: item._label === ' ',
+      }"
     >
       <slot
         v-if="(item as SlotItemType).slot"
         :name="(item as SlotItemType).slot"
       ></slot>
-      <TFormItem
+      <component
+        :is="getComponent(item.component)"
         v-else
-        v-bind="getFormItemProps(item as ComponentItemType)"
-        :name="(item as ComponentItemType).model"
-      >
-        <component
-          :is="getComponent((item as ComponentItemType).component)"
-          v-model="data[(item as ComponentItemType).model]"
-          v-bind="getComponentProps(item as ComponentItemType)"
-        ></component>
-      </TFormItem>
-    </template>
+        v-model="data[item.model as string]"
+        v-bind="getComponentProps(item)"
+      ></component>
+    </TFormItem>
   </component>
 </template>

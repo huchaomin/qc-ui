@@ -43,6 +43,7 @@ const formItems: FormItemType[] = [
     options: useDicOptions('sys_user_sex', ['0', '1']),
   },
   {
+    _label: ' ',
     slot: 'footer',
   },
 ]
@@ -55,6 +56,7 @@ const handleSubmit: FormProps['onSubmit'] = (...arg) => {
   <TForm
     :data="formData"
     :items="formItems"
+    layout="vertical"
     label-align="right"
     @submit="handleSubmit"
   >
