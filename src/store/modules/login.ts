@@ -60,6 +60,7 @@ export default defineStore(
       useExcludeKPnameStore().clear()
       useRouterStore().clear()
       useUserStore().clear()
+      useClearDic()
     }
 
     async function logout() {

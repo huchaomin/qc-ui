@@ -2,7 +2,7 @@
 import ResetPwd from './ResetPwd.vue'
 import UserInfo from './UserInfo.vue'
 
-const { data } = useRequest(
+const { data, send } = useRequest(
   alovaInst.Get<Record<string, any>>('system/user/profile', {
     meta: {
       useDataResult: false,
@@ -57,6 +57,11 @@ const tabs = reactive([
     value: 'resetPwd',
   },
 ])
+
+provide(
+  'userInfo',
+  computed(() => data.value.data),
+)
 </script>
 
 <template>
@@ -81,7 +86,7 @@ const tabs = reactive([
           lazy
           :destroy-on-hide="false"
         >
-          <Component :is="item.component" class="!mt-4"></Component>
+          <Component :is="item.component" class="!mt-4" @update="send"></Component>
         </TTabPanel>
       </TTabs>
     </TCard>

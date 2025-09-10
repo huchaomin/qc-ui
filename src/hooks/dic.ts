@@ -64,6 +64,12 @@ function getPromise(code: string): Promise<DicItem[]> {
 
 const refMap = new Map<string, Ref<DicItem[]>>()
 
+export function useClearDic() {
+  codeQueueArr.length = 0
+  promiseMap.clear()
+  refMap.clear()
+}
+
 export function useDicLabel(code: string): ComputedRef<string[]>
 
 export function useDicLabel(code: string, value: string): ComputedRef<string>

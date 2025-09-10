@@ -5,6 +5,10 @@ import './assets/style/main.css'
 
 const app = createApp(App)
 
+app.config.errorHandler = (...args) => {
+  console.error(args)
+}
+
 app.use(store)
 app.use(router)
 

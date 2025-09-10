@@ -1,9 +1,25 @@
 <script setup lang="ts">
-import type { FormProps } from 'tdesign-vue-next'
-
+const userInfo =
+  inject<ComputedRef<Record<string, any> | undefined>>('userInfo')!
 const formData = reactive({
-  sex: 1,
+  email: '',
+  nickName: '',
+  phonenumber: '',
+  sex: '1',
 })
+
+watchEffect(() => {
+  const val = userInfo.value
+
+  if (val) {
+    Object.keys(formData).forEach((key) => {
+      if (!isFalsy(val[key])) {
+        formData[key as keyof typeof formData] = val[key]
+      }
+    })
+  }
+})
+
 const formItems: FormItemType[] = [
   {
     _label: '用户昵称',
@@ -47,24 +63,35 @@ const formItems: FormItemType[] = [
     slot: 'footer',
   },
 ]
-const handleSubmit: FormProps['onSubmit'] = ({
-  firstError,
-  validateResult,
-}) => {
-  console.log(firstError, validateResult)
+const formRef = useTemplateRef('form')
+
+const emit = defineEmits<{
+  update: []
+}>()
+
+async function handleSubmit() {
+  await formRef.value!.validate()
+  await alovaInst.Put('system/user/profile', formData, {
+    meta: {
+      useLoading: '保存中...',
+      useSuccessMsg: true,
+    },
+  })
+  useUserStore().getUserInfo(false)
+  emit('update')
 }
 </script>
 
 <template>
   <TForm
+    ref="form"
     :data="formData"
     :items="formItems"
     layout="vertical"
     label-align="right"
-    @submit="handleSubmit"
   >
     <template #footer>
-      <TButton type="submit">保存</TButton>
+      <TButton @click="handleSubmit">保存</TButton>
       <TButton theme="default" class="!ml-4">关闭</TButton>
     </template>
   </TForm>

@@ -4,6 +4,7 @@ import type {
   FormInstanceFunctions,
   FormItemProps,
   FormProps,
+  ValidateResultList,
 } from 'tdesign-vue-next'
 import type { AllowedComponentProps, Reactive } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
@@ -55,12 +56,14 @@ const props = withDefaults(
         [key: string]: any
       }
       items: FormItemType[]
+      msgErrorWhenValidate?: boolean
     }
   >(),
   {
     colon: true,
     labelAlign: 'top',
     layout: 'inline',
+    msgErrorWhenValidate: true,
     preventSubmitDefault: true,
     requiredMark: undefined,
     resetType: 'initial',
@@ -108,7 +111,7 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
   )
   const message = isSelect
     ? `请选择${obj.label ?? ''}`
-    : `${obj.label ?? ''}必填`
+    : `请填写${obj.label ?? ''}`
 
   if (obj.required === true) {
     if (obj.rules === undefined) {
@@ -195,6 +198,53 @@ const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
   const exposed = instance ?? {}
+
+  if (instance !== null) {
+    const inst = instance as FormInstanceFunctions
+    const orgValidate = inst.validate
+
+    inst.validate = (...arg: Parameters<FormInstanceFunctions['validate']>) => {
+      return new Promise((resolve, reject) => {
+        orgValidate(...arg).then((res) => {
+          if (res === true) {
+            resolve(res)
+          } else {
+            if (props.msgErrorWhenValidate) {
+              Object.keys(res).forEach((key) => {
+                const arr = res[
+                  key as keyof typeof res
+                ] as unknown as ValidateResultList
+
+                arr.forEach((item: any) => {
+                  if (item.result === false) {
+                    $msg.error(item.message)
+                  }
+                })
+              })
+            }
+
+            reject(res)
+          }
+        })
+      })
+    }
+
+    const orgValidateOnly = inst.validateOnly
+
+    inst.validateOnly = (
+      ...arg: Parameters<FormInstanceFunctions['validateOnly']>
+    ) => {
+      return new Promise((resolve, reject) => {
+        orgValidateOnly(...arg).then((res) => {
+          if (res === true) {
+            resolve(res)
+          } else {
+            reject(res)
+          }
+        })
+      })
+    }
+  }
 
   vm.exposed = exposed
   vm.exposeProxy = exposed

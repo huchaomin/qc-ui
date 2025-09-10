@@ -46,13 +46,15 @@ export default defineStore('user', () => {
 
   const isAdmin = computed(() => userInfo.value.admin)
 
-  async function getUserInfo() {
+  async function getUserInfo(getRouters = true) {
     const res = await getUserInfoMethod()
 
     userInfo.value = res.user
     permissions.value = res.permissions
     roles.value = res.roles
-    await useRouterStore().getRouters()
+    if (getRouters) {
+      await useRouterStore().getRouters()
+    }
   }
 
   return {
