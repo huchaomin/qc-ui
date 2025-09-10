@@ -10,7 +10,7 @@ export type CheckboxGroupProps = Omit<
 }
 
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
-  showCheckAll: true,
+  showCheckAll: false,
 })
 const compo = _CheckboxGroup
 const vm = getCurrentInstance()!
@@ -32,10 +32,13 @@ const finallyOptions = computed(() => {
       )
     }
 
-    arr = useDicOptions(props.dicCode).value
+    arr = useDicOptions(props.dicCode).value.map((item) => ({
+      label: item.label,
+      value: item.value,
+    })) as NonNullable<CheckboxGroupProps['options']>
+  } else {
+    arr = props.options
   }
-
-  arr = props.options
 
   if (props.showCheckAll) {
     if (arr === undefined) {
@@ -44,13 +47,35 @@ const finallyOptions = computed(() => {
       )
     } else {
       arr.unshift({
+        checkAll: true,
         label: '全选',
-        value: 'all',
       })
     }
   }
 
   return arr
+})
+const value = defineModel({
+  get() {
+    if (finallyOptions.value !== undefined && props.modelValue !== undefined) {
+      const isString = finallyOptions.value.every(
+        (item: any) => typeof item.value === 'string',
+      )
+      const isNumber = finallyOptions.value.every(
+        (item: any) => typeof item.value === 'number',
+      )
+
+      if (isString) {
+        return props.modelValue.map((v) => (isFalsy(v) ? v : String(v)))
+      } else if (isNumber) {
+        return props.modelValue.map((v) =>
+          isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v),
+        )
+      }
+    }
+
+    return props.modelValue
+  },
 })
 const bindProps = computed(() => {
   const obj: Record<string, any> = {
@@ -59,6 +84,7 @@ const bindProps = computed(() => {
 
   delete obj.options
   delete obj.dicCode
+  delete obj.modelValue
   return obj
 })
 </script>
@@ -72,6 +98,10 @@ const bindProps = computed(() => {
           ...bindProps,
           ...$attrs,
           options: finallyOptions,
+          modelValue: value,
+          'onUpdate:modelValue': (v: any) => {
+            value = v
+          },
           ref: compoRef,
         },
         $slots,

@@ -81,6 +81,12 @@ body {
     height: 14px;
   }
 
+  .t-checkbox.t-is-indeterminate .t-checkbox__input::after {
+    top: 7px;
+    left: -4px;
+    width: 26px;
+  }
+
   .t-input--focused {
     box-shadow: none !important;
   }

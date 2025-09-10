@@ -2,7 +2,7 @@
 import type { FormProps } from 'tdesign-vue-next'
 
 const formData = reactive({
-  sex: '0',
+  sex: 1,
 })
 const formItems: FormItemType[] = [
   {
