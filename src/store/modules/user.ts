@@ -1,3 +1,5 @@
+import ResetPwd from '@/layout/profile/ResetPwd.vue'
+
 interface UserInfo {
   admin: boolean
   dept: {
@@ -52,11 +54,41 @@ export default defineStore('user', () => {
     userInfo.value = res.user
     permissions.value = res.permissions
     roles.value = res.roles
+
     if (getRouters) {
       await useRouterStore().getRouters()
     }
   }
 
+  watch(
+    () => userInfo.value.needChangePwd,
+    (val) => {
+      if (val === 1 && import.meta.env.VITE_FORCE_PWD_CHANGE) {
+        void nextTick(() => {
+          const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)
+          const dialogInstance = $dialog({
+            body: () =>
+              h(ResetPwd, {
+                labelAlign: 'top',
+                ref: resetPwdRef,
+                showFooter: false,
+              }),
+            cancelBtn: null,
+            closeBtn: false,
+            header: '请修改密码',
+            onConfirm: async () => {
+              await resetPwdRef.value!.handleSubmit()
+              dialogInstance.hide()
+            },
+            width: 430,
+          })
+        })
+      }
+    },
+    {
+      immediate: true,
+    },
+  )
   return {
     clear,
     getUserInfo,

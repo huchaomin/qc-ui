@@ -32,6 +32,7 @@ export default defineStore(
     const password = ref('')
     const rememberMe = ref(false)
     const token = ref('')
+    const route = useRoute()
     const router = useRouter()
 
     async function login(data: LoginData) {
@@ -53,9 +54,8 @@ export default defineStore(
       rememberMe.value = false
     }
 
-    async function clearSession() {
+    function clearSession() {
       token.value = ''
-      await router.push({ name: 'Login' })
       useRecentRoutersStore().clear()
       useExcludeKPnameStore().clear()
       useRouterStore().clear()
@@ -63,14 +63,27 @@ export default defineStore(
       useClearDic()
     }
 
+    // 用户手动跳转到登录
+    watch(
+      () => route.name, // 只能监听 route.name
+      () => {
+        if (route.name === 'Login') {
+          void clearSession()
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
+
     async function logout() {
       await logoutMethod()
-      await clearSession()
+      await router.push({ name: 'Login' })
+      clearSession()
     }
 
     return {
       clearLoginData,
-      clearSession,
       login,
       logout,
       password,

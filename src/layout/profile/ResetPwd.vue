@@ -1,4 +1,7 @@
 <script setup lang="ts">
+const { showFooter = true } = defineProps<{
+  showFooter?: boolean
+}>()
 const route = useRoute()
 const formData = reactive({
   confirmPassword: '',
@@ -45,10 +48,14 @@ const formItems: FormItemType[] = [
     model: 'confirmPassword',
     type: 'password',
   },
-  {
-    _label: ' ',
-    slot: 'footer',
-  },
+  ...(showFooter
+    ? [
+        {
+          _label: ' ',
+          slot: 'footer',
+        },
+      ]
+    : []),
 ]
 const formRef = useTemplateRef('form')
 
@@ -70,6 +77,10 @@ async function handleSubmit() {
   })
   useLoginStore().logout()
 }
+
+defineExpose({
+  handleSubmit,
+})
 </script>
 
 <template>

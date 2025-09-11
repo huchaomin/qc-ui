@@ -196,7 +196,7 @@ export default createAlova({
               return resData
             }
           } else if (code === 401) {
-            void useLoginStore().clearSession()
+            void useRouter().push({ name: 'Login' })
           } else {
             if (useFailMsg !== false) {
               void $msg.error(useFailMsg === true ? msg : useFailMsg)

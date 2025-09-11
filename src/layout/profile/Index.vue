@@ -30,7 +30,9 @@ const listItems = computed(() => {
           title: '用户邮箱',
         },
         {
-          description: `${info.dept?.deptName ?? ''} / ${data.value.postGroup}`,
+          description: [info.dept?.deptName, data.value.postGroup]
+            .filter((item) => !isFalsy(item))
+            .join('/'),
           title: '所属部门',
         },
         {
@@ -77,7 +79,7 @@ provide(
       </TList>
     </TCard>
     <TCard title="基本资料" class="flex-1">
-      <TTabs v-model="tab" size="large">
+      <TTabs v-model="tab" size="large" class="!-mt-4">
         <TTabPanel
           v-for="item in tabs"
           :key="item.value"
@@ -86,7 +88,11 @@ provide(
           lazy
           :destroy-on-hide="false"
         >
-          <Component :is="item.component" class="!mt-4" @update="send"></Component>
+          <Component
+            :is="item.component"
+            class="!mt-4"
+            @update="send"
+          ></Component>
         </TTabPanel>
       </TTabs>
     </TCard>

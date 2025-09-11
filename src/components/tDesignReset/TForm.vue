@@ -191,6 +191,7 @@ const bindProps = computed(() => {
   }
 
   delete obj.items
+  delete obj.msgErrorWhenValidate
   return obj
 })
 const compo = _Form
@@ -268,6 +269,10 @@ onMounted(() => {
       subtree: true,
     },
   )
+  // 在dialog里面，需要监听窗口大小变化
+  useResizeObserver(vm.exposed!.$el, () => {
+    calcLabelWidth()
+  })
 })
 
 function calcLabelWidth() {

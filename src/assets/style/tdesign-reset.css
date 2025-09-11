@@ -153,6 +153,10 @@ body {
           padding-bottom: 0;
         }
       }
+
+      .t-dialog__footer {
+        padding-top: 0;
+      }
     }
   }
 
