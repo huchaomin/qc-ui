@@ -10,20 +10,7 @@ const recentRoutersStore = useRecentRoutersStore()
 const handleRemove: TabsProps['onRemove'] = ({ value }) => {
   const name = value as string
 
-  if (route.name === name) {
-    const currentIndex = recentRoutersStore.recentRouters.findIndex(
-      (item) => item.name === name,
-    )
-    const pre = recentRoutersStore.recentRouters[currentIndex - 1]
-
-    if (pre !== undefined) {
-      router.push(pre)
-    } else {
-      router.push(recentRoutersStore.recentRouters[currentIndex + 1]!)
-    }
-  }
-
-  recentRoutersStore.remove(name)
+  recentRoutersStore.close(name)
 }
 const handleChange: TabsProps['onChange'] = (val) => {
   router.push(

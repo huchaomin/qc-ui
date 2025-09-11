@@ -90,6 +90,11 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
+  // 左侧树点击进来的，页面不缓存
+  if (to.query._fromLeftTree === 'true') {
+    useExcludeKPnameStore().add(to.name as string)
+  }
+
   if (to.name === 'Login') {
     return
   }

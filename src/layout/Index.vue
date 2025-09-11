@@ -1,18 +1,14 @@
 <script setup lang="ts">
+import { getRoute } from '@/router/index'
 import Aside from './modules/Aside.vue'
 import Header from './modules/Header.vue'
 
-const router = useRouter()
 const recentRoutersStore = useRecentRoutersStore()
 const excludeKPnameStore = useExcludeKPnameStore()
 const recentRoutersNames = computed(() =>
   recentRoutersStore.recentRouters
     .filter((r) => {
-      if (router.hasRoute(r.name)) {
-        return router.resolve({ name: r.name }).meta.noCache !== true
-      }
-
-      return false
+      return getRoute(r.name)!.meta.noCache === false
     })
     .map((r) => r.name),
 )

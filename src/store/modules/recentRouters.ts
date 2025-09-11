@@ -10,6 +10,7 @@ export default defineStore(
   'recentRouters',
   () => {
     const recentRouters = ref<recentRoutersConfig[]>([])
+    const route = useRoute()
     const router = useRouter()
 
     // 每次进来用户权限可能发生变化，需要重新过滤路由
@@ -58,6 +59,23 @@ export default defineStore(
       }
     }
 
+    function close(name: RouteRecordNameGeneric): void {
+      if (route.name === name) {
+        const currentIndex = recentRouters.value.findIndex(
+          (item) => item.name === name,
+        )
+        const pre = recentRouters.value[currentIndex - 1]
+
+        if (pre !== undefined) {
+          void router.push(pre)
+        } else {
+          void router.push(recentRouters.value[currentIndex + 1]!)
+        }
+      }
+
+      remove(name)
+    }
+
     function clear(): void {
       recentRouters.value = []
     }
@@ -65,6 +83,7 @@ export default defineStore(
     return {
       add,
       clear,
+      close,
       init,
       recentRouters,
       remove,

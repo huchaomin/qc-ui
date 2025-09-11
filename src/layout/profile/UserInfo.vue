@@ -1,4 +1,8 @@
 <script setup lang="ts">
+const emit = defineEmits<{
+  update: []
+}>()
+const route = useRoute()
 const userInfo =
   inject<ComputedRef<Record<string, any> | undefined>>('userInfo')!
 const formData = reactive({
@@ -65,9 +69,9 @@ const formItems: FormItemType[] = [
 ]
 const formRef = useTemplateRef('form')
 
-const emit = defineEmits<{
-  update: []
-}>()
+function handleClose() {
+  useRecentRoutersStore().close(route.name)
+}
 
 async function handleSubmit() {
   await formRef.value!.validate()
@@ -92,7 +96,7 @@ async function handleSubmit() {
   >
     <template #footer>
       <TButton @click="handleSubmit">保存</TButton>
-      <TButton theme="default" class="!ml-4">关闭</TButton>
+      <TButton theme="default" class="!ml-4" @click="handleClose">关闭</TButton>
     </template>
   </TForm>
 </template>
