@@ -87,6 +87,7 @@ export default defineConfig(({ command, mode }) => {
         '@vueuse/integrations/useNProgress',
         '@iconify/vue',
         '@visactor/vue-vtable',
+        '@visactor/vtable',
       ],
     },
     plugins: [

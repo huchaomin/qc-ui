@@ -55,16 +55,14 @@ export default createAlova({
     const params = method.config.params
 
     if (typeof params !== 'string') {
-      const paramsCopy: Record<string, any> = {}
+      const paramsCopy = new URLSearchParams()
 
       Object.keys(params).forEach((key: string) => {
         if (!isFalsy(params[key]) || !useEmptyParams) {
-          paramsCopy[encodeURIComponent(key)] = encodeURIComponent(
-            params[key] as string,
-          )
+          paramsCopy.append(key, params[key] as string)
         }
       })
-      method.config.params = paramsCopy
+      method.config.params = paramsCopy.toString()
     }
 
     // 处理 data 参数
