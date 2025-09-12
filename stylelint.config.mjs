@@ -24,6 +24,7 @@ export default defineConfig({
     '@stylistic/declaration-block-trailing-semicolon': null, // 与 prettier 保持一致
     '@stylistic/declaration-colon-newline-after': null, // 与 prettier 保持一致
     '@stylistic/no-eol-whitespace': null, // 与 prettier 保持一致
+    '@stylistic/string-quotes': null, // 与 prettier 保持一致
     'at-rule-no-unknown': [
       true,
       {

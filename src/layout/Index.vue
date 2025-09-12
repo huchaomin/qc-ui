@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getRoute } from '@/router/index'
 import Aside from './modules/Aside.vue'
+import Breadcrumb from './modules/Breadcrumb.vue'
 import Header from './modules/Header.vue'
 
 const recentRoutersStore = useRecentRoutersStore()
@@ -12,6 +13,10 @@ const recentRoutersNames = computed(() =>
     })
     .map((r) => r.name),
 )
+const breadcrumbRef = useTemplateRef('breadcrumb')
+const hasBreadcrumb = computed(() => {
+  return (breadcrumbRef.value?.items.length ?? 0) > 0
+})
 </script>
 
 <template>
@@ -19,13 +24,18 @@ const recentRoutersNames = computed(() =>
     <Aside>Aside</Aside>
     <TLayout class="!flex-1 overflow-x-auto">
       <Header></Header>
-      <TContent>
+      <TContent class="overflow-auto">
+        <Breadcrumb ref="breadcrumb"></Breadcrumb>
         <RouterView v-slot="{ Component }">
           <KeepAlive
             :include="recentRoutersNames"
             :exclude="excludeKPnameStore.excludeKPname"
           >
-            <Component :is="Component"></Component>
+            <Component
+              :is="Component"
+              :class="{ 'pt-8': hasBreadcrumb }"
+              class="min-h-full p-4"
+            ></Component>
           </KeepAlive>
         </RouterView>
       </TContent>

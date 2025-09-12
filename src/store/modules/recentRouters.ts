@@ -34,7 +34,6 @@ export default defineStore(
 
       delete copyOptions.query._fromLeftTree
       delete copyOptions.query._fromBreadcrumb
-      delete copyOptions.query._refresh
 
       if (index === -1) {
         const fromIndex = recentRouters.value.findIndex(

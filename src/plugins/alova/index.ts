@@ -3,6 +3,7 @@ import { createAlova } from 'alova'
 import adapterFetch from 'alova/fetch'
 import VueHook from 'alova/vue'
 import sysPath from 'path-browserify'
+import router from '@/router'
 
 const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'
@@ -196,7 +197,7 @@ export default createAlova({
               return resData
             }
           } else if (code === 401) {
-            void useRouter().push({ name: 'Login' })
+            void router.push({ name: 'Login' })
           } else {
             if (useFailMsg !== false) {
               void $msg.error(useFailMsg === true ? msg : useFailMsg)

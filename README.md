@@ -49,6 +49,7 @@
 - [封装右键菜单](https://github.com/CyberNika/v-contextmenu/blob/main/src/directive.ts)
 - 怎么给 page 添加 lazy-view loading
 - 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
+- 定义refresh page store
 
 ### 分析包大小
 
