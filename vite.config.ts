@@ -86,6 +86,7 @@ export default defineConfig(({ command, mode }) => {
         'alova/vue',
         '@vueuse/integrations/useNProgress',
         '@iconify/vue',
+        '@visactor/vue-vtable',
       ],
     },
     plugins: [
@@ -181,7 +182,7 @@ export default defineConfig(({ command, mode }) => {
       },
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
       // 不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
-      extensions: ['.ts'],
+      extensions: ['.ts', '.js'], // VTable 的 d3-hexbin 需要
     },
     server: {
       // vite preview 也会走该代理

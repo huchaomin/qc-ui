@@ -1,0 +1,3 @@
+<template>
+  <ListTable></ListTable>
+</template>
