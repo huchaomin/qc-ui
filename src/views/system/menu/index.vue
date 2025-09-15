@@ -1,3 +1,3 @@
 <template>
-  <ListTable></ListTable>
+  <div></div>
 </template>
