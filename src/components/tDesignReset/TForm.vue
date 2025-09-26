@@ -10,6 +10,7 @@ import type { AllowedComponentProps, Reactive } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
+import { mergeProps } from 'vue'
 
 export type FormItemType = MaybeRefInterface<
   {
@@ -304,8 +305,7 @@ defineExpose({} as FormInstanceFunctions)
   <component
     :is="compo"
     v-bind="{
-      ...bindProps,
-      ...$attrs,
+      ...mergeProps(bindProps, $attrs),
       ref: compoRef,
     }"
     label-width="fit-content"

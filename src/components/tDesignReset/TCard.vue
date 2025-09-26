@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CardProps } from 'tdesign-vue-next'
+import { mergeProps } from 'vue'
 
 const props = withDefaults(defineProps<CardProps>(), {
   headerBordered: true,
@@ -22,8 +23,7 @@ function compoRef(instance: any) {
       h(
         compo,
         {
-          ...props,
-          ...$attrs,
+          ...mergeProps(props, $attrs),
           ref: compoRef,
         },
         $slots,

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ImageProps } from 'tdesign-vue-next'
+import { mergeProps } from 'vue'
 
 const props = withDefaults(defineProps<ImageProps>(), {
   lazy: true,
@@ -21,8 +22,7 @@ function compoRef(instance: any) {
       h(
         compo,
         {
-          ...props,
-          ...$attrs,
+          ...mergeProps(props, $attrs),
           ref: compoRef,
         },
         $slots,

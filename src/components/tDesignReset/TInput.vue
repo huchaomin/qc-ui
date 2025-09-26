@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { InputProps as _InputProps } from 'tdesign-vue-next'
+import { mergeProps } from 'vue'
 
 export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'>
 
@@ -24,8 +25,7 @@ function compoRef(instance: any) {
       h(
         compo,
         {
-          ...props,
-          ...$attrs,
+          ...mergeProps(props, $attrs),
           ref: compoRef,
         },
         $slots,

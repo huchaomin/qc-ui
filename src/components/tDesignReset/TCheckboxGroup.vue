@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CheckboxGroupProps as _CheckboxGroupProps } from 'tdesign-vue-next'
+import { mergeProps } from 'vue'
 
 export type CheckboxGroupProps = Omit<
   _CheckboxGroupProps,
@@ -95,8 +96,7 @@ const bindProps = computed(() => {
       h(
         compo,
         {
-          ...bindProps,
-          ...$attrs,
+          ...mergeProps(bindProps, $attrs),
           options: finallyOptions,
           modelValue: value,
           'onUpdate:modelValue': (v: any) => {

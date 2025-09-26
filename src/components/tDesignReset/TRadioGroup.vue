@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
+import { mergeProps } from 'vue'
 
 export type RadioGroupProps = Omit<
   _RadioGroupProps,
@@ -70,8 +71,7 @@ const value = defineModel({
       h(
         compo,
         {
-          ...bindProps,
-          ...$attrs,
+          ...mergeProps(bindProps, $attrs),
           options: finallyOptions,
           modelValue: value,
           'onUpdate:modelValue': (v: any) => {
