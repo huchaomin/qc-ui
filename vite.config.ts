@@ -86,6 +86,8 @@ export default defineConfig(({ command, mode }) => {
         'alova/vue',
         '@vueuse/integrations/useNProgress',
         '@iconify/vue',
+        'vxe-pc-ui',
+        'vxe-table',
       ],
     },
     plugins: [

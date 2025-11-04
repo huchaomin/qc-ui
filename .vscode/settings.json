@@ -89,9 +89,6 @@
     "pcss",
     "postcss"
   ],
-  "html.format.enable": false,
-  "css.format.enable": false,
-  "json.validate.enable": false,
   "[json]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
@@ -111,7 +108,6 @@
     // 深度合并
     "*.css": "tailwindcss"
   },
-  "tailwindCSS.experimental.configFile": "src/assets/style/tailwindcss-entry.css",
   "cSpell.words": ["tdesign"],
   "cssVariables.lookupFiles": [
     // "**/*.css",

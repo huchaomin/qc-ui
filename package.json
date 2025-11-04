@@ -27,7 +27,8 @@
     "tailwindcss": "^4.1.13",
     "tdesign-vue-next": "^1.16.1",
     "vue": "^3.5.21",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vxe-table": "^4.16.12"
   },
   "devDependencies": {
     "@alova/wormhole": "^1.2.0",

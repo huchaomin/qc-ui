@@ -197,7 +197,6 @@ function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
 
     if (fn === undefined) {
       // void $notify.error(`路由组件/src/views/${component as string}.vue不存在`) TODO
-      console.error(`路由组件/src/views/${component as string}.vue不存在`)
       return () => import('@/layout/NotFound.vue')
     }
 
