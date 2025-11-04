@@ -87,10 +87,7 @@ async function end() {
     const moveLeftDistance = moveBlockLeft.value
     const endMoveTime = +new Date()
     const res = await checkCaptchaSend({
-      pointJson: await aesEncrypt(
-        JSON.stringify({ x: moveLeftDistance, y: 5.0 }),
-        secretKey.value,
-      ),
+      pointJson: await aesEncrypt(JSON.stringify({ x: moveLeftDistance, y: 5.0 }), secretKey.value),
       token: backToken.value,
     })
 
@@ -116,12 +113,9 @@ async function end() {
   }
 }
 
-const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(
-  getCaptcha,
-  {
-    immediate: false,
-  },
-)
+const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(getCaptcha, {
+  immediate: false,
+})
 
 async function getPicture() {
   const res = await getCaptchaSend()
@@ -192,31 +186,24 @@ function refresh() {
   >
     <div class="relative" :style="{ height: `${sizeConfig.imgHeight}px` }">
       <img
-        :src="
-          backImgBase64 ? `data:image/png;base64,${backImgBase64}` : defaultImg
-        "
+        :src="backImgBase64 ? `data:image/png;base64,${backImgBase64}` : defaultImg"
         class="block h-full w-full"
       />
-      <TButton
-        class="!absolute top-0 right-0"
-        variant="text"
-        shape="square"
-        @click="refresh"
-      >
+      <TButton class="!absolute top-0 right-0" variant="text" shape="square" @click="refresh">
         <template #icon>
           <Icon icon="material-symbols-light:refresh"></Icon>
         </template>
       </TButton>
       <span
         v-if="tipWords"
-        class="absolute bottom-0 left-0 w-full p-1 text-white"
+        class="text-white absolute bottom-0 left-0 w-full p-1"
         :class="checkState === 'success' ? 'bg-green-300/50' : 'bg-red-300/50'"
         >{{ tipWords }}</span
       >
     </div>
     <div
       ref="barArea"
-      class="relative mt-[4px] flex items-center justify-center border border-gray-300 text-center"
+      class="border-gray-300 relative mt-[4px] flex items-center justify-center border text-center"
       :style="{
         height: `${sizeConfig.barHeight}px`,
       }"
@@ -225,16 +212,13 @@ function refresh() {
       <div
         class="absolute top-0 left-0 translate-x-[-1px] translate-y-[-1px] border bg-[#f0fff0]"
         :style="{
-          width:
-            moveBlockLeft === 0
-              ? `${sizeConfig.barHeight}px`
-              : `${moveBlockLeft}px`,
+          width: moveBlockLeft === 0 ? `${sizeConfig.barHeight}px` : `${moveBlockLeft}px`,
           height: `${sizeConfig.barHeight}px`,
           'border-color': styleByState.bgColor,
         }"
       >
         <div
-          class="absolute top-0 left-0 flex translate-x-[-1px] translate-y-[-1px] cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-[var(--td-brand-color)] hover:text-white"
+          class="hover:text-white absolute top-0 left-0 flex translate-x-[-1px] translate-y-[-1px] cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-[var(--td-brand-color)]"
           :style="{
             width: `${sizeConfig.barHeight}px`,
             height: `${sizeConfig.barHeight}px`,
@@ -269,10 +253,7 @@ function refresh() {
             left: `${moveBlockLeft}px`,
           }"
         >
-          <img
-            :src="`data:image/png;base64,${blockBackImgBase64}`"
-            class="block h-full w-full"
-          />
+          <img :src="`data:image/png;base64,${blockBackImgBase64}`" class="block h-full w-full" />
         </div>
       </div>
     </div>

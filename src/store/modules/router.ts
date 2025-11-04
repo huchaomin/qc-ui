@@ -89,10 +89,10 @@ function preprocess(arr: ResRouterItem[]): ResRouterItem[] {
 }
 
 function process(routers: ResRouterItem[]): RouteRecordRaw[] {
-  const fn: (
-    arr: ResRouterItem[],
-    parent: null | RouteRecordRaw,
-  ) => RouteRecordRaw[] = (arr, parent) => {
+  const fn: (arr: ResRouterItem[], parent: null | RouteRecordRaw) => RouteRecordRaw[] = (
+    arr,
+    parent,
+  ) => {
     const tmpArr: RouteRecordRaw[] = []
 
     arr.forEach((item) => {
@@ -106,10 +106,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
           title: item.meta?.title ?? '',
         },
         name: item.name,
-        path:
-          item.path.startsWith('/') && parent !== null
-            ? item.path.slice(1)
-            : item.path,
+        path: item.path.startsWith('/') && parent !== null ? item.path.slice(1) : item.path,
       }
 
       if (item.children !== undefined) {
@@ -150,9 +147,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
 }
 
 function raiseHiddenRoutes(routers: RouteRecordRaw[]): RouteRecordRaw[] {
-  const fn: (parentChildren: RouteRecordRaw[]) => RouteRecordRaw[] = (
-    parentChildren,
-  ) => {
+  const fn: (parentChildren: RouteRecordRaw[]) => RouteRecordRaw[] = (parentChildren) => {
     const arr = [...parentChildren]
     const length = arr.length
 
@@ -179,21 +174,13 @@ function raiseHiddenRoutes(routers: RouteRecordRaw[]): RouteRecordRaw[] {
 }
 
 // 只能是以index.vue结尾的文件
-const modules = import.meta.glob('@/views/**/index.vue') as Record<
-  string,
-  LazyRouterImport
->
+const modules = import.meta.glob('@/views/**/index.vue') as Record<string, LazyRouterImport>
 
 function setRouterComponent(item: ResRouterItem): RouteRecordRaw['component'] {
-  if (
-    typeof item.component === 'function' ||
-    typeof item.component === 'string'
-  ) {
+  if (typeof item.component === 'function' || typeof item.component === 'string') {
     const component = item.component as LazyRouterImport | string
     const fn: LazyRouterImport | undefined =
-      typeof component === 'string'
-        ? modules[`/src/views/${component}.vue`]
-        : component
+      typeof component === 'string' ? modules[`/src/views/${component}.vue`] : component
 
     if (fn === undefined) {
       // void $notify.error(`路由组件/src/views/${component as string}.vue不存在`) TODO

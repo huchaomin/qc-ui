@@ -13,9 +13,7 @@ const handleRemove: TabsProps['onRemove'] = ({ value }) => {
   recentRoutersStore.close(name)
 }
 const handleChange: TabsProps['onChange'] = (val) => {
-  router.push(
-    recentRoutersStore.recentRouters.find((item) => item.name === val)!,
-  )
+  router.push(recentRoutersStore.recentRouters.find((item) => item.name === val)!)
 }
 const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
   if (data.value === 'profile') {

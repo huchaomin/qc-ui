@@ -9,9 +9,7 @@ enum DialogCreateType {
 export type CreateDialogFnType = (
   options: Omit<DialogOptions, 'default' | 'onConfirm'> & {
     onConfirm?:
-      | ((
-          ...args: Parameters<NonNullable<DialogOptions['onConfirm']>>
-        ) => Promise<void>)
+      | ((...args: Parameters<NonNullable<DialogOptions['onConfirm']>>) => Promise<void>)
       | DialogOptions['onConfirm']
   },
   context?: AppContext,

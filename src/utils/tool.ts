@@ -2,10 +2,7 @@ import type FileSaver from 'file-saver'
 
 const aesKey = 'XwKsGlMcdPMEhR1B'
 
-async function aesDecrypt(
-  word: string,
-  keyWord: string = aesKey,
-): Promise<string> {
+async function aesDecrypt(word: string, keyWord: string = aesKey): Promise<string> {
   const { default: CryptoJS } = await import('crypto-js')
   const key = CryptoJS.enc.Utf8.parse(keyWord)
   const decrypted = CryptoJS.AES.decrypt(word, key, {
@@ -16,10 +13,7 @@ async function aesDecrypt(
   return decrypted.toString(CryptoJS.enc.Utf8)
 }
 
-async function aesEncrypt(
-  word: string,
-  keyWord: string = aesKey,
-): Promise<string> {
+async function aesEncrypt(word: string, keyWord: string = aesKey): Promise<string> {
   const { default: CryptoJS } = await import('crypto-js')
   const key = CryptoJS.enc.Utf8.parse(keyWord)
   const srcs = CryptoJS.enc.Utf8.parse(word)

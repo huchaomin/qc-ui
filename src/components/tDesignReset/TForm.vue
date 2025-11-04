@@ -107,12 +107,8 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
     }
   }
 
-  const isSelect = ['TCheckbox', 'TCheckboxGroup', 'TRadioGroup'].includes(
-    item.component as string,
-  )
-  const message = isSelect
-    ? `请选择${obj.label ?? ''}`
-    : `请填写${obj.label ?? ''}`
+  const isSelect = ['TCheckbox', 'TCheckboxGroup', 'TRadioGroup'].includes(item.component as string)
+  const message = isSelect ? `请选择${obj.label ?? ''}` : `请填写${obj.label ?? ''}`
 
   if (obj.required === true) {
     if (obj.rules === undefined) {
@@ -121,9 +117,7 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
 
     if (
       obj.rules.find((rule: any) => rule.required === true) === undefined &&
-      props.rules?.[item.model ?? '']?.find(
-        (rule: any) => rule.required === true,
-      ) === undefined
+      props.rules?.[item.model ?? '']?.find((rule: any) => rule.required === true) === undefined
     ) {
       obj.rules.unshift(
         ...[
@@ -151,9 +145,7 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
     obj.rules.find((rule: any) => rule.whitespace === true) === undefined
   ) {
     obj.rules.unshift({
-      message:
-        obj.rules.find((rule: any) => rule.required === true).message ??
-        message,
+      message: obj.rules.find((rule: any) => rule.required === true).message ?? message,
       whitespace: true,
     })
   }
@@ -177,10 +169,7 @@ const bindProps = computed(() => {
       rules.forEach((rule: any) => {
         r[key].push(rule)
 
-        if (
-          rule.required === true &&
-          rules.find((r: any) => r.whitespace === true) === undefined
-        ) {
+        if (rule.required === true && rules.find((r: any) => r.whitespace === true) === undefined) {
           r[key].push({
             message: rule.message,
             whitespace: true,
@@ -213,9 +202,7 @@ function compoRef(instance: any) {
           } else {
             if (props.msgErrorWhenValidate) {
               Object.keys(res).forEach((key) => {
-                const arr = res[
-                  key as keyof typeof res
-                ] as unknown as ValidateResultList
+                const arr = res[key as keyof typeof res] as unknown as ValidateResultList
 
                 arr.forEach((item: any) => {
                   if (item.result === false) {
@@ -233,9 +220,7 @@ function compoRef(instance: any) {
 
     const orgValidateOnly = inst.validateOnly
 
-    inst.validateOnly = (
-      ...arg: Parameters<FormInstanceFunctions['validateOnly']>
-    ) => {
+    inst.validateOnly = (...arg: Parameters<FormInstanceFunctions['validateOnly']>) => {
       return new Promise((resolve, reject) => {
         orgValidateOnly(...arg).then((res) => {
           if (res === true) {
@@ -255,8 +240,7 @@ function compoRef(instance: any) {
 const formItemLabelEls = shallowRef<HTMLCollection>()
 
 onMounted(() => {
-  formItemLabelEls.value =
-    vm.exposed!.$el.getElementsByClassName('t-form__label')
+  formItemLabelEls.value = vm.exposed!.$el.getElementsByClassName('t-form__label')
   calcLabelWidth()
   useMutationObserver(
     vm.exposed!.$el,
@@ -320,10 +304,7 @@ defineExpose({} as FormInstanceFunctions)
         empty_label_item: item._label === ' ',
       }"
     >
-      <slot
-        v-if="(item as SlotItemType).slot"
-        :name="(item as SlotItemType).slot"
-      ></slot>
+      <slot v-if="(item as SlotItemType).slot" :name="(item as SlotItemType).slot"></slot>
       <component
         :is="getComponent(item.component)"
         v-else

@@ -39,7 +39,7 @@ const textStyle = computed(() => ({
       :style="borderStyle"
     >
       <div
-        class="absolute inset-0 z-[-1] rounded-[1.25rem] bg-black"
+        class="bg-black absolute inset-0 z-[-1] rounded-[1.25rem]"
         style="
           top: 50%;
           left: 50%;

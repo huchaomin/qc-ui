@@ -1,9 +1,7 @@
 import type { CreateDialogFnType } from './$dialog'
 
 export default (
-  arg1:
-    | Omit<Parameters<CreateDialogFnType>[0], 'onClose' | 'onConfirm'>
-    | string,
+  arg1: Omit<Parameters<CreateDialogFnType>[0], 'onClose' | 'onConfirm'> | string,
   arg2?: Parameters<CreateDialogFnType>[1],
 ): Promise<void> => {
   return new Promise((resolve, reject) => {

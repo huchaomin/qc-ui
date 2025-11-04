@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { VxeGridProps } from 'vxe-table'
-import VxeGrid from '@/plugins/vxe-table'
 
 interface RowVO {
   address: string

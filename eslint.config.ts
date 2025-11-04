@@ -1,8 +1,6 @@
 // eslint-disable-next-line unused-imports/no-unused-imports
 import type { composer } from 'eslint-flat-config-utils' // 不能删除
-import antfu, {
-  perfectionist as perfectionistConfigFn,
-} from '@antfu/eslint-config'
+import antfu, { perfectionist as perfectionistConfigFn } from '@antfu/eslint-config'
 import perfectionist from 'eslint-plugin-perfectionist'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import prettierOptions from './prettier.config.mjs'
@@ -13,11 +11,12 @@ export default antfu(
   {
     formatters: {
       // 都默认开启了
-      // css: true, // 与 stylelint 一起
+      css: true, // 与 stylelint 一起
       html: true,
-      // markdown: true, // 使用 prettier 格式化 markdown 文件,搭配 davidAnson.vscode-markdownlint 插件一起使用
-      // xml: true, 这一项配置了 vscode 的 eslint 插件会报错, 需要 @prettier/plugin-xml 插件
+      markdown: true, // 使用 prettier 格式化 markdown 文件,搭配 davidAnson.vscode-markdownlint 插件一起使用
       prettierOptions, // 配置 prettier 的配置,这里不会读 ignorePath 这个配置,否则 ignorePath 里面配置的文件都不会被 prettier 格式化了
+      svg: true,
+      xml: true, // 这一项配置了 vscode 的 eslint 插件会报错, 需要 @prettier/plugin-xml 插件
     },
     // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
     // GLOB_EXCLUDE 已经包括了大部分的忽略文件，遵守 gitignore 规则
@@ -59,15 +58,7 @@ export default antfu(
           },
           {
             blankLine: 'always',
-            next: [
-              'export',
-              'class',
-              'function',
-              'multiline-block-like',
-              'const',
-              'let',
-              'var',
-            ],
+            next: ['export', 'class', 'function', 'multiline-block-like', 'const', 'let', 'var'],
             prev: '*',
           },
           { blankLine: 'never', next: 'import', prev: 'import' },
@@ -151,7 +142,7 @@ export default antfu(
     },
   })
   .append({
-    ignores: ['**/*.md', '**/*.html'],
+    ignores: ['**/*.md', '**/*.html', '**/*.xml', '**/*.svg'],
     // https://github.com/prettier/eslint-plugin-prettier
     ...eslintPluginPrettierRecommended,
   })

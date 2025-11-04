@@ -2,10 +2,7 @@
 import type { CheckboxGroupProps as _CheckboxGroupProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
-export type CheckboxGroupProps = Omit<
-  _CheckboxGroupProps,
-  'defaultValue' | 'value'
-> & {
+export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'value'> & {
   dicCode?: string
   showCheckAll?: boolean
 }
@@ -28,9 +25,7 @@ const finallyOptions = computed(() => {
 
   if (props.dicCode) {
     if (props.options) {
-      $notify.error(
-        'TCheckboxGroup: dicCode and options cannot be used together',
-      )
+      $notify.error('TCheckboxGroup: dicCode and options cannot be used together')
     }
 
     arr = useDicOptions(props.dicCode).value.map((item) => ({
@@ -43,9 +38,7 @@ const finallyOptions = computed(() => {
 
   if (props.showCheckAll) {
     if (arr === undefined) {
-      $notify.error(
-        'TCheckboxGroup: options is required, when showCheckAll is true',
-      )
+      $notify.error('TCheckboxGroup: options is required, when showCheckAll is true')
     } else {
       arr.unshift({
         checkAll: true,
@@ -59,19 +52,13 @@ const finallyOptions = computed(() => {
 const value = defineModel({
   get() {
     if (finallyOptions.value !== undefined && props.modelValue !== undefined) {
-      const isString = finallyOptions.value.every(
-        (item: any) => typeof item.value === 'string',
-      )
-      const isNumber = finallyOptions.value.every(
-        (item: any) => typeof item.value === 'number',
-      )
+      const isString = finallyOptions.value.every((item: any) => typeof item.value === 'string')
+      const isNumber = finallyOptions.value.every((item: any) => typeof item.value === 'number')
 
       if (isString) {
         return props.modelValue.map((v) => (isFalsy(v) ? v : String(v)))
       } else if (isNumber) {
-        return props.modelValue.map((v) =>
-          isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v),
-        )
+        return props.modelValue.map((v) => (isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v)))
       }
     }
 

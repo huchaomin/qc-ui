@@ -1,70 +1,35 @@
 {
-  // "explorer.fileNesting.enabled": true,
-  // "explorer.fileNesting.patterns": {
-  //   "tsconfig.json": "tsconfig.*.json, env.d.ts",
-  //   "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
-  //   "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .prettier*, prettier*, .editorconfig"
-  // },
   "fileheader.configObj": {
     "autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
     "createHeader": false // 新建文件自动添加头部注释
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "prettier.enable": true,
-  // Silent the stylistic rules in you IDE, but still auto fix them
-  // "eslint.rules.customizations": [
-  //   {
-  //     "rule": "style/*",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "format/*",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*-indent",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*-spacing",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*-spaces",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*-order",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*-dangle",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*-newline",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*quotes",
-  //     "severity": "off",
-  //     "fixable": true
-  //   },
-  //   {
-  //     "rule": "*semi",
-  //     "severity": "off",
-  //     "fixable": true
-  //   }
-  // ],
-  // Enable eslint for all supported languages
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  "cssVariables.blacklistFolders": ["**/build", "**/.vscode", "**/types"],
+  "cssVariables.lookupFiles": ["node_modules/tdesign-vue-next/esm/common/style/web/**/*.less"],
+  "cssVariables.trace.server": "messages",
+  "cssVariables.languages": [
+    "astro",
+    "svelte",
+    "vue",
+    "vue-html",
+    "vue-postcss",
+    "scss",
+    "postcss",
+    "less",
+    "css",
+    "tailwindcss",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "source.css.styled"
+  ],
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -101,38 +66,22 @@
   "[html]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[xml]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[markdown]": {
+    "editor.wordWrap": "off",
+    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
+    "files.trimTrailingWhitespace": false,
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "on"
+    },
+    "editor.acceptSuggestionOnEnter": "on"
+  },
   "[tailwindcss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "files.associations": {
-    // 深度合并
-    "*.css": "tailwindcss"
-  },
-  "cSpell.words": ["tdesign"],
-  "cssVariables.lookupFiles": [
-    // "**/*.css",
-    // "**/*.scss",
-    // "**/*.sass",
-    // "**/*.less",
-    "node_modules/tdesign-vue-next/esm/common/style/web/**/*.less"
-  ],
-  "cssVariables.trace.server": "messages",
-  "cssVariables.languages": [
-    "astro",
-    "svelte",
-    "vue",
-    "vue-html",
-    "vue-postcss",
-    "scss",
-    "postcss",
-    "less",
-    "css",
-    "tailwindcss",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "source.css.styled"
-  ]
+  "cSpell.words": ["tdesign"]
 }

@@ -20,8 +20,7 @@ const formItems: FormItemType[] = [
     _required: true,
     _rules: [
       {
-        message:
-          '密码必须为8位或8位以上的必须包含(数字、大写字母、小写字母)的组合',
+        message: '密码必须为8位或8位以上的必须包含(数字、大写字母、小写字母)的组合',
         pattern: passwordReg,
       },
     ],
@@ -84,13 +83,7 @@ defineExpose({
 </script>
 
 <template>
-  <TForm
-    ref="form"
-    :data="formData"
-    :items="formItems"
-    layout="vertical"
-    label-align="right"
-  >
+  <TForm ref="form" :data="formData" :items="formItems" layout="vertical" label-align="right">
     <template #footer>
       <TButton @click="handleSubmit">保存</TButton>
       <TButton theme="default" class="!ml-4" @click="handleClose">关闭</TButton>

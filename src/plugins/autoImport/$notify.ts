@@ -54,9 +54,7 @@ createNotification.closeAll = () => {
   return NotifyPlugin.closeAll()
 }
 
-createNotification.close = (
-  ...arg: Parameters<NotificationPluginType['close']>
-) => {
+createNotification.close = (...arg: Parameters<NotificationPluginType['close']>) => {
   return NotifyPlugin.close(...arg)
 }
 

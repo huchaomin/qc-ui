@@ -11,14 +11,11 @@ const promiseMap = new Map<string, Promise<DicItem[]>>()
 
 function setPromise(codeArr: string[]): void {
   const p = alovaInst
-    .Get<Record<string, string>[]>(
-      `system/dict/data/types/${codeArr.join(',')}`,
-      {
-        meta: {
-          useLoading: false,
-        },
+    .Get<Record<string, string>[]>(`system/dict/data/types/${codeArr.join(',')}`, {
+      meta: {
+        useLoading: false,
       },
-    )
+    })
     .then((res) =>
       res.map((item) => ({
         dictType: item.dictType,
@@ -31,9 +28,7 @@ function setPromise(codeArr: string[]): void {
   codeArr.forEach((code) => {
     promiseMap.set(
       code,
-      p.then(
-        (res) => res.filter((item) => item.dictType === code) as DicItem[],
-      ),
+      p.then((res) => res.filter((item) => item.dictType === code) as DicItem[]),
     )
   })
 }
@@ -74,10 +69,7 @@ export function useDicLabel(code: string): ComputedRef<string[]>
 
 export function useDicLabel(code: string, value: string): ComputedRef<string>
 
-export function useDicLabel(
-  code: string,
-  value: string[],
-): ComputedRef<string[]>
+export function useDicLabel(code: string, value: string[]): ComputedRef<string[]>
 
 export function useDicLabel(
   code: string,
@@ -91,9 +83,7 @@ export function useDicLabel(
     } else if (typeof value === 'string') {
       return arr.value.find((item) => item.value === value)?.label ?? ''
     } else {
-      return value.map(
-        (c) => arr.value.find((item) => item.value === c)?.label ?? '',
-      )
+      return value.map((c) => arr.value.find((item) => item.value === c)?.label ?? '')
     }
   })
 }
@@ -112,9 +102,7 @@ export function useDicOptions(code: string, includeArr?: string[]) {
   }
 
   return computed(() =>
-    arr.value.filter((item) =>
-      includeArr === undefined ? true : includeArr.includes(item.value),
-    ),
+    arr.value.filter((item) => (includeArr === undefined ? true : includeArr.includes(item.value))),
   )
 }
 

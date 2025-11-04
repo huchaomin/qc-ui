@@ -3,8 +3,7 @@ const emit = defineEmits<{
   update: []
 }>()
 const route = useRoute()
-const userInfo =
-  inject<ComputedRef<Record<string, any> | undefined>>('userInfo')!
+const userInfo = inject<ComputedRef<Record<string, any> | undefined>>('userInfo')!
 const formData = reactive({
   email: '',
   nickName: '',
@@ -87,13 +86,7 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <TForm
-    ref="form"
-    :data="formData"
-    :items="formItems"
-    layout="vertical"
-    label-align="right"
-  >
+  <TForm ref="form" :data="formData" :items="formItems" layout="vertical" label-align="right">
     <template #footer>
       <TButton @click="handleSubmit">保存</TButton>
       <TButton theme="default" class="!ml-4" @click="handleClose">关闭</TButton>

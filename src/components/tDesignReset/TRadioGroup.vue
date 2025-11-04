@@ -2,10 +2,7 @@
 import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
-export type RadioGroupProps = Omit<
-  _RadioGroupProps,
-  'defaultValue' | 'value'
-> & {
+export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'value'> & {
   dicCode?: string
 }
 
@@ -44,19 +41,13 @@ const bindProps = computed(() => {
 const value = defineModel({
   get() {
     if (finallyOptions.value !== undefined && !isFalsy(props.modelValue)) {
-      const isString = finallyOptions.value.every(
-        (item: any) => typeof item.value === 'string',
-      )
-      const isNumber = finallyOptions.value.every(
-        (item: any) => typeof item.value === 'number',
-      )
+      const isString = finallyOptions.value.every((item: any) => typeof item.value === 'string')
+      const isNumber = finallyOptions.value.every((item: any) => typeof item.value === 'number')
 
       if (isString) {
         return String(props.modelValue)
       } else if (isNumber) {
-        return Number.isNaN(Number(props.modelValue))
-          ? props.modelValue
-          : Number(props.modelValue)
+        return Number.isNaN(Number(props.modelValue)) ? props.modelValue : Number(props.modelValue)
       }
     }
 

@@ -5,12 +5,7 @@ import { isExclude } from './utils/index.ts'
 export default (
   options: Parameters<typeof TDesignResolver>[0] = {},
 ): ReturnType<typeof TDesignResolver> => {
-  const pluginList = [
-    'DialogPlugin',
-    'LoadingPlugin',
-    'MessagePlugin',
-    'NotifyPlugin',
-  ]
+  const pluginList = ['DialogPlugin', 'LoadingPlugin', 'MessagePlugin', 'NotifyPlugin']
 
   return {
     resolve: (name) => {

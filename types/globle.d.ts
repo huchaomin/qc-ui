@@ -7,7 +7,5 @@ declare global {
   type MaybeRefInterface<T> = {
     [K in keyof T]: MaybeRef<T[K]>
   }
-  type XOR<T, U> = T | U extends object
-    ? (T & Without<U, T>) | (U & Without<T, U>)
-    : T | U
+  type XOR<T, U> = T | U extends object ? (T & Without<U, T>) | (U & Without<T, U>) : T | U
 }

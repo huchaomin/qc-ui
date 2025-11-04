@@ -1,6 +1,9 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
+  /* stylelint-disable-next-line custom-property-pattern */
+  --color-*: initial;
+
   /* 自定义变量 */
 
   /* --color-primary: var(--td-brand-color-active); */

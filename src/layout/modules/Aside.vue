@@ -37,11 +37,7 @@ console.log(routerStore.routersRaw)
     <TMenu :value="value" :default-expanded="defaultExpanded">
       <template #logo>
         <div class="!ml-2 flex items-center">
-          <TImage
-            :src="logoUrl"
-            class="logo"
-            style="width: 28px; height: 28px"
-          ></TImage>
+          <TImage :src="logoUrl" class="logo" style="width: 28px; height: 28px"></TImage>
           <GradientText
             :text="appName"
             :animation-speed="8"

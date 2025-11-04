@@ -20,25 +20,19 @@ export default defineStore(
       })
     }
 
-    function add(
-      fromName: RouteRecordNameGeneric,
-      options: recentRoutersConfig,
-    ): void {
+    function add(fromName: RouteRecordNameGeneric, options: recentRoutersConfig): void {
       const copyOptions = _.cloneDeep(options)
       const index = recentRouters.value.findIndex(
         (item) =>
           item.name === copyOptions.name ||
-          getRoute(item.name)!.meta.title ===
-            getRoute(copyOptions.name)!.meta.title,
+          getRoute(item.name)!.meta.title === getRoute(copyOptions.name)!.meta.title,
       )
 
       delete copyOptions.query._fromLeftTree
       delete copyOptions.query._fromBreadcrumb
 
       if (index === -1) {
-        const fromIndex = recentRouters.value.findIndex(
-          (item) => item.name === fromName,
-        )
+        const fromIndex = recentRouters.value.findIndex((item) => item.name === fromName)
 
         if (fromIndex === -1) {
           recentRouters.value.push(copyOptions)
@@ -60,9 +54,7 @@ export default defineStore(
 
     function close(name: RouteRecordNameGeneric): void {
       if (route.name === name) {
-        const currentIndex = recentRouters.value.findIndex(
-          (item) => item.name === name,
-        )
+        const currentIndex = recentRouters.value.findIndex((item) => item.name === name)
         const pre = recentRouters.value[currentIndex - 1]
 
         if (pre !== undefined) {

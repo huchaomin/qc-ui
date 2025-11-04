@@ -6,7 +6,7 @@
   }
 
   :root,
-  :root[theme-mode="light"] {
+  :root[theme-mode='light'] {
     --td-font-gray-1: rgb(0 0 0 / 70%) !important;
   }
 }
@@ -32,7 +32,7 @@ body {
     &.empty_label_item {
       .t-form__label {
         font-size: 0;
-  
+
         label {
           font-size: var(--td-font-size-body-medium);
         }
@@ -48,15 +48,15 @@ body {
     .span_2 {
       grid-column: span 2;
     }
-  
+
     .span_3 {
       grid-column: span 3;
     }
-  
+
     .span_full {
       grid-column: 1 / -1;
     }
-  
+
     .no_label_item {
       align-self: flex-end;
     }
@@ -140,7 +140,8 @@ body {
     .t-dialog {
       min-width: 320px;
       border-radius: var(--td-radius-default);
-      box-shadow: rgb(58 53 65 / 8%) 0 11px 15px -7px,
+      box-shadow:
+        rgb(58 53 65 / 8%) 0 11px 15px -7px,
         rgb(58 53 65 / 12%) 0 24px 38px 3px,
         rgb(58 53 65 / 4%) 0 9px 46px 8px;
 

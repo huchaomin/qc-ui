@@ -1,8 +1,4 @@
-import type {
-  MessageInstance,
-  MessageOptions,
-  MessagePluginType,
-} from 'tdesign-vue-next'
+import type { MessageInstance, MessageOptions, MessagePluginType } from 'tdesign-vue-next'
 
 // MessageThemeList
 enum MessageCreateType {

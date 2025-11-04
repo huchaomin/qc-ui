@@ -88,11 +88,7 @@ provide(
           lazy
           :destroy-on-hide="false"
         >
-          <Component
-            :is="item.component"
-            class="!mt-4"
-            @update="send"
-          ></Component>
+          <Component :is="item.component" class="!mt-4" @update="send"></Component>
         </TTabPanel>
       </TTabs>
     </TCard>

@@ -27,10 +27,7 @@ const hasBreadcrumb = computed(() => {
       <TContent class="overflow-auto">
         <Breadcrumb ref="breadcrumb"></Breadcrumb>
         <RouterView v-slot="{ Component }">
-          <KeepAlive
-            :include="recentRoutersNames"
-            :exclude="excludeKPnameStore.excludeKPname"
-          >
+          <KeepAlive :include="recentRoutersNames" :exclude="excludeKPnameStore.excludeKPname">
             <Component
               :is="Component"
               :class="{ 'pt-8': hasBreadcrumb }"

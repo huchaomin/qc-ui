@@ -1,8 +1,4 @@
-import type {
-  LoadingPluginType,
-  MessagePluginType,
-  NotificationPluginType,
-} from 'tdesign-vue-next'
+import type { LoadingPluginType, MessagePluginType, NotificationPluginType } from 'tdesign-vue-next'
 import type _default from 'tdesign-vue-next'
 import type { DialogPluginType } from 'tdesign-vue-next/es/dialog/plugin.d.ts'
 import _TDesign, {
@@ -30,10 +26,8 @@ const Card = _Card as (typeof import('tdesign-vue-next'))['Card']
 const Form = _Form as (typeof import('tdesign-vue-next'))['Form']
 const Image = _Image as (typeof import('tdesign-vue-next'))['Image']
 const Input = _Input as (typeof import('tdesign-vue-next'))['Input']
-const RadioGroup =
-  _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGroup']
-const CheckboxGroup =
-  _CheckboxGroup as (typeof import('tdesign-vue-next'))['CheckboxGroup']
+const RadioGroup = _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGroup']
+const CheckboxGroup = _CheckboxGroup as (typeof import('tdesign-vue-next'))['CheckboxGroup']
 
 export {
   Card,
