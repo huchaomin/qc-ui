@@ -40,13 +40,7 @@ function bypass(
 export default defineConfig(({ command, mode }) => {
   const envDir = resolvePath('build/env')
   const env = parseLoadedEnv(loadEnv(mode, envDir)) as ImportMetaEnv
-  const {
-    VITE_API_PREFIX,
-    VITE_APP_NAME,
-    VITE_BASE_URL,
-    VITE_SERVER_PORT,
-    VITE_SERVER_URL,
-  } = env
+  const { VITE_API_PREFIX, VITE_APP_NAME, VITE_BASE_URL, VITE_SERVER_PORT, VITE_SERVER_URL } = env
 
   console.log({
     command,
@@ -104,9 +98,7 @@ export default defineConfig(({ command, mode }) => {
         minify: true,
         template: 'build/index.html',
       }),
-      tailwindAutoReference(
-        resolvePath('src/assets/style/tailwindcss-entry.css'),
-      ) as Plugin,
+      tailwindAutoReference(resolvePath('src/assets/css/tailwindcss-entry.css')) as Plugin,
       tailwindcss(),
       vue(),
       vueJsx(),
@@ -130,9 +122,7 @@ export default defineConfig(({ command, mode }) => {
             imports: ['useRequest', 'useWatcher'],
           },
           {
-            '@/plugins/alova/generate/pl-admin/index.ts': [
-              ['default', 'PlAdmin'],
-            ],
+            '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
           },
           {
             '@/plugins/alova/index.ts': [['default', 'alovaInst']],
@@ -195,9 +185,7 @@ export default defineConfig(({ command, mode }) => {
           bypass,
           changeOrigin: true,
           rewrite: (p) => {
-            return VITE_BASE_URL === '/'
-              ? p
-              : p.replace(new RegExp(VITE_BASE_URL), '')
+            return VITE_BASE_URL === '/' ? p : p.replace(new RegExp(VITE_BASE_URL), '')
           },
           target: VITE_SERVER_URL,
         },
