@@ -12,6 +12,6 @@
       // "vite-plugin-font/src/font"
     ]
   },
-  "include": ["types/**/*", "src/**/*"],
+  "include": ["types/**/*", "src/**/*.ts", "src/**/*.vue", "src/**/*.tsx"],
   "exclude": ["src/**/__tests__/*"]
 }

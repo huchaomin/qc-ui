@@ -19,7 +19,7 @@ export default {
   insertPragma: false, // 在已被preitter格式化的文件顶部加上标注
   jsxSingleQuote: false, // jsx中使用单引号
   plugins: ['prettier-plugin-tailwindcss'],
-  printWidth: 80, // 单行长度
+  printWidth: 100, // 单行长度
   proseWrap: 'preserve', // 保留原有的换行符，不进行任何修改
   quoteProps: 'as-needed', // 仅在必需时为对象的key添加引号
   requirePragma: false, // 无需顶部注释即可格式化
@@ -27,7 +27,7 @@ export default {
   singleAttributePerLine: false, // 会在 HTML、JSX、Vue 和 Angular 中格式化为每个属性单独占一行。
   singleQuote: true, // 使用单引号
   tabWidth: 2, // 缩进长度
-  tailwindStylesheet: './src/assets/style/tailwindcss-entry.css',
+  tailwindStylesheet: './src/assets/css/tailwindcss-entry.css',
   trailingComma: 'all',
   useTabs: false, // 使用空格代替tab缩进
   vueIndentScriptAndStyle: false, // 不对vue中的script及style标签缩进
