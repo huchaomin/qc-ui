@@ -10,7 +10,10 @@
     "strings": "on"
   },
   "cssVariables.blacklistFolders": ["**/build", "**/.vscode", "**/types"],
-  "cssVariables.lookupFiles": ["node_modules/tdesign-vue-next/esm/common/style/web/**/*.less"],
+  "cssVariables.lookupFiles": [
+    "node_modules/tdesign-vue-next/esm/common/style/web/theme/**/*.less",
+    "node_modules/tdesign-vue-next/esm/common/style/web/_global.less",
+  ],
   "cssVariables.trace.server": "messages",
   "cssVariables.languages": [
     "astro",

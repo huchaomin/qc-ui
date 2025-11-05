@@ -39,17 +39,22 @@ export default (
         }
       }
 
+      if (name.startsWith('TQrcode')) {
+        return {
+          from: `tdesign-${library}${importFrom}`,
+          name: 'QRCode',
+        }
+      }
+
       if (name.match(/^T[A-Z]/) !== null || pluginList.includes(name)) {
         // 不使用内置的 icon
         if (name === 'TIcon') {
           return
         }
 
-        const importName = name.match(/^T[A-Z]/) !== null ? name.slice(1) : name
-
         return {
           from: `tdesign-${library}${importFrom}`,
-          name: importName,
+          name: name.match(/^T[A-Z]/) !== null ? name.slice(1) : name,
         }
       }
     },
