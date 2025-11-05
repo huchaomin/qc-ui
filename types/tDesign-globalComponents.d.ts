@@ -5,8 +5,8 @@
  */
 declare module 'vue' {
   export interface GlobalComponents {
-    Icon: (typeof import('tdesign-icons-vue-next'))['Icon']
-    IconFont: (typeof import('tdesign-icons-vue-next'))['IconFont']
+    // Icon: (typeof import('tdesign-icons-vue-next'))['Icon']
+    // IconFont: (typeof import('tdesign-icons-vue-next'))['IconFont']
     TAffix: (typeof import('tdesign-vue-next'))['Affix']
     TAlert: (typeof import('tdesign-vue-next'))['Alert']
     TAnchor: (typeof import('tdesign-vue-next'))['Anchor']
@@ -60,7 +60,7 @@ declare module 'vue' {
     TGuide: (typeof import('tdesign-vue-next'))['Guide']
     THeader: (typeof import('tdesign-vue-next'))['Header']
     THeadMenu: (typeof import('tdesign-vue-next'))['HeadMenu']
-    TIcon: (typeof import('tdesign-vue-next'))['Icon']
+    // TIcon: (typeof import('tdesign-vue-next'))['Icon']
     // TImage: (typeof import('tdesign-vue-next'))['Image']
     TImage: (typeof import('@/components/tDesignReset/TImage.vue'))['default']
     TImageViewer: (typeof import('tdesign-vue-next'))['ImageViewer']
