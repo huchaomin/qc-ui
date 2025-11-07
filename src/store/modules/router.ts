@@ -102,7 +102,7 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
           hidden: item.hidden ?? item.meta?.hidden ?? false,
           icon: item.meta?.icon === '#' ? '' : (item.meta?.icon ?? ''),
           noCache: item.meta?.noCache ?? false,
-          parentName: '',
+          parentName: parent?.name ?? '',
           title: item.meta?.title ?? '',
         },
         name: item.name,
@@ -128,10 +128,6 @@ function process(routers: ResRouterItem[]): RouteRecordRaw[] {
         !['Layout', 'ParentView'].includes(item.component as string)
       ) {
         newItem.component = setRouterComponent(item)
-      }
-
-      if (parent !== null) {
-        newItem.meta.parentName = parent.name
       }
 
       if (filterRouter(newItem)) {

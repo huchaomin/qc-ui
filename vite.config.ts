@@ -161,7 +161,7 @@ export default defineConfig(({ command, mode }) => {
           ...(isProduction
             ? [
                 TDesignResolver({
-                  exclude: tDesignResetComponentsName,
+                  exclude: [...tDesignResetComponentsName, 'TIcon'],
                   library: 'vue-next',
                   resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
                 }),

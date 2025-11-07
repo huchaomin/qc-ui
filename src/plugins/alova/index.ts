@@ -33,7 +33,7 @@ export default createAlova({
     }
 
     const loginStore = useLoginStore()
-    const { useEmptyData, useEmptyParams, useFormData, useLoading, useToken } =
+    const { useEmptyData, useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } =
       method.meta as ThisAlovaCustomTypes
 
     if (useToken) {
@@ -86,7 +86,10 @@ export default createAlova({
       method.data = formData
     }
 
-    if (method.config.timeout === TIMEOUT && (useFormData || method.data instanceof FormData)) {
+    if (
+      method.config.timeout === TIMEOUT &&
+      (useFormData || method.data instanceof FormData || useResponseBlob)
+    ) {
       method.config.timeout = 0
     }
   },
