@@ -12,6 +12,4 @@ const autoImportComponentsSubFolderEntryName = autoImportComponentsSubFolderEntr
   },
 )
 
-console.log(autoImportComponentsSubFolderEntryName)
-
 export { autoImportComponentsSubFolderEntryName, tDesignResetComponentsName }
