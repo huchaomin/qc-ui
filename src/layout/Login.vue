@@ -1,3 +1,4 @@
 <template>
-  <VxeGrid />
+  <!-- <VxeGrid /> -->
+  <div></div>
 </template>

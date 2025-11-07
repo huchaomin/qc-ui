@@ -32,8 +32,7 @@
 3. 重要的通知用 $notify, 需用户手动关闭
 4. 轻提示用 $msg
 5. 升级 tdesign 组件库时，手动对比 `node_modules/tdesign-vue-next/global.d.ts`
-6. 升级 unplugin-vue-components，手动对比 `tDesignResolver`
-7. api 文件夹里面的接口都是没有在 swagger 中定义的，是手动添加的
+6. api 文件夹里面的接口都是没有在 swagger 中定义的，是手动添加的
 
 ## todo
 
@@ -50,6 +49,7 @@
 - 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
 - 定义refresh page store
 - 上传用户图片
+- 600 现在是不管成功和失败，都弹窗，需要优化
 
 ### 分析包大小
 

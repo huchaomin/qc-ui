@@ -2,6 +2,7 @@ import type * as http from 'node:http'
 import type { Plugin, ProxyOptions } from 'vite'
 import path from 'node:path'
 import tailwindcss from '@tailwindcss/vite'
+import { TDesignResolver } from '@tdesign-vue-next/auto-import-resolver'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import browserslist from 'browserslist'
@@ -14,7 +15,7 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
 import autoImportStoreList from './build/autoImportStores.ts'
 import tDesignAutoImport from './build/tDesignAutoImport.ts'
-import TDesignResolver from './build/tDesignResolver.ts'
+import { tDesignResetComponentsName } from './build/utils/config.ts'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
@@ -139,15 +140,17 @@ export default defineConfig(({ command, mode }) => {
           },
           autoImportStoreList,
         ],
-        resolvers: [
-          ...(isProduction
-            ? [
-                TDesignResolver({
-                  library: 'vue-next',
-                }),
-              ]
-            : []),
-        ],
+        // resolvers: [
+        //   ...(isProduction
+        //     ? [
+        //         TDesignResolver({
+        //           exclude: tDesignResetComponentsName,
+        //           library: 'vue-next',
+        //           resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
+        //         }),
+        //       ]
+        //     : []),
+        // ],
         vueTemplate: true,
       }),
       Components({
@@ -158,7 +161,9 @@ export default defineConfig(({ command, mode }) => {
           ...(isProduction
             ? [
                 TDesignResolver({
+                  exclude: tDesignResetComponentsName,
                   library: 'vue-next',
+                  resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
                 }),
               ]
             : []),

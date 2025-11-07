@@ -38,41 +38,5 @@ const gridOptions = reactive<VxeGridProps<RowVO>>({
 </script>
 
 <template>
-  <!-- <VxeGrid v-bind="gridOptions" /> -->
-  <TTable
-    :data="gridOptions.data"
-    table-layout="auto"
-    :height="500"
-    row-key="index"
-    :columns="[
-      { width: 80, colKey: 'name', title: 'Name' },
-      { width: 80, colKey: 'sex', title: 'Sex' },
-      {
-        width: 80,
-        maxWidth: 200,
-        colKey: 'age',
-        title: 'AgeAgeAgeAg eAgeAgeAgeAgeAgeAgeAgeAgeAgeA',
-        ellipsis: true,
-        ellipsisTitle: true,
-      },
-      {
-        width: 80,
-        colKey: 'role',
-        title: 'RoleRoleRole',
-      },
-      { width: 80, colKey: 'address', title: 'AddressAddressAddress' },
-    ]"
-  />
+  <VxeGrid v-bind="gridOptions" />
 </template>
-
-<style>
-.t-table {
-  width: 80%;
-  margin: 0 auto;
-
-  th,
-  td {
-    white-space: nowrap;
-  }
-}
-</style>
