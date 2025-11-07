@@ -15,7 +15,10 @@ import { createHtmlPlugin } from 'vite-plugin-html'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
 import autoImportStoreList from './build/autoImportStores.ts'
 import tDesignAutoImport from './build/tDesignAutoImport.ts'
-import { tDesignResetComponentsName } from './build/utils/config.ts'
+import {
+  autoImportComponentsSubFolderEntryName,
+  tDesignResetComponentsName,
+} from './build/utils/config.ts'
 import { resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
@@ -154,6 +157,7 @@ export default defineConfig(({ command, mode }) => {
         vueTemplate: true,
       }),
       Components({
+        deep: false,
         // 用于自动导入 Vue 组件
         dirs: [resolvePath('src/components/autoImport')],
         dts: resolvePath('types/components.d.ts'),
@@ -167,7 +171,16 @@ export default defineConfig(({ command, mode }) => {
                 }),
               ]
             : []),
+          (componentName) => {
+            if (autoImportComponentsSubFolderEntryName.includes(componentName)) {
+              return {
+                from: `@/components/autoImport/${componentName}/Index.vue`,
+                name: 'default',
+              }
+            }
+          },
         ],
+        syncMode: 'overwrite',
       }),
       ...vitePlugins[isProduction ? 'production' : 'development'],
     ],
