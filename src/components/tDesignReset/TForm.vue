@@ -52,13 +52,16 @@ interface SlotItemType {
 
 const props = withDefaults(
   defineProps<
-    Omit<FormProps, 'data' | 'labelWidth'> & {
+    {
       data: {
         [key: string]: any
       }
       items: FormItemType[]
+      /**
+       * @description: 是否在验证失败时显示错误信息
+       */
       msgErrorWhenValidate?: boolean
-    }
+    } & Omit<FormProps, 'data' | 'labelWidth'>
   >(),
   {
     colon: true,
@@ -301,7 +304,6 @@ defineExpose({} as FormInstanceFunctions)
       :name="item.model"
       :class="{
         no_label_item: isFalsy(item._label),
-        empty_label_item: item._label === ' ',
       }"
     >
       <slot v-if="(item as SlotItemType).slot" :name="(item as SlotItemType).slot"></slot>

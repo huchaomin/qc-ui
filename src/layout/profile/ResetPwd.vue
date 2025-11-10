@@ -50,7 +50,6 @@ const formItems: FormItemType[] = [
   ...(showFooter
     ? [
         {
-          _label: ' ',
           slot: 'footer',
         },
       ]

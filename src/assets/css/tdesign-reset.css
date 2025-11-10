@@ -25,17 +25,8 @@ body {
 
     &.no_label_item {
       .t-form__label {
-        display: none;
-      }
-    }
-
-    &.empty_label_item {
-      .t-form__label {
-        font-size: 0;
-
-        label {
-          font-size: var(--td-font-size-body-medium);
-        }
+        height: 1px;
+        opacity: 0;
       }
     }
   }
