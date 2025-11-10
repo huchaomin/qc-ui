@@ -2,6 +2,10 @@
 import type { CardProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<CardProps>(), {
   headerBordered: true,
   shadow: true,

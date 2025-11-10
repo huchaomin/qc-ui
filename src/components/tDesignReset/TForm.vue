@@ -49,6 +49,9 @@ interface SlotItemType {
   model?: string
   slot: string
 }
+defineOptions({
+  inheritAttrs: false,
+})
 
 const props = withDefaults(
   defineProps<

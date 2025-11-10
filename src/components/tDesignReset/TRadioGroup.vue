@@ -6,6 +6,10 @@ export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'value'> &
   dicCode?: string
 }
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<RadioGroupProps>(), {})
 const compo = _RadioGroup
 const vm = getCurrentInstance()!

@@ -7,6 +7,10 @@ export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'val
   showCheckAll?: boolean
 }
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
   showCheckAll: false,
 })

@@ -4,6 +4,10 @@ import { mergeProps } from 'vue'
 
 export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'>
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<InputProps>(), {
   autocomplete: 'off',
   clearable: true,

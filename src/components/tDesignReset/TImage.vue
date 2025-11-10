@@ -2,6 +2,10 @@
 import type { ImageProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<ImageProps>(), {
   lazy: true,
 })
