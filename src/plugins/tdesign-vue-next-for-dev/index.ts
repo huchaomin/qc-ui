@@ -13,6 +13,7 @@ import _TDesign, {
   MessagePlugin as _MessagePlugin,
   NotifyPlugin as _NotifyPlugin,
   RadioGroup as _RadioGroup,
+  TabPanel as _TabPanel,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
 
@@ -28,6 +29,7 @@ const Image = _Image as (typeof import('tdesign-vue-next'))['Image']
 const Input = _Input as (typeof import('tdesign-vue-next'))['Input']
 const RadioGroup = _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGroup']
 const CheckboxGroup = _CheckboxGroup as (typeof import('tdesign-vue-next'))['CheckboxGroup']
+const TabPanel = _TabPanel as (typeof import('tdesign-vue-next'))['TabPanel']
 
 export {
   Card,
@@ -41,5 +43,6 @@ export {
   MessagePlugin,
   NotifyPlugin,
   RadioGroup,
+  TabPanel,
   TDesign,
 }

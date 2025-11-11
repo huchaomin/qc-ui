@@ -86,15 +86,14 @@ const bindProps = computed(() => {
     :is="
       h(
         compo,
-        {
-          ...mergeProps(bindProps, $attrs),
+        mergeProps($attrs, bindProps, {
           options: finallyOptions,
           modelValue: value,
           'onUpdate:modelValue': (v: any) => {
             value = v
           },
           ref: compoRef,
-        },
+        }),
         $slots,
       )
     "

@@ -294,10 +294,11 @@ defineExpose({} as FormInstanceFunctions)
   <!-- eslint-disable vue/no-mutating-props -->
   <component
     :is="compo"
-    v-bind="{
-      ...mergeProps(bindProps, $attrs),
-      ref: compoRef,
-    }"
+    v-bind="
+      mergeProps($attrs, bindProps, {
+        ref: compoRef,
+      })
+    "
     label-width="fit-content"
   >
     <TFormItem

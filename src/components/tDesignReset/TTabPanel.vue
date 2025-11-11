@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import type { CardProps } from 'tdesign-vue-next'
+import type { TabPanelProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 defineOptions({
   inheritAttrs: false,
+  // eslint-disable-next-line vue/order-in-components
+  name: 'TTabPanel',
 })
 
-const props = withDefaults(defineProps<CardProps>(), {
-  headerBordered: true,
-  shadow: true,
+const props = withDefaults(defineProps<TabPanelProps>(), {
+  destroyOnHide: false,
+  lazy: true,
 })
-const compo = _Card
+const compo = _TabPanel
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {

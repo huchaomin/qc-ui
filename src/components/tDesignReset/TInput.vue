@@ -28,10 +28,9 @@ function compoRef(instance: any) {
     :is="
       h(
         compo,
-        {
-          ...mergeProps(props, $attrs),
+        mergeProps($attrs, props, {
           ref: compoRef,
-        },
+        }),
         $slots,
       )
     "

@@ -80,14 +80,7 @@ provide(
     </TCard>
     <TCard title="基本资料" class="flex-1">
       <TTabs v-model="tab" size="large" class="!-mt-4">
-        <TTabPanel
-          v-for="item in tabs"
-          :key="item.value"
-          :value="item.value"
-          :label="item.label"
-          lazy
-          :destroy-on-hide="false"
-        >
+        <TTabPanel v-for="item in tabs" :key="item.value" :value="item.value" :label="item.label">
           <Component :is="item.component" class="!mt-4" @update="send"></Component>
         </TTabPanel>
       </TTabs>
