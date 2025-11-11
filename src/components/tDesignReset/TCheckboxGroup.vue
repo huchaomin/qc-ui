@@ -35,7 +35,7 @@ const finallyOptions = computed(() => {
     arr = useDicOptions(props.dicCode).value.map((item) => ({
       label: item.label,
       value: item.value,
-    })) as NonNullable<CheckboxGroupProps['options']>
+    })) as CheckboxGroupProps['options']
   } else {
     arr = props.options
   }
@@ -55,7 +55,9 @@ const finallyOptions = computed(() => {
 })
 const value = defineModel({
   get() {
-    if (finallyOptions.value !== undefined && props.modelValue !== undefined) {
+    if (!Array.isArray(props.modelValue)) {
+      $notify.error('TCheckboxGroup: modelValue must be an array')
+    } else if (finallyOptions.value !== undefined) {
       const isString = finallyOptions.value.every((item: any) => typeof item.value === 'string')
       const isNumber = finallyOptions.value.every((item: any) => typeof item.value === 'number')
 
@@ -77,6 +79,7 @@ const bindProps = computed(() => {
   delete obj.options
   delete obj.dicCode
   delete obj.modelValue
+  delete obj.showCheckAll
   return obj
 })
 </script>

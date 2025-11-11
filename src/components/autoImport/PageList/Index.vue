@@ -24,10 +24,28 @@ const formItems: FormItemType[] = [
     model: 'planType',
   },
 ]
+const value1 = ref(['1'])
+const options = ref([
+  {
+    label: '选项1',
+    value: '1',
+  },
+  {
+    label: '选项2',
+    value: '2',
+  },
+])
+// const compo = _Select
+// const compoRef = ref<InstanceType<typeof _Select>>()
+// onMounted(() => {
+//   console.log(compoRef.value)
+// })
 </script>
 
 <template>
   <TCard>
     <TForm :data="formData" :items="formItems"></TForm>
+    <TSelect v-model="value1" :options="options" :show-check-all="true" :multiple="true"></TSelect>
+    <!-- <component :is="compo" ref="compoRef" v-model="value" :options="options"></component> -->
   </TCard>
 </template>
