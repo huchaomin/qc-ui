@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type {
   SelectProps as _SelectProps,
+  PopupVisibleChangeContext,
+  SelectInputValueChangeContext,
   SelectOptionGroup,
   SelectValue,
   TdOptionProps,
@@ -12,9 +14,11 @@ export type SelectProps = Omit<
   'defaultInputValue' | 'defaultPopupVisible' | 'defaultValue' | 'value'
 > & {
   dicCode?: string
+  modelValue: SelectValue
   showCheckAll?: boolean
 }
 
+type OnChangeParams = Parameters<NonNullable<_SelectProps['onChange']>>
 defineOptions({
   inheritAttrs: false,
 })
@@ -22,6 +26,7 @@ defineOptions({
 const props = withDefaults(defineProps<SelectProps>(), {
   clearable: true,
   filterable: true,
+  inputValue: undefined,
   keys: () => ({
     disabled: 'disabled',
     label: 'label',
@@ -32,6 +37,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
    */
   multiple: false,
   placeholder: '请选择',
+  popupVisible: undefined,
   /**
    * @description: 阈值 大于等于 150 时，启用虚拟滚动
    */
@@ -96,7 +102,7 @@ const finallyOptions = computed(() => {
 
   return arr
 })
-const modelValueInner = computed(() => {
+const innerModelValue = computed(() => {
   if (finallyOptions.value !== undefined) {
     const flatOptions = finallyOptions.value.flatMap(
       (item) => (item as SelectOptionGroup).children ?? [item],
@@ -140,6 +146,23 @@ const bindProps = computed(() => {
   delete obj.showCheckAll
   return obj
 })
+const { inputValue, popupVisible } = toRefs(props)
+const [innerPopupVisible, setInnerPopupVisible] = useDefaultValue(
+  popupVisible as Ref<boolean>,
+  false,
+  (visible: boolean, context: PopupVisibleChangeContext) => {
+    props.onPopupVisibleChange?.(visible, context)
+  },
+  'popupVisible',
+)
+const [innerInputValue, setInputValue] = useDefaultValue(
+  inputValue as Ref<string>,
+  '',
+  (value: string, context: SelectInputValueChangeContext) => {
+    props.onInputChange?.(value, context)
+  },
+  'inputValue',
+)
 </script>
 
 <template>
@@ -149,18 +172,15 @@ const bindProps = computed(() => {
         compo,
         mergeProps($attrs, bindProps, {
           options: finallyOptions,
-          modelValue: modelValueInner,
-          'onUpdate:modelValue': (v: any) => {
-            emit('update:modelValue', v)
+          modelValue: innerModelValue,
+          onChange: (...args: OnChangeParams) => {
+            emit('update:modelValue', args[0])
+            props.onChange?.(...args)
           },
-          popupVisible,
-          'onUpdate:popupVisible': (v: boolean) => {
-            emit('update:popupVisible', v)
-          },
-          inputValue,
-          'onUpdate:inputValue': (v: string) => {
-            emit('update:inputValue', v)
-          },
+          popupVisible: innerPopupVisible,
+          onPopupVisibleChange: setInnerPopupVisible,
+          inputValue: innerInputValue,
+          onInputChange: setInputValue,
           ref: compoRef,
         }),
         $slots,
