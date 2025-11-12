@@ -10,6 +10,7 @@ import type { AllowedComponentProps, Reactive } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
+import type { SelectProps } from './TSelect.vue'
 import { mergeProps } from 'vue'
 
 export type FormItemType = MaybeRefInterface<
@@ -28,19 +29,24 @@ type ComponentItemType = AllowedComponentProps &
   XOR<
     XOR<
       XOR<
-        Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-          component: 'TCheckbox'
-        },
-        Omit<InputProps, 'modelValue'> & {
-          component?: 'TInput'
+        XOR<
+          Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+            component: 'TCheckbox'
+          },
+          Omit<InputProps, 'modelValue'> & {
+            component?: 'TInput'
+          }
+        >,
+        Omit<RadioGroupProps, 'modelValue'> & {
+          component: 'TRadioGroup'
         }
       >,
-      Omit<RadioGroupProps, 'modelValue'> & {
-        component: 'TRadioGroup'
+      Omit<CheckboxGroupProps, 'modelValue'> & {
+        component: 'TCheckboxGroup'
       }
     >,
-    Omit<CheckboxGroupProps, 'modelValue'> & {
-      component: 'TCheckboxGroup'
+    Omit<SelectProps, 'modelValue'> & {
+      component: 'TSelect'
     }
   > & {
     model: string

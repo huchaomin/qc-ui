@@ -9,13 +9,7 @@ import { mergeProps } from 'vue'
 
 export type SelectProps = Omit<
   _SelectProps,
-  | 'defaultInputValue'
-  | 'defaultPopupVisible'
-  | 'defaultValue'
-  | 'inputValue'
-  | 'modelValue'
-  | 'popupVisible'
-  | 'value'
+  'defaultInputValue' | 'defaultPopupVisible' | 'defaultValue' | 'value'
 > & {
   dicCode?: string
   showCheckAll?: boolean
@@ -54,6 +48,11 @@ const props = withDefaults(defineProps<SelectProps>(), {
    */
   showCheckAll: false,
 })
+const emit = defineEmits<{
+  'update:inputValue': [value: string]
+  'update:modelValue': [value: any]
+  'update:popupVisible': [value: boolean]
+}>()
 const compo = _Select
 const vm = getCurrentInstance()!
 
@@ -97,51 +96,39 @@ const finallyOptions = computed(() => {
 
   return arr
 })
-const modelValue = defineModel('modelValue')
-const value = defineModel('value', {
-  get() {
-    if (finallyOptions.value !== undefined) {
-      const flatOptions = finallyOptions.value.flatMap(
-        (item) => (item as SelectOptionGroup).children ?? [item],
-      )
-      const valueKey = props.keys?.value ?? 'value'
-      const isString = flatOptions.every((item: any) => typeof item[valueKey] === 'string')
-      const isNumber = flatOptions.every((item: any) => typeof item[valueKey] === 'number')
+const modelValueInner = computed(() => {
+  if (finallyOptions.value !== undefined) {
+    const flatOptions = finallyOptions.value.flatMap(
+      (item) => (item as SelectOptionGroup).children ?? [item],
+    )
+    const valueKey = props.keys?.value ?? 'value'
+    const isString = flatOptions.every((item: any) => typeof item[valueKey] === 'string')
+    const isNumber = flatOptions.every((item: any) => typeof item[valueKey] === 'number')
 
-      if (props.multiple) {
-        if (Array.isArray(modelValue.value)) {
-          if (isString) {
-            return (modelValue.value as SelectValue[]).map((v) => (isFalsy(v) ? v : String(v)))
-          } else if (isNumber) {
-            return (modelValue.value as SelectValue[]).map((v) =>
-              isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v),
-            )
-          }
-        } else {
-          $notify.error('TSelect: modelValue must be an array, when multiple is true')
+    if (props.multiple) {
+      if (Array.isArray(props.modelValue)) {
+        if (isString) {
+          return (props.modelValue as SelectValue[]).map((v) => (isFalsy(v) ? v : String(v)))
+        } else if (isNumber) {
+          return (props.modelValue as SelectValue[]).map((v) =>
+            isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v),
+          )
         }
       } else {
-        if (isString) {
-          return isFalsy(modelValue.value) ? modelValue.value : String(modelValue.value)
-        } else if (isNumber) {
-          return isFalsy(modelValue.value) || Number.isNaN(Number(modelValue.value))
-            ? modelValue.value
-            : Number(modelValue.value)
-        }
+        $notify.error('TSelect: modelValue must be an array, when multiple is true')
+      }
+    } else {
+      if (isString) {
+        return isFalsy(props.modelValue) ? props.modelValue : String(props.modelValue)
+      } else if (isNumber) {
+        return isFalsy(props.modelValue) || Number.isNaN(Number(props.modelValue))
+          ? props.modelValue
+          : Number(props.modelValue)
       }
     }
+  }
 
-    return modelValue.value
-  },
-  set(v: any) {
-    modelValue.value = v
-  },
-})
-const popupVisible = defineModel('popupVisible', {
-  default: false,
-})
-const inputValue = defineModel('inputValue', {
-  default: '',
+  return props.modelValue
 })
 const bindProps = computed(() => {
   const obj: Record<string, any> = {
@@ -162,17 +149,17 @@ const bindProps = computed(() => {
         compo,
         mergeProps($attrs, bindProps, {
           options: finallyOptions,
-          modelValue: value,
+          modelValue: modelValueInner,
           'onUpdate:modelValue': (v: any) => {
-            value = v
+            emit('update:modelValue', v)
           },
           popupVisible,
           'onUpdate:popupVisible': (v: boolean) => {
-            popupVisible = v
+            emit('update:popupVisible', v)
           },
           inputValue,
           'onUpdate:inputValue': (v: string) => {
-            inputValue = v
+            emit('update:inputValue', v)
           },
           ref: compoRef,
         }),
