@@ -151,15 +151,8 @@ const bindProps = computed(() => {
   delete obj.options
   delete obj.dicCode
   delete obj.showCheckAll
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] === undefined) {
-      delete obj[key]
-    }
-  })
   return obj
 })
-
-console.log(bindProps)
 </script>
 
 <template>
