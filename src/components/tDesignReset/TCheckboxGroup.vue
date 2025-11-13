@@ -1,12 +1,17 @@
 <script setup lang="ts">
-import type { CheckboxGroupProps as _CheckboxGroupProps } from 'tdesign-vue-next'
+import type {
+  CheckboxGroupProps as _CheckboxGroupProps,
+  CheckboxGroupValue,
+} from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'value'> & {
   dicCode?: string
+  modelValue: CheckboxGroupValue
   showCheckAll?: boolean
 }
 
+type OnChangeParams = Parameters<NonNullable<_CheckboxGroupProps['onChange']>>
 defineOptions({
   inheritAttrs: false,
 })
@@ -14,6 +19,9 @@ defineOptions({
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
   showCheckAll: false,
 })
+const emit = defineEmits<{
+  'update:modelValue': [value: CheckboxGroupValue]
+}>()
 const compo = _CheckboxGroup
 const vm = getCurrentInstance()!
 
@@ -53,32 +61,32 @@ const finallyOptions = computed(() => {
 
   return arr
 })
-const value = defineModel({
-  get() {
-    if (!Array.isArray(props.modelValue)) {
-      $notify.error('TCheckboxGroup: modelValue must be an array')
-    } else if (finallyOptions.value !== undefined) {
-      const isString = finallyOptions.value.every((item: any) => typeof item.value === 'string')
-      const isNumber = finallyOptions.value.every((item: any) => typeof item.value === 'number')
+const innerModelValue = computed(() => {
+  if (!Array.isArray(props.modelValue)) {
+    $notify.error('TCheckboxGroup: modelValue must be an array')
+  } else if (finallyOptions.value !== undefined) {
+    const isString = finallyOptions.value.every(
+      (item: any) => typeof (item.value ?? item) === 'string',
+    )
+    const isNumber = finallyOptions.value.every(
+      (item: any) => typeof (item.value ?? item) === 'number',
+    )
 
-      if (isString) {
-        return props.modelValue.map((v) => (isFalsy(v) ? v : String(v)))
-      } else if (isNumber) {
-        return props.modelValue.map((v) => (isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v)))
-      }
+    if (isString) {
+      return props.modelValue.map((v) => (isFalsy(v) ? v : String(v)))
+    } else if (isNumber) {
+      return props.modelValue.map((v) => (isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v)))
     }
+  }
 
-    return props.modelValue
-  },
+  return props.modelValue
 })
 const bindProps = computed(() => {
   const obj: Record<string, any> = {
     ...props,
   }
 
-  delete obj.options
   delete obj.dicCode
-  delete obj.modelValue
   delete obj.showCheckAll
   return obj
 })
@@ -91,9 +99,10 @@ const bindProps = computed(() => {
         compo,
         mergeProps($attrs, bindProps, {
           options: finallyOptions,
-          modelValue: value,
-          'onUpdate:modelValue': (v: any) => {
-            value = v
+          modelValue: innerModelValue,
+          onChange: (...args: OnChangeParams) => {
+            emit('update:modelValue', args[0])
+            props.onChange?.(...args)
           },
           ref: compoRef,
         }),

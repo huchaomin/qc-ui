@@ -37,6 +37,9 @@ const props = withDefaults(defineProps<SelectProps>(), {
    */
   multiple: false,
   placeholder: '请选择',
+  /**
+   * @description: 是否显示下拉框
+   */
   popupVisible: undefined,
   /**
    * @description: 阈值 大于等于 150 时，启用虚拟滚动
@@ -56,7 +59,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
 })
 const emit = defineEmits<{
   'update:inputValue': [value: string]
-  'update:modelValue': [value: any]
+  'update:modelValue': [value: SelectValue]
   'update:popupVisible': [value: boolean]
 }>()
 const compo = _Select
@@ -141,7 +144,6 @@ const bindProps = computed(() => {
     ...props,
   }
 
-  delete obj.options
   delete obj.dicCode
   delete obj.showCheckAll
   return obj

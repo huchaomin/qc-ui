@@ -19,10 +19,12 @@ const formItems: FormItemType[] = [
     _label: '计划名称',
     model: 'planName',
   },
-  {
-    _label: '计划类型',
-    model: 'planType',
-  },
+  // {
+  //   _label: '计划类型',
+  //   component: 'TSelect',
+  //   dicCode: 'plan_type',
+  //   model: 'planType',
+  // },
 ]
 const value1 = ref(['1'])
 const options = ref([
@@ -35,17 +37,28 @@ const options = ref([
     value: '2',
   },
 ])
-// const compo = _Select
-// const compoRef = ref<InstanceType<typeof _Select>>()
-// onMounted(() => {
-//   console.log(compoRef.value)
-// })
+const compo = _Select
+const compoRef = ref<InstanceType<typeof _Select>>()
+
+onMounted(() => {
+  console.log(compoRef.value)
+})
+
+const popupVisible = ref(false)
+const inputValue = ref('')
 </script>
 
 <template>
   <TCard>
     <TForm :data="formData" :items="formItems"></TForm>
     <TSelect v-model="value1" :options="options" :show-check-all="true" :multiple="true"></TSelect>
-    <!-- <component :is="compo" ref="compoRef" v-model="value" :options="options"></component> -->
+    <component
+      :is="compo"
+      ref="compoRef"
+      v-model="value1"
+      :show-check-all="true"
+      :multiple="true"
+      :options="options"
+    ></component>
   </TCard>
 </template>

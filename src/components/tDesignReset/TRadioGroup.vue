@@ -1,16 +1,21 @@
 <script setup lang="ts">
-import type { RadioGroupProps as _RadioGroupProps } from 'tdesign-vue-next'
+import type { RadioGroupProps as _RadioGroupProps, RadioValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'value'> & {
   dicCode?: string
+  modelValue: RadioValue
 }
 
+type OnChangeParams = Parameters<NonNullable<_RadioGroupProps['onChange']>>
 defineOptions({
   inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<RadioGroupProps>(), {})
+const emit = defineEmits<{
+  'update:modelValue': [value: RadioValue]
+}>()
 const compo = _RadioGroup
 const vm = getCurrentInstance()!
 
@@ -27,7 +32,10 @@ const finallyOptions = computed(() => {
       $notify.error('TRadioGroup: dicCode and options cannot be used together')
     }
 
-    return useDicOptions(props.dicCode).value
+    return useDicOptions(props.dicCode).value.map((item) => ({
+      label: item.label,
+      value: item.value,
+    }))
   }
 
   return props.options
@@ -37,26 +45,26 @@ const bindProps = computed(() => {
     ...props,
   }
 
-  delete obj.options
   delete obj.dicCode
-  delete obj.modelValue
   return obj
 })
-const value = defineModel({
-  get() {
-    if (finallyOptions.value !== undefined && !isFalsy(props.modelValue)) {
-      const isString = finallyOptions.value.every((item: any) => typeof item.value === 'string')
-      const isNumber = finallyOptions.value.every((item: any) => typeof item.value === 'number')
+const innerModelValue = computed(() => {
+  if (finallyOptions.value !== undefined && !isFalsy(props.modelValue)) {
+    const isString = finallyOptions.value.every(
+      (item: any) => typeof (item.value ?? item) === 'string',
+    )
+    const isNumber = finallyOptions.value.every(
+      (item: any) => typeof (item.value ?? item) === 'number',
+    )
 
-      if (isString) {
-        return String(props.modelValue)
-      } else if (isNumber) {
-        return Number.isNaN(Number(props.modelValue)) ? props.modelValue : Number(props.modelValue)
-      }
+    if (isString) {
+      return String(props.modelValue)
+    } else if (isNumber) {
+      return Number.isNaN(Number(props.modelValue)) ? props.modelValue : Number(props.modelValue)
     }
+  }
 
-    return props.modelValue
-  },
+  return props.modelValue
 })
 </script>
 
@@ -67,9 +75,10 @@ const value = defineModel({
         compo,
         mergeProps($attrs, bindProps, {
           options: finallyOptions,
-          modelValue: value,
-          'onUpdate:modelValue': (v: any) => {
-            value = v
+          modelValue: innerModelValue,
+          onChange: (...args: OnChangeParams) => {
+            emit('update:modelValue', args[0])
+            props.onChange?.(...args)
           },
           ref: compoRef,
         }),
