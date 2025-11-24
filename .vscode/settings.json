@@ -86,5 +86,8 @@
   "[tailwindcss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "cSpell.words": ["tdesign"]
+  "cSpell.words": ["tdesign"],
+  "vue.inlayHints.vBindShorthand": true,
+  "vue.inlayHints.destructuredProps": true,
+  "vue.editor.focusMode": true,
 }

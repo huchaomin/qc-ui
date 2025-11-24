@@ -13,13 +13,11 @@ import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
 import { mergeProps } from 'vue'
 
-export type FormItemType = MaybeRefInterface<
-  {
-    [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
-  } & {
-    show?: boolean // 是否显示
-  } & XOR<ComponentItemType, SlotItemType>
->
+export type FormItemType = {
+  [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
+} & {
+  show?: boolean // 是否显示
+} & XOR<ComponentItemType, SlotItemType>
 
 type _FormItemProps = AllowedComponentProps &
   Omit<FormItemProps, 'labelWidth' | 'name'> & {
