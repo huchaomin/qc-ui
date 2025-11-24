@@ -23,7 +23,7 @@ watchEffect(() => {
   }
 })
 
-const formItems: FormItemType[] = [
+const formItems: FormItemType[] = reactive([
   {
     _label: '用户昵称',
     _required: true,
@@ -64,7 +64,7 @@ const formItems: FormItemType[] = [
   {
     slot: 'footer',
   },
-]
+])
 const formRef = useTemplateRef('form')
 
 function handleClose() {
