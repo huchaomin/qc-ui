@@ -26,6 +26,7 @@ export default antfu(
       'src/plugins/alova/generate/pl-admin/createApis.ts',
       'src/plugins/alova/generate/pl-admin/globals.d.ts',
       'src/plugins/alova/generate/pl-admin.swagger.json',
+      'types/tDesign-globalComponents.d.ts',
     ],
     jsonc: {
       overrides: {

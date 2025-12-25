@@ -52,6 +52,14 @@
 - 600 现在是不管成功和失败，都弹窗，需要优化
 - admin 用户登录 判断哪些菜单生成了却没有被用到
 - tForm 支持传slot
+- Tailwind Components：社区收集了各种免费的 hero/footer。
+- https://www.creative-tim.com/twcomponents：类似上面，也是社区收集的片段
+- HyperUI：有 hero、footer、pricing、gallery 等常见页面段落，直接可复制代码。
+- Tailblocks：在线拼装器，可以选择不同模块生成完整 landing page。
+- type-xor
+- getappInfo
+- cookie 会不会影响传输速度
+- env 文件参考bigScreen
 
 ### 分析包大小
 
