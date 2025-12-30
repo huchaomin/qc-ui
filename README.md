@@ -60,6 +60,9 @@
 - getappInfo
 - cookie 会不会影响传输速度
 - env 文件参考bigScreen
+- z-vue-scan
+- 根据btn text 添加icon
+- langding page
 
 ### 分析包大小
 

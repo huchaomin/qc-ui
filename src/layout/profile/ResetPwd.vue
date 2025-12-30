@@ -2,6 +2,7 @@
 const { showFooter = true } = defineProps<{
   showFooter?: boolean
 }>()
+const loginStore = useLoginStore()
 const route = useRoute()
 const formData = reactive({
   confirmPassword: '',
@@ -20,8 +21,8 @@ const formItems: FormItemType[] = [
     _required: true,
     _rules: [
       {
-        message: '密码必须为8位或8位以上的必须包含(数字、大写字母、小写字母)的组合',
-        pattern: passwordReg,
+        message: loginStore.passwordRegMessage,
+        pattern: loginStore.passwordReg,
       },
     ],
     model: 'newPassword',

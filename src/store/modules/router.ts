@@ -23,8 +23,10 @@ export interface RouteRecordRaw {
 type LazyRouterImport = () => Promise<{
   default: Component
 }>
-interface ResRouterItem
-  extends Omit<RouteRecordRaw, 'children' | 'component' | 'meta' | 'redirect'> {
+interface ResRouterItem extends Omit<
+  RouteRecordRaw,
+  'children' | 'component' | 'meta' | 'redirect'
+> {
   children?: ResRouterItem[]
   component?: Component | LazyRouterImport | string
   hidden?: boolean

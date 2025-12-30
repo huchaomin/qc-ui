@@ -25,6 +25,7 @@ export default defineStore(
       const index = recentRouters.value.findIndex(
         (item) =>
           item.name === copyOptions.name ||
+          // 相同名称的也视为相同的路由
           getRoute(item.name)!.meta.title === getRoute(copyOptions.name)!.meta.title,
       )
 
