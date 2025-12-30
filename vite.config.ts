@@ -1,3 +1,4 @@
+import type { TDesignResolverOptions } from '@tdesign-vue-next/auto-import-resolver'
 import type * as http from 'node:http'
 import type { Plugin, ProxyOptions } from 'vite'
 import path from 'node:path'
@@ -38,6 +39,12 @@ function bypass(
 
     res.setHeader('X-Res-ProxyUrl', proxyUrl) // 查看真实的请求地址
   }
+}
+
+const TDesignResolverConfig: TDesignResolverOptions = {
+  exclude: [...tDesignResetComponentsName, 'TIcon'],
+  library: 'vue-next',
+  resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
 }
 
 // https://vite.dev/config/
@@ -143,17 +150,7 @@ export default defineConfig(({ command, mode }) => {
           },
           autoImportStoreList,
         ],
-        // resolvers: [
-        //   ...(isProduction
-        //     ? [
-        //         TDesignResolver({
-        //           exclude: tDesignResetComponentsName,
-        //           library: 'vue-next',
-        //           resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
-        //         }),
-        //       ]
-        //     : []),
-        // ],
+        resolvers: [...(isProduction ? [TDesignResolver(TDesignResolverConfig)] : [])],
         vueTemplate: true,
       }),
       Components({
@@ -162,15 +159,7 @@ export default defineConfig(({ command, mode }) => {
         dirs: [resolvePath('src/components/autoImport')],
         dts: resolvePath('types/components.d.ts'),
         resolvers: [
-          ...(isProduction
-            ? [
-                TDesignResolver({
-                  exclude: [...tDesignResetComponentsName, 'TIcon'],
-                  library: 'vue-next',
-                  resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
-                }),
-              ]
-            : []),
+          ...(isProduction ? [TDesignResolver(TDesignResolverConfig)] : []),
           (componentName) => {
             if (autoImportComponentsSubFolderEntryName.includes(componentName)) {
               return {
