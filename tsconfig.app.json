@@ -8,6 +8,7 @@
       "img/*": ["./src/assets/images/*"]
     },
     "types": [
+      "vite/client"
       // TODO 识别 ttf 字体文件
       // "vite-plugin-font/src/font"
     ]

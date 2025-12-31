@@ -2,7 +2,6 @@ import type { AlovaCustomTypes, Arg } from 'alova'
 import { createAlova } from 'alova'
 import adapterFetch from 'alova/fetch'
 import VueHook from 'alova/vue'
-import sysPath from 'path-browserify'
 import router from '@/router'
 
 const TIMEOUT = 15000
@@ -13,7 +12,7 @@ type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']> & {
 }
 
 export default createAlova({
-  baseURL: sysPath.join(import.meta.env.VITE_BASE_URL, import.meta.env.VITE_API_PREFIX),
+  baseURL: VITE_BASE_URL,
   // 请求前拦截器 可以为异步函数
   beforeRequest(method) {
     method.meta = {
@@ -40,7 +39,7 @@ export default createAlova({
       if (loginStore.token) {
         method.config.headers.Authorization = loginStore.token
       } else {
-        method.abort()
+        void method.abort()
       }
     }
 

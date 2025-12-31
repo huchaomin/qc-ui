@@ -11,7 +11,7 @@ import { browserslistToTargets } from 'lightningcss'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
-import { envParse, parseLoadedEnv } from 'vite-plugin-env-parse'
+import { parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
 import autoImportStoreList from './build/autoImportStores.ts'
@@ -20,7 +20,7 @@ import {
   autoImportComponentsSubFolderEntryName,
   tDesignResetComponentsName,
 } from './build/utils/config.ts'
-import { resolvePath } from './build/utils/index.ts'
+import { needPort, resolvePath } from './build/utils/index.ts'
 import vitePlugins from './build/vitePlugins.ts'
 
 function bypass(
@@ -50,16 +50,41 @@ const TDesignResolverConfig: TDesignResolverOptions = {
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
   const envDir = resolvePath('build/env')
-  const env = parseLoadedEnv(loadEnv(mode, envDir)) as ImportMetaEnv
-  const { VITE_API_PREFIX, VITE_APP_NAME, VITE_BASE_URL, VITE_SERVER_PORT, VITE_SERVER_URL } = env
+  const env = parseLoadedEnv(loadEnv(mode, envDir)) as {
+    VITE_API_PROXY_PORT_ARRAY: Array<[string, number]>
+    VITE_APP_NAME?: string
+    VITE_BASE_URL?: string
+    VITE_FORCE_PWD_CHANGE?: boolean
+    VITE_PROXY_TARGET: string | string[]
+    VITE_USE_LOGIN_CAPTCHA?: boolean
+  }
+  const {
+    VITE_API_PROXY_PORT_ARRAY,
+    VITE_APP_NAME = '',
+    VITE_BASE_URL = '/',
+    VITE_FORCE_PWD_CHANGE = true,
+    VITE_PROXY_TARGET: viteProxyTarget,
+    VITE_USE_LOGIN_CAPTCHA = true,
+  } = env
+  const VITE_PROXY_TARGET = Array.isArray(viteProxyTarget) ? viteProxyTarget : [viteProxyTarget]
 
   console.log({
     command,
-    env,
     mode,
+    VITE_API_PROXY_PORT_ARRAY,
+    VITE_APP_NAME,
+    VITE_BASE_URL,
+    VITE_FORCE_PWD_CHANGE,
+    VITE_PROXY_TARGET,
+    VITE_USE_LOGIN_CAPTCHA,
   })
 
   const isProduction = mode === 'production'
+  const getProxyTarget = (index: number, port: number) => {
+    const target = VITE_PROXY_TARGET.length > 1 ? VITE_PROXY_TARGET[index] : VITE_PROXY_TARGET[0]
+
+    return needPort(target) ? `${target}:${port}` : target
+  }
 
   return {
     build: {
@@ -73,7 +98,13 @@ export default defineConfig(({ command, mode }) => {
       },
       transformer: 'lightningcss',
     },
-    envDir, // 将 env 文件里面的变量注入到 import.meta.env 里面
+    define: {
+      VITE_APP_NAME: JSON.stringify(VITE_APP_NAME),
+      VITE_BASE_URL: JSON.stringify(VITE_BASE_URL),
+      VITE_FORCE_PWD_CHANGE: JSON.stringify(VITE_FORCE_PWD_CHANGE),
+      VITE_USE_LOGIN_CAPTCHA: JSON.stringify(VITE_USE_LOGIN_CAPTCHA),
+    },
+    // envDir, // 将 env 文件里面的变量注入到 import.meta.env 里面
     esbuild: {
       drop: isProduction ? ['console', 'debugger'] : [],
     },
@@ -96,9 +127,9 @@ export default defineConfig(({ command, mode }) => {
       ],
     },
     plugins: [
-      envParse({
-        dtsPath: resolvePath('types/env.d.ts'),
-      }),
+      // envParse({
+      //   dtsPath: resolvePath('types/env.d.ts'),
+      // }),
       createHtmlPlugin({
         entry: `../src/main.${isProduction ? 'prod' : 'dev'}.ts`,
         inject: {
@@ -186,17 +217,21 @@ export default defineConfig(({ command, mode }) => {
       // vite preview 也会走该代理
       host: '0.0.0.0', // 可以用ip访问
       open: false,
-      port: VITE_SERVER_PORT + 1000,
-      proxy: {
-        [path.posix.join(VITE_BASE_URL, VITE_API_PREFIX)]: {
-          bypass,
-          changeOrigin: true,
-          rewrite: (p) => {
-            return VITE_BASE_URL === '/' ? p : p.replace(new RegExp(VITE_BASE_URL), '')
+      port: VITE_API_PROXY_PORT_ARRAY[0][1] + 1000,
+      proxy: Object.fromEntries(
+        VITE_API_PROXY_PORT_ARRAY.map(([prefix, port], index) => [
+          path.posix.join(VITE_BASE_URL, prefix),
+          {
+            bypass,
+            changeOrigin: true,
+            rewrite: (p) => {
+              return VITE_BASE_URL === '/' ? p : p.replace(new RegExp(VITE_BASE_URL), '')
+            },
+            target: getProxyTarget(index, port),
           },
-          target: VITE_SERVER_URL,
-        },
-      },
+        ]),
+      ),
+      strictPort: true,
     },
   }
 })

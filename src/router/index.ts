@@ -50,7 +50,7 @@ export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWith
 }
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.VITE_BASE_URL),
+  history: createWebHistory(VITE_BASE_URL),
   routes: [
     getTopRoute(),
     {

@@ -31,6 +31,5 @@ coverage
 
 /build/.cache
 
-/types/env.d.ts
 /types/auto-imports.d.ts
 /types/components.d.ts

@@ -5,7 +5,7 @@ import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
 const router = useRouter()
-const appName = import.meta.env.VITE_APP_NAME
+const appName = VITE_APP_NAME
 const formData = reactive<LoginData>({
   password: '',
   rememberMe: true,
@@ -20,8 +20,6 @@ async function initLoginData() {
 if (loginStore.rememberMe) {
   initLoginData()
 }
-
-const useCaptcha = import.meta.env.VITE_USE_CAPTCHA
 
 async function loginSubmit(formData: LoginData) {
   await loginStore.login(formData)
@@ -50,7 +48,7 @@ async function onSubmit() {
     return
   }
 
-  if (useCaptcha) {
+  if (VITE_USE_LOGIN_CAPTCHA) {
     formData.code = await captcha()
     loginSubmit(formData)
   } else {

@@ -3,7 +3,7 @@ import MenuNode from './MenuNode.vue'
 
 const route = useRoute()
 const commonStore = useCommonStore()
-const appName = import.meta.env.VITE_APP_NAME
+const appName = VITE_APP_NAME
 const logoUrl = Object.values(
   import.meta.glob('img/side_logo.*', {
     eager: true,

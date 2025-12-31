@@ -63,7 +63,7 @@ export default defineStore('user', () => {
   watch(
     () => userInfo.value.needChangePwd,
     (val) => {
-      if (val === 1 && import.meta.env.VITE_FORCE_PWD_CHANGE) {
+      if (val === 1 && VITE_FORCE_PWD_CHANGE) {
         void nextTick(() => {
           const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)
           const dialogInstance = $dialog({
