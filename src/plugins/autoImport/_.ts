@@ -1,5 +1,6 @@
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, kebabCase } from 'lodash-es'
 
 export default {
   cloneDeep,
+  kebabCase,
 }

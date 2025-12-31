@@ -2,7 +2,6 @@
  * @description: @tdesign/shared-hooks useDefaultValue
  */
 import type { Ref } from 'vue'
-import { kebabCase } from 'lodash-es'
 
 type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void
 
@@ -13,10 +12,10 @@ export function useDefaultValue<T, P extends any[]>(
   propsName: string,
 ): [Ref<T>, ChangeHandler<T, P>] {
   const { emit, vnode } = getCurrentInstance()!
-  // @ts-expect-error 类型错误
-  const internalValue: Ref<T> = ref()
   const vProps = vnode.props ?? {}
-  const isVMP = vProps[propsName] !== undefined || vProps[kebabCase(propsName)] !== undefined
+  const isVMP =
+    Object.prototype.hasOwnProperty.call(vProps, propsName) ||
+    Object.prototype.hasOwnProperty.call(vProps, _.kebabCase(propsName))
 
   if (isVMP) {
     return [
@@ -28,9 +27,10 @@ export function useDefaultValue<T, P extends any[]>(
     ]
   }
 
-  internalValue.value = defaultValue
+  const internalValue = ref(defaultValue)
+
   return [
-    internalValue,
+    internalValue as Ref<T>,
     (newValue, ...args) => {
       internalValue.value = newValue
       onChange?.(newValue, ...args)
