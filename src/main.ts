@@ -11,5 +11,6 @@ app.config.errorHandler = (...args) => {
 
 app.use(store)
 app.use(router)
+void useCommonStore().getAppInfo()
 
 export default app

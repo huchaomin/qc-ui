@@ -134,7 +134,7 @@ export default createAlova({
         return Promise.reject(response)
       }
 
-      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg } =
+      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg, useToken } =
         method.meta as ThisAlovaCustomTypes
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
@@ -176,7 +176,9 @@ export default createAlova({
               return resData
             }
           } else if (code === 401) {
-            void router.push({ name: 'Login' })
+            if (useToken) {
+              void router.push({ name: 'Login' })
+            }
           } else {
             if (useFailMsg !== false) {
               void $msg.error(useFailMsg === true ? msg : useFailMsg)

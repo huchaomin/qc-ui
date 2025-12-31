@@ -57,12 +57,12 @@
 - HyperUI：有 hero、footer、pricing、gallery 等常见页面段落，直接可复制代码。
 - Tailblocks：在线拼装器，可以选择不同模块生成完整 landing page。
 - type-xor
-- getappInfo
 - cookie 会不会影响传输速度
-- env 文件参考bigScreen
 - z-vue-scan
 - 根据btn text 添加icon
 - langding page
+- pluginWebUpdateNotice
+- utils 不自动导入
 
 ### 分析包大小
 

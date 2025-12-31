@@ -4,8 +4,9 @@ import captcha from '@/plugins/captcha'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
+const commonStore = useCommonStore()
 const router = useRouter()
-const appName = VITE_APP_NAME
+const appName = computed(() => commonStore.appInfo.appName)
 const formData = reactive<LoginData>({
   password: '',
   rememberMe: true,
