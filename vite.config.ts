@@ -99,6 +99,7 @@ export default defineConfig(({ command, mode }) => {
       transformer: 'lightningcss',
     },
     define: {
+      VITE_API_PREFIX_ARRAY: JSON.stringify(VITE_API_PROXY_PORT_ARRAY.map(([prefix]) => prefix)),
       VITE_APP_NAME: JSON.stringify(VITE_APP_NAME),
       VITE_BASE_URL: JSON.stringify(VITE_BASE_URL),
       VITE_FORCE_PWD_CHANGE: JSON.stringify(VITE_FORCE_PWD_CHANGE),
