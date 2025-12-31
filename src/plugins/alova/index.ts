@@ -8,9 +8,7 @@ import router from '@/router'
 const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'
 
-type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']> & {
-  useDownload?: boolean | string
-}
+type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']>
 
 export default createAlova({
   baseURL: VITE_BASE_URL,
@@ -28,7 +26,7 @@ export default createAlova({
       ...{
         use600Alert: true,
         useDataResult: true,
-        useEmptyData: false,
+        useDownload: false,
         useEmptyParams: true,
         useFailMsg: true,
         useFormData: false,
@@ -41,7 +39,7 @@ export default createAlova({
     }
 
     const loginStore = useLoginStore()
-    const { useEmptyData, useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } =
+    const { useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } =
       method.meta as ThisAlovaCustomTypes
 
     if (useToken) {
@@ -68,20 +66,6 @@ export default createAlova({
         }
       })
       method.config.params = paramsCopy.toString()
-    }
-
-    // 处理 data 参数
-    if (useEmptyData) {
-      const obj = {
-        ...(method.data as Arg),
-      }
-
-      Object.keys(obj).forEach((key: string) => {
-        if (isFalsy(obj[key])) {
-          delete obj[key]
-        }
-      })
-      method.data = obj
     }
 
     // 处理 formData 参数
@@ -155,7 +139,7 @@ export default createAlova({
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
-        if (useDownload !== undefined && useDownload !== false) {
+        if (useDownload !== false) {
           void saveAs(await response.blob(), useDownload as string) // TODO true 从响应头获取文件名
         }
 

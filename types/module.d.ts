@@ -43,18 +43,13 @@ declare module 'alova' {
        */
       useDataResult?: boolean
       /**
-       * 是下载blob 默认undefined,
-       * 如果为true 则从响应头获取文件名
-       * 如果为string 则使用string作为文件名
-       * 如果为false 或 undefined 则不下载
+       * 如果为false 则不下载，自己处理返回的 blob, 默认
+       * 如果为true 则从响应头获取文件名,并下载
+       * 如果为string 则使用string作为文件名,并下载
        */
       useDownload?: boolean | string
       /**
-       * 是否去除 data 里面 isFalsy 的值， 默认false
-       */
-      useEmptyData?: boolean
-      /**
-       * 是否去除 params 里面非 string boolean number 的值， 默认true
+       * 是否去除请求参数 params 里面 isFalsy 的值， 默认true
        */
       useEmptyParams?: boolean
       /**
@@ -73,7 +68,7 @@ declare module 'alova' {
        */
       useLoading?: boolean | string
       /**
-       * 是否使用响应blob 默认false
+       * 响应体是否为blob类型 默认false
        */
       useResponseBlob?: boolean
       /**
