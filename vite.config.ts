@@ -148,11 +148,7 @@ export default defineConfig(({ command, mode }) => {
       AutoImport({
         // 用于自动导入 函数/工具库 的 API
         defaultExportByFilename: true,
-        dirs: [
-          resolvePath('src/plugins/autoImport'),
-          resolvePath('src/hooks'),
-          resolvePath('src/utils'),
-        ],
+        dirs: [resolvePath('src/plugins/autoImport'), resolvePath('src/hooks')],
         dts: resolvePath('types/auto-imports.d.ts'),
         imports: [
           'vue',

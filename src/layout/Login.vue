@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { LoginData } from '@/store/modules/login'
 import captcha from '@/plugins/captcha'
+import { aesDecrypt } from '@/utils/tool'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()

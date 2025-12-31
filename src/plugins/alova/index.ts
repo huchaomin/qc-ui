@@ -4,6 +4,8 @@ import adapterFetch from 'alova/fetch'
 import VueHook from 'alova/vue'
 import sysPath from 'path-browserify'
 import router from '@/router'
+import { isFalsy } from '@/utils'
+import { saveAs } from '@/utils/tool'
 
 const TIMEOUT = 15000
 const NETWORK_ERR_MSG = '网络错误，请稍后再试'

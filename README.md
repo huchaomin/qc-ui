@@ -62,7 +62,7 @@
 - 根据btn text 添加icon
 - langding page
 - pluginWebUpdateNotice
-- utils 不自动导入
+- hooks 整理
 
 ### 分析包大小
 

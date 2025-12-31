@@ -8,6 +8,7 @@ import type {
   TdOptionProps,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import { isFalsy } from '@/utils'
 
 export type SelectProps = Omit<
   _SelectProps,

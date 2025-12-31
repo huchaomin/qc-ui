@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { aesEncrypt } from '@/utils/tool'
 import { checkCaptcha, getCaptcha } from './api'
 
 const emit = defineEmits<{

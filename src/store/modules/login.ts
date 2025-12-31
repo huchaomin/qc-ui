@@ -1,3 +1,5 @@
+import { aesEncrypt } from '@/utils/tool'
+
 export interface LoginData {
   code?: string
   password: string
