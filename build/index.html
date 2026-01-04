@@ -37,8 +37,8 @@
           left: 0;
           flex-direction: column;
           transition: opacity 1s ease-in-out;
+          font-size: clamp(12px, 0.9vw, 24px);
         }
-
         @keyframes landing_slide {
           0% {
             transform: translate(0, 0);
@@ -115,7 +115,7 @@
           }
         }
         #landing svg {
-          width: 9vw;
+          width: clamp(60px, 8vw, 240px);
           margin-bottom: 2vw;
         }
         #landing svg #gradient > stop[offset='0%'] {

@@ -34,6 +34,7 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
       shape="circle"
       variant="text"
       size="large"
+      class="flex-shrink-0"
       @click="commonStore.drawerOpen = !commonStore.drawerOpen"
     >
       <Icon icon="lineicons:menu-hamburger-1" />
