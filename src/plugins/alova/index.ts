@@ -35,6 +35,7 @@ export default createAlova({
         useLoading: true,
         useResponseBlob: false,
         useSuccessMsg: false,
+        useSysFailMsg: true,
         useToken: true,
       },
       ...(method.meta ?? {}),
@@ -99,7 +100,9 @@ export default createAlova({
 
     // 由于window.fetch的特点，只有在连接超时或连接中断时才会触发onError拦截器，其他情况均会触发onSuccess拦截器
     // 这里必须抛出错误, 要不然将认为请求是成功的，且不会获得响应数据(undefined)
-    onError: async (err) => {
+    onError: async (err, method) => {
+      const { useSysFailMsg } = method.meta as ThisAlovaCustomTypes
+
       if (err instanceof Error) {
         const { message } = err
 
@@ -109,35 +112,50 @@ export default createAlova({
         }
 
         if (message.toLowerCase().includes('timeout')) {
-          void $msg.error('请求超时')
+          if (useSysFailMsg) {
+            void $msg.error('请求超时')
+          }
+
           return Promise.reject(err)
         }
       }
 
-      void $msg.error(NETWORK_ERR_MSG)
+      if (useSysFailMsg) {
+        void $msg.error(NETWORK_ERR_MSG)
+      }
+
       return Promise.reject(err)
     },
 
     // 当捕获错误但没有抛出错误或返回 reject 状态的 Promise 实例，将认为请求是成功的，且不会获得响应数据。
     // 代码直接报错那当然，请求是失败的
     onSuccess: async (response, method) => {
+      const {
+        useDataResult,
+        useDownload,
+        useFailMsg,
+        useResponseBlob,
+        useSuccessMsg,
+        useSysFailMsg,
+        useToken,
+      } = method.meta as ThisAlovaCustomTypes
       const { headers, ok, status } = response
 
       // 状态码在 200-299 范围内
       if (ok === false) {
-        const map: Record<number, string> = {
-          403: '当前操作没有权限',
-          404: '访问资源不存在',
-          500: '服务不可用，请稍后再试或联系管理员！',
-        }
-        const m = map[status] ?? NETWORK_ERR_MSG
+        if (useSysFailMsg) {
+          const map: Record<number, string> = {
+            403: '当前操作没有权限',
+            404: '访问资源不存在',
+            500: '服务不可用，请稍后再试或联系管理员！',
+          }
+          const m = map[status] ?? NETWORK_ERR_MSG
 
-        void $msg.error(m)
+          void $msg.error(m)
+        }
+
         return Promise.reject(response)
       }
-
-      const { useDataResult, useDownload, useFailMsg, useResponseBlob, useSuccessMsg, useToken } =
-        method.meta as ThisAlovaCustomTypes
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
@@ -177,10 +195,8 @@ export default createAlova({
               // eslint-disable-next-line ts/no-unsafe-return
               return resData
             }
-          } else if (code === 401) {
-            if (useToken) {
-              void router.push({ name: 'Login' })
-            }
+          } else if (code === 401 && useToken) {
+            void router.push({ name: 'Login' })
           } else {
             if (useFailMsg !== false) {
               void $msg.error(useFailMsg === true ? msg : useFailMsg)

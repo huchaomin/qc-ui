@@ -53,7 +53,7 @@ declare module 'alova' {
        */
       useEmptyParams?: boolean
       /**
-       * 接口调用失败是否弹出 msg 默认true
+       * 接口调用失败(业务上的错误)是否弹出 msg 默认true
        * 如果传string的话，失败就弹出string
        */
       useFailMsg?: boolean | string
@@ -75,6 +75,10 @@ declare module 'alova' {
        * 接口调用成功是否弹出 msg 默认false
        */
       useSuccessMsg?: boolean
+      /**
+       * 系统错误(系统级的网络错误、请求超时等错误)是否弹出 msg 默认true
+       */
+      useSysFailMsg?: boolean
       /**
        * 是否在请求头添加 token 默认true
        */
