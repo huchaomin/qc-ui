@@ -55,11 +55,10 @@
 - Tailwind Components：社区收集了各种免费的 hero/footer。
 - https://www.creative-tim.com/twcomponents：类似上面，也是社区收集的片段
 - HyperUI：有 hero、footer、pricing、gallery 等常见页面段落，直接可复制代码。
-- Tailblocks：在线拼装器，可以选择不同模块生成完整 landing page。
 - z-vue-scan
-- 根据btn text 添加icon
-- langding page
+- 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
+- 头部拖动太小
 
 ### 分析包大小
 

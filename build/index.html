@@ -3,17 +3,181 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
     <title><%- title %></title>
     <style>
       html,
       body,
       #app {
         height: 100%;
+        margin: 0;
       }
     </style>
   </head>
   <body>
     <div id="app"></div>
+    <div id="landing">
+      <style>
+        body {
+          margin: 0;
+        }
+        #landing {
+          position: fixed;
+          width: 100%;
+          height: 100%;
+          background: #fff;
+          z-index: calc(Infinity);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          top: 0;
+          left: 0;
+          flex-direction: column;
+          transition: opacity 1s ease-in-out;
+        }
+
+        @keyframes landing_slide {
+          0% {
+            transform: translate(0, 0);
+          }
+          2% {
+            transform: translate(33px, 0);
+          }
+          12.5% {
+            transform: translate(33px, 0);
+          }
+          15.5% {
+            transform: translate(66px, 0);
+          }
+          25% {
+            transform: translate(66px, 0);
+          }
+          27% {
+            transform: translate(66px, 33px);
+          }
+          37.5% {
+            transform: translate(66px, 33px);
+          }
+          39.5% {
+            transform: translate(33px, 33px);
+          }
+          50% {
+            transform: translate(33px, 33px);
+          }
+          52% {
+            transform: translate(33px, 66px);
+          }
+          62.5% {
+            transform: translate(33px, 66px);
+          }
+          64.5% {
+            transform: translate(0, 66px);
+          }
+          75% {
+            transform: translate(0, 66px);
+          }
+          77% {
+            transform: translate(0, 33px);
+          }
+          87.5% {
+            transform: translate(0, 33px);
+          }
+          89.5% {
+            transform: translate(0, 0);
+          }
+          100% {
+            transform: translate(0, 0);
+          }
+        }
+        @keyframes landing_gradient1 {
+          from {
+            stop-color: #4383b8;
+          }
+          50% {
+            stop-color: #8013b9;
+          }
+          to {
+            stop-color: #4383b8;
+          }
+        }
+        @keyframes landing_gradient2 {
+          from {
+            stop-color: #4aa06c;
+          }
+          50% {
+            stop-color: #b22358;
+          }
+          to {
+            stop-color: #4aa06c;
+          }
+        }
+        #landing svg {
+          width: 9vw;
+          margin-bottom: 2vw;
+        }
+        #landing svg #gradient > stop[offset='0%'] {
+          animation: landing_gradient1 15s ease 0s infinite;
+        }
+        #landing svg #gradient > stop[offset='100%'] {
+          animation: landing_gradient2 15s ease 0s infinite;
+        }
+        #landing svg .rect {
+          animation: landing_slide 15s ease infinite;
+        }
+        #landing svg #rect1 {
+          animation-delay: 0s;
+        }
+        #landing svg #rect2 {
+          animation-delay: -2.1428571428571s;
+        }
+        #landing svg #rect3 {
+          animation-delay: -4.2857142857143s;
+        }
+        #landing svg #rect4 {
+          animation-delay: -6.4285714285714s;
+        }
+        #landing svg #rect5 {
+          animation-delay: -8.5714285714286s;
+        }
+        #landing svg #rect6 {
+          animation-delay: -10.714285714286s;
+        }
+        #landing svg #rect7 {
+          animation-delay: -12.857142857143s;
+        }
+      </style>
+      <svg viewBox="0 0 100 80">
+        <defs>
+          <linearGradient id="gradient" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#4383b8" />
+            <stop offset="100%" stop-color="#4aa06c" />
+          </linearGradient>
+
+          <clipPath id="rects">
+            <rect class="rect" id="rect1" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+            <rect class="rect" id="rect2" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+            <rect class="rect" id="rect3" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+            <rect class="rect" id="rect4" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+            <rect class="rect" id="rect5" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+            <rect class="rect" id="rect6" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+            <rect class="rect" id="rect7" x="0" y="0" width="30" height="30" rx="2" ry="2" />
+          </clipPath>
+        </defs>
+        <rect
+          id="container"
+          transform="translate(50) scale(0.707, 0.707) rotate(45)"
+          x="0"
+          y="0"
+          width="100"
+          height="100"
+          fill="url(#gradient)"
+          clip-path="url(#rects)"
+        ></rect>
+      </svg>
+      <div>正在加载系统资源，请耐心等待</div>
+    </div>
   </body>
 </html>

@@ -11,12 +11,15 @@ const { done, start } = useNProgress(undefined, {
 type LoadingText = Parameters<CreateMessageFnType>[0]
 
 class LoadingService {
+  public isLoading = ref(false)
   private loadingCount = 0
   private loadingInstance: LoadingInstance | null = null
   private loadingText: Ref<LoadingText | undefined> = ref(undefined)
 
   changeView() {
     if (this.loadingCount > 0) {
+      this.isLoading.value = true
+
       if (this.loadingInstance === null) {
         this.loadingInstance = LoadingPlugin({
           fullscreen: true,
@@ -36,6 +39,8 @@ class LoadingService {
         start()
       }
     } else {
+      this.isLoading.value = false
+
       if (this.loadingCount < 0) {
         throw new Error('loadingCount 不能小于 0')
       }
