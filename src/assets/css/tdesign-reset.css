@@ -152,6 +152,17 @@ body {
     }
   }
 
+  [id^="drag-dialog"] {
+    .t-dialog {
+      cursor: move;
+
+      [class^="t-dialog__body"],
+      .t-dialog__footer {
+        cursor: initial;
+      }
+    }
+  }
+
   .t-list-item {
     &:last-child {
       &::after {

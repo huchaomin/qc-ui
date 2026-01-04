@@ -58,7 +58,6 @@
 - z-vue-scan
 - 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
-- 头部拖动太小
 
 ### 分析包大小
 
