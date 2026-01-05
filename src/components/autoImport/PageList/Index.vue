@@ -1,35 +1,16 @@
 <script setup lang="ts">
-const formData = reactive({
-  amountType: '',
-  assignDimension: '',
-  id: '',
-  pkgGroup: '',
-  planName: '',
-  planStatus: '',
-  planType: '',
-  takeSameDebitAway: '',
-  templateId: '',
-})
-const formItems: FormItemType[] = [
-  {
-    _label: '计划ID',
-    model: 'id',
-  },
-  {
-    _label: '计划名称',
-    model: 'planName',
-  },
-  {
-    _label: '计划类型',
-    component: 'TSelect',
-    dicCode: 'plan_type',
-    model: 'planType',
-  },
-]
+import type { FormPropsType } from '@/components/tDesignReset/TForm.vue'
+import PageSearch from './PageSearch.vue'
+
+export interface PageListConfigType {
+  formProps: FormPropsType
+}
+
+const props = withDefaults(defineProps<PageListConfigType>(), {})
 </script>
 
 <template>
   <TCard>
-    <TForm :data="formData" :items="formItems"></TForm>
+    <PageSearch v-bind="props.formProps"></PageSearch>
   </TCard>
 </template>

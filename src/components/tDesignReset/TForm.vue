@@ -1,4 +1,8 @@
 <script setup lang="ts">
+/**
+ * @description: form reset 时， show 为 false 的不会一起reset
+ * @description: 要监听 formItem 的值变化时，可用onChange事件, 暂时没考虑 onUpdate:modelValue 事件
+ */
 import type {
   CheckboxProps,
   FormInstanceFunctions,
@@ -58,30 +62,28 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(
-  defineProps<
-    {
-      data: {
-        [key: string]: any
-      }
-      items: FormItemType[]
-      /**
-       * @description: 是否在验证失败时显示错误信息
-       */
-      msgErrorWhenValidate?: boolean
-    } & Omit<FormProps, 'data' | 'labelWidth'>
-  >(),
-  {
-    colon: true,
-    labelAlign: 'top',
-    layout: 'inline',
-    msgErrorWhenValidate: true,
-    preventSubmitDefault: true,
-    requiredMark: undefined,
-    resetType: 'initial',
-    showErrorMessage: true,
-  },
-)
+const props = withDefaults(defineProps<FormPropsType>(), {
+  colon: true,
+  labelAlign: 'top',
+  layout: 'inline',
+  msgErrorWhenValidate: true,
+  preventSubmitDefault: true,
+  requiredMark: undefined,
+  resetType: 'initial',
+  showErrorMessage: true,
+})
+
+export type FormPropsType = {
+  data: {
+    [key: string]: any
+  }
+  items: FormItemType[]
+  /**
+   * @description: 是否在验证失败时显示错误信息
+   */
+  msgErrorWhenValidate?: boolean
+} & Omit<FormProps, 'data' | 'labelWidth'>
+
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
     return reactive(item)

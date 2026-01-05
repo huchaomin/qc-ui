@@ -172,6 +172,11 @@ export default defineConfig(({ command, mode }) => {
             type: true,
           },
           {
+            from: '@/components/autoImport/PageList/Index.vue',
+            imports: ['PageListConfigType'],
+            type: true,
+          },
+          {
             from: '@/store/modules/router.ts',
             imports: ['RouteRecordRaw'],
             type: true,

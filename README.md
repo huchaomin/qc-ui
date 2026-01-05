@@ -51,7 +51,6 @@
 - 上传用户图片
 - 600 现在是不管成功和失败，都弹窗，需要优化
 - admin 用户登录 判断哪些菜单生成了却没有被用到
-- tForm 支持传slot emit
 - z-vue-scan
 - 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
