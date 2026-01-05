@@ -33,6 +33,8 @@
 4. 轻提示用 $msg
 5. 升级 tdesign 组件库时，手动对比 `node_modules/tdesign-vue-next/global.d.ts`
 6. api 文件夹里面的接口都是没有在 swagger 中定义的，是手动添加的
+7. 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
+8. vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
 
 ## todo
 
@@ -42,22 +44,18 @@
 - [server.warmup配置](https://mp.weixin.qq.com/s?__biz=Mzk0MDUyMDI4OA==&mid=2247484020&idx=1&sn=7d0c88c1b10c001b1d7724ace76d1b7a&chksm=c3b7c9155a69b2bf2e966e2bfbf55b40fa40c63d1e893d43d3ee0b452e25d7ad36bae8fe02d2&mpshare=1&scene=24&srcid=1007A1bipuxBSqdRkfwltAzs&sharer_shareinfo=a95b5998c3c2f0d944a89b04af59f319&sharer_shareinfo_first=a95b5998c3c2f0d944a89b04af59f319#rd)
 - [tdesign-starter](https://tdesign.tencent.com/starter/vue-next/dashboard/base)
 - 404 页面搞好看一点
-- 添加 waiting 动画
 - form reset 时，清空数据， show 为 false 的会不会一起reset?
 - [封装右键菜单](https://github.com/CyberNika/v-contextmenu/blob/main/src/directive.ts)
 - 怎么给 page 添加 lazy-view loading
-- 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
 - 定义refresh page store
 - 上传用户图片
 - 600 现在是不管成功和失败，都弹窗，需要优化
 - admin 用户登录 判断哪些菜单生成了却没有被用到
 - tForm 支持传slot emit
-- Tailwind Components：社区收集了各种免费的 hero/footer。
-- https://www.creative-tim.com/twcomponents：类似上面，也是社区收集的片段
-- HyperUI：有 hero、footer、pricing、gallery 等常见页面段落，直接可复制代码。
 - z-vue-scan
 - 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
+- 为自定义全局指令添加类型
 
 ### 分析包大小
 

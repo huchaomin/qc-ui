@@ -51,7 +51,7 @@ type ComponentItemType = AllowedComponentProps &
     model: string
   }
 interface SlotItemType {
-  model?: string
+  model?: string // 传给 name 参与校验
   slot: string
 }
 defineOptions({
@@ -119,7 +119,12 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
   }
 
   const isSelect = ['TCheckbox', 'TCheckboxGroup', 'TRadioGroup'].includes(item.component as string)
-  const message = isSelect ? `请选择${obj.label ?? ''}` : `请填写${obj.label ?? ''}`
+  const message =
+    typeof obj.label === 'string'
+      ? isSelect
+        ? `请选择${obj.label}`
+        : `请填写${obj.label}`
+      : '必填'
 
   if (obj.required === true) {
     if (obj.rules === undefined) {
@@ -128,7 +133,7 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
 
     if (
       obj.rules.find((rule: any) => rule.required === true) === undefined &&
-      props.rules?.[item.model ?? '']?.find((rule: any) => rule.required === true) === undefined
+      props.rules?.[item.model ?? ''] === undefined
     ) {
       obj.rules.unshift(
         ...[
@@ -164,6 +169,9 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
   return obj
 }
 
+/**
+ * @description: 当两种rule都存在时, _rules 会覆盖 props.rules
+ */
 const bindProps = computed(() => {
   const obj: Record<string, any> = {
     ...props,
@@ -315,7 +323,11 @@ defineExpose({} as FormInstanceFunctions)
         no_label_item: isFalsy(item._label),
       }"
     >
-      <slot v-if="(item as SlotItemType).slot" :name="(item as SlotItemType).slot"></slot>
+      <slot
+        v-if="(item as SlotItemType).slot"
+        :name="(item as SlotItemType).slot"
+        :item="item"
+      ></slot>
       <component
         :is="getComponent(item.component)"
         v-else
