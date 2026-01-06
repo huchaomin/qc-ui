@@ -30,4 +30,22 @@
     ],
     "description": "useWatcher alova"
   },
+  "usePagination alova": {
+    "prefix": "usePagination",
+    "body": [
+      "const { data, page, pageSize, refresh, total } = usePagination(",
+      "  // Method实例获取函数，它将接收page和pageSize，并返回一个Method实例",
+      "  (page, pageSize) => queryStudents(page, pageSize),",
+      "  {",
+      "    data: (response) => response.rows,",
+      "    immediate: false, // 默认为 true",
+      "    initialData: {",
+      "      data: [],",
+      "      total: 0,",
+      "    },",
+      "  },",
+      ")"
+    ],
+    "description": "usePagination alova"
+  }
 }

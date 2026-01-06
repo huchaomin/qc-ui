@@ -2,6 +2,10 @@
 import type { FormPropsType } from '@/components/tDesignReset/TForm.vue'
 
 const props = withDefaults(defineProps<FormPropsType>(), {})
+const emit = defineEmits<{
+  query: [FormData: Record<string, any>]
+  reset: [FormData: Record<string, any>]
+}>()
 const formData = ref(_.cloneDeep(props.data))
 
 watch(
@@ -33,19 +37,27 @@ const otherProps = computed(() => {
 })
 const formInstance = useTemplateRef('formRef')
 
-function handleReset() {
-  formData.value = _.cloneDeep(props.data)
+async function handleQuery() {
+  await formInstance.value!.validate()
+  emit('query', formData.value)
 }
 
-async function handleSearch() {
-  await formInstance.value!.validate()
+function handleReset() {
+  formData.value = _.cloneDeep(props.data)
+  emit('reset', formData.value)
 }
+
+defineExpose({
+  formData,
+  query: handleQuery,
+  reset: handleReset,
+})
 </script>
 
 <template>
   <TForm ref="formRef" :data="formData" :items="formItems" v-bind="otherProps">
     <template #btn>
-      <TButton @click="handleSearch">查询</TButton>
+      <TButton @click="handleQuery">查询</TButton>
       <TButton theme="default" @click="handleReset">重置</TButton>
     </template>
   </TForm>

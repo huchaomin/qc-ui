@@ -55,6 +55,7 @@
 - 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
 - 为自定义全局指令添加类型
+- isQueryByPagination
 
 ### 分析包大小
 

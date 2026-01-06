@@ -74,9 +74,7 @@ const props = withDefaults(defineProps<FormPropsType>(), {
 })
 
 export type FormPropsType = {
-  data: {
-    [key: string]: any
-  }
+  data: Record<string, any>
   items: FormItemType[]
   /**
    * @description: 是否在验证失败时显示错误信息

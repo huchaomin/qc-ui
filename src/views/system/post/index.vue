@@ -1,5 +1,10 @@
 <script setup lang="ts">
 const config: PageListConfigType = {
+  apis: {
+    list: {
+      method: 'system/post/list',
+    },
+  },
   formProps: {
     data: {
       postCode: '',
