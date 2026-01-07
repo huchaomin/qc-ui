@@ -35,66 +35,82 @@ const defaultUserInfo: UserInfo = {
   userName: '',
 }
 
-export default defineStore('user', () => {
-  const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
-  const permissions: Ref<string[]> = ref([])
-  const roles: Ref<string[]> = ref([])
+export default defineStore(
+  'user',
+  () => {
+    const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
+    const permissions: Ref<string[]> = ref([])
+    const roles: Ref<string[]> = ref([])
 
-  function clear() {
-    userInfo.value = _.cloneDeep(defaultUserInfo)
-    permissions.value = []
-    roles.value = []
-  }
-
-  const isAdmin = computed(() => userInfo.value.admin)
-
-  async function getUserInfo(getRouters = true) {
-    const res = await getUserInfoMethod()
-
-    userInfo.value = res.user
-    permissions.value = res.permissions
-    roles.value = res.roles
-
-    if (getRouters) {
-      await useRouterStore().getRouters()
+    function clear() {
+      userInfo.value = _.cloneDeep(defaultUserInfo)
+      permissions.value = []
+      roles.value = []
     }
-  }
 
-  watch(
-    () => userInfo.value.needChangePwd,
-    (val) => {
-      if (val === 1 && VITE_FORCE_PWD_CHANGE) {
-        void nextTick(() => {
-          const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)
-          const dialogInstance = $dialog({
-            body: () =>
-              h(ResetPwd, {
-                labelAlign: 'top',
-                ref: resetPwdRef,
-                showFooter: false,
-              }),
-            cancelBtn: null,
-            closeBtn: false,
-            header: '请修改密码',
-            onConfirm: async () => {
-              await resetPwdRef.value!.handleSubmit()
-              dialogInstance.hide()
-            },
-            width: 430,
-          })
-        })
+    const isAdmin = computed(() => userInfo.value.admin)
+    const lastUserId = ref('')
+
+    async function getUserInfo(getRouters = true) {
+      const res = await getUserInfoMethod()
+
+      userInfo.value = res.user
+
+      if (lastUserId.value !== userInfo.value.userId) {
+        useRecentRoutersStore().clear()
       }
+
+      lastUserId.value = userInfo.value.userId
+      permissions.value = res.permissions
+      roles.value = res.roles
+
+      if (getRouters) {
+        await useRouterStore().getRouters()
+      }
+    }
+
+    watch(
+      () => userInfo.value.needChangePwd,
+      (val) => {
+        if (val === 1 && VITE_FORCE_PWD_CHANGE) {
+          void nextTick(() => {
+            const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)
+            const dialogInstance = $dialog({
+              body: () =>
+                h(ResetPwd, {
+                  labelAlign: 'top',
+                  ref: resetPwdRef,
+                  showFooter: false,
+                }),
+              cancelBtn: null,
+              closeBtn: false,
+              header: '请修改密码',
+              onConfirm: async () => {
+                await resetPwdRef.value!.handleSubmit()
+                dialogInstance.hide()
+              },
+              width: 430,
+            })
+          })
+        }
+      },
+      {
+        immediate: true,
+      },
+    )
+    return {
+      clear,
+      getUserInfo,
+      isAdmin,
+      lastUserId, // 只有return 出去才会被 pick 到
+      permissions,
+      roles,
+      userInfo,
+    }
+  },
+  {
+    persist: {
+      pick: ['lastUserId'],
     },
-    {
-      immediate: true,
-    },
-  )
-  return {
-    clear,
-    getUserInfo,
-    isAdmin,
-    permissions,
-    roles,
-    userInfo,
-  }
-})
+  },
+)

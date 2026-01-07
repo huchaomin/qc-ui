@@ -112,18 +112,17 @@ router.afterEach((to, from, failure) => {
   const { meta, name } = to as RouteRecordRaw
   const { fullScreen, parentName, title } = meta
 
-  if (title !== '') {
-    document.title = title
+  document.title = title || useCommonStore().appInfo.appName
+
+  const recentRoutersStore = useRecentRoutersStore()
+
+  // 如果从面包屑进入，则删除当前下一层级路由
+  if (to.query._fromBreadcrumb === 'true') {
+    recentRoutersStore.remove(from.name)
   }
 
   if (!['Login', 'NotFound'].includes(name) && !fullScreen) {
-    const recentRoutersStore = useRecentRoutersStore()
-
-    // 如果从面包屑进入，则删除当前下一层级路由
-    if (to.query._fromBreadcrumb === 'true') {
-      recentRoutersStore.remove(from.name)
-    }
-
+    // 安排在谁后面，从父级路由进入，则安排在父级路由tab后面，从非左侧树进入，则安排在当前tab后面
     const fromName =
       parentName === from.name || to.query._fromLeftTree !== 'true' ? from.name : undefined
 
@@ -131,9 +130,10 @@ router.afterEach((to, from, failure) => {
       name,
       query: to.query,
     })
-    // 从不缓存列表中移除
-    useExcludeKPnameStore().remove(name)
   }
+
+  // 从不缓存列表中移除
+  useExcludeKPnameStore().remove(name)
 
   if (import.meta.env.DEV) {
     if (isNavigationFailure(failure, NavigationFailureType.aborted)) {

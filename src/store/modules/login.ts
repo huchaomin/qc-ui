@@ -62,7 +62,6 @@ export default defineStore(
 
     function clearSession() {
       token.value = ''
-      useRecentRoutersStore().clear()
       useExcludeKPnameStore().clear()
       useRouterStore().clear()
       useUserStore().clear()
