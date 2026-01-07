@@ -8,6 +8,16 @@
   :root,
   :root[theme-mode='light'] {
     --td-font-gray-1: rgb(0 0 0 / 70%) !important;
+    --td-brand-color-1: #f2f3ff !important;
+    --td-brand-color-2: #cadffc !important;
+    --td-brand-color-3: #a1cbfa !important;
+    --td-brand-color-4: #79b7f7 !important;
+    --td-brand-color-5: #51a2f4 !important;
+    --td-brand-color-6: #288ef2 !important;
+    --td-brand-color-7: #007aef !important;
+    --td-brand-color-8: #005fbb !important;
+    --td-brand-color-9: #004586 !important;
+    --td-brand-color-10: #002a52 !important;
   }
 }
 
