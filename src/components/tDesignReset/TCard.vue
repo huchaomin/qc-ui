@@ -10,6 +10,18 @@ const props = withDefaults(defineProps<CardProps>(), {
   headerBordered: true,
   shadow: true,
 })
+const otherProps = computed(() => {
+  const obj: Partial<CardProps> = {
+    ...props,
+  }
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof typeof obj] === undefined) {
+      delete obj[key as keyof typeof obj]
+    }
+  })
+  return obj
+})
 const compo = _Card
 const vm = getCurrentInstance()!
 
@@ -26,7 +38,7 @@ function compoRef(instance: any) {
     :is="
       h(
         compo,
-        mergeProps($attrs, props, {
+        mergeProps($attrs, otherProps, {
           ref: compoRef,
         }),
         $slots,

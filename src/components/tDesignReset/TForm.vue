@@ -4,10 +4,10 @@
  * @description: 要监听 formItem 的值变化时，可用onChange事件, 暂时没考虑 onUpdate:modelValue 事件
  */
 import type {
+  FormProps as _FormProps,
   CheckboxProps,
   FormInstanceFunctions,
   FormItemProps,
-  FormProps,
   ValidateResultList,
 } from 'tdesign-vue-next'
 import type { AllowedComponentProps, Reactive } from 'vue'
@@ -62,7 +62,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<FormPropsType>(), {
+const props = withDefaults(defineProps<FormProps>(), {
   colon: true,
   labelAlign: 'top',
   layout: 'inline',
@@ -73,14 +73,14 @@ const props = withDefaults(defineProps<FormPropsType>(), {
   showErrorMessage: true,
 })
 
-export type FormPropsType = {
+export type FormProps = {
   data: Record<string, any>
   items: FormItemType[]
   /**
    * @description: 是否在验证失败时显示错误信息
    */
   msgErrorWhenValidate?: boolean
-} & Omit<FormProps, 'data' | 'labelWidth'>
+} & Omit<_FormProps, 'data' | 'labelWidth'>
 
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
@@ -172,8 +172,8 @@ function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
 /**
  * @description: 当两种rule都存在时, _rules 会覆盖 props.rules
  */
-const bindProps = computed(() => {
-  const obj: Record<string, any> = {
+const otherProps = computed(() => {
+  const obj: Partial<FormProps> = {
     ...props,
   }
 
@@ -183,12 +183,15 @@ const bindProps = computed(() => {
     Object.keys(obj.rules).forEach((key) => {
       r[key] = []
 
-      const rules = obj.rules[key]
+      const rules = obj.rules![key]
 
-      rules.forEach((rule: any) => {
+      rules!.forEach((rule: any) => {
         r[key].push(rule)
 
-        if (rule.required === true && rules.find((r: any) => r.whitespace === true) === undefined) {
+        if (
+          rule.required === true &&
+          rules!.find((r: any) => r.whitespace === true) === undefined
+        ) {
           r[key].push({
             message: rule.message,
             whitespace: true,
@@ -201,6 +204,11 @@ const bindProps = computed(() => {
 
   delete obj.items
   delete obj.msgErrorWhenValidate
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof typeof obj] === undefined) {
+      delete obj[key as keyof typeof obj]
+    }
+  })
   return obj
 })
 const compo = _Form
@@ -308,7 +316,7 @@ defineExpose({} as FormInstanceFunctions)
   <component
     :is="compo"
     v-bind="
-      mergeProps($attrs, bindProps, {
+      mergeProps($attrs, otherProps, {
         ref: compoRef,
       })
     "

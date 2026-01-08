@@ -12,6 +12,18 @@ const props = withDefaults(defineProps<TabPanelProps>(), {
   destroyOnHide: false,
   lazy: true,
 })
+const otherProps = computed(() => {
+  const obj: Partial<TabPanelProps> = {
+    ...props,
+  }
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof typeof obj] === undefined) {
+      delete obj[key as keyof typeof obj]
+    }
+  })
+  return obj
+})
 const compo = _TabPanel
 const vm = getCurrentInstance()!
 
@@ -28,7 +40,7 @@ function compoRef(instance: any) {
     :is="
       h(
         compo,
-        mergeProps($attrs, props, {
+        mergeProps($attrs, otherProps, {
           ref: compoRef,
         }),
         $slots,

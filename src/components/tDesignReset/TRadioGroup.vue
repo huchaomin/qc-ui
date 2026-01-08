@@ -41,12 +41,17 @@ const finallyOptions = computed(() => {
 
   return props.options
 })
-const bindProps = computed(() => {
-  const obj: Record<string, any> = {
+const otherProps = computed(() => {
+  const obj: Partial<RadioGroupProps> = {
     ...props,
   }
 
   delete obj.dicCode
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof typeof obj] === undefined) {
+      delete obj[key as keyof typeof obj]
+    }
+  })
   return obj
 })
 const innerModelValue = computed(() => {
@@ -74,7 +79,7 @@ const innerModelValue = computed(() => {
     :is="
       h(
         compo,
-        mergeProps($attrs, bindProps, {
+        mergeProps($attrs, otherProps, {
           options: finallyOptions,
           modelValue: innerModelValue,
           onChange: (...args: OnChangeParams) => {

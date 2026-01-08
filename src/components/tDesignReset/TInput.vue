@@ -19,6 +19,18 @@ const props = withDefaults(defineProps<InputProps>(), {
 const emit = defineEmits<{
   'update:modelValue': [value: InputValue]
 }>()
+const otherProps = computed(() => {
+  const obj: Partial<InputProps> = {
+    ...props,
+  }
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof typeof obj] === undefined) {
+      delete obj[key as keyof typeof obj]
+    }
+  })
+  return obj
+})
 const compo = _Input
 const vm = getCurrentInstance()!
 
@@ -35,7 +47,7 @@ function compoRef(instance: any) {
     :is="
       h(
         compo,
-        mergeProps($attrs, props, {
+        mergeProps($attrs, otherProps, {
           onChange: (...args: OnChangeParams) => {
             emit('update:modelValue', args[0])
             props.onChange?.(...args)

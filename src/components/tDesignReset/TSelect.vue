@@ -140,13 +140,18 @@ const innerModelValue = computed(() => {
 
   return props.modelValue
 })
-const bindProps = computed(() => {
-  const obj: Record<string, any> = {
+const otherProps = computed(() => {
+  const obj: Partial<SelectProps> = {
     ...props,
   }
 
   delete obj.dicCode
   delete obj.showCheckAll
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof typeof obj] === undefined) {
+      delete obj[key as keyof typeof obj]
+    }
+  })
   return obj
 })
 const { inputValue, popupVisible } = toRefs(props)
@@ -173,7 +178,7 @@ const [innerInputValue, setInputValue] = useDefaultValue(
     :is="
       h(
         compo,
-        mergeProps($attrs, bindProps, {
+        mergeProps($attrs, otherProps, {
           options: finallyOptions,
           modelValue: innerModelValue,
           onChange: (...args: OnChangeParams) => {
