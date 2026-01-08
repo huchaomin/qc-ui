@@ -32,8 +32,14 @@ export default defineStore(
       },
     )
 
-    async function getAppInfo() {
-      appInfo.value = await getAppInfoMethod()
+    function getAppInfo() {
+      getAppInfoMethod()
+        .then((res) => {
+          appInfo.value = res
+        })
+        .catch((e) => {
+          console.log(`${VITE_APP_NAME} 获取应用信息失败`, e)
+        })
     }
 
     return {

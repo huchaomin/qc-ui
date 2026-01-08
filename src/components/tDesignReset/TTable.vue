@@ -16,6 +16,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   lazyLoad: true, // 开启整个表格的懒加载
   resizable: true,
   rowKey: '_ROW_KEY', // footer data 不需要考虑
+  rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
   scroll: () => ({
     isFixedRowHeight: true,
     rowHeight: 49, // TODO
@@ -25,7 +26,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   selectOnRowClick: true,
   showHeader: true,
   stripe: true,
-  tableLayout: 'auto',
+  tableLayout: 'fixed',
 })
 
 export type TableProps = Omit<EnhancedTableProps, 'columns' | 'data' | 'rowKey'> & {
@@ -45,9 +46,12 @@ const data = computed(() => {
   })
 })
 /**
- * @description: ellipsis width ellipsisTitle
+ * @description: ellipsis width ellipsisTitle fixed
  * @description: className 添加 class
  * @description: attrs 添加 style
+ * @description: cell 添加 自定义渲染， 函数参数为：{col, colIndex, row, rowIndex} https://tdesign.tencent.com/vue-next/components/table?tab=demo#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%85%83%E6%A0%BC%E7%9A%84%E8%A1%A8%E6%A0%BC
+ * @description: title 定义标题数据
+ * @description: foot 定义底部数据
  */
 const columns = computed(() => {
   const arr = props.columns.map((column) => {
@@ -74,6 +78,8 @@ const otherProps = computed(() => {
   delete obj.data
   delete obj.columnResizeMinWidth
   delete obj.columnResizeMaxWidth
+  delete obj.allowResizeColumnWidth // 已废弃的属性
+  delete obj.sortOnRowDraggable // 已废弃的属性
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
@@ -110,3 +116,16 @@ function compoRef(instance: any) {
   >
   </component>
 </template>
+
+<style scoped>
+:deep() {
+  .t-table__content::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .t-table__content::-webkit-scrollbar-thumb {
+    cursor: pointer;
+  }
+}
+</style>
