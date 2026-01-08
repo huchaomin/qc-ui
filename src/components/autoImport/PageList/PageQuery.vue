@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { FormPropsType } from '@/components/tDesignReset/TForm.vue'
+import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 
-const props = withDefaults(defineProps<FormPropsType>(), {})
+const props = withDefaults(defineProps<FormProps>(), {})
 const emit = defineEmits<{
   query: [FormData: Record<string, any>]
 }>()
@@ -26,7 +26,7 @@ const formItems = computed(() => {
   ]
 })
 const otherProps = computed(() => {
-  const obj: Partial<FormPropsType> = {
+  const obj: Partial<FormProps> = {
     ...props,
   }
 

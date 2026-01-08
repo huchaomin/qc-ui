@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Method } from 'alova'
-import type { FormPropsType } from '@/components/tDesignReset/TForm.vue'
+import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import type { TableProps } from '@/components/tDesignReset/TTable.vue'
 import PageQuery from './PageQuery.vue'
 
@@ -15,7 +15,7 @@ export interface PageListConfigType {
   /**
    * @description: 查询表单配置
    */
-  formProps: FormPropsType
+  formProps: FormProps
   /**
    * @description: 第一次查询是否要父组件来发起, 默认 false
    */

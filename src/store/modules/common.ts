@@ -6,6 +6,7 @@ interface AppInfo {
 function getAppInfoMethod() {
   return alovaInst.Get<AppInfo>('common/appInfo', {
     meta: {
+      useLoading: false,
       useSysFailMsg: false,
       useToken: false,
     },
