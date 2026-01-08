@@ -42,7 +42,13 @@ function bypass(
 }
 
 const TDesignResolverConfig: TDesignResolverOptions = {
-  exclude: [...tDesignResetComponentsName, 'TIcon'],
+  exclude: [
+    ...tDesignResetComponentsName,
+    'TIcon',
+    'TPrimaryTable',
+    'TEnhancedTable',
+    'TBaseTable',
+  ],
   library: 'vue-next',
   resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
 }
@@ -155,7 +161,7 @@ export default defineConfig(({ command, mode }) => {
           'vue-router',
           'pinia',
           '@vueuse/core',
-          tDesignAutoImport(isProduction),
+          tDesignAutoImport(isProduction), // const xxx = _${compo} 自动导入
           {
             from: 'alova/client',
             imports: ['useRequest', 'useWatcher'],

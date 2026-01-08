@@ -16,7 +16,7 @@ declare module 'vue' {
     TAvatarGroup: typeof import('tdesign-vue-next')['AvatarGroup'];
     TBackTop: typeof import('tdesign-vue-next')['BackTop'];
     TBadge: typeof import('tdesign-vue-next')['Badge'];
-    TBaseTable: typeof import('tdesign-vue-next')['BaseTable'];
+    // TBaseTable: typeof import('tdesign-vue-next')['BaseTable'];
     TBreadcrumb: typeof import('tdesign-vue-next')['Breadcrumb'];
     TBreadcrumbItem: typeof import('tdesign-vue-next')['BreadcrumbItem'];
     TButton: typeof import('tdesign-vue-next')['Button'];
@@ -49,7 +49,7 @@ declare module 'vue' {
     TDropdownItem: typeof import('tdesign-vue-next')['DropdownItem'];
     TDropdownMenu: typeof import('tdesign-vue-next')['DropdownMenu'];
     TEmpty: typeof import('tdesign-vue-next')['Empty'];
-    TEnhancedTable: typeof import('tdesign-vue-next')['EnhancedTable'];
+    // TEnhancedTable: typeof import('tdesign-vue-next')['EnhancedTable'];
     TFooter: typeof import('tdesign-vue-next')['Footer'];
     // TForm: typeof import('tdesign-vue-next')['Form'];
     TFormItem: typeof import('tdesign-vue-next')['FormItem'];
@@ -83,7 +83,7 @@ declare module 'vue' {
     TTypographyParagraph: typeof import('tdesign-vue-next')['Paragraph'];
     TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm'];
     TPopup: typeof import('tdesign-vue-next')['Popup'];
-    TPrimaryTable: typeof import('tdesign-vue-next')['PrimaryTable'];
+    // TPrimaryTable: typeof import('tdesign-vue-next')['PrimaryTable'];
     TProgress: typeof import('tdesign-vue-next')['Progress'];
     TQrcode: typeof import('tdesign-vue-next')['QRCode'];
     TRadio: typeof import('tdesign-vue-next')['Radio'];
@@ -108,7 +108,7 @@ declare module 'vue' {
     TSwiper: typeof import('tdesign-vue-next')['Swiper'];
     TSwiperItem: typeof import('tdesign-vue-next')['SwiperItem'];
     TSwitch: typeof import('tdesign-vue-next')['Switch'];
-    TTable: typeof import('tdesign-vue-next')['Table'];
+    // TTable: typeof import('tdesign-vue-next')['Table'];
     // TTabPanel: typeof import('tdesign-vue-next')['TabPanel'];
     TTabs: typeof import('tdesign-vue-next')['Tabs'];
     TTag: typeof import('tdesign-vue-next')['Tag'];
@@ -137,6 +137,7 @@ declare module 'vue' {
     TRadioGroup: (typeof import('@/components/tDesignReset/TRadioGroup.vue'))['default']
     TSelect: (typeof import('@/components/tDesignReset/TSelect.vue'))['default']
     TTabPanel: (typeof import('@/components/tDesignReset/TTabPanel.vue'))['default']
+    TTable: (typeof import('@/components/tDesignReset/TTable.vue'))['default']
   }
 }
 

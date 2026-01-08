@@ -10,6 +10,9 @@ const compos = import.meta.glob('./components/tDesignReset/*.vue', {
 
 app.use(TDesign)
 delete app._context.components.TIcon // 不使用内部 TIcon 组件
+delete app._context.components.TPrimaryTable // 不使用内部 TPrimaryTable 组件
+delete app._context.components.TEnhancedTable // 不使用内部 TEnhancedTable 组件
+delete app._context.components.TBaseTable // 不使用内部 TBaseTable 组件
 Object.keys(compos).forEach((key) => {
   const name = getFilenameFromUrl(key)
 

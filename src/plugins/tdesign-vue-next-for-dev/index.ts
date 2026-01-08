@@ -5,6 +5,7 @@ import _TDesign, {
   Card as _Card,
   CheckboxGroup as _CheckboxGroup,
   DialogPlugin as _DialogPlugin,
+  EnhancedTable as _EnhancedTable,
   Form as _Form,
   Image as _Image,
   Input as _Input,
@@ -32,7 +33,9 @@ const RadioGroup = _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGrou
 const CheckboxGroup = _CheckboxGroup as (typeof import('tdesign-vue-next'))['CheckboxGroup']
 const TabPanel = _TabPanel as (typeof import('tdesign-vue-next'))['TabPanel']
 const Select = _Select as (typeof import('tdesign-vue-next'))['Select']
+const Table = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTable']
 
+// 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
   Card,
   CheckboxGroup,
@@ -46,6 +49,7 @@ export {
   NotifyPlugin,
   RadioGroup,
   Select,
+  Table,
   TabPanel,
   TDesign,
 }
