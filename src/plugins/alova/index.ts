@@ -16,12 +16,14 @@ export default createAlova({
   baseURL: VITE_BASE_URL, // 如果你在某个具体请求中提供了包含协议头（如 http://或 https://）的完整 URL，Alova 会自动忽略 baseURL的拼接，直接使用该完整地址
   // 请求前拦截器 可以为异步函数
   beforeRequest(method) {
+    const [VITE_API_PREFIX_ARRAY_FIRST, ...VITE_API_PREFIX_ARRAY_REST] = VITE_API_PREFIX_ARRAY
+
     if (
-      !VITE_API_PREFIX_ARRAY.some((prefix) =>
+      !VITE_API_PREFIX_ARRAY_REST.some((prefix) =>
         sysPath.join('/', method.url).startsWith(sysPath.join('/', prefix)),
       )
     ) {
-      method.url = sysPath.join(VITE_API_PREFIX_ARRAY[0]!, method.url)
+      method.url = sysPath.join(VITE_API_PREFIX_ARRAY_FIRST!, method.url)
     }
 
     method.meta = {
