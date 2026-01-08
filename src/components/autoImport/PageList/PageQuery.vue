@@ -4,7 +4,6 @@ import type { FormPropsType } from '@/components/tDesignReset/TForm.vue'
 const props = withDefaults(defineProps<FormPropsType>(), {})
 const emit = defineEmits<{
   query: [FormData: Record<string, any>]
-  reset: [FormData: Record<string, any>]
 }>()
 const formData = ref(_.cloneDeep(props.data))
 
@@ -42,9 +41,9 @@ async function handleQuery() {
   emit('query', formData.value)
 }
 
-function handleReset() {
+async function handleReset() {
   formData.value = _.cloneDeep(props.data)
-  emit('reset', formData.value)
+  await handleQuery()
 }
 
 defineExpose({
