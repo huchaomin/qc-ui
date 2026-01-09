@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
   scroll: () => ({
     isFixedRowHeight: true,
-    rowHeight: 47, // TODO
+    rowHeight: 45,
     threshold: 500,
     type: 'virtual',
   }),
@@ -155,7 +155,7 @@ onMounted(() => {
 
           if (ellipsis !== null) {
             const insertWidth = Math.ceil(
-              Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 32 + 1,
+              Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1,
             )
             const _index = parent.getAttribute('data-col-index')
 
@@ -212,9 +212,35 @@ onMounted(() => {
 
 <style scoped>
 :deep() {
-  /* 解决滚动时固定列border消失的bug */
   table {
+    --td-font-size-body-medium: 13px;
+    /* stylelint-disable-next-line custom-property-pattern */
+    --td-comp-paddingTB-m: 6px;
+    /* stylelint-disable-next-line custom-property-pattern */
+    --td-comp-paddingLR-l: 12px;
+    --td-bg-color-secondarycontainer: var(--td-gray-color-1);
+
+    font-size: 13px;
+
+    /* 解决滚动时固定列border消失的bug */
     border-collapse: separate;
+
+    td,
+    th {
+      height: 45px;
+    }
+
+    thead {
+      tr {
+        background-color: var(--td-brand-color-1);
+      }
+    }
+
+    th,
+    thead td {
+      font-weight: 600;
+      color: inherit;
+    }
   }
 
   /* 滚动条样式 */
@@ -236,26 +262,85 @@ onMounted(() => {
   }
 }
 
-/* fixed 列的阴影 */
-.t-table--bordered.t-table__content--scrollable-to-left {
-  :deep() {
-    .t-table__cell--fixed-left-last {
-      box-shadow: 8px 0 10px -5px rgb(0 0 0 / 12%);
+.t-table--bordered {
+  /* fixed 列的阴影 */
+  &.t-table__content--scrollable-to-left {
+    :deep() {
+      .t-table__cell--fixed-left-last {
+        box-shadow: 8px 0 10px -5px rgb(0 0 0 / 12%);
 
-      &::after {
-        border-right-width: 1px;
+        &::after {
+          border-right-width: 1px;
+        }
       }
+    }
+  }
+
+  &.t-table__content--scrollable-to-right {
+    :deep() {
+      .t-table__cell--fixed-right-first {
+        box-shadow: -8px 0 10px -5px rgb(0 0 0 / 12%);
+
+        &::after {
+          border-left-width: 1px;
+        }
+      }
+    }
+  }
+
+  /* 最下面的边框 */
+  :deep() {
+    tbody > tr:last-child > td,
+    tfoot > tr:last-child > td,
+    .t-table__content .t-table__row--without-border-bottom > td {
+      border-bottom: 1px solid var(--td-component-border);
     }
   }
 }
 
-.t-table--bordered.t-table__content--scrollable-to-right {
-  :deep() {
-    .t-table__cell--fixed-right-first {
-      box-shadow: -8px 0 10px -5px rgb(0 0 0 / 12%);
+/* 行背景颜色 */
+.t-table--striped {
+  &.t-table--header-fixed {
+    :deep() {
+      > .t-table__content > table > tbody tr:nth-of-type(even) {
+        background-color: var(--td-bg-color-container);
+      }
 
-      &::after {
-        border-left-width: 1px;
+      > .t-table__content > table > tbody tr:nth-of-type(odd) {
+        background-color: var(--td-bg-color-secondarycontainer);
+      }
+    }
+
+    &.t-table--hoverable {
+      :deep() {
+        tbody tr {
+          /* stylelint-disable-next-line no-descending-specificity */
+          &:hover {
+            background-color: var(--td-bg-color-secondarycontainer-hover);
+          }
+        }
+      }
+    }
+  }
+
+  &:not(.t-table--header-fixed) {
+    :deep() {
+      > .t-table__content > table > tbody > tr:nth-of-type(odd):not(.t-table__expanded-row) {
+        background-color: var(--td-bg-color-container);
+      }
+
+      > .t-table__content > table > tbody > tr:nth-of-type(even):not(.t-table__expanded-row) {
+        background-color: var(--td-bg-color-secondarycontainer);
+      }
+    }
+
+    &.t-table--hoverable {
+      :deep() {
+        > .t-table__content > table > tbody tr {
+          &:hover {
+            background-color: var(--td-bg-color-secondarycontainer-hover);
+          }
+        }
       }
     }
   }
