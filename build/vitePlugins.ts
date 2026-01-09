@@ -1,11 +1,13 @@
 import { visualizer } from 'rollup-plugin-visualizer'
 import { compression } from 'vite-plugin-compression2'
 import viteImagemin from 'vite-plugin-imagemin'
-import vueDevTools from 'vite-plugin-vue-devtools'
+// import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolvePath } from './utils/index.ts'
 
 export default {
-  development: [vueDevTools()],
+  development: [
+    // vueDevTools()
+  ],
   production: [
     (viteImagemin as unknown as typeof viteImagemin.default)({
       gifsicle: {

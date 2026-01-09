@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { EnhancedTableProps } from 'tdesign-vue-next'
+import type { CellData, EnhancedTableProps, PrimaryTableCol, TableRowData } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 defineOptions({
@@ -8,8 +8,6 @@ defineOptions({
 
 const props = withDefaults(defineProps<TableProps>(), {
   bordered: true,
-  columnResizeMaxWidth: 600,
-  columnResizeMinWidth: 80,
   disableDataPage: true,
   disableSpaceInactiveRow: true,
   hover: true,
@@ -19,7 +17,7 @@ const props = withDefaults(defineProps<TableProps>(), {
   rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
   scroll: () => ({
     isFixedRowHeight: true,
-    rowHeight: 49, // TODO
+    rowHeight: 47, // TODO
     threshold: 500,
     type: 'virtual',
   }),
@@ -29,11 +27,20 @@ const props = withDefaults(defineProps<TableProps>(), {
   tableLayout: 'fixed',
 })
 
+export type TableCol = {
+  /**
+   * @description: 列拖动的最大值最小值，感觉有bug
+   * @return {*}
+   */
+  resize?: {
+    maxWidth?: number
+    minWidth?: number
+  }
+} & Omit<PrimaryTableCol<TableRowData>, 'resize'>
+
 export type TableProps = Omit<EnhancedTableProps, 'columns' | 'data' | 'rowKey'> & {
-  columnResizeMaxWidth?: number
-  columnResizeMinWidth?: number
-  columns: NonNullable<EnhancedTableProps['columns']>
-  data: NonNullable<EnhancedTableProps['data']>
+  columns: Array<TableCol>
+  data: Array<TableRowData>
   rowKey?: string
 }
 
@@ -45,6 +52,35 @@ const data = computed(() => {
     }
   })
 })
+const _columnWidths = shallowRef<number[]>([])
+const columnWidths = refDebounced(_columnWidths, 500)
+const columnMinWidths = reactive<number[]>([])
+const columnMaxWidths = reactive<number[]>([])
+
+function getResize(column: TableCol) {
+  return {
+    maxWidth: column.resize?.maxWidth ?? Infinity,
+    minWidth: column.resize?.minWidth ?? 80,
+  }
+}
+
+watch(
+  () => props.columns,
+  (columns) => {
+    columns.forEach((column, index) => {
+      const resize = getResize(column)
+
+      _columnWidths.value = []
+      columnMinWidths[index] = resize.minWidth
+      columnMaxWidths[index] = resize.maxWidth
+    })
+  },
+  {
+    deep: true,
+    immediate: true,
+  },
+)
+
 /**
  * @description: ellipsis width ellipsisTitle fixed
  * @description: className 添加 class
@@ -54,15 +90,22 @@ const data = computed(() => {
  * @description: foot 定义底部数据
  */
 const columns = computed(() => {
-  const arr = props.columns.map((column) => {
+  const arr = props.columns.map((column, index) => {
+    const resize = getResize(column)
+
     return {
       ellipsis: true,
       ellipsisTitle: true,
+      stopPropagation: true,
       ...column,
-      resize: {
-        maxWidth: column.resize?.maxWidth ?? props.columnResizeMaxWidth,
-        minWidth: column.resize?.minWidth ?? props.columnResizeMinWidth,
+      attrs: (context: CellData<TableRowData>) => {
+        return {
+          ...(typeof column.attrs === 'function' ? column.attrs(context) : (column.attrs ?? {})),
+          'data-col-index': index,
+        }
       },
+      resize,
+      width: column.width ?? columnWidths.value[index] ?? resize.minWidth,
     }
   })
 
@@ -76,10 +119,8 @@ const otherProps = computed(() => {
 
   delete obj.columns
   delete obj.data
-  delete obj.columnResizeMinWidth
-  delete obj.columnResizeMaxWidth
-  delete obj.allowResizeColumnWidth // 已废弃的属性
-  delete obj.sortOnRowDraggable // 已废弃的属性
+  delete obj.allowResizeColumnWidth // 删除已废弃的属性
+  delete obj.sortOnRowDraggable // 删除已废弃的属性
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
@@ -98,6 +139,58 @@ function compoRef(instance: any) {
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }
+
+onMounted(() => {
+  useMutationObserver(
+    vm.exposed!.$el,
+    (mutations) => {
+      mutations.forEach((item) => {
+        const parent =
+          item.target instanceof HTMLElement
+            ? (item.target.closest('td') ?? item.target.closest('th'))
+            : (item.target.parentElement?.closest('td') ?? item.target.parentElement?.closest('th'))
+
+        if (parent !== null && parent !== undefined) {
+          const ellipsis = parent.querySelector('.t-table__ellipsis') as HTMLElement | null
+
+          if (ellipsis !== null) {
+            const insertWidth = Math.ceil(
+              Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 32 + 1,
+            )
+            const _index = parent.getAttribute('data-col-index')
+
+            if (_index !== null) {
+              const index = Number(_index)
+              const current = _columnWidths.value[index] ?? columnMinWidths[index]!
+
+              if (insertWidth > current) {
+                const finallyInsertWidth = Math.max(
+                  Math.min(insertWidth, columnMaxWidths[index]!),
+                  columnMinWidths[index]!,
+                )
+
+                if (finallyInsertWidth !== current) {
+                  console.log('-----------------------------')
+
+                  const arr = [..._columnWidths.value]
+
+                  arr[Number(index)] = finallyInsertWidth
+                  _columnWidths.value = arr
+                }
+              }
+            }
+          }
+        }
+      })
+    },
+    {
+      attributes: true,
+      characterData: true,
+      childList: true,
+      subtree: true,
+    },
+  )
+})
 </script>
 
 <template>
@@ -119,6 +212,12 @@ function compoRef(instance: any) {
 
 <style scoped>
 :deep() {
+  /* 解决滚动时固定列border消失的bug */
+  table {
+    border-collapse: separate;
+  }
+
+  /* 滚动条样式 */
   .t-table__content::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -126,6 +225,39 @@ function compoRef(instance: any) {
 
   .t-table__content::-webkit-scrollbar-thumb {
     cursor: pointer;
+  }
+
+  /* 调整css,以便计算宽度 */
+  .t-table__ellipsis {
+    display: inline-block;
+    width: auto;
+    max-width: 100%;
+    vertical-align: bottom;
+  }
+}
+
+/* fixed 列的阴影 */
+.t-table--bordered.t-table__content--scrollable-to-left {
+  :deep() {
+    .t-table__cell--fixed-left-last {
+      box-shadow: 8px 0 10px -5px rgb(0 0 0 / 12%);
+
+      &::after {
+        border-right-width: 1px;
+      }
+    }
+  }
+}
+
+.t-table--bordered.t-table__content--scrollable-to-right {
+  :deep() {
+    .t-table__cell--fixed-right-first {
+      box-shadow: -8px 0 10px -5px rgb(0 0 0 / 12%);
+
+      &::after {
+        border-left-width: 1px;
+      }
+    }
   }
 }
 </style>

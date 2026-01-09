@@ -55,7 +55,7 @@
 - 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
 - 为自定义全局指令添加类型
-- isQueryByPagination fullScreen empty maxHeight默认值 formProps拆开
+- isQueryByPagination fullScreen empty maxHeight默认值 formProps拆开, selectRow
 - reject 处理
 - 支持多级 Breadcrumb，对象存储在 recentRoutersStore 中
 
