@@ -46,8 +46,9 @@ body {
     width: 26px;
   }
 
-  .t-input--focused {
-    box-shadow: none !important;
+  .t-input--focused,
+  .t-range-input-popup--visible .t-range-input {
+    box-shadow: 0 0 0 1px var(--td-brand-color);
   }
 
   .t-tabs {
@@ -137,9 +138,5 @@ body {
         display: none;
       }
     }
-  }
-
-  .t-button + .t-button {
-    margin-left: var(--td-comp-margin-m);
   }
 }

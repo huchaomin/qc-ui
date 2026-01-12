@@ -12,6 +12,7 @@ import type {
 } from 'tdesign-vue-next'
 import type { AllowedComponentProps, Reactive } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
+import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
@@ -30,27 +31,32 @@ type _FormItemProps = AllowedComponentProps &
   }
 type ComponentItemType = AllowedComponentProps &
   XOR<
+    Omit<DateRangePickerProps, 'modelValue'> & {
+      component: 'TDateRangePicker'
+    },
     XOR<
       XOR<
         XOR<
-          Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-            component: 'TCheckbox'
-          },
-          Omit<InputProps, 'modelValue'> & {
-            component?: 'TInput'
+          XOR<
+            Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+              component: 'TCheckbox'
+            },
+            Omit<InputProps, 'modelValue'> & {
+              component?: 'TInput'
+            }
+          >,
+          Omit<RadioGroupProps, 'modelValue'> & {
+            component: 'TRadioGroup'
           }
         >,
-        Omit<RadioGroupProps, 'modelValue'> & {
-          component: 'TRadioGroup'
+        Omit<CheckboxGroupProps, 'modelValue'> & {
+          component: 'TCheckboxGroup'
         }
       >,
-      Omit<CheckboxGroupProps, 'modelValue'> & {
-        component: 'TCheckboxGroup'
+      Omit<SelectProps, 'modelValue'> & {
+        component: 'TSelect'
       }
-    >,
-    Omit<SelectProps, 'modelValue'> & {
-      component: 'TSelect'
-    }
+    >
   > & {
     model: string
   }
@@ -361,6 +367,10 @@ defineExpose({} as FormInstanceFunctions)
         opacity: 0;
       }
     }
+  }
+
+  .t-date-range-picker {
+    width: 100%;
   }
 }
 

@@ -110,10 +110,11 @@ defineExpose({
   <TForm ref="formRef" :data="formData" :items="formItems" v-bind="otherProps">
     <template #btn>
       <TButton @click="handleQuery">查询</TButton>
-      <TButton theme="default" @click="handleReset">重置</TButton>
+      <TButton theme="default" class="!ml-3" @click="handleReset">重置</TButton>
       <TButton
         v-if="showToggleBtn"
         variant="outline"
+        class="!ml-3"
         @click="showExtraFormItems = !showExtraFormItems"
       >
         展开

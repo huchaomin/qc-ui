@@ -5,6 +5,7 @@ import _TDesign, {
   Button as _Button,
   Card as _Card,
   CheckboxGroup as _CheckboxGroup,
+  DateRangePicker as _DateRangePicker,
   DialogPlugin as _DialogPlugin,
   EnhancedTable as _EnhancedTable,
   Form as _Form,
@@ -36,12 +37,14 @@ const TabPanel = _TabPanel as (typeof import('tdesign-vue-next'))['TabPanel']
 const Select = _Select as (typeof import('tdesign-vue-next'))['Select']
 const Table = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTable']
 const Button = _Button as (typeof import('tdesign-vue-next'))['Button']
+const DateRangePicker = _DateRangePicker as (typeof import('tdesign-vue-next'))['DateRangePicker']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
   Button,
   Card,
   CheckboxGroup,
+  DateRangePicker,
   DialogPlugin,
   Form,
   Image,
