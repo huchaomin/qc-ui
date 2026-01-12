@@ -128,9 +128,8 @@ export default defineConfig(({ command, mode }) => {
         'alova/fetch',
         'alova/vue',
         '@vueuse/integrations/useNProgress',
+        '@vueuse/integrations/useCookies',
         '@iconify/vue',
-        'vxe-pc-ui',
-        'vxe-table',
       ],
     },
     plugins: [
