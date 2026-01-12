@@ -19,7 +19,7 @@ declare module 'vue' {
     // TBaseTable: typeof import('tdesign-vue-next')['BaseTable'];
     TBreadcrumb: typeof import('tdesign-vue-next')['Breadcrumb'];
     TBreadcrumbItem: typeof import('tdesign-vue-next')['BreadcrumbItem'];
-    TButton: typeof import('tdesign-vue-next')['Button'];
+    // TButton: typeof import('tdesign-vue-next')['Button'];
     TCalendar: typeof import('tdesign-vue-next')['Calendar'];
     // TCard: typeof import('tdesign-vue-next')['Card'];
     TCascader: typeof import('tdesign-vue-next')['Cascader'];
@@ -138,6 +138,7 @@ declare module 'vue' {
     TSelect: (typeof import('@/components/tDesignReset/TSelect.vue'))['default']
     TTabPanel: (typeof import('@/components/tDesignReset/TTabPanel.vue'))['default']
     TTable: (typeof import('@/components/tDesignReset/TTable.vue'))['default']
+    TButton: (typeof import('@/components/tDesignReset/TButton.vue'))['default']
   }
 }
 

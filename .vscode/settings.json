@@ -87,6 +87,7 @@
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
   "cSpell.words": [
+    "iconify",
     "secondarycontainer",
     "tdesign"
   ],

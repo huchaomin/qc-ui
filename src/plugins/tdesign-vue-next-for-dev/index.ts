@@ -2,6 +2,7 @@ import type { LoadingPluginType, MessagePluginType, NotificationPluginType } fro
 import type _default from 'tdesign-vue-next'
 import type { DialogPluginType } from 'tdesign-vue-next/es/dialog/plugin.d.ts'
 import _TDesign, {
+  Button as _Button,
   Card as _Card,
   CheckboxGroup as _CheckboxGroup,
   DialogPlugin as _DialogPlugin,
@@ -34,9 +35,11 @@ const CheckboxGroup = _CheckboxGroup as (typeof import('tdesign-vue-next'))['Che
 const TabPanel = _TabPanel as (typeof import('tdesign-vue-next'))['TabPanel']
 const Select = _Select as (typeof import('tdesign-vue-next'))['Select']
 const Table = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTable']
+const Button = _Button as (typeof import('tdesign-vue-next'))['Button']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
+  Button,
   Card,
   CheckboxGroup,
   DialogPlugin,
