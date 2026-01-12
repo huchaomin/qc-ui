@@ -70,62 +70,60 @@ const config: PageListConfigType = {
       title: '数据类型1-视频 2-内容 3-其他',
     },
   ],
-  formProps: {
-    data: {
-      accessToken: '',
-      authorizeCode: '',
-      brandId: '',
-      dataType: '',
-      offsetNum: '',
-      status: '',
-      taskId: '',
-      ticket: '',
-      ticketType: '',
+  formItems: [
+    {
+      _label: '品牌id',
+      model: 'brandId',
     },
-    items: [
-      {
-        _label: '品牌id',
-        model: 'brandId',
-      },
-      {
-        _label: '任务id',
-        model: 'taskId',
-      },
-      {
-        _label: 'ticket类型',
-        component: 'TSelect',
-        dicCode: 'ticket_type',
-        model: 'ticketType',
-      },
-      {
-        _label: '微博ticket',
-        model: 'ticket',
-      },
-      {
-        _label: '鉴权码',
-        model: 'authorizeCode',
-      },
-      {
-        _label: '授权token',
-        model: 'accessToken',
-      },
-      {
-        _label: '拉取数据位置标记',
-        model: 'offsetNum',
-      },
-      {
-        _label: '状态',
-        component: 'TSelect',
-        dicCode: 'status',
-        model: 'status',
-      },
-      {
-        _label: '数据类型',
-        component: 'TSelect',
-        dicCode: 'data_type',
-        model: 'dataType',
-      },
-    ],
+    {
+      _label: '任务id',
+      model: 'taskId',
+    },
+    {
+      _label: 'ticket类型',
+      component: 'TSelect',
+      dicCode: 'ticket_type',
+      model: 'ticketType',
+    },
+    {
+      _label: '微博ticket',
+      model: 'ticket',
+    },
+    {
+      _label: '鉴权码',
+      model: 'authorizeCode',
+    },
+    {
+      _label: '授权token',
+      model: 'accessToken',
+    },
+    {
+      _label: '拉取数据位置标记',
+      model: 'offsetNum',
+    },
+    {
+      _label: '状态',
+      component: 'TSelect',
+      dicCode: 'status',
+      model: 'status',
+    },
+    {
+      _label: '数据类型',
+      component: 'TSelect',
+      dicCode: 'data_type',
+      model: 'dataType',
+    },
+  ],
+  initialFormData: {
+    accessToken: '',
+    authorizeCode: '',
+    brandId: '',
+    dataType: '',
+    offsetNum: '',
+    status: '',
+    taskId: '',
+    ticket: '',
+    ticketType: '',
   },
 }
 </script>

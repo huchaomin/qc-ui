@@ -11,15 +11,26 @@ export interface PageListConfigType {
     }
   }
   columns: TableProps['columns']
+  /**
+   * @description: 查询表单配置项
+   */
+  formItems: FormProps['items']
+  /**
+   * @description: 其他查询表单配置
+   */
+  formOtherProps?: Omit<FormProps, 'data' | 'items'>
 
   /**
-   * @description: 查询表单配置
+   * @description: 初始化查询表单数据
    */
-  formProps: FormProps
+  initialFormData: FormProps['data']
   /**
    * @description: 第一次查询是否要父组件来发起, 默认 false
    */
   isFirstQueryByParent?: boolean
+  /**
+   * @description: 其他表格配置
+   */
   tableOtherProps?: Omit<TableProps, 'columns' | 'data'>
 }
 
@@ -63,7 +74,13 @@ if (!props.isFirstQueryByParent) {
 
 <template>
   <TCard>
-    <PageQuery ref="pageQueryRef" v-bind="props.formProps" @query="doQuery"></PageQuery>
+    <PageQuery
+      ref="pageQueryRef"
+      :data="props.initialFormData"
+      :items="props.formItems"
+      v-bind="props.formOtherProps"
+      @query="doQuery"
+    ></PageQuery>
     <TTable
       :data="listData.rows"
       :columns="props.columns"
