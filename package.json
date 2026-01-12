@@ -15,6 +15,7 @@
     "nodeModulesInspector": "pnpx node-modules-inspector"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.9.0",
     "@vueuse/core": "^14.1.0",
     "@vueuse/integrations": "^14.1.0",
     "alova": "^3.4.1",

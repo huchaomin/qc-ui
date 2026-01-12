@@ -43,28 +43,26 @@ const config: PageListConfigType = {
       title: '更新人',
     },
   ],
-  formProps: {
-    data: {
-      postCode: '',
-      postName: '',
-      status: '',
+  formItems: [
+    {
+      _label: '岗位编码',
+      model: 'postCode',
     },
-    items: [
-      {
-        _label: '岗位编码',
-        model: 'postCode',
-      },
-      {
-        _label: '岗位名称',
-        model: 'postName',
-      },
-      {
-        _label: '状态',
-        component: 'TSelect',
-        dicCode: 'sys_normal_disable',
-        model: 'status',
-      },
-    ],
+    {
+      _label: '岗位名称',
+      model: 'postName',
+    },
+    {
+      _label: '状态',
+      component: 'TSelect',
+      dicCode: 'sys_normal_disable',
+      model: 'status',
+    },
+  ],
+  initialFormData: {
+    postCode: '',
+    postName: '',
+    status: '',
   },
 }
 </script>

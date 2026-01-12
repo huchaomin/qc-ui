@@ -130,6 +130,7 @@ export default defineConfig(({ command, mode }) => {
         '@vueuse/integrations/useNProgress',
         '@vueuse/integrations/useCookies',
         '@iconify/vue',
+        '@formkit/auto-animate',
       ],
     },
     plugins: [

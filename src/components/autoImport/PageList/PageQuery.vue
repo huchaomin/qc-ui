@@ -34,13 +34,13 @@ const otherProps = computed(() => {
   delete obj.data
   return obj
 })
-const formInstance = useTemplateRef('formRef')
+const formRef = useTemplateRef('formRef')
 // 计算哪些表单项需要展开/折叠 ------- start -------
 const showExtraFormItems = ref(false)
 const showToggleBtn = ref(false)
 let formDom: HTMLFormElement | null = null
 
-useResizeObserver(formInstance, (entries) => {
+useResizeObserver(formRef, (entries) => {
   formDom = (entries[0]?.target ?? null) as HTMLFormElement | null
   calcFormItemToggle()
 })
@@ -90,7 +90,7 @@ watch([showExtraFormItems, () => formItems.value.length], calcFormItemToggle)
 // 计算哪些表单项需要展开/折叠 ------- end -------
 
 async function handleQuery() {
-  await formInstance.value!.validate()
+  await formRef.value!.validate()
   emit('query', formData.value)
 }
 
