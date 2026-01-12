@@ -38,7 +38,10 @@ export type TableCol = {
   }
 } & Omit<PrimaryTableCol<TableRowData>, 'resize'>
 
-export type TableProps = Omit<EnhancedTableProps, 'columns' | 'data' | 'rowKey'> & {
+export type TableProps = Omit<
+  EnhancedTableProps,
+  'columns' | 'data' | 'fixedRows' | 'footerAffixProps' | 'headerAffixProps' | 'rowKey'
+> & {
   columns: Array<TableCol>
   data: Array<TableRowData>
   rowKey?: string
@@ -184,6 +187,7 @@ onMounted(() => {
       })
     },
     {
+      attributeFilter: ['class', 'style'],
       attributes: true,
       characterData: true,
       childList: true,
@@ -212,16 +216,13 @@ onMounted(() => {
 
 <style scoped>
 :deep() {
+  --td-font-body-medium: 13px / var(--td-line-height-body-medium) var(--td-font-family);
+  /* stylelint-disable-next-line custom-property-pattern */
+  --td-comp-paddingTB-m: 6px;
+  /* stylelint-disable-next-line custom-property-pattern */
+  --td-comp-paddingLR-l: 12px;
+
   table {
-    --td-font-size-body-medium: 13px;
-    /* stylelint-disable-next-line custom-property-pattern */
-    --td-comp-paddingTB-m: 6px;
-    /* stylelint-disable-next-line custom-property-pattern */
-    --td-comp-paddingLR-l: 12px;
-    --td-bg-color-secondarycontainer: var(--td-gray-color-1);
-
-    font-size: 13px;
-
     /* 解决滚动时固定列border消失的bug */
     border-collapse: separate;
 
@@ -230,16 +231,15 @@ onMounted(() => {
       height: 45px;
     }
 
-    thead {
-      tr {
-        background-color: var(--td-brand-color-1);
-      }
-    }
-
     th,
     thead td {
       font-weight: 600;
       color: inherit;
+      background-color: var(--td-brand-color-1) !important;
+    }
+
+    tfoot tr {
+      background-color: var(--td-brand-color-1) !important;
     }
   }
 
@@ -251,6 +251,10 @@ onMounted(() => {
 
   .t-table__content::-webkit-scrollbar-thumb {
     cursor: pointer;
+  }
+
+  .t-table__scroll-bar-divider {
+    right: 10px !important;
   }
 
   /* 调整css,以便计算宽度 */
@@ -290,9 +294,8 @@ onMounted(() => {
 
   /* 最下面的边框 */
   :deep() {
-    tbody > tr:last-child > td,
     tfoot > tr:last-child > td,
-    .t-table__content .t-table__row--without-border-bottom > td {
+    tbody:not(:has(+ tfoot)) > tr:last-child > td {
       border-bottom: 1px solid var(--td-component-border);
     }
   }
@@ -300,46 +303,21 @@ onMounted(() => {
 
 /* 行背景颜色 */
 .t-table--striped {
-  &.t-table--header-fixed {
-    :deep() {
-      > .t-table__content > table > tbody tr:nth-of-type(even) {
-        background-color: var(--td-bg-color-container);
-      }
-
-      > .t-table__content > table > tbody tr:nth-of-type(odd) {
-        background-color: var(--td-bg-color-secondarycontainer);
-      }
+  :deep() {
+    > .t-table__content > table > tbody > tr:nth-of-type(odd):not(.t-table__expanded-row) {
+      background-color: var(--td-bg-color-container) !important;
     }
 
-    &.t-table--hoverable {
-      :deep() {
-        tbody tr {
-          /* stylelint-disable-next-line no-descending-specificity */
-          &:hover {
-            background-color: var(--td-bg-color-secondarycontainer-hover);
-          }
-        }
-      }
+    > .t-table__content > table > tbody > tr:nth-of-type(even):not(.t-table__expanded-row) {
+      background-color: var(--td-bg-color-secondarycontainer) !important;
     }
   }
 
-  &:not(.t-table--header-fixed) {
+  &.t-table--hoverable {
     :deep() {
-      > .t-table__content > table > tbody > tr:nth-of-type(odd):not(.t-table__expanded-row) {
-        background-color: var(--td-bg-color-container);
-      }
-
-      > .t-table__content > table > tbody > tr:nth-of-type(even):not(.t-table__expanded-row) {
-        background-color: var(--td-bg-color-secondarycontainer);
-      }
-    }
-
-    &.t-table--hoverable {
-      :deep() {
-        > .t-table__content > table > tbody tr {
-          &:hover {
-            background-color: var(--td-bg-color-secondarycontainer-hover);
-          }
+      > .t-table__content > table > tbody tr {
+        &:hover {
+          background-color: var(--td-bg-color-secondarycontainer-hover) !important;
         }
       }
     }
