@@ -8,13 +8,10 @@ const config: PageListConfigType = {
   columns: [
     {
       colKey: 'id',
-      fixed: 'left',
       title: '主键',
-      width: 200,
     },
     {
       colKey: 'brandId',
-      fixed: 'left',
       title: '品牌id',
     },
     {

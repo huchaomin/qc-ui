@@ -345,3 +345,52 @@ defineExpose({} as FormInstanceFunctions)
     </TFormItem>
   </component>
 </template>
+
+<style scoped>
+:deep() {
+  .t-form__label {
+    padding-right: var(--td-size-1);
+  }
+
+  .t-form__item {
+    margin-bottom: var(--td-comp-margin-xxl) !important;
+
+    &.no_label_item {
+      .t-form__label {
+        height: 1px;
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.t-form-inline {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0 24px;
+
+  :deep() {
+    .span_2 {
+      grid-column: span 2;
+    }
+
+    .span_3 {
+      grid-column: span 3;
+    }
+
+    .span_full {
+      grid-column: 1 / -1;
+    }
+
+    .no_label_item {
+      align-self: flex-end;
+    }
+
+    .t-form__item {
+      display: block;
+      min-width: auto;
+      margin-right: 0;
+    }
+  }
+}
+</style>

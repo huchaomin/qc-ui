@@ -63,7 +63,7 @@ const columnMaxWidths = reactive<number[]>([])
 function getResize(column: TableCol) {
   return {
     maxWidth: column.resize?.maxWidth ?? Infinity,
-    minWidth: column.resize?.minWidth ?? 80,
+    minWidth: column.resize?.minWidth ?? 60,
   }
 }
 
