@@ -56,4 +56,8 @@ function compoRef(instance: any) {
     }
   }
 }
+
+.t-button + .t-button {
+  margin-left: var(--td-comp-margin-m);
+}
 </style>

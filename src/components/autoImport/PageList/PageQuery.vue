@@ -1,5 +1,10 @@
 <script setup lang="ts">
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
+import { mergeProps } from 'vue'
+
+defineOptions({
+  inheritAttrs: false,
+})
 
 const props = withDefaults(defineProps<FormProps>(), {})
 const emit = defineEmits<{
@@ -107,14 +112,22 @@ defineExpose({
 </script>
 
 <template>
-  <TForm ref="formRef" :data="formData" :items="formItems" v-bind="otherProps">
+  <TForm
+    ref="formRef"
+    :data="formData"
+    :items="formItems"
+    v-bind="
+      mergeProps($attrs, otherProps, {
+        class: 'relative',
+      })
+    "
+  >
     <template #btn>
       <TButton @click="handleQuery">查询</TButton>
-      <TButton theme="default" class="!ml-3" @click="handleReset">重置</TButton>
+      <TButton theme="default" @click="handleReset">重置</TButton>
       <TButton
         v-if="showToggleBtn"
         variant="outline"
-        class="!ml-3"
         @click="showExtraFormItems = !showExtraFormItems"
       >
         展开
