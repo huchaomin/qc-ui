@@ -58,7 +58,6 @@
 - isQueryByPagination fullScreen empty maxHeight默认值, selectRow
 - reject 处理
 - 支持多级 Breadcrumb，对象存储在 recentRoutersStore 中
-- picker presets bug
 
 ### 分析包大小
 
