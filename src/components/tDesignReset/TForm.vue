@@ -314,7 +314,12 @@ function calcLabelWidth() {
   })
 }
 
-defineExpose({} as FormInstanceFunctions)
+defineExpose(
+  {} as Omit<FormInstanceFunctions, 'validate' | 'validateOnly'> & {
+    validate: (...arg: Parameters<FormInstanceFunctions['validate']>) => Promise<true>
+    validateOnly: (...arg: Parameters<FormInstanceFunctions['validateOnly']>) => Promise<true>
+  },
+)
 </script>
 
 <template>

@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import type { CellData, EnhancedTableProps, PrimaryTableCol, TableRowData } from 'tdesign-vue-next'
+import type {
+  TableCol as _TableCol,
+  CellData,
+  EnhancedTableInstanceFunctions,
+  EnhancedTableProps,
+  TableRowData,
+} from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 defineOptions({
@@ -36,7 +42,7 @@ export type TableCol = {
     maxWidth?: number
     minWidth?: number
   }
-} & Omit<PrimaryTableCol<TableRowData>, 'resize'>
+} & Omit<_TableCol<TableRowData>, 'resize'>
 
 export type TableProps = Omit<
   EnhancedTableProps,
@@ -195,6 +201,7 @@ onMounted(() => {
     },
   )
 })
+defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
 
 <template>
