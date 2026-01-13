@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type { DateRangePickerProps as _DateRangePickerProps } from 'tdesign-vue-next'
+import type {
+  DateRangePickerProps as _DateRangePickerProps,
+  DateRangeValue,
+} from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 defineOptions({
@@ -9,6 +12,8 @@ defineOptions({
 const props = withDefaults(defineProps<DateRangePickerProps>(), {
   clearable: true,
   firstDayOfWeek: 7,
+  needConfirm: true,
+  panelPreselection: true,
   presets: () => ({
     上一个月: [
       dayjs().subtract(1, 'month').startOf('month').toDate(),
@@ -20,8 +25,18 @@ const props = withDefaults(defineProps<DateRangePickerProps>(), {
     本月: [dayjs().startOf('month').toDate(), dayjs().endOf('month').toDate()],
   }),
 })
+const emit = defineEmits<{
+  'update:modelValue': [value: DateRangeValue]
+}>()
 
-export type DateRangePickerProps = Omit<_DateRangePickerProps, 'defaultValue' | 'value'>
+export type DateRangePickerProps = Omit<
+  _DateRangePickerProps,
+  'defaultValue' | 'modelValue' | 'value'
+> & {
+  modelValue: DateRangeValue
+}
+
+type OnChangeParams = Parameters<NonNullable<_DateRangePickerProps['onChange']>>
 
 const otherProps = computed(() => {
   const obj: Partial<DateRangePickerProps> = {
@@ -52,6 +67,10 @@ function compoRef(instance: any) {
       h(
         compo,
         mergeProps($attrs, otherProps, {
+          onChange: (...args: OnChangeParams) => {
+            emit('update:modelValue', args[0])
+            props.onChange?.(...args)
+          },
           ref: compoRef,
         }),
         $slots,
