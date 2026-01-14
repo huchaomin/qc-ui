@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const config: PageListConfigType = {
+const config: PageListProps = {
   apis: {
     list: {
       method: 'system/post/list',

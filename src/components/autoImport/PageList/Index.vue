@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import type { Method } from 'alova'
+import type { PageTableProps } from '@/components/autoImport/PageTable.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import type { TableProps } from '@/components/tDesignReset/TTable.vue'
 import PageQuery from './PageQuery.vue'
 
-export interface PageListConfigType {
+export interface PageListProps {
   apis: {
     list: {
-      method: ((params: Record<string, any>) => Method) | string
+      method: PageTableProps['method']
     }
   }
   columns: TableProps['columns']
@@ -31,44 +31,27 @@ export interface PageListConfigType {
   /**
    * @description: 其他表格配置
    */
-  tableOtherProps?: Omit<TableProps, 'columns' | 'data'>
+  tableOtherProps?: Omit<PageTableProps, 'columns' | 'method'>
 }
 
-const props = withDefaults(defineProps<PageListConfigType>(), {
+const props = withDefaults(defineProps<PageListProps>(), {
   isFirstQueryByParent: false,
 })
-const listMethod = computed(() => {
-  if (typeof props.apis.list.method === 'string') {
-    return (params: Record<string, any>) =>
-      alovaInst.Get(props.apis.list.method as string, {
-        params,
-      })
-  }
-
-  return props.apis.list.method
-})
-const {
-  data: listData,
-  loading: listLoading,
-  send: listSend,
-} = useRequest(listMethod.value, {
-  immediate: false,
-  initialData: {
-    rows: [],
-    total: 0,
-  },
-})
+const pageQueryRef = useTemplateRef('pageQueryRef')
+const pageTableRef = useTemplateRef('pageTableRef')
 
 function doQuery(FormData: Record<string, any>) {
-  listSend(FormData)
+  pageTableRef.value!.query(FormData)
 }
-
-const pageQueryRef = useTemplateRef('pageQueryRef')
 
 if (!props.isFirstQueryByParent) {
   void nextTick(() => {
     pageQueryRef.value!.query()
   })
+}
+
+function doReset(FormData: Record<string, any>) {
+  pageTableRef.value!.reset(FormData)
 }
 </script>
 
@@ -80,12 +63,13 @@ if (!props.isFirstQueryByParent) {
       :items="props.formItems"
       v-bind="props.formOtherProps"
       @query="doQuery"
+      @reset="doReset"
     ></PageQuery>
-    <TTable
-      :data="listData.rows"
+    <PageTable
+      ref="pageTableRef"
+      :method="props.apis.list.method"
       :columns="props.columns"
-      :loading="listLoading"
       v-bind="props.tableOtherProps"
-    ></TTable>
+    ></PageTable>
   </TCard>
 </template>

@@ -179,7 +179,7 @@ export default defineConfig(({ command, mode }) => {
           },
           {
             from: '@/components/autoImport/PageList/Index.vue',
-            imports: ['PageListConfigType'],
+            imports: ['PageListProps'],
             type: true,
           },
           {

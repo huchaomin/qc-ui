@@ -9,6 +9,7 @@ defineOptions({
 const props = withDefaults(defineProps<FormProps>(), {})
 const emit = defineEmits<{
   query: [FormData: Record<string, any>]
+  reset: [FormData: Record<string, any>]
 }>()
 const formData = ref(_.cloneDeep(props.data))
 
@@ -101,7 +102,8 @@ async function handleQuery() {
 
 async function handleReset() {
   formData.value = _.cloneDeep(props.data)
-  await handleQuery()
+  await formRef.value!.validate()
+  emit('reset', formData.value)
 }
 
 defineExpose({

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import type {
   TableCol as _TableCol,
   CellData,
@@ -8,11 +8,7 @@ import type {
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
-defineOptions({
-  inheritAttrs: false,
-})
-
-const props = withDefaults(defineProps<TableProps>(), {
+export const propsInit = {
   bordered: true,
   disableDataPage: true,
   disableSpaceInactiveRow: true,
@@ -25,13 +21,13 @@ const props = withDefaults(defineProps<TableProps>(), {
     isFixedRowHeight: true,
     rowHeight: 45,
     threshold: 500,
-    type: 'virtual',
+    type: 'virtual' as const,
   }),
   selectOnRowClick: true,
   showHeader: true,
   stripe: true,
   tableLayout: 'fixed',
-})
+} as const
 
 export type TableCol = {
   /**
@@ -46,13 +42,27 @@ export type TableCol = {
 
 export type TableProps = Omit<
   EnhancedTableProps,
-  'columns' | 'data' | 'fixedRows' | 'footerAffixProps' | 'headerAffixProps' | 'rowKey'
+  | 'allowResizeColumnWidth'
+  | 'columns'
+  | 'data'
+  | 'fixedRows'
+  | 'footerAffixProps'
+  | 'headerAffixProps'
+  | 'rowKey'
+  | 'sortOnRowDraggable'
 > & {
   columns: Array<TableCol>
   data: Array<TableRowData>
   rowKey?: string
 }
+</script>
 
+<script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<TableProps>(), propsInit)
 const data = computed(() => {
   return props.data.map((item, index) => {
     return {
@@ -128,8 +138,6 @@ const otherProps = computed(() => {
 
   delete obj.columns
   delete obj.data
-  delete obj.allowResizeColumnWidth // 删除已废弃的属性
-  delete obj.sortOnRowDraggable // 删除已废弃的属性
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
