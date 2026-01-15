@@ -66,7 +66,10 @@ export default createAlova({
       const paramsCopy = new URLSearchParams()
 
       Object.keys(params).forEach((key: string) => {
-        if (!isFalsy(params[key]) || !useEmptyParams || (params[key] as any[]).length > 0) {
+        if (
+          !useEmptyParams ||
+          (Array.isArray(params[key]) ? params[key].length > 0 : !isFalsy(params[key]))
+        ) {
           paramsCopy.append(key, params[key] as string)
         }
       })
