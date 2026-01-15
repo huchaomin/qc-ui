@@ -42,10 +42,30 @@ export default defineStore(
         })
     }
 
+    const isRequestSleep = ref(true)
+    let timer: null | number = null
+
+    function requestActive(): void {
+      if (timer !== null) {
+        clearTimeout(timer)
+        timer = null
+      }
+
+      isRequestSleep.value = false
+      timer = setTimeout(
+        () => {
+          isRequestSleep.value = true
+        },
+        1000 * 60 * 15,
+      )
+    }
+
     return {
       appInfo,
       drawerOpen,
       getAppInfo,
+      isRequestSleep,
+      requestActive,
     }
   },
   {

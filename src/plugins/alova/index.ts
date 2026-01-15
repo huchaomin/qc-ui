@@ -34,6 +34,7 @@ export default createAlova({
         useEmptyParams: true,
         useFailMsg: true,
         useFormData: false,
+        useInPolling: false,
         useLoading: true,
         useResponseBlob: false,
         useSuccessMsg: false,
@@ -44,8 +45,14 @@ export default createAlova({
     }
 
     const loginStore = useLoginStore()
-    const { useEmptyParams, useFormData, useLoading, useResponseBlob, useToken } =
+    const { useEmptyParams, useFormData, useInPolling, useLoading, useResponseBlob, useToken } =
       method.meta as ThisAlovaCustomTypes
+
+    if (!useInPolling) {
+      const commonStore = useCommonStore()
+
+      commonStore.requestActive()
+    }
 
     if (useToken) {
       if (loginStore.token) {

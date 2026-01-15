@@ -62,6 +62,10 @@ declare module 'alova' {
        */
       useFormData?: boolean
       /**
+       * 是否是轮询请求 默认false
+       */
+      useInPolling?: boolean
+      /**
        * 请求接口时是否使用loading 默认true
        * 如果为string 则使用 string 作为 loading 的文本
        * 如果为false 则不使用loading
