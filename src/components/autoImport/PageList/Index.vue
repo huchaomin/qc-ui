@@ -42,12 +42,12 @@ const pageTableRef = useTemplateRef('pageTableRef')
 const queryParams = ref({})
 
 function doQuery() {
-  queryParams.value = pageQueryRef.value!.formData
+  queryParams.value = _.cloneDeep(pageQueryRef.value!.formData)
   pageTableRef.value!.query()
 }
 
 function doReset() {
-  queryParams.value = pageQueryRef.value!.formData
+  queryParams.value = _.cloneDeep(pageQueryRef.value!.formData)
   pageTableRef.value!.reset()
 }
 </script>

@@ -41,10 +41,6 @@ const otherProps = computed(() => {
   })
   return obj
 })
-const attrs = useAttrs()
-
-console.log('attrs', attrs)
-
 const compo = _Pagination
 const vm = getCurrentInstance()!
 

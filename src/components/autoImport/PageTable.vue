@@ -50,7 +50,8 @@ const listMethod = computed(() => {
 const pageNum = ref(1)
 const pageSize = ref(10)
 const queryParamsChangeTimer = ref(0)
-const { data, loading, send } = useWatcher(
+const { data, loading } = useWatcher(
+  // 初始化时这个函数会执行两遍
   () =>
     listMethod.value({
       pageNum: pageNum.value,
@@ -59,7 +60,7 @@ const { data, loading, send } = useWatcher(
     }),
   [pageNum, pageSize, queryParamsChangeTimer],
   {
-    debounce: 300,
+    debounce: 100,
     immediate: props.initialQuery,
     initialData: {
       rows: [],
@@ -85,12 +86,13 @@ watch(
 )
 
 function query() {
-  send()
+  queryParamsChangeTimer.value++
 }
 
 function reset() {
   pageNum.value = 1
   pageSize.value = 10
+  queryParamsChangeTimer.value++
 }
 
 defineExpose({
