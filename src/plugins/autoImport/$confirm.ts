@@ -1,7 +1,12 @@
 import type { CreateDialogFnType } from './$dialog'
 
 export default (
-  arg1: Omit<Parameters<CreateDialogFnType>[0], 'onClose' | 'onConfirm'> | string,
+  arg1:
+    | (Omit<Parameters<CreateDialogFnType>[0], 'onCancel' | 'onConfirm'> & {
+        onCancelCallback?: () => Promise<void> | void
+        onConfirmCallback?: () => Promise<void> | void
+      })
+    | string,
   arg2?: Parameters<CreateDialogFnType>[1],
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -14,7 +19,7 @@ export default (
         ? $dialog(
             {
               body: arg1,
-              onClose: () => {
+              onCancel: () => {
                 dialogInstance.hide()
                 reject()
               },
@@ -28,11 +33,14 @@ export default (
           )
         : $dialog(
             {
-              onClose: () => {
+              // eslint-disable-next-line ts/no-misused-promises
+              onCancel: async () => {
+                await arg1.onCancelCallback?.()
                 dialogInstance.hide()
                 reject()
               },
-              onConfirm: () => {
+              onConfirm: async () => {
+                await arg1.onConfirmCallback?.()
                 dialogInstance.hide()
                 resolve()
               },

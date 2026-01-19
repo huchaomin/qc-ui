@@ -75,7 +75,8 @@ export default defineStore(
         if (val === 1 && VITE_FORCE_PWD_CHANGE) {
           void nextTick(() => {
             const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)
-            const dialogInstance = $dialog({
+
+            void $confirm({
               body: () =>
                 h(ResetPwd, {
                   labelAlign: 'top',
@@ -83,11 +84,9 @@ export default defineStore(
                   showFooter: false,
                 }),
               cancelBtn: null,
-              closeBtn: false,
               header: '请修改密码',
-              onConfirm: async () => {
+              onConfirmCallback: async () => {
                 await resetPwdRef.value!.handleSubmit()
-                dialogInstance.hide()
               },
               width: 430,
             })
