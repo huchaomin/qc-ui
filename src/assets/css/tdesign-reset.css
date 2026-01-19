@@ -19,6 +19,9 @@
     --td-brand-color-9: #004586 !important;
     --td-brand-color-10: #002a52 !important;
     --td-gray-color-1: #fafafa !important;
+    --td-shadow-1: 0px 0px 6px rgb(0 0 0 / 8%) !important;
+    --td-shadow-2: 0px 0px 12px rgb(0 0 0 / 12%) !important;
+    --td-shadow-3: 0px 0px 18px rgb(0 0 0 / 24%) !important;
   }
 }
 
