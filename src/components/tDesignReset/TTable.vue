@@ -222,10 +222,15 @@ defineExpose({} as EnhancedTableInstanceFunctions)
           columns,
           data,
         }),
-        $slots,
       )
     "
   >
+    <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
+      <slot :name="k" v-bind="slotScope"></slot>
+    </template>
+    <template #empty>
+      <TEmpty></TEmpty>
+    </template>
   </component>
 </template>
 
