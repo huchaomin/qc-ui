@@ -39,19 +39,16 @@ const props = withDefaults(defineProps<PageListProps>(), {
 })
 const pageQueryRef = useTemplateRef('pageQueryRef')
 const pageTableRef = useTemplateRef('pageTableRef')
+const queryParams = ref({})
 
-function doQuery(FormData: Record<string, any>) {
-  pageTableRef.value!.query(FormData)
+function doQuery() {
+  queryParams.value = pageQueryRef.value!.formData
+  pageTableRef.value!.query()
 }
 
-if (!props.isFirstQueryByParent) {
-  void nextTick(() => {
-    pageQueryRef.value!.query()
-  })
-}
-
-function doReset(FormData: Record<string, any>) {
-  pageTableRef.value!.reset(FormData)
+function doReset() {
+  queryParams.value = pageQueryRef.value!.formData
+  pageTableRef.value!.reset()
 }
 </script>
 
@@ -70,6 +67,9 @@ function doReset(FormData: Record<string, any>) {
       :method="props.apis.list.method"
       :columns="props.columns"
       v-bind="props.tableOtherProps"
+      :watch-query-params="false"
+      :query-params="queryParams"
+      :watch-query-params-immediate="!props.isFirstQueryByParent"
     ></PageTable>
   </TCard>
 </template>

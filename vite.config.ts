@@ -164,7 +164,7 @@ export default defineConfig(({ command, mode }) => {
           tDesignAutoImport(isProduction), // const xxx = _${compo} 自动导入
           {
             from: 'alova/client',
-            imports: ['useRequest', 'useWatcher'],
+            imports: ['useRequest', 'useWatcher', 'usePagination'],
           },
           {
             '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],

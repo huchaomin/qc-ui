@@ -306,7 +306,9 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       }
     }
   }
+}
 
+.t-table--width-overflow {
   /* 最下面的边框 */
   :deep() {
     tfoot > tr:last-child > td,

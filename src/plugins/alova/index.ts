@@ -12,6 +12,20 @@ const NETWORK_ERR_MSG = '网络错误，请稍后再试'
 
 type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']>
 
+export function getParamsString(params: Arg, useEmptyParams = true): string {
+  const paramsCopy = new URLSearchParams()
+
+  Object.keys(params).forEach((key: string) => {
+    if (
+      !useEmptyParams ||
+      (Array.isArray(params[key]) ? params[key].length > 0 : !isFalsy(params[key]))
+    ) {
+      paramsCopy.append(key, params[key] as string)
+    }
+  })
+  return paramsCopy.toString()
+}
+
 export default createAlova({
   baseURL: VITE_BASE_URL, // 如果你在某个具体请求中提供了包含协议头（如 http://或 https://）的完整 URL，Alova 会自动忽略 baseURL的拼接，直接使用该完整地址
   // 请求前拦截器 可以为异步函数
@@ -70,17 +84,7 @@ export default createAlova({
     const params = method.config.params
 
     if (typeof params !== 'string') {
-      const paramsCopy = new URLSearchParams()
-
-      Object.keys(params).forEach((key: string) => {
-        if (
-          !useEmptyParams ||
-          (Array.isArray(params[key]) ? params[key].length > 0 : !isFalsy(params[key]))
-        ) {
-          paramsCopy.append(key, params[key] as string)
-        }
-      })
-      method.config.params = paramsCopy.toString()
+      method.config.params = getParamsString(params, useEmptyParams)
     }
 
     // 处理 formData 参数

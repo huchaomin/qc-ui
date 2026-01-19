@@ -60,6 +60,7 @@
 - 支持多级 Breadcrumb，对象存储在 recentRoutersStore 中
 - GradientText 取自 css 变量
 - [AutoDecimal](https://juejin.cn/post/7450708775008747557)
+- @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
 
 ### 分析包大小
 
