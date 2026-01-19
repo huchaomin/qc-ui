@@ -15,6 +15,7 @@ import _TDesign, {
   Message as _Message,
   MessagePlugin as _MessagePlugin,
   NotifyPlugin as _NotifyPlugin,
+  Pagination as _Pagination,
   RadioGroup as _RadioGroup,
   Select as _Select,
   TabPanel as _TabPanel,
@@ -38,6 +39,7 @@ const Select = _Select as (typeof import('tdesign-vue-next'))['Select']
 const Table = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTable']
 const Button = _Button as (typeof import('tdesign-vue-next'))['Button']
 const DateRangePicker = _DateRangePicker as (typeof import('tdesign-vue-next'))['DateRangePicker']
+const Pagination = _Pagination as (typeof import('tdesign-vue-next'))['Pagination']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -53,6 +55,7 @@ export {
   Message,
   MessagePlugin,
   NotifyPlugin,
+  Pagination,
   RadioGroup,
   Select,
   Table,

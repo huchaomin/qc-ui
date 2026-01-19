@@ -78,7 +78,7 @@ declare module 'vue' {
     TNotification: typeof import('tdesign-vue-next')['Notification'];
     TOption: typeof import('tdesign-vue-next')['Option'];
     TOptionGroup: typeof import('tdesign-vue-next')['OptionGroup'];
-    TPagination: typeof import('tdesign-vue-next')['Pagination'];
+    // TPagination: typeof import('tdesign-vue-next')['Pagination'];
     TPaginationMini: typeof import('tdesign-vue-next')['PaginationMini'];
     TTypographyParagraph: typeof import('tdesign-vue-next')['Paragraph'];
     TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm'];
@@ -140,6 +140,7 @@ declare module 'vue' {
     TTable: (typeof import('@/components/tDesignReset/TTable.vue'))['default']
     TButton: (typeof import('@/components/tDesignReset/TButton.vue'))['default']
     TDateRangePicker: (typeof import('@/components/tDesignReset/TDateRangePicker.vue'))['default']
+    TPagination: (typeof import('@/components/tDesignReset/TPagination.vue'))['default']
   }
 }
 

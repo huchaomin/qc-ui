@@ -5,6 +5,10 @@ import { propsInit } from '@/components/tDesignReset/TTable.vue'
 import { getParamsString } from '@/plugins/alova/index'
 
 export type PageTableProps = {
+  /**
+   * @description: 是否立即查询
+   */
+  initialQuery?: boolean
   method: ((params: Record<string, any>) => Method) | string
   /**
    * @description: 传给分页接口的参数
@@ -14,17 +18,13 @@ export type PageTableProps = {
    * @description: 是否监听传给分页接口的参数
    */
   watchQueryParams?: boolean
-  /**
-   * @description: 是否立即监听传给分页接口的参数,watchQueryParams为true时有效，仅初始化时的值有效
-   */
-  watchQueryParamsImmediate?: boolean
 } & Omit<TableProps, 'data' | 'loading'>
 
 const props = withDefaults(defineProps<PageTableProps>(), {
   ...propsInit,
+  initialQuery: true,
   queryParams: () => ({}),
   watchQueryParams: true,
-  watchQueryParamsImmediate: true,
 })
 const otherProps = computed(() => {
   const obj: Partial<PageTableProps> = {
@@ -34,11 +34,8 @@ const otherProps = computed(() => {
   delete obj.method
   delete obj.queryParams
   delete obj.watchQueryParams
-  delete obj.watchQueryParamsImmediate
-  return obj as Omit<
-    PageTableProps,
-    'method' | 'queryParams' | 'watchQueryParams' | 'watchQueryParamsImmediate'
-  >
+  delete obj.initialQuery
+  return obj as Omit<PageTableProps, 'initialQuery' | 'method' | 'queryParams' | 'watchQueryParams'>
 })
 const listMethod = computed(() => {
   if (typeof props.method === 'string') {
@@ -52,17 +49,18 @@ const listMethod = computed(() => {
 })
 const pageNum = ref(1)
 const pageSize = ref(10)
-const total = ref(0)
 const queryParamsChangeTimer = ref(0)
 const { data, loading, send } = useWatcher(
-  listMethod.value({
-    pageNum: pageNum.value,
-    pageSize: pageSize.value,
-    ...props.queryParams,
-  }),
+  () =>
+    listMethod.value({
+      pageNum: pageNum.value,
+      pageSize: pageSize.value,
+      ...props.queryParams,
+    }),
   [pageNum, pageSize, queryParamsChangeTimer],
   {
-    debounce: 500,
+    debounce: 300,
+    immediate: props.initialQuery,
     initialData: {
       rows: [],
       total: 0,
@@ -76,16 +74,13 @@ watch(
     if (props.watchQueryParams) {
       const useEmptyParams = listMethod.value({}).meta?.useEmptyParams ?? true
 
-      if (
-        getParamsString(newVal, useEmptyParams) !== getParamsString(oldVal ?? {}, useEmptyParams)
-      ) {
+      if (getParamsString(newVal, useEmptyParams) !== getParamsString(oldVal, useEmptyParams)) {
         queryParamsChangeTimer.value++
       }
     }
   },
   {
     deep: true,
-    immediate: props.watchQueryParamsImmediate,
   },
 )
 
@@ -106,4 +101,10 @@ defineExpose({
 
 <template>
   <TTable :data="data.rows" :loading="loading" v-bind="otherProps"></TTable>
+  <TPagination
+    v-model="pageNum"
+    v-model:page-size="pageSize"
+    :total="Number(data.total)"
+    class="!mt-4"
+  ></TPagination>
 </template>

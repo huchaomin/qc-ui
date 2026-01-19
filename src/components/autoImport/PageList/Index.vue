@@ -69,7 +69,7 @@ function doReset() {
       v-bind="props.tableOtherProps"
       :watch-query-params="false"
       :query-params="queryParams"
-      :watch-query-params-immediate="!props.isFirstQueryByParent"
+      :initial-query="!props.isFirstQueryByParent"
     ></PageTable>
   </TCard>
 </template>
