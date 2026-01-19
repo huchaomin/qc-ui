@@ -61,7 +61,7 @@ function compoRef(instance: any) {
           ref: compoRef,
           onCurrentChange: (...args: OnCurrentChangeParams) => {
             const value = args[0]
-            if (value > 1) {
+            if (value > 100) {
               $confirm({
                 body: '仅支持前100页的查看，请用查询条件筛选数据！',
                 cancelBtn: null,
