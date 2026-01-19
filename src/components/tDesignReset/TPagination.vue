@@ -60,6 +60,14 @@ function compoRef(instance: any) {
         mergeProps($attrs, otherProps, {
           ref: compoRef,
           onCurrentChange: (...args: OnCurrentChangeParams) => {
+            const value = args[0]
+            if (value > 1) {
+              $confirm({
+                body: '仅支持前100页的查看，请用查询条件筛选数据！',
+                cancelBtn: null,
+              })
+              return
+            }
             emit('update:modelValue', args[0])
             props.onCurrentChange?.(...args)
           },
