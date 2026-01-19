@@ -197,11 +197,3 @@ const [innerInputValue, setInputValue] = useDefaultValue(
   >
   </component>
 </template>
-
-<style>
-.t-select__dropdown .t-popup__content {
-  box-shadow:
-    var(--td-shadow-2), var(--td-shadow-inset-top), var(--td-shadow-inset-right),
-    var(--td-shadow-inset-bottom), var(--td-shadow-inset-left);
-}
-</style>

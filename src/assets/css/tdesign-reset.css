@@ -143,4 +143,9 @@ body {
       }
     }
   }
+
+  .t-popup__content {
+    border: 1px solid var(--td-border-level-2-color);
+    box-shadow: var(--td-shadow-2);
+  }
 }
