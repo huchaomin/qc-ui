@@ -104,6 +104,7 @@ defineExpose({
 <template>
   <TTable :data="data.rows" :loading="loading" v-bind="otherProps"></TTable>
   <TPagination
+    v-if="data.total > 0"
     v-model="pageNum"
     v-model:page-size="pageSize"
     :total="Number(data.total)"
