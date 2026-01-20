@@ -336,11 +336,19 @@ defineExpose(
     <TFormItem
       v-for="item in formItemsConfig.filter((item) => item.show !== false)"
       :key="item.model ?? item.slot"
-      v-bind="getFormItemProps(item)"
+      v-bind="
+        mergeProps(
+          {
+            ...getFormItemProps(item),
+          },
+          {
+            class: {
+              no_label_item: isFalsy(item._label),
+            },
+          },
+        )
+      "
       :name="item.model"
-      :class="{
-        no_label_item: isFalsy(item._label),
-      }"
     >
       <slot
         v-if="(item as SlotItemType).slot"
