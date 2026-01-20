@@ -49,7 +49,7 @@ function compoRef(instance: any) {
 :deep() {
   .iconify {
     flex-shrink: 0;
-    font-size: calc(1em + 4px) !important;
+    font-size: calc(1em + 8px) !important;
 
     &:has(+ .t-button__text) {
       @apply mr-2;

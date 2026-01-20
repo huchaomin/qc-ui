@@ -7,9 +7,9 @@ const userStore = useUserStore()
 
 <template>
   <TConfigProvider :global-config="globalConfig">
-    <RouterView></RouterView>
+    <RouterView class="relative z-0"></RouterView>
     <TWatermark
-      class="pointer-events-none !absolute top-0 h-full"
+      class="pointer-events-none !absolute top-0 z-[calc(Infinity)] h-full"
       :watermark-content="[
         { text: userStore.userInfo.userName ?? '' },
         {

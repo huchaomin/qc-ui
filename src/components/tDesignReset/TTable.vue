@@ -14,6 +14,7 @@ export const propsInit = {
   disableSpaceInactiveRow: true,
   hover: true,
   lazyLoad: true, // 开启整个表格的懒加载
+  maxHeight: 507,
   resizable: true,
   rowKey: '_ROW_KEY', // footer data 不需要考虑
   rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
@@ -63,6 +64,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TableProps>(), propsInit)
+const route = useRoute()
 const data = computed(() => {
   return props.data.map((item, index) => {
     return {
@@ -128,7 +130,7 @@ const columns = computed(() => {
     }
   })
 
-  console.log('tableColumns', arr)
+  // console.log('tableColumns', arr)
   return arr
 })
 const otherProps = computed(() => {
@@ -144,9 +146,18 @@ const otherProps = computed(() => {
       delete obj[key as keyof typeof obj]
     }
   })
-  console.log('tableOtherProps', obj)
+  // console.log('tableOtherProps', obj)
   return obj
 })
+const isFullscreen = ref(false)
+
+watch(
+  () => route.name,
+  () => {
+    isFullscreen.value = false
+  },
+)
+
 const compo = _Table
 const vm = getCurrentInstance()!
 
@@ -213,25 +224,57 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
 
 <template>
-  <component
-    :is="
-      h(
-        compo,
-        mergeProps($attrs, otherProps, {
-          ref: compoRef,
-          columns,
-          data,
-        }),
-      )
-    "
-  >
-    <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
-      <slot :name="k" v-bind="slotScope"></slot>
-    </template>
-    <template #empty>
-      <TEmpty></TEmpty>
-    </template>
-  </component>
+  <Teleport :disabled="!isFullscreen" to="#app">
+    <div
+      class="flex w-full flex-col gap-4"
+      :class="isFullscreen ? 'full_screen bg-[var(--td-bg-color-container)] p-4' : ''"
+    >
+      <div class="flex items-end">
+        <slot name="table-operations" v-bind="{ columns, data }"></slot>
+        <TTooltip content="列显示配置">
+          <TButton shape="square" variant="outline" class="!ml-auto">
+            <template #icon>
+              <Icon icon="mingcute:column-line"></Icon>
+            </template>
+          </TButton>
+        </TTooltip>
+        <TTooltip :content="isFullscreen ? '退出全屏' : '全屏显示'">
+          <TButton
+            shape="square"
+            variant="outline"
+            class="!ml-auto"
+            @click="isFullscreen = !isFullscreen"
+          >
+            <template #icon>
+              <Icon
+                :icon="isFullscreen ? 'lsicon:screen-off-filled' : 'lsicon:fit-screen-outline'"
+              ></Icon>
+            </template>
+          </TButton>
+        </TTooltip>
+      </div>
+      <slot name="table-top" v-bind="{ columns, data }"></slot>
+      <component
+        :is="
+          h(
+            compo,
+            mergeProps($attrs, otherProps, {
+              ref: compoRef,
+              columns,
+              data,
+            }),
+          )
+        "
+      >
+        <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
+          <slot :name="k" v-bind="slotScope"></slot>
+        </template>
+        <template #empty>
+          <TEmpty></TEmpty>
+        </template>
+      </component>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped>
