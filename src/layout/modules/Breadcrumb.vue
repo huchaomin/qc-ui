@@ -2,7 +2,7 @@
  * @Author       : huchaomin peter@qingcongai.com
  * @Date         : 2023-12-02 11:08:16
  * @LastEditors  : peterhu peter@qcznai.com
- * @LastEditTime : 2025-09-12 10:27:43
+ * @LastEditTime : 2026-01-20 09:52:58
  * @Description  :
 -->
 <script setup lang="ts">
@@ -36,7 +36,7 @@ defineExpose({
 </script>
 
 <template>
-  <TBreadcrumb v-if="items.length > 0" class="absolute z-10 !px-4 !py-1">
+  <TBreadcrumb v-if="items.length > 0" class="absolute top-[1px] z-10 !py-1">
     <TBreadcrumbItem
       v-for="item in items"
       :key="item.name"

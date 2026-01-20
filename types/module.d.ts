@@ -1,6 +1,6 @@
-import 'alova'
-import 'vue-router'
+import type { vAutoAnimate } from '@formkit/auto-animate/vue'
 
+// https://juejin.cn/post/7534903589254430746
 export {}
 
 declare module 'vue-router' {
@@ -88,5 +88,10 @@ declare module 'alova' {
        */
       useToken?: boolean
     }
+  }
+}
+declare module 'vue' {
+  interface GlobalDirectives {
+    vAutoAnimate: typeof vAutoAnimate
   }
 }

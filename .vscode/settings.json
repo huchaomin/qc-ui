@@ -12,7 +12,7 @@
   "cssVariables.blacklistFolders": ["**/build", "**/.vscode", "**/types"],
   "cssVariables.lookupFiles": [
     "node_modules/tdesign-vue-next/esm/common/style/web/theme/**/*.less",
-    "node_modules/tdesign-vue-next/esm/common/style/web/_global.less",
+    "node_modules/tdesign-vue-next/esm/common/style/web/_global.less"
   ],
   "cssVariables.trace.server": "messages",
   "cssVariables.languages": [
@@ -86,12 +86,8 @@
   "[tailwindcss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "cSpell.words": [
-    "iconify",
-    "secondarycontainer",
-    "tdesign"
-  ],
+  "cSpell.words": ["formkit", "iconify", "secondarycontainer", "tdesign"],
   "vue.inlayHints.vBindShorthand": true,
   "vue.inlayHints.destructuredProps": true,
-  "vue.editor.focusMode": true,
+  "vue.editor.focusMode": true
 }

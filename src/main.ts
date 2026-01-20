@@ -1,4 +1,5 @@
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
+import directives from '@/plugins/others/directive'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -13,6 +14,7 @@ app.config.errorHandler = (...args) => {
 
 app.use(store)
 app.use(router)
+app.use(directives)
 app.use(autoAnimatePlugin)
 useCommonStore().getAppInfo()
 
