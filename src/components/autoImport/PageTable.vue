@@ -102,12 +102,13 @@ defineExpose({
 </script>
 
 <template>
-  <TTable :data="data.rows" :loading="loading" v-bind="otherProps"></TTable>
-  <TPagination
-    v-if="data.total > 0"
-    v-model="pageNum"
-    v-model:page-size="pageSize"
-    :total="Number(data.total)"
-    class="!mt-4"
-  ></TPagination>
+  <TTable :data="data.rows" :loading="loading" v-bind="otherProps">
+    <template v-if="data.total > 0" #table-pagination>
+      <TPagination
+        v-model="pageNum"
+        v-model:page-size="pageSize"
+        :total="Number(data.total)"
+      ></TPagination>
+    </template>
+  </TTable>
 </template>

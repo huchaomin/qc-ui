@@ -66,10 +66,11 @@ function doReset() {
       ref="pageTableRef"
       :method="props.apis.list.method"
       :columns="props.columns"
-      v-bind="props.tableOtherProps"
       :watch-query-params="false"
       :query-params="queryParams"
       :initial-query="!props.isFirstQueryByParent"
+      :show-fullscreen="true"
+      v-bind="props.tableOtherProps"
     ></PageTable>
   </TCard>
 </template>

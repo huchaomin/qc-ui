@@ -25,6 +25,7 @@ export const propsInit = {
     type: 'virtual' as const,
   }),
   selectOnRowClick: true,
+  showFullscreen: false,
   showHeader: true,
   stripe: true,
   tableLayout: 'fixed',
@@ -55,6 +56,7 @@ export type TableProps = Omit<
   columns: Array<TableCol>
   data: Array<TableRowData>
   rowKey?: string
+  showFullscreen?: boolean
 }
 </script>
 
@@ -140,6 +142,7 @@ const otherProps = computed(() => {
 
   delete obj.columns
   delete obj.data
+  delete obj.showFullscreen
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
@@ -238,7 +241,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
             </template>
           </TButton>
         </TTooltip>
-        <TTooltip :content="isFullscreen ? '退出全屏' : '全屏显示'">
+        <TTooltip v-if="showFullscreen" :content="isFullscreen ? '退出全屏' : '全屏显示'">
           <TButton
             shape="square"
             variant="outline"
@@ -273,6 +276,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
           <TEmpty></TEmpty>
         </template>
       </component>
+      <slot name="table-pagination"></slot>
     </div>
   </Teleport>
 </template>
