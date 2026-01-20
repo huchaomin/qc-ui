@@ -61,7 +61,15 @@ function doReset() {
       v-bind="props.formOtherProps"
       @query="doQuery"
       @reset="doReset"
-    ></PageQuery>
+    >
+      <template
+        v-for="k in Object.keys($slots).filter((key) => !key.startsWith('table-'))"
+        :key="k"
+        #[k]="slotScope"
+      >
+        <slot :name="k" v-bind="slotScope"></slot>
+      </template>
+    </PageQuery>
     <PageTable
       ref="pageTableRef"
       :method="props.apis.list.method"
@@ -71,6 +79,14 @@ function doReset() {
       :initial-query="!props.isFirstQueryByParent"
       :show-fullscreen="true"
       v-bind="props.tableOtherProps"
-    ></PageTable>
+    >
+      <template
+        v-for="k in Object.keys($slots).filter((key) => key.startsWith('table-'))"
+        :key="k"
+        #[k]="slotScope"
+      >
+        <slot :name="k" v-bind="slotScope"></slot>
+      </template>
+    </PageTable>
   </TCard>
 </template>

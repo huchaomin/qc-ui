@@ -276,7 +276,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
           <TEmpty></TEmpty>
         </template>
       </component>
-      <slot name="table-pagination"></slot>
+      <slot name="table-bottom" v-bind="{ columns, data }"></slot>
     </div>
   </Teleport>
 </template>

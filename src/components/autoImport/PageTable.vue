@@ -103,12 +103,21 @@ defineExpose({
 
 <template>
   <TTable :data="data.rows" :loading="loading" v-bind="otherProps">
-    <template v-if="data.total > 0" #table-pagination>
+    <template
+      v-for="k in Object.keys($slots).filter((k) => k !== 'table-bottom')"
+      :key="k"
+      #[k]="slotScope"
+    >
+      <slot :name="k" v-bind="slotScope"></slot>
+    </template>
+    <template #table-bottom="slotScope">
       <TPagination
+        v-if="data.total > 0"
         v-model="pageNum"
         v-model:page-size="pageSize"
         :total="Number(data.total)"
       ></TPagination>
+      <slot name="table-bottom" v-bind="slotScope"></slot>
     </template>
   </TTable>
 </template>
