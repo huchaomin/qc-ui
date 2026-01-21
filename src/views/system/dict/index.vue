@@ -83,7 +83,7 @@ const config: PageListProps = {
       model: 'status',
     },
     {
-      _class: 'span_2',
+      _class: 'col-span-2',
       _label: '创建时间',
       component: 'TDateRangePicker',
       model: 'dateRange',

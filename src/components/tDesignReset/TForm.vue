@@ -393,18 +393,6 @@ defineExpose(
   gap: 0 24px;
 
   :deep() {
-    .span_2 {
-      grid-column: span 2;
-    }
-
-    .span_3 {
-      grid-column: span 3;
-    }
-
-    .span_full {
-      grid-column: 1 / -1;
-    }
-
     .no_label_item {
       align-self: flex-end;
     }
