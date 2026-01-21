@@ -91,6 +91,7 @@ const columnWidths = refDebounced(_columnWidths, 500)
 const columnMinWidths = reactive<number[]>([])
 const columnMaxWidths = reactive<number[]>([])
 const columnsShows = ref<string[]>([])
+const tableOperationsRef = useTemplateRef('tableOperationsRef')
 const columnOptions = computed(() => {
   return props.columns
     .filter((c) => !isFalsy(c.colKey) && !isFalsy(c.title))
@@ -283,7 +284,7 @@ onMounted(() => {
   )
 })
 onUnmounted(() => {
-  if (!props.showColumnConfigBtn || columnHides.value.length === 0) {
+  if (columnHides.value.length === 0) {
     localStorage.removeItem(columnConfigStorageKey.value)
   }
 })
@@ -296,8 +297,15 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       class="flex w-full flex-col gap-3"
       :class="isFullscreen ? 'full_screen bg-[var(--td-bg-color-container)] p-4' : ''"
     >
-      <div class="flex items-end">
-        <slot name="table-operations" v-bind="{ columns, data }"></slot>
+      <div
+        v-if="
+          showColumnConfigBtn ||
+          showToggleFullscreenBtn ||
+          ($slots['table-operations'] && tableOperationsRef)
+        "
+        class="flex items-end"
+      >
+        <slot ref="tableOperationsRef" name="table-operations" v-bind="{ columns, data }"></slot>
         <TTooltip v-if="showColumnConfigBtn" content="列显示配置">
           <TButton
             shape="square"
