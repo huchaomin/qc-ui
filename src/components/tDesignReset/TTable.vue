@@ -5,8 +5,11 @@ import type {
   EnhancedTableInstanceFunctions,
   EnhancedTableProps,
   TableRowData,
+  TNode,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
+import { isFalsy } from '@/utils'
 
 export const propsInit = {
   bordered: true,
@@ -25,13 +28,14 @@ export const propsInit = {
     type: 'virtual' as const,
   }),
   selectOnRowClick: true,
-  showFullscreen: false,
   showHeader: true,
+  showToggleFullscreenBtn: false,
   stripe: true,
   tableLayout: 'fixed',
 } as const
 
 export type TableCol = {
+  colKey: string
   /**
    * @description: 列拖动的最大值最小值，感觉有bug
    * @return {*}
@@ -40,9 +44,21 @@ export type TableCol = {
     maxWidth?: number
     minWidth?: number
   }
-} & Omit<_TableCol<TableRowData>, 'resize'>
+} & Omit<_TableCol<TableRowData>, 'colKey' | 'resize'>
 
-export type TableProps = Omit<
+export type TableProps = {
+  columns: Array<TableCol>
+  data: Array<TableRowData>
+  rowKey?: string
+  /**
+   * @description: 是否显示列配置按钮
+   */
+  showColumnConfigBtn?: boolean
+  /**
+   * @description: 是否显示全屏按钮
+   */
+  showToggleFullscreenBtn?: boolean
+} & Omit<
   EnhancedTableProps,
   | 'allowResizeColumnWidth'
   | 'columns'
@@ -52,12 +68,7 @@ export type TableProps = Omit<
   | 'headerAffixProps'
   | 'rowKey'
   | 'sortOnRowDraggable'
-> & {
-  columns: Array<TableCol>
-  data: Array<TableRowData>
-  rowKey?: string
-  showFullscreen?: boolean
-}
+>
 </script>
 
 <script setup lang="ts">
@@ -79,6 +90,19 @@ const _columnWidths = shallowRef<number[]>([])
 const columnWidths = refDebounced(_columnWidths, 500)
 const columnMinWidths = reactive<number[]>([])
 const columnMaxWidths = reactive<number[]>([])
+const columnsShows = ref<string[]>([])
+const columnOptions = computed(() => {
+  return props.columns
+    .filter((c) => !isFalsy(c.colKey) && !isFalsy(c.title))
+    .map((column) => ({
+      label: column.title as string | TNode,
+      value: column.colKey,
+    }))
+})
+const columnConfigStorageKey = computed(() => {
+  return columnOptions.value.map((c) => c.value).join('_')
+})
+const columnHides = useLocalStorage<string[]>(columnConfigStorageKey, [])
 
 function getResize(column: TableCol) {
   return {
@@ -113,26 +137,31 @@ watch(
  * @description: foot 定义底部数据
  */
 const columns = computed(() => {
-  const arr = props.columns.map((column, index) => {
-    const resize = getResize(column)
+  const arr = props.columns
+    .filter(
+      (c) =>
+        (props.showColumnConfigBtn && !columnHides.value.includes(c.colKey)) ||
+        !props.showColumnConfigBtn,
+    )
+    .map((column, index) => {
+      const resize = getResize(column)
 
-    return {
-      ellipsis: true,
-      ellipsisTitle: true,
-      stopPropagation: true,
-      ...column,
-      attrs: (context: CellData<TableRowData>) => {
-        return {
-          ...(typeof column.attrs === 'function' ? column.attrs(context) : (column.attrs ?? {})),
-          'data-col-index': index,
-        }
-      },
-      resize,
-      width: column.width ?? columnWidths.value[index] ?? resize.minWidth,
-    }
-  })
+      return {
+        ellipsis: true,
+        ellipsisTitle: true,
+        stopPropagation: true,
+        ...column,
+        attrs: (context: CellData<TableRowData>) => {
+          return {
+            ...(typeof column.attrs === 'function' ? column.attrs(context) : (column.attrs ?? {})),
+            'data-col-index': index,
+          }
+        },
+        resize,
+        width: column.width ?? columnWidths.value[index] ?? resize.minWidth,
+      }
+    })
 
-  // console.log('tableColumns', arr)
   return arr
 })
 const otherProps = computed(() => {
@@ -142,14 +171,14 @@ const otherProps = computed(() => {
 
   delete obj.columns
   delete obj.data
-  delete obj.showFullscreen
+  delete obj.showToggleFullscreenBtn
+  delete obj.showColumnConfigBtn
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]
     }
   })
-  // console.log('tableOtherProps', obj)
   return obj
 })
 const isFullscreen = ref(false)
@@ -160,6 +189,38 @@ watch(
     isFullscreen.value = false
   },
 )
+watch(
+  [columnOptions, columnHides],
+  ([options, hides]) => {
+    columnsShows.value = options
+      .filter((c) => !hides.includes(c.value))
+      .map((column) => column.value)
+  },
+  {
+    immediate: true,
+  },
+)
+
+function handleColumnHideConfig() {
+  $dialog({
+    body: () =>
+      h(TCheckboxGroup, {
+        class: 'flex-col',
+        modelValue: columnsShows.value,
+        'onUpdate:modelValue': (value) => {
+          columnsShows.value = value as string[]
+          columnHides.value = columnOptions.value
+            .filter((c) => !value.includes(c.value))
+            .map((c) => c.value)
+        },
+        options: columnOptions.value,
+      }),
+    closeOnOverlayClick: true,
+    dialogClassName: '!min-w-[auto]',
+    footer: false,
+    header: '请勾选要显示的列',
+  })
+}
 
 const compo = _Table
 const vm = getCurrentInstance()!
@@ -201,8 +262,6 @@ onMounted(() => {
                 )
 
                 if (finallyInsertWidth !== current) {
-                  console.log('-----------------------------')
-
                   const arr = [..._columnWidths.value]
 
                   arr[Number(index)] = finallyInsertWidth
@@ -223,29 +282,41 @@ onMounted(() => {
     },
   )
 })
+onUnmounted(() => {
+  if (!props.showColumnConfigBtn || columnHides.value.length === 0) {
+    localStorage.removeItem(columnConfigStorageKey.value)
+  }
+})
 defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
 
 <template>
   <Teleport :disabled="!isFullscreen" to="#app">
     <div
-      class="flex w-full flex-col gap-4"
+      class="flex w-full flex-col gap-3"
       :class="isFullscreen ? 'full_screen bg-[var(--td-bg-color-container)] p-4' : ''"
     >
       <div class="flex items-end">
         <slot name="table-operations" v-bind="{ columns, data }"></slot>
-        <TTooltip content="列显示配置">
-          <TButton shape="square" variant="outline" class="!ml-auto">
+        <TTooltip v-if="showColumnConfigBtn" content="列显示配置">
+          <TButton
+            shape="square"
+            variant="outline"
+            class="!ml-auto"
+            @click="handleColumnHideConfig"
+          >
             <template #icon>
               <Icon icon="mingcute:column-line"></Icon>
             </template>
           </TButton>
         </TTooltip>
-        <TTooltip v-if="showFullscreen" :content="isFullscreen ? '退出全屏' : '全屏显示'">
+        <TTooltip v-if="showToggleFullscreenBtn" :content="isFullscreen ? '退出全屏' : '全屏显示'">
           <TButton
             shape="square"
             variant="outline"
-            class="!ml-auto"
+            :class="{
+              '!ml-auto': !showColumnConfigBtn,
+            }"
             @click="isFullscreen = !isFullscreen"
           >
             <template #icon>

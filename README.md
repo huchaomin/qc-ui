@@ -61,6 +61,7 @@
 - GradientText 取自 css 变量
 - [AutoDecimal](https://juejin.cn/post/7450708775008747557)
 - @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
+- autoimport utils
 
 ### 分析包大小
 

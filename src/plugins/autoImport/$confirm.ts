@@ -11,7 +11,6 @@ export default (
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
     const config = {
-      closeBtn: false,
       theme: 'warning',
     } as const
     const dialogInstance =

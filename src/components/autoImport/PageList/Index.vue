@@ -77,7 +77,8 @@ function doReset() {
       :watch-query-params="false"
       :query-params="queryParams"
       :initial-query="!props.isFirstQueryByParent"
-      :show-fullscreen="true"
+      :show-toggle-fullscreen-btn="true"
+      :show-column-config-btn="true"
       v-bind="props.tableOtherProps"
     >
       <template
