@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CardProps } from 'tdesign-vue-next'
+import type { CardProps as _CardProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 defineOptions({
@@ -7,14 +7,21 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<CardProps>(), {
+  bodyFullHeight: false,
   headerBordered: true,
   shadow: true,
 })
+
+export type CardProps = _CardProps & {
+  bodyFullHeight?: boolean
+}
+
 const otherProps = computed(() => {
   const obj: Partial<CardProps> = {
     ...props,
   }
 
+  delete obj.bodyFullHeight
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]
@@ -40,6 +47,10 @@ function compoRef(instance: any) {
         compo,
         mergeProps($attrs, otherProps, {
           ref: compoRef,
+          class: bodyFullHeight ? 'flex flex-col' : '',
+          bodyClassName: [bodyFullHeight ? 'flex-1' : '', otherProps.bodyClassName]
+            .filter(Boolean)
+            .join(' '),
         }),
         $slots,
       )

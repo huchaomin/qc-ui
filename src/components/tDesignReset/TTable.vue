@@ -14,6 +14,7 @@ export const propsInit = {
   bordered: true,
   disableDataPage: true,
   disableSpaceInactiveRow: true,
+  flexHeight: false,
   hover: true,
   lazyLoad: true, // 开启整个表格的懒加载
   maxHeight: 507,
@@ -48,6 +49,10 @@ export type TableCol = {
 export type TableProps = {
   columns: Array<TableCol>
   data: Array<TableRowData>
+  /**
+   * @description: 表格高度是否 flex-1 自适应
+   */
+  flexHeight?: boolean
   rowKey?: string
   /**
    * @description: 是否显示列配置按钮
@@ -173,6 +178,7 @@ const otherProps = computed(() => {
   delete obj.data
   delete obj.showToggleFullscreenBtn
   delete obj.showColumnConfigBtn
+  delete obj.flexHeight
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
@@ -222,6 +228,12 @@ function handleColumnHideConfig() {
   })
 }
 
+const tableParentRef = useTemplateRef('tableParentRef')
+const { height: tableParentHeight } = useElementSize(tableParentRef)
+const tableContentRef = ref<HTMLElement | null>(null)
+const { height: tableContentHeight } = useElementSize(tableContentRef, undefined, {
+  box: 'border-box',
+})
 const compo = _Table
 const vm = getCurrentInstance()!
 
@@ -233,6 +245,7 @@ function compoRef(instance: any) {
 }
 
 onMounted(() => {
+  tableContentRef.value = tableParentRef.value!.querySelector('table')
   useMutationObserver(
     vm.exposed!.$el,
     (mutations) => {
@@ -282,6 +295,9 @@ onMounted(() => {
     },
   )
 })
+onUpdated(() => {
+  tableContentRef.value = tableParentRef.value!.querySelector('table')
+})
 onUnmounted(() => {
   if (columnHides.value.length === 0) {
     localStorage.removeItem(columnConfigStorageKey.value)
@@ -294,7 +310,11 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   <Teleport :disabled="!isFullscreen" to="#app">
     <div
       class="flex w-full flex-col gap-3"
-      :class="isFullscreen ? 'full_screen bg-[var(--td-bg-color-container)] p-4' : ''"
+      :class="{
+        'overflow-y-auto': flexHeight || isFullscreen,
+        'full_screen bg-[var(--td-bg-color-container)] p-4': isFullscreen,
+      }"
+      v-bind="$attrs"
     >
       <div
         v-if="
@@ -335,25 +355,33 @@ defineExpose({} as EnhancedTableInstanceFunctions)
         </TTooltip>
       </div>
       <slot name="table-top" v-bind="{ columns, data }"></slot>
-      <component
-        :is="
-          h(
-            compo,
-            mergeProps($attrs, otherProps, {
-              ref: compoRef,
-              columns,
-              data,
-            }),
-          )
-        "
-      >
-        <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
-          <slot :name="k" v-bind="slotScope"></slot>
-        </template>
-        <template #empty>
-          <TEmpty></TEmpty>
-        </template>
-      </component>
+      <div ref="tableParentRef" :class="{ 'flex-1 overflow-y-auto': flexHeight || isFullscreen }">
+        <component
+          :is="
+            h(
+              compo,
+              mergeProps(otherProps, {
+                ref: compoRef,
+                columns,
+                data,
+                height: flexHeight || isFullscreen ? tableParentHeight : otherProps.height,
+                maxHeight: flexHeight || isFullscreen ? undefined : otherProps.maxHeight,
+                class: {
+                  no_blank_spaces: tableContentHeight + 2 >= tableParentHeight,
+                },
+                resizable: otherProps.bordered ? otherProps.resizable : false,
+              }),
+            )
+          "
+        >
+          <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
+            <slot :name="k" v-bind="slotScope"></slot>
+          </template>
+          <template #empty>
+            <TEmpty></TEmpty>
+          </template>
+        </component>
+      </div>
       <slot name="table-bottom" v-bind="{ columns, data }"></slot>
     </div>
   </Teleport>
@@ -411,6 +439,14 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   }
 }
 
+.no_blank_spaces {
+  :deep() {
+    .t-table__content {
+      border-bottom-color: transparent;
+    }
+  }
+}
+
 .t-table--bordered {
   /* fixed 列的阴影 */
   &.t-table__content--scrollable-to-left {
@@ -436,11 +472,9 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       }
     }
   }
-}
 
-.t-table--width-overflow {
-  /* 最下面的边框 */
   :deep() {
+    /* 最下面的边框 */
     tfoot > tr:last-child > td,
     tbody:not(:has(+ tfoot)) > tr:last-child > td {
       border-bottom: 1px solid var(--td-component-border);

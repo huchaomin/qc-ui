@@ -53,7 +53,11 @@ function doReset() {
 </script>
 
 <template>
-  <TCard>
+  <TCard
+    class="h-full overflow-y-auto"
+    :body-full-height="true"
+    body-class-name="!flex flex-col overflow-y-auto"
+  >
     <PageQuery
       ref="pageQueryRef"
       :data="props.initialFormData"
@@ -79,6 +83,8 @@ function doReset() {
       :initial-query="!props.isFirstQueryByParent"
       :show-toggle-fullscreen-btn="true"
       :show-column-config-btn="true"
+      :flex-height="true"
+      class="flex-1"
       v-bind="props.tableOtherProps"
     >
       <template
