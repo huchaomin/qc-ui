@@ -108,7 +108,13 @@ defineExpose({
       :key="k"
       #[k]="slotScope"
     >
-      <slot :name="k" v-bind="slotScope"></slot>
+      <slot
+        :name="k"
+        v-bind="{
+          ...slotScope,
+          res: data,
+        }"
+      ></slot>
     </template>
     <template #table-bottom="slotScope">
       <TPagination
@@ -117,7 +123,13 @@ defineExpose({
         v-model:page-size="pageSize"
         :total="Number(data.total)"
       ></TPagination>
-      <slot name="table-bottom" v-bind="slotScope"></slot>
+      <slot
+        name="table-bottom"
+        v-bind="{
+          ...slotScope,
+          res: data,
+        }"
+      ></slot>
     </template>
   </TTable>
 </template>

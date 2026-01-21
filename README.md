@@ -62,6 +62,7 @@
 - [AutoDecimal](https://juejin.cn/post/7450708775008747557)
 - @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
 - autoimport utils
+- col-span
 
 ### 分析包大小
 
