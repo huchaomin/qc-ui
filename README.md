@@ -11,30 +11,31 @@
 
 ## 注意
 
-1. Ignored build scripts \*\* Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts
+- Ignored build scripts \*\* Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts
 
-   ```md
-   pnpm approve-builds
-   ```
+  ```md
+  pnpm approve-builds
+  ```
 
-   运行上述命令选择允许哪些依赖包在安装时自动执行生命周期脚本
+  运行上述命令选择允许哪些依赖包在安装时自动执行生命周期脚本
 
-2. icons
-   - 选择地址[https://icon-sets.iconify.design/?category=UI+24px](https://icon-sets.iconify.design/?category=UI+24px)
-   - 使用方法
+- icons
+  - 选择地址[https://icon-sets.iconify.design/?category=UI+24px](https://icon-sets.iconify.design/?category=UI+24px)
+  - 使用方法
 
-     ```vue
-     <template>
-       <Icon icon="material-symbols-light:refresh"></Icon>
-     </template>
-     ```
+    ```vue
+    <template>
+      <Icon icon="material-symbols-light:refresh"></Icon>
+    </template>
+    ```
 
-3. 重要的通知用 $notify, 需用户手动关闭
-4. 轻提示用 $msg
-5. 升级 tdesign 组件库时，手动对比 `node_modules/tdesign-vue-next/global.d.ts`
-6. api 文件夹里面的接口都是没有在 swagger 中定义的，是手动添加的
-7. 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
-8. vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
+- 重要的通知用 $notify, 需用户手动关闭
+- 轻提示用 $msg
+- 升级 tdesign 组件库时，手动对比 `node_modules/tdesign-vue-next/global.d.ts`
+- api 文件夹里面的接口都是没有在 swagger 中定义的，是手动添加的
+- 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
+- vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
+- @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
 
 ## todo
 
@@ -44,7 +45,6 @@
 - [server.warmup配置](https://mp.weixin.qq.com/s?__biz=Mzk0MDUyMDI4OA==&mid=2247484020&idx=1&sn=7d0c88c1b10c001b1d7724ace76d1b7a&chksm=c3b7c9155a69b2bf2e966e2bfbf55b40fa40c63d1e893d43d3ee0b452e25d7ad36bae8fe02d2&mpshare=1&scene=24&srcid=1007A1bipuxBSqdRkfwltAzs&sharer_shareinfo=a95b5998c3c2f0d944a89b04af59f319&sharer_shareinfo_first=a95b5998c3c2f0d944a89b04af59f319#rd)
 - [tdesign-starter](https://tdesign.tencent.com/starter/vue-next/dashboard/base)
 - 404 页面搞好看一点
-
 - [封装右键菜单](https://github.com/CyberNika/v-contextmenu/blob/main/src/directive.ts)
 - 怎么给 page 添加 lazy-view loading
 - 定义refresh page store
@@ -60,8 +60,6 @@
 - 支持多级 Breadcrumb，对象存储在 recentRoutersStore 中
 - GradientText 取自 css 变量
 - [AutoDecimal](https://juejin.cn/post/7450708775008747557)
-- @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
-- autoimport utils
 
 ### 分析包大小
 

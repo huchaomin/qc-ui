@@ -9,7 +9,6 @@ import type {
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
-import { isFalsy } from '@/utils'
 
 export const propsInit = {
   bordered: true,

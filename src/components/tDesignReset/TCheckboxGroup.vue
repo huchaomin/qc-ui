@@ -4,7 +4,6 @@ import type {
   CheckboxGroupValue,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { isFalsy } from '@/utils'
 
 export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'value'> & {
   dicCode?: string

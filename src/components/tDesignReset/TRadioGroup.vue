@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps, RadioValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { isFalsy } from '@/utils'
 
 export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'value'> & {
   dicCode?: string

@@ -154,8 +154,16 @@ export default defineConfig(({ command, mode }) => {
       AutoImport({
         // 用于自动导入 函数/工具库 的 API
         defaultExportByFilename: true,
-        dirs: [resolvePath('src/plugins/autoImport'), resolvePath('src/hooks')],
+        dirs: [
+          resolvePath('src/plugins/autoImport'),
+          resolvePath('src/hooks'),
+          resolvePath('src/utils/autoImport.ts'),
+        ],
+        dirsScanOptions: {
+          types: false, // Enable auto import the types under the directories
+        },
         dts: resolvePath('types/auto-imports.d.ts'),
+        dtsMode: 'overwrite', // overwrite the whole existing .d.ts file with the new type definitions.
         imports: [
           'vue',
           'vue-router',
