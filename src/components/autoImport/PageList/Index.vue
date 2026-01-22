@@ -54,9 +54,9 @@ function doReset() {
 
 <template>
   <TCard
-    class="h-full overflow-y-auto"
+    class="h-full overflow-y-hidden"
     :body-full-height="true"
-    body-class-name="!flex flex-col overflow-y-auto"
+    body-class-name="!flex flex-col overflow-y-hidden"
   >
     <PageQuery
       ref="pageQueryRef"

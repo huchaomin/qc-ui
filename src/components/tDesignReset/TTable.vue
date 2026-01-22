@@ -95,7 +95,6 @@ const columnWidths = refDebounced(_columnWidths, 500)
 const columnMinWidths = reactive<number[]>([])
 const columnMaxWidths = reactive<number[]>([])
 const columnsShows = ref<string[]>([])
-const tableOperationsRef = useTemplateRef('tableOperationsRef')
 const columnOptions = computed(() => {
   return props.columns
     .filter((c) => !isFalsy(c.colKey) && !isFalsy(c.title))
@@ -231,9 +230,6 @@ function handleColumnHideConfig() {
 const tableParentRef = useTemplateRef('tableParentRef')
 const { height: tableParentHeight } = useElementSize(tableParentRef)
 const tableContentRef = ref<HTMLElement | null>(null)
-const { height: tableContentHeight } = useElementSize(tableContentRef, undefined, {
-  box: 'border-box',
-})
 const compo = _Table
 const vm = getCurrentInstance()!
 
@@ -311,20 +307,13 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     <div
       class="flex w-full flex-col gap-3"
       :class="{
-        'overflow-y-auto': flexHeight || isFullscreen,
+        'overflow-y-hidden': flexHeight || isFullscreen,
         'full_screen bg-[var(--td-bg-color-container)] p-4': isFullscreen,
       }"
       v-bind="$attrs"
     >
-      <div
-        v-if="
-          showColumnConfigBtn ||
-          showToggleFullscreenBtn ||
-          ($slots['table-operations'] && tableOperationsRef)
-        "
-        class="flex items-end"
-      >
-        <slot ref="tableOperationsRef" name="table-operations" v-bind="{ columns, data }"></slot>
+      <div class="table_operations_wrapper items-end">
+        <slot name="table-operations" v-bind="{ columns, data }"></slot>
         <TTooltip v-if="showColumnConfigBtn" content="列显示配置">
           <TButton
             shape="square"
@@ -355,7 +344,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
         </TTooltip>
       </div>
       <slot name="table-top" v-bind="{ columns, data }"></slot>
-      <div ref="tableParentRef" :class="{ 'flex-1 overflow-y-auto': flexHeight || isFullscreen }">
+      <div ref="tableParentRef" :class="{ 'flex-1 overflow-y-hidden': flexHeight || isFullscreen }">
         <component
           :is="
             h(
@@ -366,9 +355,6 @@ defineExpose({} as EnhancedTableInstanceFunctions)
                 data,
                 height: flexHeight || isFullscreen ? tableParentHeight : otherProps.height,
                 maxHeight: flexHeight || isFullscreen ? undefined : otherProps.maxHeight,
-                class: {
-                  no_blank_spaces: tableContentHeight + 2 >= tableParentHeight,
-                },
                 resizable: otherProps.bordered ? otherProps.resizable : false,
               }),
             )
@@ -412,7 +398,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     }
 
     tfoot tr {
-      background-color: var(--td-brand-color-1) !important;
+      background-color: var(--td-gray-color-2) !important;
     }
   }
 
@@ -427,6 +413,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   }
 
   .t-table__scroll-bar-divider {
+    top: -1px;
     right: 10px !important;
   }
 
@@ -439,16 +426,8 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   }
 }
 
-.no_blank_spaces {
-  :deep() {
-    .t-table__content {
-      border-bottom-color: transparent;
-    }
-  }
-}
-
-.t-table--bordered {
-  /* fixed 列的阴影 */
+/* fixed 列的阴影 */
+.t-table {
   &.t-table__content--scrollable-to-left {
     :deep() {
       .t-table__cell--fixed-left-last {
@@ -472,12 +451,31 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       }
     }
   }
+}
+
+.t-table--bordered {
+  /* 最下面的边框 */
+  &::after {
+    position: absolute;
+    right: 2px;
+    bottom: 1px;
+    left: 2px;
+    z-index: 32; /* fixed left 30, right 31  */
+    display: block;
+    height: 1px;
+    content: '';
+    background-color: var(--td-component-border);
+  }
 
   :deep() {
     /* 最下面的边框 */
     tfoot > tr:last-child > td,
     tbody:not(:has(+ tfoot)) > tr:last-child > td {
       border-bottom: 1px solid var(--td-component-border);
+    }
+
+    .t-table__content {
+      border-bottom-color: transparent;
     }
   }
 }
@@ -502,6 +500,14 @@ defineExpose({} as EnhancedTableInstanceFunctions)
         }
       }
     }
+  }
+}
+
+.table_operations_wrapper {
+  display: none;
+
+  &:has(> *) {
+    display: flex;
   }
 }
 </style>
