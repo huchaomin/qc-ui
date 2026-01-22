@@ -54,8 +54,8 @@
 - z-vue-scan
 - 根据btn text 添加icon, 根据是否focus 和 loading 状态 loading
 - pluginWebUpdateNotice
-- 为自定义全局指令添加类型 v-auto-animate
-- selectRow empty loading 样式
+- 为自定义全局指令添加类型
+- selectRow 样式
 - reject 处理
 - 支持多级 Breadcrumb，对象存储在 recentRoutersStore 中
 - GradientText 取自 css 变量
