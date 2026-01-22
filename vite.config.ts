@@ -128,6 +128,7 @@ export default defineConfig(({ command, mode }) => {
         'alova/fetch',
         'alova/vue',
         '@vueuse/integrations/useNProgress',
+        '@vueuse/integrations/useCookies',
         '@iconify/vue',
         '@formkit/auto-animate',
       ],
