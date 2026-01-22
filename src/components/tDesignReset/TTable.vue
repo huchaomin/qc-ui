@@ -229,7 +229,10 @@ function handleColumnHideConfig() {
 
 const tableParentRef = useTemplateRef('tableParentRef')
 const { height: tableParentHeight } = useElementSize(tableParentRef)
-const tableContentRef = ref<HTMLElement | null>(null)
+const theadTagRef = ref<HTMLElement | null>(null)
+const tfootTagRef = ref<HTMLElement | null>(null)
+const { height: theadHeight } = useElementSize(theadTagRef)
+const { height: tfootHeight } = useElementSize(tfootTagRef)
 const compo = _Table
 const vm = getCurrentInstance()!
 
@@ -241,7 +244,11 @@ function compoRef(instance: any) {
 }
 
 onMounted(() => {
-  tableContentRef.value = tableParentRef.value!.querySelector('table')
+  theadTagRef.value = tableParentRef.value!.querySelector('thead')
+  tfootTagRef.value = tableParentRef.value!.querySelector('tfoot')
+  /**
+   * @description: col span 的暂时没考虑， footer 的没考虑
+   */
   useMutationObserver(
     vm.exposed!.$el,
     (mutations) => {
@@ -283,7 +290,7 @@ onMounted(() => {
       })
     },
     {
-      attributeFilter: ['class', 'style'],
+      attributeFilter: ['class', 'style', 'colspan'],
       attributes: true,
       characterData: true,
       childList: true,
@@ -292,12 +299,16 @@ onMounted(() => {
   )
 })
 onUpdated(() => {
-  tableContentRef.value = tableParentRef.value!.querySelector('table')
+  theadTagRef.value = tableParentRef.value!.querySelector('thead')
+  tfootTagRef.value = tableParentRef.value!.querySelector('tfoot')
 })
 onUnmounted(() => {
   if (columnHides.value.length === 0) {
     localStorage.removeItem(columnConfigStorageKey.value)
   }
+
+  theadTagRef.value = null
+  tfootTagRef.value = null
 })
 defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
@@ -307,7 +318,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     <div
       class="flex w-full flex-col gap-3"
       :class="{
-        'overflow-y-hidden': flexHeight || isFullscreen,
+        'overflow-y-auto': flexHeight || isFullscreen,
         'full_screen bg-[var(--td-bg-color-container)] p-4': isFullscreen,
       }"
       v-bind="$attrs"
@@ -344,7 +355,11 @@ defineExpose({} as EnhancedTableInstanceFunctions)
         </TTooltip>
       </div>
       <slot name="table-top" v-bind="{ columns, data }"></slot>
-      <div ref="tableParentRef" :class="{ 'flex-1 overflow-y-hidden': flexHeight || isFullscreen }">
+      <div
+        ref="tableParentRef"
+        class="table_parent"
+        :class="{ 'flex-1 overflow-y-hidden': flexHeight || isFullscreen }"
+      >
         <component
           :is="
             h(
@@ -426,6 +441,27 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   }
 }
 
+.table_parent {
+  /* stylelint-disable-next-line value-keyword-case */
+  min-height: calc(v-bind(theadHeight) * 1px + v-bind(tfootHeight) * 1px + 46px);
+
+  &:has(.t-table--width-overflow) {
+    /* stylelint-disable-next-line value-keyword-case */
+    min-height: calc(v-bind(theadHeight) * 1px + v-bind(tfootHeight) * 1px + 56px);
+  }
+
+  &:has(.t-table__empty) {
+    /* stylelint-disable-next-line value-keyword-case */
+    min-height: calc(v-bind(theadHeight) * 1px + 144px);
+
+    :deep() {
+      .t-table__footer {
+        display: none;
+      }
+    }
+  }
+}
+
 /* fixed 列的阴影 */
 .t-table {
   &.t-table__content--scrollable-to-left {
@@ -451,6 +487,21 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       }
     }
   }
+
+  :deep() {
+    .t-table__empty {
+      position: absolute;
+      /* stylelint-disable-next-line value-keyword-case */
+      inset: calc(v-bind(theadHeight) * 1px + 12px) 12px 12px;
+      width: auto !important;
+      pointer-events: none;
+    }
+
+    .t-table__content:has(.t-table__empty),
+    td:has(.t-table__empty) {
+      position: static;
+    }
+  }
 }
 
 .t-table--bordered {
@@ -474,6 +525,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       border-bottom: 1px solid var(--td-component-border);
     }
 
+    /* stylelint-disable-next-line no-descending-specificity */
     .t-table__content {
       border-bottom-color: transparent;
     }
@@ -494,7 +546,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
   &.t-table--hoverable {
     :deep() {
-      > .t-table__content > table > tbody tr {
+      > .t-table__content > table > tbody tr:not(.t-table__empty-row) {
         &:hover {
           background-color: var(--td-bg-color-secondarycontainer-hover) !important;
         }

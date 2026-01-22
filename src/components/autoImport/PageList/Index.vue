@@ -53,11 +53,7 @@ function doReset() {
 </script>
 
 <template>
-  <TCard
-    class="h-full overflow-y-hidden"
-    :body-full-height="true"
-    body-class-name="!flex flex-col overflow-y-hidden"
-  >
+  <TCard class="h-full" :body-full-height="true" body-class-name="!flex flex-col overflow-y-auto">
     <PageQuery
       ref="pageQueryRef"
       :data="props.initialFormData"
