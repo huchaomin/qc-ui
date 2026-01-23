@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { LoginData } from '@/store/modules/login'
 import captcha from '@/plugins/captcha'
-import { aesDecrypt } from '@/utils/tool'
 import LoginBg from './modules/LoginBg.vue'
 
 const loginStore = useLoginStore()
@@ -10,32 +9,11 @@ const router = useRouter()
 const appName = computed(() => commonStore.appInfo.appName)
 const formData = reactive<LoginData>({
   password: '',
-  rememberMe: true,
   username: '',
 })
 
-async function initLoginData() {
-  formData.username = await aesDecrypt(loginStore.username)
-  formData.password = await aesDecrypt(loginStore.password)
-}
-
-if (loginStore.rememberMe) {
-  initLoginData()
-}
-
 async function loginSubmit(formData: LoginData) {
   await loginStore.login(formData)
-
-  if (formData.rememberMe) {
-    await loginStore.storeLoginData({
-      password: formData.password,
-      rememberMe: formData.rememberMe,
-      username: formData.username,
-    })
-  } else {
-    loginStore.clearLoginData()
-  }
-
   router.replace({ name: 'Index' })
 }
 
@@ -85,11 +63,6 @@ const formItems: FormItemType[] = [
     type: 'password',
   },
   {
-    component: 'TCheckbox',
-    label: '记住密码',
-    model: 'rememberMe',
-  },
-  {
     slot: 'submitBtn',
   },
 ]
@@ -102,7 +75,7 @@ const formItems: FormItemType[] = [
       :animation-speed="8"
       :show-border="false"
       :colors="['#000000', '#444951', '#8791a1']"
-      class-name="text-center text-2xl !font-bold mt-8"
+      class-name="text-center text-2xl !font-bold mt-12 mb-10"
     />
     <TForm class="!mt-8" :data="formData" :items="formItems" @submit="onSubmit">
       <template #submitBtn>
