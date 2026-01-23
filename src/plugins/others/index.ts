@@ -1,11 +1,3 @@
-import { useCookies } from '@vueuse/integrations/useCookies'
-
-const { getAll, remove } = useCookies()
-const cookies = getAll<Record<string, any>>()
-
-Object.keys(cookies).forEach((key) => {
-  remove(key)
-})
 window.addEventListener('load', () => {
   const landing: HTMLElement = document.querySelector('#landing')!
   const removeLanding = () => {
