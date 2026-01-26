@@ -458,6 +458,11 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       .t-table__footer {
         display: none;
       }
+
+      .t-table,
+      .t-table__content {
+        min-height: inherit;
+      }
     }
   }
 }
