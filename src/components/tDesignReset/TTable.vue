@@ -35,6 +35,9 @@ export const propsInit = {
 } as const
 
 export type TableCol = {
+  /**
+   * @description: 列的key，必须要存在，且唯一
+   */
   colKey: string
   /**
    * @description: 列拖动的最大值最小值，感觉有bug
@@ -82,6 +85,45 @@ defineOptions({
 
 const props = withDefaults(defineProps<TableProps>(), propsInit)
 const route = useRoute()
+
+function checkColumns(arr: TableCol[]): string | true {
+  const emptyKeyCol = arr.find((c) => isFalsy(c.colKey))
+
+  if (emptyKeyCol !== undefined) {
+    return `列的colKey不能为空: ${JSON.stringify(emptyKeyCol)}`
+  }
+
+  const repeatKeyCol = arr.find((c, i) => arr.findIndex((c2) => c2.colKey === c.colKey) !== i)
+
+  if (repeatKeyCol !== undefined) {
+    return `列的colKey不能重复: ${JSON.stringify(repeatKeyCol)}`
+  }
+
+  return true
+}
+
+const _columns = computed(() => {
+  const result = checkColumns(props.columns)
+
+  if (result !== true) {
+    return []
+  }
+
+  return props.columns
+})
+
+watch(
+  () => checkColumns(props.columns),
+  (result) => {
+    if (result !== true) {
+      void $notify.error(result)
+    }
+  },
+  {
+    immediate: true,
+  },
+)
+
 const data = computed(() => {
   return props.data.map((item, index) => {
     return {
@@ -96,7 +138,7 @@ const columnMinWidths = reactive<number[]>([])
 const columnMaxWidths = reactive<number[]>([])
 const columnsShows = ref<string[]>([])
 const columnOptions = computed(() => {
-  return props.columns
+  return _columns.value
     .filter((c) => !isFalsy(c.colKey) && !isFalsy(c.title))
     .map((column) => ({
       label: column.title as string | TNode,
@@ -116,7 +158,7 @@ function getResize(column: TableCol) {
 }
 
 watch(
-  () => props.columns,
+  _columns,
   (columns) => {
     columns.forEach((column, index) => {
       const resize = getResize(column)
@@ -141,7 +183,7 @@ watch(
  * @description: foot 定义底部数据
  */
 const columns = computed(() => {
-  const arr = props.columns
+  const arr = _columns.value
     .filter(
       (c) =>
         (props.showColumnConfigBtn && !columnHides.value.includes(c.colKey)) ||
