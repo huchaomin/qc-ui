@@ -230,9 +230,19 @@ function handleColumnHideConfig() {
 const tableParentRef = useTemplateRef('tableParentRef')
 const { height: tableParentHeight } = useElementSize(tableParentRef)
 const theadTagRef = ref<HTMLElement | null>(null)
+const tbodyTagRef = ref<HTMLElement | null>(null)
 const tfootTagRef = ref<HTMLElement | null>(null)
+const tableContentRef = ref<HTMLElement | null>(null)
 const { height: theadHeight } = useElementSize(theadTagRef)
+const { height: tbodyHeight } = useElementSize(tbodyTagRef)
 const { height: tfootHeight } = useElementSize(tfootTagRef)
+const { height: tableContentHeight } = useElementSize(tableContentRef)
+const tfootTransformY = computed(() => {
+  return Math.max(
+    0,
+    tableContentHeight.value - theadHeight.value - tbodyHeight.value - tfootHeight.value,
+  )
+})
 const compo = _Table
 const vm = getCurrentInstance()!
 
@@ -245,7 +255,9 @@ function compoRef(instance: any) {
 
 onMounted(() => {
   theadTagRef.value = tableParentRef.value!.querySelector('thead')
+  tbodyTagRef.value = tableParentRef.value!.querySelector('tbody')
   tfootTagRef.value = tableParentRef.value!.querySelector('tfoot')
+  tableContentRef.value = tableParentRef.value!.querySelector('.t-table__content')
   /**
    * @description: col span 的暂时没考虑， footer 的没考虑
    */
@@ -300,7 +312,9 @@ onMounted(() => {
 })
 onUpdated(() => {
   theadTagRef.value = tableParentRef.value!.querySelector('thead')
+  tbodyTagRef.value = tableParentRef.value!.querySelector('tbody')
   tfootTagRef.value = tableParentRef.value!.querySelector('tfoot')
+  tableContentRef.value = tableParentRef.value!.querySelector('.t-table__content')
 })
 onUnmounted(() => {
   if (columnHides.value.length === 0) {
@@ -308,7 +322,9 @@ onUnmounted(() => {
   }
 
   theadTagRef.value = null
+  tbodyTagRef.value = null
   tfootTagRef.value = null
+  tableContentRef.value = null
 })
 defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
@@ -412,8 +428,13 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       background-color: var(--td-brand-color-1) !important;
     }
 
-    tfoot tr {
-      background-color: var(--td-gray-color-2) !important;
+    tfoot {
+      /* stylelint-disable-next-line value-keyword-case */
+      transform: translateY(calc(v-bind(tfootTransformY) * 1px));
+
+      tr {
+        background-color: var(--td-gray-color-2) !important;
+      }
     }
   }
 
@@ -526,8 +547,24 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   :deep() {
     /* 最下面的边框 */
     tfoot > tr:last-child > td,
-    tbody:not(:has(+ tfoot)) > tr:last-child > td {
+    tbody > tr:last-child > td {
       border-bottom: 1px solid var(--td-component-border);
+    }
+
+    tfoot {
+      > tr:first-child > td {
+        border-top: none;
+      }
+
+      &::before {
+        position: absolute;
+        top: -1px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        content: '';
+        background-color: var(--td-component-border);
+      }
     }
 
     /* stylelint-disable-next-line no-descending-specificity */
