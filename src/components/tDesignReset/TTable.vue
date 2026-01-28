@@ -133,7 +133,15 @@ const data = computed(() => {
   })
 })
 const _columnWidths = shallowRef<number[]>([])
-const columnWidths = refDebounced(_columnWidths, 500)
+const columnWidths = refDebounced(_columnWidths, 600)
+
+/**
+ * @description: 初始化时，fixed 阴影不展示的bug
+ */
+watch(columnWidths, () => {
+  vm.exposed!.refreshTable()
+})
+
 const columnMinWidths = reactive<number[]>([])
 const columnMaxWidths = reactive<number[]>([])
 const columnsShows = ref<string[]>([])
@@ -159,9 +167,9 @@ function getResize(column: TableCol) {
 
 watch(
   _columns,
-  (columns) => {
-    columns.forEach((column, index) => {
-      const resize = getResize(column)
+  (cs) => {
+    cs.forEach((c, index) => {
+      const resize = getResize(c)
 
       _columnWidths.value = []
       columnMinWidths[index] = resize.minWidth
