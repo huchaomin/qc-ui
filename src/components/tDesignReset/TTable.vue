@@ -132,22 +132,14 @@ const data = computed(() => {
     }
   })
 })
-const _columnWidths = shallowRef<number[]>([])
+const _columnWidths = ref<Record<string, number>>({})
 const columnWidths = refDebounced(_columnWidths, 600)
-
-/**
- * @description: 初始化时，fixed 阴影不展示的bug
- */
-watch(columnWidths, () => {
-  vm.exposed!.refreshTable()
-})
-
-const columnMinWidths = reactive<number[]>([])
-const columnMaxWidths = reactive<number[]>([])
+const columnMinWidths = reactive<Record<string, number>>({})
+const columnMaxWidths = reactive<Record<string, number>>({})
 const columnsShows = ref<string[]>([])
 const columnOptions = computed(() => {
   return _columns.value
-    .filter((c) => !isFalsy(c.colKey) && !isFalsy(c.title))
+    .filter((c) => !isFalsy(c.title))
     .map((column) => ({
       label: column.title as string | TNode,
       value: column.colKey,
@@ -157,6 +149,21 @@ const columnConfigStorageKey = computed(() => {
   return columnOptions.value.map((c) => c.value).join('_')
 })
 const columnHides = useLocalStorage<string[]>(columnConfigStorageKey, [])
+
+/**
+ * @description: 初始化时以及列显隐时，fixed 阴影不展示的bug
+ */
+watch(
+  [columnWidths, columnHides],
+  () => {
+    nextTick(() => {
+      vm.exposed!.refreshTable()
+    })
+  },
+  {
+    deep: true,
+  },
+)
 
 function getResize(column: TableCol) {
   return {
@@ -168,12 +175,12 @@ function getResize(column: TableCol) {
 watch(
   _columns,
   (cs) => {
-    cs.forEach((c, index) => {
+    cs.forEach((c) => {
       const resize = getResize(c)
 
-      _columnWidths.value = []
-      columnMinWidths[index] = resize.minWidth
-      columnMaxWidths[index] = resize.maxWidth
+      _columnWidths.value = {}
+      columnMinWidths[c.colKey] = resize.minWidth
+      columnMaxWidths[c.colKey] = resize.maxWidth
     })
   },
   {
@@ -208,11 +215,11 @@ const columns = computed(() => {
         attrs: (context: CellData<TableRowData>) => {
           return {
             ...(typeof column.attrs === 'function' ? column.attrs(context) : (column.attrs ?? {})),
-            'data-col-index': index,
+            'data-col-key': column.colKey,
           }
         },
         resize,
-        width: column.width ?? columnWidths.value[index] ?? resize.minWidth,
+        width: column.width ?? columnWidths.value[column.colKey] ?? resize.minWidth,
       }
     })
 
@@ -327,23 +334,19 @@ onMounted(() => {
             const insertWidth = Math.ceil(
               Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1,
             )
-            const _index = parent.getAttribute('data-col-index')
+            const key = parent.getAttribute('data-col-key')
 
-            if (_index !== null) {
-              const index = Number(_index)
-              const current = _columnWidths.value[index] ?? columnMinWidths[index]!
+            if (key !== null) {
+              const current = _columnWidths.value[key] ?? columnMinWidths[key]!
 
               if (insertWidth > current) {
                 const finallyInsertWidth = Math.max(
-                  Math.min(insertWidth, columnMaxWidths[index]!),
-                  columnMinWidths[index]!,
+                  Math.min(insertWidth, columnMaxWidths[key]!),
+                  columnMinWidths[key]!,
                 )
 
                 if (finallyInsertWidth !== current) {
-                  const arr = [..._columnWidths.value]
-
-                  arr[Number(index)] = finallyInsertWidth
-                  _columnWidths.value = arr
+                  _columnWidths.value[key] = finallyInsertWidth
                 }
               }
             }
