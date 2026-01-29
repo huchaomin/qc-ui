@@ -6,16 +6,20 @@ import { getParamsString } from '@/plugins/alova/index'
 
 export type PageTableProps = {
   /**
-   * @description: 是否立即查询
+   * @description: 是否立即查询, 默认 true
    */
   initialQuery?: boolean
   method: ((params: Record<string, any>) => Method) | string
   /**
-   * @description: 传给分页接口的参数
+   * @description: 传给分页接口的参数, 默认 {}
    */
   queryParams?: Record<string, any>
   /**
-   * @description: 是否监听传给分页接口的参数
+   * @description: 与method的meta.useEmptyParams 一致, 默认 true, 用于对比get查询参数是否变化
+   */
+  useEmptyParams?: boolean
+  /**
+   * @description: 是否监听传给分页接口的参数, 默认 true
    */
   watchQueryParams?: boolean
 } & Omit<TableProps, 'data' | 'loading'>
@@ -24,6 +28,7 @@ const props = withDefaults(defineProps<PageTableProps>(), {
   ...propsInit,
   initialQuery: true,
   queryParams: () => ({}),
+  useEmptyParams: true,
   watchQueryParams: true,
 })
 const otherProps = computed(() => {
@@ -35,7 +40,11 @@ const otherProps = computed(() => {
   delete obj.queryParams
   delete obj.watchQueryParams
   delete obj.initialQuery
-  return obj as Omit<PageTableProps, 'initialQuery' | 'method' | 'queryParams' | 'watchQueryParams'>
+  delete obj.useEmptyParams
+  return obj as Omit<
+    PageTableProps,
+    'initialQuery' | 'method' | 'queryParams' | 'useEmptyParams' | 'watchQueryParams'
+  >
 })
 const listMethod = computed(() => {
   if (typeof props.method === 'string') {
@@ -51,7 +60,7 @@ const pageNum = ref(1)
 const pageSize = ref(10)
 const queryParamsChangeTimer = ref(0)
 const { data, loading } = useWatcher(
-  // 初始化时这个函数会执行两遍
+  // immediate 为true 初始化时这个函数会执行两遍
   () =>
     listMethod.value({
       pageNum: pageNum.value,
@@ -61,7 +70,6 @@ const { data, loading } = useWatcher(
   [pageNum, pageSize, queryParamsChangeTimer],
   {
     debounce: 100,
-    immediate: props.initialQuery,
     initialData: {
       rows: [],
       total: 0,
@@ -69,13 +77,18 @@ const { data, loading } = useWatcher(
   },
 )
 
+if (props.initialQuery) {
+  queryParamsChangeTimer.value++
+}
+
 watch(
   () => props.queryParams,
   (newVal, oldVal) => {
     if (props.watchQueryParams) {
-      const useEmptyParams = listMethod.value({}).meta?.useEmptyParams ?? true
-
-      if (getParamsString(newVal, useEmptyParams) !== getParamsString(oldVal, useEmptyParams)) {
+      if (
+        getParamsString(newVal, props.useEmptyParams) !==
+        getParamsString(oldVal, props.useEmptyParams)
+      ) {
         queryParamsChangeTimer.value++
       }
     }

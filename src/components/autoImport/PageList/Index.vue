@@ -46,6 +46,12 @@ function doQuery() {
   pageTableRef.value!.query()
 }
 
+if (!props.isFirstQueryByParent) {
+  nextTick(() => {
+    doQuery()
+  })
+}
+
 function doReset() {
   queryParams.value = _.cloneDeep(pageQueryRef.value!.formData)
   pageTableRef.value!.reset()
@@ -76,7 +82,7 @@ function doReset() {
       :columns="props.columns"
       :watch-query-params="false"
       :query-params="queryParams"
-      :initial-query="!props.isFirstQueryByParent"
+      :initial-query="false"
       :show-toggle-fullscreen-btn="true"
       :show-column-config-btn="true"
       :flex-height="true"

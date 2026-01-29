@@ -2,49 +2,38 @@
 const config: PageListProps = {
   apis: {
     list: {
-      method: 'system/dict/type/list',
+      method: (o: Record<string, any>) => {
+        return alovaInst.Get('system/dict/type/list', {
+          params: {
+            ...o,
+            dateRange: undefined,
+            'params[beginTime]': o.dateRange[0] ?? '',
+            'params[endTime]': o.dateRange[1] ?? '',
+          },
+        })
+      },
     },
   },
   columns: [
     {
-      colKey: 'id',
-      title: '主键',
+      colKey: 'dictId',
+      title: '字典编号',
     },
     {
-      colKey: 'brandId',
-      title: '品牌id',
+      colKey: 'dictName',
+      title: '字典名称',
     },
     {
-      colKey: 'taskId',
-      title: '任务id',
+      colKey: 'dictType',
+      title: '字典类型',
     },
     {
-      colKey: 'ticketType',
-      title: 'ticket类型1-数据拉取 2-方案',
-    },
-    {
-      colKey: 'ticket',
-      title: '微博ticket',
-    },
-    {
-      colKey: 'authorizeCode',
-      title: '鉴权码',
-    },
-    {
-      colKey: 'accessToken',
-      title: '授权token',
+      colKey: 'status',
+      title: '状态',
     },
     {
       colKey: 'remark',
       title: '备注',
-    },
-    {
-      colKey: 'offsetNum',
-      title: '拉取数据位置标记',
-    },
-    {
-      colKey: 'status',
-      title: '状态0-有效1-无效',
     },
     {
       colKey: 'createBy',
@@ -53,18 +42,6 @@ const config: PageListProps = {
     {
       colKey: 'createTime',
       title: '创建时间',
-    },
-    {
-      colKey: 'updateBy',
-      title: '更新人',
-    },
-    {
-      colKey: 'updateTime',
-      title: '更新时间',
-    },
-    {
-      colKey: 'dataType',
-      title: '数据类型1-视频 2-内容 3-其他',
     },
   ],
   formItems: [
@@ -99,5 +76,5 @@ const config: PageListProps = {
 </script>
 
 <template>
-  <PageList v-bind="config"></PageList>
+  <PageList v-bind="config"> </PageList>
 </template>
