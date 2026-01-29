@@ -47,6 +47,10 @@ export type TableCol = {
     maxWidth?: number
     minWidth?: number
   }
+  /**
+   * @description: 列的显示与隐藏
+   */
+  visible?: boolean
 } & Omit<_TableCol<TableRowData>, 'colKey' | 'resize'>
 
 export type TableProps = {
@@ -109,7 +113,7 @@ const _columns = computed(() => {
     return []
   }
 
-  return props.columns
+  return props.columns.filter((c) => c.visible !== false)
 })
 
 watch(
@@ -136,8 +140,8 @@ const _columnWidths = ref<Record<string, number>>({})
 const columnWidths = refDebounced(_columnWidths, 600)
 const columnMinWidths = reactive<Record<string, number>>({})
 const columnMaxWidths = reactive<Record<string, number>>({})
-const columnsShows = ref<string[]>([])
-const columnOptions = computed(() => {
+const columnConfigShows = ref<string[]>([])
+const columnConfigOptions = computed(() => {
   return _columns.value
     .filter((c) => !isFalsy(c.title))
     .map((column) => ({
@@ -146,7 +150,7 @@ const columnOptions = computed(() => {
     }))
 })
 const columnConfigStorageKey = computed(() => {
-  return columnOptions.value.map((c) => c.value).join('_')
+  return columnConfigOptions.value.map((c) => c.value).join('_')
 })
 const columnHides = useLocalStorage<string[]>(columnConfigStorageKey, [])
 
@@ -204,7 +208,7 @@ const columns = computed(() => {
         (props.showColumnConfigBtn && !columnHides.value.includes(c.colKey)) ||
         !props.showColumnConfigBtn,
     )
-    .map((column, index) => {
+    .map((column) => {
       const resize = getResize(column)
 
       return {
@@ -252,9 +256,9 @@ watch(
   },
 )
 watch(
-  [columnOptions, columnHides],
+  [columnConfigOptions, columnHides],
   ([options, hides]) => {
-    columnsShows.value = options
+    columnConfigShows.value = options
       .filter((c) => !hides.includes(c.value))
       .map((column) => column.value)
   },
@@ -268,14 +272,14 @@ function handleColumnHideConfig() {
     body: () =>
       h(TCheckboxGroup, {
         class: 'flex-col',
-        modelValue: columnsShows.value,
+        modelValue: columnConfigShows.value,
         'onUpdate:modelValue': (value) => {
-          columnsShows.value = value as string[]
-          columnHides.value = columnOptions.value
+          // columnConfigShows.value = value as string[]
+          columnHides.value = columnConfigOptions.value
             .filter((c) => !value.includes(c.value))
             .map((c) => c.value)
         },
-        options: columnOptions.value,
+        options: columnConfigOptions.value,
       }),
     closeOnOverlayClick: true,
     dialogClassName: '!min-w-[auto]',
@@ -461,7 +465,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 :deep() {
   --td-font-body-medium: 13px / var(--td-line-height-body-medium) var(--td-font-family);
   /* stylelint-disable-next-line custom-property-pattern */
-  --td-comp-paddingTB-m: 6px;
+  --td-comp-paddingTB-m: 0;
   /* stylelint-disable-next-line custom-property-pattern */
   --td-comp-paddingLR-l: 12px;
 
@@ -471,7 +475,9 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
     td,
     th {
-      height: 45px;
+      &:has(.t-table__ellipsis) {
+        height: 45px;
+      }
     }
 
     th,
