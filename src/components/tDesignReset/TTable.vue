@@ -182,7 +182,7 @@ watch(
     cs.forEach((c) => {
       const resize = getResize(c)
 
-      _columnWidths.value = {}
+      _columnWidths.value[c.colKey] = resize.minWidth
       columnMinWidths[c.colKey] = resize.minWidth
       columnMaxWidths[c.colKey] = resize.maxWidth
     })
@@ -223,7 +223,7 @@ const columns = computed(() => {
           }
         },
         resize,
-        width: column.width ?? columnWidths.value[column.colKey] ?? resize.minWidth,
+        width: column.width ?? columnWidths.value[column.colKey],
       }
     })
 
@@ -341,15 +341,15 @@ onMounted(() => {
             const key = parent.getAttribute('data-col-key')
 
             if (key !== null) {
-              const current = _columnWidths.value[key] ?? columnMinWidths[key]!
+              const finallyInsertWidth = Math.max(
+                Math.min(insertWidth, columnMaxWidths[key]!),
+                columnMinWidths[key]!,
+              )
 
-              if (insertWidth > current) {
-                const finallyInsertWidth = Math.max(
-                  Math.min(insertWidth, columnMaxWidths[key]!),
-                  columnMinWidths[key]!,
-                )
-
-                if (finallyInsertWidth !== current) {
+              if (finallyInsertWidth > _columnWidths.value[key]!) {
+                if (finallyInsertWidth <= parent.offsetWidth) {
+                  columnMinWidths[key] = finallyInsertWidth
+                } else {
                   _columnWidths.value[key] = finallyInsertWidth
                 }
               }
@@ -606,11 +606,12 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   :deep() {
     /* 最下面的边框 */
     tfoot > tr:last-child > td,
-    tbody > tr:last-child > td {
+    tbody > tr:last-child:not(.t-table__empty-row) > td {
       border-bottom: 1px solid var(--td-component-border);
     }
 
     tfoot {
+      /* stylelint-disable-next-line no-descending-specificity */
       > tr:first-child > td {
         border-top: none;
       }
