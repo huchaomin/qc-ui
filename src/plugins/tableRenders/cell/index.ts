@@ -15,11 +15,12 @@ const compos = import.meta.glob('./*.vue') as Record<
 >
 
 export function getCellRender(config: CellObjConfig): CellRenderFn {
+  const { component, ...restConfig } = config
+
   return (h: typeof import('vue').h, context: Parameters<CellRenderFn>[1]) => {
-    return h(defineAsyncComponent(compos[`./${config.component}.vue`]!), {
-      ...config,
+    return h(defineAsyncComponent(compos[`./${component}.vue`]!), {
+      ...restConfig,
       ...context,
-      component: undefined,
     })
   }
 }
