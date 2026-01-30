@@ -6,7 +6,7 @@ import 'tdesign-vue-next/dist/tdesign.min.css'
 const compos = import.meta.glob('./components/tDesignReset/*.vue', {
   eager: true,
   import: 'default',
-}) as Record<string, () => Promise<Component>>
+})
 
 app.use(TDesign)
 delete app._context.components.TIcon // 不使用内部 TIcon 组件

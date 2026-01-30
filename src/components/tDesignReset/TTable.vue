@@ -27,7 +27,17 @@ export type TableCol = {
   /**
    * @description: 单元格渲染
    * @description: 渲染方式1(tsx): (h, { col, row }) => <div>{row[col.colKey]}</div>
-   * @description: 渲染方式2(vue组件): { name: 'DicLabel', dicCode: 'sys_normal_disable' }
+   * @description: 渲染方式2(vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
+   * @description: 渲染方式3(vue组件，需要行列信息作为参数的): {
+                                                                _component: 'Link',
+                                                                _componentProps: ({ col, colIndex, row, rowIndex }) => {
+                                                                  return {
+                                                                    onClick: () => {
+                                                                      console.log(row, col, colIndex, rowIndex)
+                                                                    },
+                                                                  }
+                                                                },
+                                                              }
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
   cell?: XOR<CellRenderFn, CellObjConfig>
@@ -36,7 +46,7 @@ export type TableCol = {
    */
   colKey: string
   /**
-   * @description: 列拖动的最大值最小值，感觉有bug
+   * @description: 列拖动的最大值最小值，也可用来限制列的宽度（整体宽度不足时展现出来），感觉有bug
    * @return {*}
    */
   resize?: {

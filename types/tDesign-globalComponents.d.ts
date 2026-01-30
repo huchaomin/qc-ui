@@ -66,7 +66,7 @@ declare module 'vue' {
     TInputGroup: typeof import('tdesign-vue-next')['InputGroup'];
     TInputNumber: typeof import('tdesign-vue-next')['InputNumber'];
     TLayout: typeof import('tdesign-vue-next')['Layout'];
-    TLink: typeof import('tdesign-vue-next')['Link'];
+    // TLink: typeof import('tdesign-vue-next')['Link'];
     TList: typeof import('tdesign-vue-next')['List'];
     TListItem: typeof import('tdesign-vue-next')['ListItem'];
     TListItemMeta: typeof import('tdesign-vue-next')['ListItemMeta'];
@@ -141,6 +141,7 @@ declare module 'vue' {
     TButton: (typeof import('@/components/tDesignReset/TButton.vue'))['default']
     TDateRangePicker: (typeof import('@/components/tDesignReset/TDateRangePicker.vue'))['default']
     TPagination: (typeof import('@/components/tDesignReset/TPagination.vue'))['default']
+    TLink: (typeof import('@/components/tDesignReset/TLink.vue'))['default']
   }
 }
 

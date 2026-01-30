@@ -24,6 +24,10 @@ export const tablePropsInit = {
   tableLayout: 'fixed',
 } as const
 
+export const linkPropsInit = {
+  theme: 'primary',
+} as const
+
 type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void
 
 /**

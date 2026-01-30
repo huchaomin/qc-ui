@@ -11,6 +11,7 @@ import _TDesign, {
   Form as _Form,
   Image as _Image,
   Input as _Input,
+  Link as _Link,
   LoadingPlugin as _LoadingPlugin,
   Message as _Message,
   MessagePlugin as _MessagePlugin,
@@ -40,6 +41,7 @@ const Table = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTab
 const Button = _Button as (typeof import('tdesign-vue-next'))['Button']
 const DateRangePicker = _DateRangePicker as (typeof import('tdesign-vue-next'))['DateRangePicker']
 const Pagination = _Pagination as (typeof import('tdesign-vue-next'))['Pagination']
+const Link = _Link as (typeof import('tdesign-vue-next'))['Link']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -51,6 +53,7 @@ export {
   Form,
   Image,
   Input,
+  Link,
   LoadingPlugin,
   Message,
   MessagePlugin,

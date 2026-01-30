@@ -24,12 +24,22 @@ const config: PageListProps = {
       title: '字典名称',
     },
     {
+      cell: {
+        _component: 'Link',
+        _componentProps: ({ col, colIndex, row, rowIndex }) => {
+          return {
+            onClick: () => {
+              console.log(row, col, colIndex, rowIndex)
+            },
+          }
+        },
+      },
       colKey: 'dictType',
       title: '字典类型',
     },
     {
       cell: {
-        component: 'DicLabel',
+        _component: 'DicLabel',
         dicCode: 'sys_normal_disable',
       },
       colKey: 'status',
