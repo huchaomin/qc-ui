@@ -1,4 +1,4 @@
-<script lang="ts">
+<script setup lang="ts">
 import type {
   TableCol as _TableCol,
   CellData,
@@ -7,34 +7,30 @@ import type {
   TableRowData,
   TNode,
 } from 'tdesign-vue-next'
+import type { UnwrapRef } from 'vue'
+import type { CellObjConfig } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
+import { tablePropsInit } from '@/components/tDesignReset/utils'
+import { getCellRender } from '@/plugins/tableRenders/cell'
 
-export const propsInit = {
-  bordered: true,
-  disableDataPage: true,
-  disableSpaceInactiveRow: true,
-  flexHeight: false,
-  hover: true,
-  lazyLoad: true, // 开启整个表格的懒加载
-  maxHeight: 507,
-  resizable: true,
-  rowKey: '_ROW_KEY', // footer data 不需要考虑
-  rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
-  scroll: () => ({
-    isFixedRowHeight: true,
-    rowHeight: 45,
-    threshold: 500,
-    type: 'virtual' as const,
-  }),
-  selectOnRowClick: true,
-  showHeader: true,
-  showToggleFullscreenBtn: false,
-  stripe: true,
-  tableLayout: 'fixed',
-} as const
+export interface CellRenderContext {
+  col: FinallyTableCol
+  colIndex: number
+  row: TableRowData
+  rowIndex: number
+}
+
+export type CellRenderFn = NonNullable<Exclude<_TableCol<TableRowData>['cell'], string>>
 
 export type TableCol = {
+  /**
+   * @description: 单元格渲染
+   * @description: 渲染方式1(tsx): (h, { col, row }) => <div>{row[col.colKey]}</div>
+   * @description: 渲染方式2(vue组件): { name: 'DicLabel', dicCode: 'sys_normal_disable' }
+   * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
+   */
+  cell?: XOR<CellRenderFn, CellObjConfig>
   /**
    * @description: 列的key，必须要存在，且唯一
    */
@@ -51,7 +47,11 @@ export type TableCol = {
    * @description: 列的显示与隐藏
    */
   visible?: boolean
-} & Omit<_TableCol<TableRowData>, 'colKey' | 'resize'>
+  /**
+   * @description: 列的宽度，宽度充裕时实际渲染的将比这个值大，可以看作列的最小宽度
+   */
+  width?: number
+} & Omit<_TableCol<TableRowData>, 'cell' | 'colKey' | 'render' | 'resize' | 'width'>
 
 export type TableProps = {
   columns: Array<TableCol>
@@ -80,14 +80,26 @@ export type TableProps = {
   | 'rowKey'
   | 'sortOnRowDraggable'
 >
-</script>
 
-<script setup lang="ts">
+type FinallyTableCol = Omit<
+  UnwrapRef<typeof _columns>[number],
+  'attrs' | 'cell' | 'resize' | 'width'
+> & {
+  attrs: (context: CellData<TableRowData>) => {
+    [key: string]: any
+  }
+  cell?: CellRenderFn
+  resize: {
+    maxWidth: number
+    minWidth: number
+  }
+  width: number
+}
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<TableProps>(), propsInit)
+const props = withDefaults(defineProps<TableProps>(), tablePropsInit)
 const route = useRoute()
 
 function checkColumns(arr: TableCol[]): string | true {
@@ -113,7 +125,16 @@ const _columns = computed(() => {
     return []
   }
 
-  return props.columns.filter((c) => c.visible !== false)
+  return props.columns
+    .filter((c) => c.visible !== false)
+    .map((c) => {
+      const obj = {
+        ...c,
+      }
+
+      delete obj.visible
+      return obj as Omit<typeof c, 'visible'>
+    })
 })
 
 watch(
@@ -154,21 +175,6 @@ const columnConfigStorageKey = computed(() => {
 })
 const columnHides = useLocalStorage<string[]>(columnConfigStorageKey, [])
 
-/**
- * @description: 初始化时以及列显隐时，fixed 阴影不展示的bug
- */
-watch(
-  [columnWidths, columnHides],
-  () => {
-    nextTick(() => {
-      vm.exposed!.refreshTable()
-    })
-  },
-  {
-    deep: true,
-  },
-)
-
 function getResize(column: TableCol) {
   return {
     maxWidth: column.resize?.maxWidth ?? Infinity,
@@ -201,7 +207,7 @@ watch(
  * @description: title 定义标题数据
  * @description: foot 定义底部数据
  */
-const columns = computed(() => {
+const columns = computed<FinallyTableCol[]>(() => {
   const arr = _columns.value
     .filter(
       (c) =>
@@ -222,8 +228,12 @@ const columns = computed(() => {
             'data-col-key': column.colKey,
           }
         },
+        cell:
+          typeof column.cell === 'function' || column.cell === undefined
+            ? column.cell
+            : getCellRender(column.cell),
         resize,
-        width: column.width ?? columnWidths.value[column.colKey],
+        width: (column.width ?? columnWidths.value[column.colKey])!,
       }
     })
 
@@ -314,6 +324,20 @@ function compoRef(instance: any) {
   vm.exposeProxy = exposed
 }
 
+/**
+ * @description: 初始化时以及列显隐时，fixed 阴影不展示的bug
+ */
+watch(
+  [columnWidths, columnHides],
+  () => {
+    nextTick(() => {
+      vm.exposed!.refreshTable()
+    })
+  },
+  {
+    deep: true,
+  },
+)
 onMounted(() => {
   theadTagRef.value = tableParentRef.value!.querySelector('thead')
   tbodyTagRef.value = tableParentRef.value!.querySelector('tbody')

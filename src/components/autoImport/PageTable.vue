@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Method } from 'alova'
 import type { TableProps } from '@/components/tDesignReset/TTable.vue'
-import { propsInit } from '@/components/tDesignReset/TTable.vue'
+import { tablePropsInit } from '@/components/tDesignReset/utils'
 import { getParamsString } from '@/plugins/alova/index'
 
 export type PageTableProps = {
@@ -25,7 +25,7 @@ export type PageTableProps = {
 } & Omit<TableProps, 'data' | 'loading'>
 
 const props = withDefaults(defineProps<PageTableProps>(), {
-  ...propsInit,
+  ...tablePropsInit,
   initialQuery: true,
   queryParams: () => ({}),
   useEmptyParams: true,

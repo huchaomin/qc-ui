@@ -28,6 +28,10 @@ const config: PageListProps = {
       title: '字典类型',
     },
     {
+      cell: {
+        component: 'DicLabel',
+        dicCode: 'sys_normal_disable',
+      },
       colKey: 'status',
       title: '状态',
     },
