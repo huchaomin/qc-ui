@@ -90,6 +90,12 @@ function compoRef(instance: any) {
       flex: none;
       order: 2;
     }
+
+    .t-pagination__select {
+      .t-input {
+        min-width: 100px;
+      }
+    }
   }
 }
 </style>
