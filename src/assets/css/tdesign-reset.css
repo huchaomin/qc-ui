@@ -52,7 +52,7 @@ body {
   .t-input--focused,
   .t-range-input.t-is-focused,
   .t-range-input-popup--visible .t-range-input {
-    box-shadow: 0 0 0 1px var(--td-brand-color);
+    box-shadow: 0 0 0 1px var(--td-brand-color) inset;
   }
 
   .t-tabs {
