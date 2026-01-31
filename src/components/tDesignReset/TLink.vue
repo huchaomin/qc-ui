@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<LinkProps>(), {
   ...linkPropsInit,
 })
 
-export type LinkProps = _LinkProps
+export type LinkProps = Omit<_LinkProps, 'content'>
 
 const otherProps = computed(() => {
   const obj: Partial<LinkProps> = {

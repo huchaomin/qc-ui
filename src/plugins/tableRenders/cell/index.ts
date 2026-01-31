@@ -1,8 +1,14 @@
 import type { DicLabelProps } from './DicLabel.vue'
 import type { LinkProps } from './Link.vue'
-import type { CellRenderContext, CellRenderFn } from '@/components/tDesignReset/TTable.vue'
+import type {
+  CellRenderContext,
+  CellRenderFn,
+  TableCol,
+} from '@/components/tDesignReset/TTable.vue'
 
 export type CellObjConfig = XOR<DicLabelConfig, LinkConfig>
+
+export type DynamicCellObjConfig = (context: CellRenderContext) => CellObjConfig
 
 export const cellRenderContextKeys = ['row', 'col', 'colIndex', 'rowIndex']
 
@@ -28,8 +34,12 @@ const compos: Record<string, Component> = import.meta.glob('./*.vue', {
   import: 'default',
 })
 
-export function getCellRender(config: CellObjConfig): CellRenderFn {
-  const { _component, ...restConfig } = config
+export function getCellRender(config: TableCol['cell']): CellRenderFn | undefined {
+  if (config === undefined || (typeof config === 'function' && config.length === 2)) {
+    return config as CellRenderFn | undefined
+  }
+
+  const { _component, ...restConfig } = config as XOR<CellObjConfig, DynamicCellObjConfig>
 
   return (h: typeof import('vue').h, context: Parameters<CellRenderFn>[1]) => {
     return h(compos[`./${_component}.vue`]!, {

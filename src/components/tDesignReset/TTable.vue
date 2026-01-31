@@ -8,7 +8,7 @@ import type {
   TNode,
 } from 'tdesign-vue-next'
 import type { UnwrapRef } from 'vue'
-import type { CellObjConfig } from '@/plugins/tableRenders/cell'
+import type { CellObjConfig, DynamicCellObjConfig } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
 import { tablePropsInit } from '@/components/tDesignReset/utils'
@@ -40,7 +40,7 @@ export type TableCol = {
                                                               }
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
-  cell?: XOR<CellRenderFn, CellObjConfig>
+  cell?: XOR<XOR<CellRenderFn, CellObjConfig>, DynamicCellObjConfig>
   /**
    * @description: 列的key，必须要存在，且唯一
    */
@@ -238,10 +238,7 @@ const columns = computed<FinallyTableCol[]>(() => {
             'data-col-key': column.colKey,
           }
         },
-        cell:
-          typeof column.cell === 'function' || column.cell === undefined
-            ? column.cell
-            : getCellRender(column.cell),
+        cell: getCellRender(column.cell),
         resize,
         width: (column.width ?? columnWidths.value[column.colKey])!,
       }
