@@ -193,9 +193,14 @@ const { width } = useElementSize(() => vm.exposed!.$el)
           ref: compoRef,
           popupProps: {
             ...(otherProps.popupProps ?? {}),
-            overlayInnerStyle: {
-              width: 'auto',
-              minWidth: `${width}px`,
+            overlayInnerStyle: (triggerElement: HTMLElement, popupElement: HTMLElement) => {
+              return {
+                width: 'auto',
+                minWidth: `${width}px`,
+                ...(typeof otherProps.popupProps?.overlayInnerStyle === 'function'
+                  ? otherProps.popupProps.overlayInnerStyle(triggerElement, popupElement)
+                  : (otherProps.popupProps?.overlayInnerStyle ?? {})),
+              }
             },
           },
         }),
