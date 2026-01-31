@@ -8,24 +8,17 @@ import type {
 
 export type CellObjConfig = XOR<DicLabelConfig, LinkConfig>
 
-export type DynamicCellObjConfig = (context: CellRenderContext) => CellObjConfig
+export type CellObjConfigFn = (
+  h: typeof import('vue').h,
+  context: CellRenderContext,
+) => CellObjConfig
 
 export const cellRenderContextKeys = ['row', 'col', 'colIndex', 'rowIndex']
 
-type DicLabelConfig = XOR<
-  Omit<DicLabelProps, '_component'>,
-  {
-    _componentProps: (context: CellRenderContext) => Omit<DicLabelProps, '_component'>
-  }
-> & {
+type DicLabelConfig = Omit<DicLabelProps, '_component'> & {
   _component: 'DicLabel'
 }
-type LinkConfig = XOR<
-  Omit<LinkProps, '_component'>,
-  {
-    _componentProps: (context: CellRenderContext) => Omit<LinkProps, '_component'>
-  }
-> & {
+type LinkConfig = Omit<LinkProps, '_component'> & {
   _component: 'Link'
 }
 
@@ -35,19 +28,40 @@ const compos: Record<string, Component> = import.meta.glob('./*.vue', {
 })
 
 export function getCellRender(config: TableCol['cell']): CellRenderFn | undefined {
-  if (config === undefined || (typeof config === 'function' && config.length === 2)) {
-    return config as CellRenderFn | undefined
+  if (config === undefined) {
+    return undefined
   }
 
-  const { _component, ...restConfig } = config as XOR<CellObjConfig, DynamicCellObjConfig>
+  if (isCellObjConfig(config)) {
+    const { _component, ...restConfig } = config
+
+    return (h: typeof import('vue').h, context: Parameters<CellRenderFn>[1]) => {
+      return h(compos[`./${_component}.vue`]!, {
+        ...restConfig,
+        ...context,
+      })
+    }
+  }
 
   return (h: typeof import('vue').h, context: Parameters<CellRenderFn>[1]) => {
-    return h(compos[`./${_component}.vue`]!, {
-      ...(typeof restConfig._componentProps === 'function'
-        ? // eslint-disable-next-line ts/no-unsafe-call
-          restConfig._componentProps(context as CellRenderContext)
-        : restConfig),
-      ...context,
-    })
+    // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-call
+    const result = config(h, context)
+
+    if (isCellObjConfig(result)) {
+      const { _component, ...restConfig } = result
+
+      return h(compos[`./${_component}.vue`]!, {
+        ...restConfig,
+        ...context,
+      })
+    } else {
+      // eslint-disable-next-line ts/no-unsafe-return
+      return result
+    }
   }
+}
+
+function isCellObjConfig(value: any): value is CellObjConfig {
+  // eslint-disable-next-line ts/no-unsafe-member-access
+  return value?._component !== undefined
 }

@@ -8,7 +8,7 @@ import type {
   TNode,
 } from 'tdesign-vue-next'
 import type { UnwrapRef } from 'vue'
-import type { CellObjConfig, DynamicCellObjConfig } from '@/plugins/tableRenders/cell'
+import type { CellObjConfig, CellObjConfigFn } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
 import { tablePropsInit } from '@/components/tDesignReset/utils'
@@ -21,26 +21,24 @@ export interface CellRenderContext {
   rowIndex: number
 }
 
-export type CellRenderFn = NonNullable<Exclude<_TableCol<TableRowData>['cell'], string>>
+export type CellRenderFn = TNode<CellRenderContext>
 
 export type TableCol = {
   /**
    * @description: 单元格渲染
-   * @description: 渲染方式1(tsx): (h, { col, row }) => <div>{row[col.colKey]}</div>
+   * @description: 渲染方式1(tsx): (h, { col, colIndex, row, rowIndex }) => <div>{row[col.colKey]}</div>
    * @description: 渲染方式2(vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
-   * @description: 渲染方式3(vue组件，需要行列信息作为参数的): {
-                                                                _component: 'Link',
-                                                                _componentProps: ({ col, colIndex, row, rowIndex }) => {
-                                                                  return {
-                                                                    onClick: () => {
-                                                                      console.log(row, col, colIndex, rowIndex)
-                                                                    },
-                                                                  }
-                                                                },
-                                                              }
+   * @description: 渲染方式3(vue组件，需要行列信息作为参数的):  (h, { col, colIndex, row, rowIndex }) => {
+                                                            return {
+                                                              _component: 'Link',
+                                                              onClick: () => {
+                                                                console.log(row, col, colIndex, rowIndex)
+                                                              },
+                                                            }
+                                                          }
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
-  cell?: XOR<XOR<CellRenderFn, CellObjConfig>, DynamicCellObjConfig>
+  cell?: XOR<XOR<CellRenderFn, CellObjConfig>, CellObjConfigFn>
   /**
    * @description: 列的key，必须要存在，且唯一
    */
@@ -655,6 +653,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
         height: 1px;
         content: '';
         background-color: var(--td-component-border);
+        transform: scaleY(0.4);
       }
     }
 
