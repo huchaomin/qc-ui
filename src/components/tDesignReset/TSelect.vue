@@ -171,7 +171,20 @@ const [innerInputValue, setInputValue] = useDefaultValue(
   },
   'inputValue',
 )
-const { width } = useElementSize(() => vm.exposed!.$el)
+// const { width } = useElementSize(() => vm.exposed!.$el) // 为什么会多出 一点宽度呢？
+const width = ref(0)
+
+onMounted(() => {
+  useResizeObserver(
+    vm.exposed!.$el,
+    () => {
+      width.value = vm.exposed!.$el.offsetWidth
+    },
+    {
+      box: 'border-box',
+    },
+  )
+})
 </script>
 
 <template>
