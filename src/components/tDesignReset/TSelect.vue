@@ -171,6 +171,7 @@ const [innerInputValue, setInputValue] = useDefaultValue(
   },
   'inputValue',
 )
+const { width } = useElementSize(() => vm.exposed!.$el)
 </script>
 
 <template>
@@ -190,6 +191,13 @@ const [innerInputValue, setInputValue] = useDefaultValue(
           inputValue: innerInputValue,
           onInputChange: setInputValue,
           ref: compoRef,
+          popupProps: {
+            ...(otherProps.popupProps ?? {}),
+            overlayInnerStyle: {
+              width: 'auto',
+              minWidth: `${width}px`,
+            },
+          },
         }),
         $slots,
       )
