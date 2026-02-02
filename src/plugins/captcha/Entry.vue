@@ -67,8 +67,14 @@ const styleByState = computed(() => {
 })
 const startLeft = ref(0)
 const startMoveTime = ref(0)
+const backToken = ref<string>('')
+const secretKey = ref<string>('')
 
 function start(e: MouseEvent | TouchEvent): void {
+  if (secretKey.value === '') {
+    return
+  }
+
   const x = getEx(e)
 
   startLeft.value = x - getBarAreaLeft()
@@ -77,8 +83,6 @@ function start(e: MouseEvent | TouchEvent): void {
   e.stopPropagation()
 }
 
-const backToken = ref<string>('')
-const secretKey = ref<string>('')
 const { send: checkCaptchaSend } = useRequest(checkCaptcha, {
   immediate: false,
 })
@@ -174,6 +178,7 @@ function refresh() {
   tipWords.value = ''
   moveBlockLeft.value = 0
   checkState.value = 'default'
+  secretKey.value = ''
   getPicture()
 }
 </script>
