@@ -24,15 +24,13 @@ const config: PageListProps = {
       title: '字典名称',
     },
     {
-      cell: {
-        _component: 'Link',
-        _componentProps: ({ col, colIndex, row, rowIndex }) => {
-          return {
-            onClick: () => {
-              console.log(row, col, colIndex, rowIndex)
-            },
-          }
-        },
+      cell: (_, { row }) => {
+        return {
+          _component: 'Link',
+          onClick: () => {
+            console.log(row)
+          },
+        }
       },
       colKey: 'dictType',
       title: '字典类型',

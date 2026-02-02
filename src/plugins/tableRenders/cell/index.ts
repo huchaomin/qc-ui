@@ -13,8 +13,6 @@ export type CellObjConfigFn = (
   context: CellRenderContext,
 ) => CellObjConfig
 
-export const cellRenderContextKeys = ['row', 'col', 'colIndex', 'rowIndex']
-
 type DicLabelConfig = Omit<DicLabelProps, '_component'> & {
   _component: 'DicLabel'
 }

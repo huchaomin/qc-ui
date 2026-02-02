@@ -5,8 +5,13 @@ export interface DicLabelProps {
   dicCode: string
 }
 
-const props = withDefaults(defineProps<CellRenderContext & DicLabelProps>(), {})
-const dicLabel = useDicLabel(props.dicCode, props.row[props.col.colKey])
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<DicLabelProps>(), {})
+const attrs = useAttrs() as unknown as CellRenderContext
+const dicLabel = useDicLabel(props.dicCode, attrs.row[attrs.col.colKey])
 </script>
 
 <template>

@@ -2,18 +2,22 @@
 import type { LinkProps as _LinkProps } from '@/components/tDesignReset/TLink.vue'
 import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
 import { linkPropsInit } from '@/components/tDesignReset/utils'
-import _ from '@/plugins/autoImport/_.ts'
-import { cellRenderContextKeys } from './index'
 
-const props = withDefaults(defineProps<CellRenderContext & LinkProps>(), {
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<LinkProps>(), {
   ...linkPropsInit,
 })
 
 export type LinkProps = _LinkProps
+
+const attrs = useAttrs() as unknown as CellRenderContext
 </script>
 
 <template>
-  <TLink v-bind="_.omit(props, cellRenderContextKeys)">
-    {{ props.row[props.col.colKey] }}
+  <TLink v-bind="props">
+    {{ attrs.row[attrs.col.colKey] }}
   </TLink>
 </template>
