@@ -6,6 +6,9 @@ import PageQuery from './PageQuery.vue'
 
 export interface PageListProps {
   apis: {
+    delete?: {
+      method: PageTableProps['method']
+    }
     list: {
       method: PageTableProps['method']
     }
@@ -90,9 +93,23 @@ function doReset() {
       v-bind="props.tableOtherProps"
     >
       <template
-        v-for="k in Object.keys($slots).filter((key) => key.startsWith('table-'))"
+        v-for="k in Object.keys($slots).filter((key) =>
+          ['table-operations', 'table-top', 'table-bottom'].includes(key),
+        )"
         :key="k"
         #[k]="slotScope"
+      >
+        <slot :name="k" v-bind="slotScope"></slot>
+      </template>
+
+      <template
+        v-for="k in Object.keys($slots).filter(
+          (key) =>
+            key.startsWith('table-') &&
+            !['table-operations', 'table-top', 'table-bottom'].includes(key),
+        )"
+        :key="k"
+        #[k.slice(6)]="slotScope"
       >
         <slot :name="k" v-bind="slotScope"></slot>
       </template>
