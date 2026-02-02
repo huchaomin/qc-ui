@@ -1,12 +1,16 @@
 <script setup lang="ts">
-import type { ButtonProps } from 'tdesign-vue-next'
+import type { ButtonProps as _ButtonProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import { buttonPropsInit } from '@/components/tDesignReset/utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<ButtonProps>(), {})
+const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
+
+export type ButtonProps = Omit<_ButtonProps, 'content'>
+
 const otherProps = computed(() => {
   const obj: Partial<ButtonProps> = {
     ...props,

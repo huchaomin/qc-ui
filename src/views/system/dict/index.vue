@@ -55,6 +55,23 @@ const config: PageListProps = {
       colKey: 'createTime',
       title: '创建时间',
     },
+    {
+      cell: (_, { row }) => {
+        return {
+          _component: 'Buttons',
+          buttons: [
+            {
+              default: '编辑',
+            },
+            {
+              default: '删除',
+            },
+          ],
+        }
+      },
+      colKey: '_operation',
+      title: '操作',
+    },
   ],
   formItems: [
     {

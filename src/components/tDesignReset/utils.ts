@@ -28,6 +28,8 @@ export const linkPropsInit = {
   theme: 'primary',
 } as const
 
+export const buttonPropsInit = {} as const
+
 type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void
 
 /**

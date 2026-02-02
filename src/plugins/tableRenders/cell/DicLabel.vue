@@ -11,7 +11,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<DicLabelProps>(), {})
 const attrs = useAttrs() as unknown as CellRenderContext
-const dicLabel = useDicLabel(props.dicCode, attrs.row[attrs.col.colKey])
+const dicLabel = computed(() => useDicLabel(props.dicCode, attrs.row[attrs.col.colKey]).value)
 </script>
 
 <template>
