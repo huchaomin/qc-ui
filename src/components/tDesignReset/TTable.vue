@@ -492,12 +492,6 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
 <style scoped>
 :deep() {
-  --td-font-body-medium: 13px / var(--td-line-height-body-medium) var(--td-font-family);
-  /* stylelint-disable-next-line custom-property-pattern */
-  --td-comp-paddingTB-m: 0;
-  /* stylelint-disable-next-line custom-property-pattern */
-  --td-comp-paddingLR-l: 12px;
-
   table {
     /* 解决滚动时固定列border消失的bug */
     border-collapse: separate;
@@ -550,34 +544,14 @@ defineExpose({} as EnhancedTableInstanceFunctions)
   }
 }
 
-.table_parent {
-  /* stylelint-disable-next-line value-keyword-case */
-  min-height: calc(v-bind(theadHeight) * 1px + v-bind(tfootHeight) * 1px + 46px);
-
-  &:has(.t-table--width-overflow) {
-    /* stylelint-disable-next-line value-keyword-case */
-    min-height: calc(v-bind(theadHeight) * 1px + v-bind(tfootHeight) * 1px + 56px);
-  }
-
-  &:has(.t-table__empty) {
-    /* stylelint-disable-next-line value-keyword-case */
-    min-height: calc(v-bind(theadHeight) * 1px + 144px);
-
-    :deep() {
-      .t-table__footer {
-        display: none;
-      }
-
-      .t-table,
-      .t-table__content {
-        min-height: inherit;
-      }
-    }
-  }
-}
-
-/* fixed 列的阴影 */
 .t-table {
+  --td-font-body-medium: 13px / var(--td-line-height-body-medium) var(--td-font-family);
+  /* stylelint-disable-next-line custom-property-pattern */
+  --td-comp-paddingTB-m: 0;
+  /* stylelint-disable-next-line custom-property-pattern */
+  --td-comp-paddingLR-l: 12px;
+
+  /* fixed 列的阴影 */
   &.t-table__content--scrollable-to-left {
     :deep() {
       .t-table__cell--fixed-left-last {
@@ -614,6 +588,32 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     .t-table__content:has(.t-table__empty),
     td:has(.t-table__empty) {
       position: static;
+    }
+  }
+}
+
+.table_parent {
+  /* stylelint-disable-next-line value-keyword-case */
+  min-height: calc(v-bind(theadHeight) * 1px + v-bind(tfootHeight) * 1px + 46px);
+
+  &:has(.t-table--width-overflow) {
+    /* stylelint-disable-next-line value-keyword-case */
+    min-height: calc(v-bind(theadHeight) * 1px + v-bind(tfootHeight) * 1px + 56px);
+  }
+
+  &:has(.t-table__empty) {
+    /* stylelint-disable-next-line value-keyword-case */
+    min-height: calc(v-bind(theadHeight) * 1px + 144px);
+
+    :deep() {
+      .t-table__footer {
+        display: none;
+      }
+
+      .t-table,
+      .t-table__content {
+        min-height: inherit;
+      }
     }
   }
 }
@@ -690,7 +690,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 .table_operations_wrapper {
   display: none;
 
-  &:has(> *) {
+  &:has(> *:not(:empty)) {
     display: flex;
   }
 }

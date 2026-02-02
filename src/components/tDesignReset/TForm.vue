@@ -376,6 +376,7 @@ defineExpose(
     &.no_label_item {
       .t-form__label {
         height: 1px;
+        padding-right: 0;
         opacity: 0;
       }
     }

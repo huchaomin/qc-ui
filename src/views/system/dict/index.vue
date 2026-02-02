@@ -101,6 +101,11 @@ const config: PageListProps = {
     dictType: '',
     status: '',
   },
+  operations: [
+    {
+      default: '新增',
+    },
+  ],
 }
 </script>
 

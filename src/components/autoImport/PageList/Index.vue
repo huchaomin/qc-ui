@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PageTableProps } from '@/components/autoImport/PageTable.vue'
+import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import type { TableProps } from '@/components/tDesignReset/TTable.vue'
 import PageQuery from './PageQuery.vue'
@@ -31,6 +32,10 @@ export interface PageListProps {
    * @description: 第一次查询是否要父组件来发起, 默认 false
    */
   isFirstQueryByParent?: boolean
+  /**
+   * @description: 表格上面的操作按钮
+   */
+  operations?: ButtonProps[]
   /**
    * @description: 其他表格配置
    */
@@ -92,6 +97,12 @@ function doReset() {
       class="flex-1"
       v-bind="props.tableOtherProps"
     >
+      <template #table-operations>
+        <div class="flex items-end">
+          <TButton v-for="(operation, index) in props.operations" :key="index" v-bind="operation">
+          </TButton>
+        </div>
+      </template>
       <template
         v-for="k in Object.keys($slots).filter((key) =>
           ['table-operations', 'table-top', 'table-bottom'].includes(key),
