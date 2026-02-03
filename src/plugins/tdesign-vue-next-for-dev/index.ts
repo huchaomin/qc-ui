@@ -17,6 +17,7 @@ import _TDesign, {
   MessagePlugin as _MessagePlugin,
   NotifyPlugin as _NotifyPlugin,
   Pagination as _Pagination,
+  Popconfirm as _Popconfirm,
   RadioGroup as _RadioGroup,
   Select as _Select,
   TabPanel as _TabPanel,
@@ -44,6 +45,7 @@ const DateRangePicker = _DateRangePicker as (typeof import('tdesign-vue-next'))[
 const Pagination = _Pagination as (typeof import('tdesign-vue-next'))['Pagination']
 const Link = _Link as (typeof import('tdesign-vue-next'))['Link']
 const Textarea = _Textarea as (typeof import('tdesign-vue-next'))['Textarea']
+const Popconfirm = _Popconfirm as (typeof import('tdesign-vue-next'))['Popconfirm']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -61,6 +63,7 @@ export {
   MessagePlugin,
   NotifyPlugin,
   Pagination,
+  Popconfirm,
   RadioGroup,
   Select,
   Table,

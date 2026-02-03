@@ -28,7 +28,7 @@ const formItems = computed(() => {
   return [
     ...props.items,
     {
-      slot: '__btn',
+      slot: '_btn',
     },
   ]
 })
@@ -128,7 +128,7 @@ defineExpose({
     <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
       <slot :name="k" v-bind="slotScope"></slot>
     </template>
-    <template #__btn>
+    <template #_btn>
       <TButton @click="handleQuery">查询</TButton>
       <TButton theme="default" @click="handleReset">重置</TButton>
       <TButton

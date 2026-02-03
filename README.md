@@ -62,7 +62,7 @@
 - [AutoDecimal](https://juejin.cn/post/7450708775008747557)
 - zx —— 真正像 JavaScript 的 Shell 脚本
 - vue-skills
-- button permission
+- CheckboxProps
 
 ### 分析包大小
 

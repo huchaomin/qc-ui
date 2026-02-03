@@ -64,6 +64,12 @@ function doReset() {
   queryParams.value = _.cloneDeep(pageQueryRef.value!.formData)
   pageTableRef.value!.reset()
 }
+
+defineExpose({
+  query: doQuery,
+  queryParams,
+  reset: doReset,
+})
 </script>
 
 <template>

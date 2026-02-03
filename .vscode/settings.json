@@ -86,7 +86,13 @@
   "[tailwindcss]": {
     "editor.defaultFormatter": "stylelint.vscode-stylelint"
   },
-  "cSpell.words": ["formkit", "iconify", "secondarycontainer", "tdesign"],
+  "cSpell.words": [
+    "formkit",
+    "iconify",
+    "Popconfirm",
+    "secondarycontainer",
+    "tdesign"
+  ],
   "vue.inlayHints.vBindShorthand": true,
   "vue.inlayHints.destructuredProps": true,
   "vue.editor.focusMode": true
