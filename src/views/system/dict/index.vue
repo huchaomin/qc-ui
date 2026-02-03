@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const pageListRef = useTemplateRef('pageListRef')
 const config: PageListProps = {
   apis: {
     list: {
@@ -65,6 +66,15 @@ const config: PageListProps = {
             },
             {
               default: '删除',
+              permission: 'system:dict:remove',
+              popconfirm: {
+                content: '确认删除吗',
+                onConfirm: async () => {
+                  await alovaInst.Delete(`system/dict/type/${row.dictId}`)
+                  $msg.success('删除成功')
+                  pageListRef.value!.query()
+                },
+              },
             },
           ],
         }
@@ -104,11 +114,61 @@ const config: PageListProps = {
   operations: [
     {
       default: '新增',
+      onClick: () => {
+        const formRef = ref<FormInstance | null>(null)
+
+        $confirm({
+          body: () =>
+            h(resolveComponent('TForm') as Component<FormProps>, {
+              data: reactive({
+                dictId: '',
+                dictName: '',
+                dictType: '',
+                remark: '',
+                status: '0',
+              }),
+              items: [
+                {
+                  _label: '字典名称',
+                  _required: true,
+                  model: 'dictName',
+                },
+                {
+                  _label: '字典类型',
+                  _required: true,
+                  model: 'dictType',
+                },
+                {
+                  _label: '状态',
+                  component: 'TRadioGroup',
+                  dicCode: 'sys_normal_disable',
+                  model: 'status',
+                },
+                {
+                  _label: '备注',
+                  component: 'TTextarea',
+                  model: 'remark',
+                },
+              ],
+              labelAlign: 'right',
+              layout: 'vertical',
+              ref: formRef,
+            }),
+          header: '添加字典类型',
+          onConfirmCallback: async () => {
+            await alovaInst.Post('system/dict/type', await formRef.value!.validate())
+            $msg.success('字典添加成功')
+            pageListRef.value!.query()
+          },
+          width: 430,
+        })
+      },
+      permission: 'system:dict:add',
     },
   ],
 }
 </script>
 
 <template>
-  <PageList v-bind="config"> </PageList>
+  <PageList ref="pageListRef" v-bind="config"> </PageList>
 </template>
