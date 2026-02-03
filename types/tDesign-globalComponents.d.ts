@@ -114,7 +114,7 @@ declare module 'vue' {
     TTag: typeof import('tdesign-vue-next')['Tag'];
     TTagInput: typeof import('tdesign-vue-next')['TagInput'];
     TTypographyText: typeof import('tdesign-vue-next')['Text'];
-    TTextarea: typeof import('tdesign-vue-next')['Textarea'];
+    // TTextarea: typeof import('tdesign-vue-next')['Textarea'];
     TTimeline: typeof import('tdesign-vue-next')['Timeline'];
     TTimelineItem: typeof import('tdesign-vue-next')['TimelineItem'];
     TTimePicker: typeof import('tdesign-vue-next')['TimePicker'];
@@ -142,6 +142,7 @@ declare module 'vue' {
     TDateRangePicker: (typeof import('@/components/tDesignReset/TDateRangePicker.vue'))['default']
     TPagination: (typeof import('@/components/tDesignReset/TPagination.vue'))['default']
     TLink: (typeof import('@/components/tDesignReset/TLink.vue'))['default']
+    TTextarea: (typeof import('@/components/tDesignReset/TTextarea.vue'))['default']
   }
 }
 

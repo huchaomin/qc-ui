@@ -16,6 +16,7 @@ import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
+import type { TextareaProps } from './TTextarea.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
@@ -31,32 +32,37 @@ type _FormItemProps = AllowedComponentProps &
   }
 type ComponentItemType = AllowedComponentProps &
   XOR<
-    Omit<DateRangePickerProps, 'modelValue'> & {
-      component: 'TDateRangePicker'
-    },
     XOR<
+      Omit<DateRangePickerProps, 'modelValue'> & {
+        component: 'TDateRangePicker'
+      },
       XOR<
         XOR<
           XOR<
-            Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-              component: 'TCheckbox'
-            },
-            Omit<InputProps, 'modelValue'> & {
-              component?: 'TInput'
+            XOR<
+              Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+                component: 'TCheckbox'
+              },
+              Omit<InputProps, 'modelValue'> & {
+                component?: 'TInput'
+              }
+            >,
+            Omit<RadioGroupProps, 'modelValue'> & {
+              component: 'TRadioGroup'
             }
           >,
-          Omit<RadioGroupProps, 'modelValue'> & {
-            component: 'TRadioGroup'
+          Omit<CheckboxGroupProps, 'modelValue'> & {
+            component: 'TCheckboxGroup'
           }
         >,
-        Omit<CheckboxGroupProps, 'modelValue'> & {
-          component: 'TCheckboxGroup'
+        Omit<SelectProps, 'modelValue'> & {
+          component: 'TSelect'
         }
-      >,
-      Omit<SelectProps, 'modelValue'> & {
-        component: 'TSelect'
-      }
-    >
+      >
+    >,
+    Omit<TextareaProps, 'modelValue'> & {
+      component: 'TTextarea'
+    }
   > & {
     model: string
   }

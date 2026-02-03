@@ -20,6 +20,7 @@ import _TDesign, {
   RadioGroup as _RadioGroup,
   Select as _Select,
   TabPanel as _TabPanel,
+  Textarea as _Textarea,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
 
@@ -42,6 +43,7 @@ const Button = _Button as (typeof import('tdesign-vue-next'))['Button']
 const DateRangePicker = _DateRangePicker as (typeof import('tdesign-vue-next'))['DateRangePicker']
 const Pagination = _Pagination as (typeof import('tdesign-vue-next'))['Pagination']
 const Link = _Link as (typeof import('tdesign-vue-next'))['Link']
+const Textarea = _Textarea as (typeof import('tdesign-vue-next'))['Textarea']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -64,4 +66,5 @@ export {
   Table,
   TabPanel,
   TDesign,
+  Textarea,
 }
