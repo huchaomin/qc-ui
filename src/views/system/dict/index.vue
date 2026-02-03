@@ -165,6 +165,18 @@ const config: PageListProps = {
       },
       permission: 'system:dict:add',
     },
+    {
+      default: '刷新缓存',
+      onClick: async () => {
+        await alovaInst.Delete('system/dict/type/refreshCache', undefined, {
+          meta: {
+            useSuccessMsg: true,
+          },
+        })
+        pageListRef.value!.query()
+      },
+      permission: 'system:dict:remove',
+    },
   ],
 }
 </script>
