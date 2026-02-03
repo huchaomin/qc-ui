@@ -4,9 +4,9 @@
  * @description: 要监听 formItem 的值变化时，可用onChange事件, 暂时没考虑 onUpdate:modelValue 事件
  */
 import type {
+  FormInstanceFunctions as _FormInstanceFunctions,
   FormProps as _FormProps,
   CheckboxProps,
-  FormInstanceFunctions,
   FormItemProps,
   ValidateResultList,
 } from 'tdesign-vue-next'
@@ -17,6 +17,7 @@ import type { InputProps } from './TInput.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
 import { mergeProps } from 'vue'
+import { formPropsInit } from './utils'
 
 export type FormItemType = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
@@ -67,16 +68,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<FormProps>(), {
-  colon: true,
-  labelAlign: 'top',
-  layout: 'inline',
-  msgErrorWhenValidate: true,
-  preventSubmitDefault: true,
-  requiredMark: undefined,
-  resetType: 'initial',
-  showErrorMessage: true,
-})
+const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 
 export type FormProps = {
   data: Record<string, any>
@@ -223,10 +215,10 @@ function compoRef(instance: any) {
   const exposed = instance ?? {}
 
   if (instance !== null) {
-    const inst = instance as FormInstanceFunctions
+    const inst = instance as _FormInstanceFunctions
     const orgValidate = inst.validate
 
-    inst.validate = (...arg: Parameters<FormInstanceFunctions['validate']>) => {
+    inst.validate = (...arg: Parameters<_FormInstanceFunctions['validate']>) => {
       return new Promise((resolve, reject) => {
         orgValidate(...arg).then((res) => {
           if (res === true) {
@@ -252,7 +244,7 @@ function compoRef(instance: any) {
 
     const orgValidateOnly = inst.validateOnly
 
-    inst.validateOnly = (...arg: Parameters<FormInstanceFunctions['validateOnly']>) => {
+    inst.validateOnly = (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => {
       return new Promise((resolve, reject) => {
         orgValidateOnly(...arg).then((res) => {
           if (res === true) {
@@ -292,6 +284,11 @@ onMounted(() => {
   })
 })
 
+export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
+  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<true>
+  validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<true>
+}
+
 function calcLabelWidth() {
   const arr = [...formItemLabelEls.value!] as HTMLElement[]
 
@@ -313,12 +310,7 @@ function calcLabelWidth() {
   })
 }
 
-defineExpose(
-  {} as Omit<FormInstanceFunctions, 'validate' | 'validateOnly'> & {
-    validate: (...arg: Parameters<FormInstanceFunctions['validate']>) => Promise<true>
-    validateOnly: (...arg: Parameters<FormInstanceFunctions['validateOnly']>) => Promise<true>
-  },
-)
+defineExpose({} as FormInstance)
 </script>
 
 <template>

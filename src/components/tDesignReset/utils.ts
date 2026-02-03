@@ -30,6 +30,17 @@ export const linkPropsInit = {
 
 export const buttonPropsInit = {} as const
 
+export const formPropsInit = {
+  colon: true,
+  labelAlign: 'top',
+  layout: 'inline',
+  msgErrorWhenValidate: true,
+  preventSubmitDefault: true,
+  requiredMark: undefined,
+  resetType: 'initial',
+  showErrorMessage: true,
+} as const
+
 type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void
 
 /**

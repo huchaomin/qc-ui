@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import { mergeProps } from 'vue'
+import { formPropsInit } from '@/components/tDesignReset/utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<FormProps>(), {})
+const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 const emit = defineEmits<{
   query: [FormData: Record<string, any>]
   reset: [FormData: Record<string, any>]
