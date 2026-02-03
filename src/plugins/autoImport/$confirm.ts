@@ -10,9 +10,6 @@ export default (
   arg2?: Parameters<CreateDialogFnType>[1],
 ): Promise<void> => {
   return new Promise((resolve, reject) => {
-    const config = {
-      theme: 'warning',
-    } as const
     const dialogInstance =
       typeof arg1 === 'string'
         ? $dialog(
@@ -26,7 +23,7 @@ export default (
                 dialogInstance.hide()
                 resolve()
               },
-              ...config,
+              theme: 'warning',
             },
             arg2,
           )
@@ -43,7 +40,6 @@ export default (
                 dialogInstance.hide()
                 resolve()
               },
-              ...config,
               ...arg1,
             },
             arg2,

@@ -113,8 +113,9 @@ body {
         padding: var(--td-size-7);
       }
 
-      .t-dialog__body {
-        &:is(:last-child) {
+      [class^="t-dialog__body"] {
+        &:is(:last-child),
+        &:has(> .t-form:is(:last-child)) {
           padding-bottom: 0;
         }
       }

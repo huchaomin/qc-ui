@@ -79,11 +79,12 @@ const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 export type FormProps = {
   data: Record<string, any>
   items: FormItemType[]
+  labelAlign?: 'right' | 'top'
   /**
    * @description: 是否在验证失败时显示错误信息
    */
   msgErrorWhenValidate?: boolean
-} & Omit<_FormProps, 'data' | 'labelWidth'>
+} & Omit<_FormProps, 'data' | 'labelAlign' | 'labelWidth'>
 
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
@@ -222,44 +223,57 @@ function compoRef(instance: any) {
 
   if (instance !== null) {
     const inst = instance as _FormInstanceFunctions
-    const orgValidate = inst.validate
 
-    inst.validate = (...arg: Parameters<_FormInstanceFunctions['validate']>) => {
-      return new Promise((resolve, reject) => {
-        orgValidate(...arg).then((res) => {
-          if (res === true) {
-            resolve(res)
-          } else {
-            if (props.msgErrorWhenValidate) {
-              Object.keys(res).forEach((key) => {
-                const arr = res[key as keyof typeof res] as unknown as ValidateResultList
+    // @ts-expect-error 内部属性
+    if (!inst.validate._alreadyReplace) {
+      const orgValidate = inst.validate
 
-                arr.forEach((item: any) => {
-                  if (item.result === false) {
-                    $msg.error(item.message)
-                  }
+      inst.validate = (...arg: Parameters<_FormInstanceFunctions['validate']>) => {
+        return new Promise((resolve, reject) => {
+          orgValidate(...arg).then((res) => {
+            if (res === true) {
+              resolve(props.data)
+            } else {
+              if (props.msgErrorWhenValidate) {
+                Object.keys(res).forEach((key) => {
+                  const arr = res[key as keyof typeof res] as unknown as ValidateResultList
+
+                  arr.forEach((item: any) => {
+                    if (item.result === false) {
+                      $msg.error(item.message)
+                    }
+                  })
                 })
-              })
-            }
+              }
 
-            reject(res)
-          }
+              reject(res)
+            }
+          })
         })
-      })
+      }
+
+      // @ts-expect-error 内部属性
+      inst.validate._alreadyReplace = true
     }
 
-    const orgValidateOnly = inst.validateOnly
+    // @ts-expect-error 内部属性
+    if (!inst.validate._alreadyReplace) {
+      const orgValidateOnly = inst.validateOnly
 
-    inst.validateOnly = (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => {
-      return new Promise((resolve, reject) => {
-        orgValidateOnly(...arg).then((res) => {
-          if (res === true) {
-            resolve(res)
-          } else {
-            reject(res)
-          }
+      inst.validateOnly = (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => {
+        return new Promise((resolve, reject) => {
+          orgValidateOnly(...arg).then((res) => {
+            if (res === true) {
+              resolve(props.data)
+            } else {
+              reject(res)
+            }
+          })
         })
-      })
+      }
+
+      // @ts-expect-error 内部属性
+      inst.validateOnly._alreadyReplace = true
     }
   }
 
@@ -291,8 +305,10 @@ onMounted(() => {
 })
 
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
-  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<true>
-  validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<true>
+  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormProps['data']>
+  validateOnly: (
+    ...arg: Parameters<_FormInstanceFunctions['validateOnly']>
+  ) => Promise<FormProps['data']>
 }
 
 function calcLabelWidth() {
