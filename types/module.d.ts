@@ -1,4 +1,5 @@
 import type { vAutoAnimate } from '@formkit/auto-animate/vue'
+import type { VPermissionDirective } from '@/plugins/others/directive'
 
 // https://juejin.cn/post/7534903589254430746
 export {}
@@ -93,5 +94,6 @@ declare module 'alova' {
 declare module 'vue' {
   interface GlobalDirectives {
     vAutoAnimate: typeof vAutoAnimate
+    vPermission: VPermissionDirective
   }
 }

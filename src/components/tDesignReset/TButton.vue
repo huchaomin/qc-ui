@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps as _ButtonProps } from 'tdesign-vue-next'
-import { mergeProps } from 'vue'
+import { mergeProps, resolveDirective, withDirectives } from 'vue'
 import { buttonPropsInit } from '@/components/tDesignReset/utils'
 
 defineOptions({
@@ -9,7 +9,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
 
-export type ButtonProps = Omit<_ButtonProps, 'content'>
+export type ButtonProps = Omit<_ButtonProps, 'content'> & {
+  permission?: Parameters<typeof checkPermissions>[0]
+}
 
 const otherProps = computed(() => {
   const obj: Partial<ButtonProps> = {
@@ -21,6 +23,7 @@ const otherProps = computed(() => {
       delete obj[key as keyof typeof obj]
     }
   })
+  delete obj.permission
   return obj
 })
 const compo = _Button
@@ -37,12 +40,15 @@ function compoRef(instance: any) {
 <template>
   <component
     :is="
-      h(
-        compo,
-        mergeProps($attrs, otherProps, {
-          ref: compoRef,
-        }),
-        $slots,
+      withDirectives(
+        h(
+          compo,
+          mergeProps($attrs, otherProps, {
+            ref: compoRef,
+          }),
+          $slots,
+        ),
+        [[resolveDirective('permission'), props.permission]],
       )
     "
   >

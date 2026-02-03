@@ -175,6 +175,10 @@ export default defineConfig(({ command, mode }) => {
             imports: ['useRequest', 'useWatcher', 'usePagination'],
           },
           {
+            from: '@/plugins/others/directive.ts',
+            imports: ['checkPermissions'],
+          },
+          {
             '@/plugins/alova/generate/pl-admin/index.ts': [['default', 'PlAdmin']],
           },
           {
