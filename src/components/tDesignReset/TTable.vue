@@ -498,9 +498,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
     td,
     th {
-      &:has(.t-table__ellipsis) {
-        height: 45px;
-      }
+      height: 45px;
     }
 
     th,
@@ -627,9 +625,8 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     left: 2px;
     z-index: 32; /* fixed left 30, right 31  */
     display: block;
-    height: 1px;
     content: '';
-    background-color: var(--td-component-border);
+    border-bottom: 1px solid var(--td-component-border);
   }
 
   :deep() {
@@ -647,13 +644,11 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
       &::before {
         position: absolute;
-        top: -1px;
         left: 0;
+        z-index: 1;
         width: 100%;
-        height: 1px;
         content: '';
-        background-color: var(--td-component-border);
-        transform: scaleY(0.4);
+        border-bottom: 1px solid var(--td-component-border);
       }
     }
 

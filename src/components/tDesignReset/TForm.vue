@@ -379,9 +379,18 @@ defineExpose({} as FormInstance)
 </template>
 
 <style scoped>
+.t-form {
+  --td-comp-margin-xxl: var(--td-comp-margin-xl);
+}
+
 :deep() {
   .t-form__label {
     padding-right: var(--td-size-1);
+  }
+
+  .t-form__label--top {
+    min-height: auto;
+    line-height: inherit;
   }
 
   .t-form__item {
