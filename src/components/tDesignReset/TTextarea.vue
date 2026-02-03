@@ -32,7 +32,6 @@ const otherProps = computed(() => {
       delete obj[key as keyof typeof obj]
     }
   })
-  console.log(obj)
   return obj
 })
 const compo = _Textarea

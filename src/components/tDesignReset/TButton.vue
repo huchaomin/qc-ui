@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps as _ButtonProps } from 'tdesign-vue-next'
+import type { PopconfirmProps } from '@/components/tDesignReset/TPopconfirm.vue'
 import { mergeProps, resolveDirective, withDirectives } from 'vue'
 import { buttonPropsInit } from '@/components/tDesignReset/utils'
 
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
 
 export type ButtonProps = Omit<_ButtonProps, 'content'> & {
   permission?: Parameters<typeof checkPermissions>[0]
+  popconfirm?: Omit<PopconfirmProps, 'default'>
 }
 
 const otherProps = computed(() => {
@@ -24,6 +26,7 @@ const otherProps = computed(() => {
     }
   })
   delete obj.permission
+  delete obj.popconfirm
   return obj
 })
 const compo = _Button
@@ -38,6 +41,22 @@ function compoRef(instance: any) {
 </script>
 
 <template>
+  <TPopconfirm v-if="props.popconfirm" v-bind="props.popconfirm">
+    <component
+      :is="
+        withDirectives(
+          h(
+            compo,
+            mergeProps($attrs, otherProps, {
+              ref: compoRef,
+            }),
+            $slots,
+          ),
+          [[resolveDirective('permission'), props.permission]],
+        )
+      "
+    ></component>
+  </TPopconfirm>
   <component
     :is="
       withDirectives(
@@ -51,8 +70,8 @@ function compoRef(instance: any) {
         [[resolveDirective('permission'), props.permission]],
       )
     "
-  >
-  </component>
+    v-else
+  ></component>
 </template>
 
 <style scoped>
