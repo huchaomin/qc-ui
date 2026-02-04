@@ -341,12 +341,13 @@ const { height: theadHeight } = useElementSize(theadTagRef)
 const { height: tbodyHeight } = useElementSize(tbodyTagRef)
 const { height: tfootHeight } = useElementSize(tfootTagRef)
 const { height: tableContentHeight } = useElementSize(tableContentRef)
-const tfootTransformY = computed(() => {
+const _tfootTransformY = computed(() => {
   return Math.max(
     0,
     tableContentHeight.value - theadHeight.value - tbodyHeight.value - tfootHeight.value,
   )
 })
+const tfootTransformY = refDebounced(_tfootTransformY, 100)
 const compo = _Table
 const vm = getCurrentInstance()!
 
@@ -450,6 +451,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       :class="{
         'overflow-y-auto': flexHeight || isFullscreen,
         'full_screen bg-[var(--td-bg-color-container)] p-4': isFullscreen,
+        transform_tfoot: tfootTransformY > 0,
       }"
       v-bind="$attrs"
     >
@@ -541,9 +543,6 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     }
 
     tfoot {
-      /* stylelint-disable-next-line value-keyword-case */
-      transform: translateY(calc(v-bind(tfootTransformY) * 1px));
-
       tr {
         background-color: var(--td-gray-color-2) !important;
       }
@@ -676,6 +675,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
       &::before {
         position: absolute;
+        top: -1px;
         left: 0;
         z-index: 1;
         width: 100%;
@@ -719,6 +719,15 @@ defineExpose({} as EnhancedTableInstanceFunctions)
 
   &:has(> *:not(:empty)) {
     display: flex;
+  }
+}
+
+.transform_tfoot {
+  :deep() {
+    tfoot {
+      /* stylelint-disable-next-line value-keyword-case */
+      transform: translateY(calc(v-bind(tfootTransformY) * 1px));
+    }
   }
 }
 </style>
