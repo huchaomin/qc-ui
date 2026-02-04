@@ -104,10 +104,8 @@ defineExpose({
       v-bind="props.tableOtherProps"
     >
       <template #table-operations>
-        <div class="flex flex-1 items-end">
-          <TButton v-for="(operation, index) in props.operations" :key="index" v-bind="operation">
-          </TButton>
-        </div>
+        <TButton v-for="(operation, index) in props.operations" :key="index" v-bind="operation">
+        </TButton>
       </template>
       <template
         v-for="k in Object.keys($slots).filter((key) =>

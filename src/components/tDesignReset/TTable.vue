@@ -470,7 +470,9 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       v-bind="$attrs"
     >
       <div class="table_operations_wrapper items-end justify-end gap-3">
-        <slot name="table-operations" v-bind="{ columns, data }"></slot>
+        <div class="flex flex-1 items-end">
+          <slot name="table-operations" v-bind="{ columns, data }"></slot>
+        </div>
         <TTooltip v-if="showColumnConfigBtn" content="列显示配置">
           <TButton shape="square" variant="outline" @click="handleColumnHideConfig">
             <template #icon>
