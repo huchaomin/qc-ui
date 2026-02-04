@@ -104,7 +104,7 @@ defineExpose({
       v-bind="props.tableOtherProps"
     >
       <template #table-operations>
-        <div class="flex items-end">
+        <div class="flex flex-1 items-end">
           <TButton v-for="(operation, index) in props.operations" :key="index" v-bind="operation">
           </TButton>
         </div>

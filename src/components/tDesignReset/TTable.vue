@@ -108,6 +108,11 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TableProps>(), tablePropsInit)
+
+defineEmits<{
+  'update:selectedRowKeys': Array<number | string>
+}>()
+
 const route = useRoute()
 
 function checkColumns(arr: TableCol[]): string | true {
@@ -459,20 +464,15 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       class="flex w-full flex-col gap-3"
       :class="{
         'overflow-y-auto': flexHeight || isFullscreen,
-        'full_screen bg-[var(--td-bg-color-container)] p-4': isFullscreen,
+        'full_screen bg-(--td-bg-color-container) p-4': isFullscreen,
         transform_tfoot: tfootTransformY > 0,
       }"
       v-bind="$attrs"
     >
-      <div class="table_operations_wrapper items-end">
+      <div class="table_operations_wrapper items-end justify-end gap-3">
         <slot name="table-operations" v-bind="{ columns, data }"></slot>
         <TTooltip v-if="showColumnConfigBtn" content="列显示配置">
-          <TButton
-            shape="square"
-            variant="outline"
-            class="!ml-auto"
-            @click="handleColumnHideConfig"
-          >
+          <TButton shape="square" variant="outline" @click="handleColumnHideConfig">
             <template #icon>
               <Icon icon="mingcute:column-line"></Icon>
             </template>
@@ -480,11 +480,9 @@ defineExpose({} as EnhancedTableInstanceFunctions)
         </TTooltip>
         <TTooltip v-if="showToggleFullscreenBtn" :content="isFullscreen ? '退出全屏' : '全屏显示'">
           <TButton
+            class="ml-0!"
             shape="square"
             variant="outline"
-            :class="{
-              '!ml-auto': !showColumnConfigBtn,
-            }"
             @click="isFullscreen = !isFullscreen"
           >
             <template #icon>
