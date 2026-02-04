@@ -51,8 +51,22 @@ body {
 
   .t-input--focused,
   .t-range-input.t-is-focused,
+  .t-textarea__inner:focus,
   .t-range-input-popup--visible .t-range-input {
     box-shadow: 0 0 0 1px var(--td-brand-color) inset;
+  }
+
+  .t-is-error {
+    .t-form__controls-content {
+      .t-cascader--focused,
+      .t-input--focused,
+      .t-radio-button--focused,
+      .t-range-input--focused,
+      .t-select--focused,
+      .t-textarea__inner--focused {
+        box-shadow: 0 0 0 1px var(--td-error-color) inset;
+      }
+    }
   }
 
   .t-tabs {
