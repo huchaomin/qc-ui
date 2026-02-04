@@ -3,9 +3,6 @@
     "autoAdd": false, // 检测文件没有头部注释，自动添加文件头部注释
     "createHeader": false // 新建文件自动添加头部注释
   },
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
   "editor.quickSuggestions": {
     "strings": "on"
   },
@@ -83,16 +80,7 @@
     },
     "editor.acceptSuggestionOnEnter": "on"
   },
-  "[tailwindcss]": {
-    "editor.defaultFormatter": "stylelint.vscode-stylelint"
-  },
-  "cSpell.words": [
-    "formkit",
-    "iconify",
-    "Popconfirm",
-    "secondarycontainer",
-    "tdesign"
-  ],
+  "cSpell.words": ["formkit", "iconify", "Popconfirm", "secondarycontainer", "tdesign"],
   "vue.inlayHints.vBindShorthand": true,
   "vue.inlayHints.destructuredProps": true,
   "vue.editor.focusMode": true

@@ -30,23 +30,45 @@ body {
     background-color: rgb(255 255 255 / 10%);
   }
 
+  .t-list-item {
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+  }
+
   .t-radio__input,
   .t-checkbox__input {
     width: 20px;
     height: 20px;
   }
 
-  .t-checkbox.t-is-checked .t-checkbox__input::after {
-    top: 8px;
-    left: 3px;
-    width: 8px;
-    height: 14px;
-  }
+  .t-checkbox {
+    &.t-is-checked {
+      .t-checkbox__input {
+        transition: none;
 
-  .t-checkbox.t-is-indeterminate .t-checkbox__input::after {
-    top: 7px;
-    left: -4px;
-    width: 26px;
+        &::after {
+          top: 8px;
+          left: 3px;
+          width: 8px;
+          height: 14px;
+        }
+      }
+    }
+
+    &.t-is-indeterminate {
+      .t-checkbox__input {
+        transition: none;
+
+        &::after {
+          top: 7px;
+          left: -4px;
+          width: 26px;
+        }
+      }
+    }
   }
 
   .t-input--focused,
@@ -127,7 +149,7 @@ body {
         padding: var(--td-size-7);
       }
 
-      [class^="t-dialog__body"] {
+      [class^='t-dialog__body'] {
         &:is(:last-child),
         &:has(> .t-form:is(:last-child)) {
           padding-bottom: 0;
@@ -135,26 +157,18 @@ body {
       }
 
       .t-dialog__footer {
-        padding-top: 0;
+        @apply pt-0;
       }
     }
   }
 
-  [id^="drag-dialog"] {
+  [id^='drag-dialog'] {
     .t-dialog {
       cursor: move;
 
-      [class^="t-dialog__body"],
+      [class^='t-dialog__body'],
       .t-dialog__footer {
         cursor: initial;
-      }
-    }
-  }
-
-  .t-list-item {
-    &:last-child {
-      &::after {
-        display: none;
       }
     }
   }
