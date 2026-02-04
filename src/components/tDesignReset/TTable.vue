@@ -161,7 +161,7 @@ const data = computed(() => {
   return props.data.map((item, index) => {
     return {
       ...item,
-      _ROW_KEY: _.uniqueId(String(index)),
+      _ROW_KEY: _.uniqueId(String(index)), // 兜底的rowKey
     }
   })
 })
@@ -172,7 +172,9 @@ const columnMaxWidths = reactive<Record<string, number>>({})
 const columnConfigShows = ref<string[]>([])
 const columnConfigOptions = computed(() => {
   return _columns.value
-    .filter((c) => !isFalsy(c.title))
+    .filter(
+      (c) => !isFalsy(c.title) && !['row-select'].includes(c.colKey) && !c.colKey.startsWith('_'),
+    )
     .map((column) => ({
       label: column.title as string | TNode,
       value: column.colKey,
@@ -244,11 +246,37 @@ const columns = computed<FinallyTableCol[]>(() => {
 
   return arr
 })
+
+function getRowKey(): string | undefined {
+  const arr = props.data
+
+  if (arr.length === 0) {
+    return undefined
+  }
+
+  const keys = Object.keys(arr[0]!)
+
+  if (keys.includes('id')) {
+    return 'id'
+  }
+
+  if (keys.filter((k) => k.endsWith('Id')).length === 1) {
+    return keys.find((k) => k.endsWith('Id'))!
+  }
+
+  if (keys.includes('key')) {
+    return 'key'
+  }
+
+  return undefined
+}
+
 const otherProps = computed(() => {
   const obj: Partial<TableProps> = {
     ...props,
   }
 
+  obj.rowKey = props.rowKey ?? getRowKey() ?? '_ROW_KEY'
   delete obj.columns
   delete obj.data
   delete obj.showToggleFullscreenBtn
@@ -508,6 +536,10 @@ defineExpose({} as EnhancedTableInstanceFunctions)
       font-weight: 600;
       color: inherit;
       background-color: var(--td-brand-color-1) !important;
+    }
+
+    .t-table__cell-check {
+      text-align: center;
     }
 
     tfoot {

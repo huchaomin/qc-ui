@@ -9,7 +9,6 @@ export const tablePropsInit = {
   lazyLoad: true, // 开启整个表格的懒加载
   maxHeight: 507,
   resizable: true,
-  rowKey: '_ROW_KEY', // footer data 不需要考虑
   rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
   scroll: () => ({
     isFixedRowHeight: true,
@@ -22,6 +21,7 @@ export const tablePropsInit = {
   showToggleFullscreenBtn: false,
   stripe: true,
   tableLayout: 'fixed',
+  tree: () => ({}), // 解决表格报错问题
 } as const
 
 export const linkPropsInit = {
