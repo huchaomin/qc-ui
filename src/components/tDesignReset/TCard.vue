@@ -45,13 +45,19 @@ function compoRef(instance: any) {
     :is="
       h(
         compo,
-        mergeProps($attrs, otherProps, {
-          ref: compoRef,
-          class: bodyFullHeight ? 'flex flex-col' : '',
-          bodyClassName: [bodyFullHeight ? 'flex-1' : '', otherProps.bodyClassName]
-            .filter(Boolean)
-            .join(' '),
-        }),
+        mergeProps(
+          $attrs,
+          {
+            ...otherProps,
+            ref: compoRef,
+            bodyClassName: [bodyFullHeight ? 'flex-1' : '', otherProps.bodyClassName]
+              .filter(Boolean)
+              .join(' '),
+          },
+          {
+            class: bodyFullHeight ? 'flex flex-col' : '',
+          },
+        ),
         $slots,
       )
     "

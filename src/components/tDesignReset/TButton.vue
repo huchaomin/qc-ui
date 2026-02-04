@@ -47,7 +47,8 @@ function compoRef(instance: any) {
         withDirectives(
           h(
             compo,
-            mergeProps($attrs, otherProps, {
+            mergeProps($attrs, {
+              ...otherProps,
               ref: compoRef,
             }),
             $slots,
@@ -62,7 +63,8 @@ function compoRef(instance: any) {
       withDirectives(
         h(
           compo,
-          mergeProps($attrs, otherProps, {
+          mergeProps($attrs, {
+            ...otherProps,
             ref: compoRef,
           }),
           $slots,

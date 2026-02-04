@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type {
   SelectProps as _SelectProps,
-  PopupVisibleChangeContext,
-  SelectInputValueChangeContext,
   SelectOptionGroup,
   SelectValue,
   TdOptionProps,
@@ -156,19 +154,15 @@ const otherProps = computed(() => {
 })
 const { inputValue, popupVisible } = toRefs(props)
 const [innerPopupVisible, setInnerPopupVisible] = useDefaultValue(
-  popupVisible as Ref<boolean>,
+  popupVisible,
   false,
-  (visible: boolean, context: PopupVisibleChangeContext) => {
-    props.onPopupVisibleChange?.(visible, context)
-  },
+  props.onPopupVisibleChange,
   'popupVisible',
 )
 const [innerInputValue, setInputValue] = useDefaultValue(
-  inputValue as Ref<string>,
+  inputValue,
   '',
-  (value: string, context: SelectInputValueChangeContext) => {
-    props.onInputChange?.(value, context)
-  },
+  props.onInputChange,
   'inputValue',
 )
 // const { width } = useElementSize(() => vm.exposed!.$el) // 为什么会多出 一点宽度呢？
@@ -192,7 +186,8 @@ onMounted(() => {
     :is="
       h(
         compo,
-        mergeProps($attrs, otherProps, {
+        mergeProps($attrs, {
+          ...otherProps,
           options: finallyOptions,
           modelValue: innerModelValue,
           onChange: (...args: OnChangeParams) => {

@@ -102,7 +102,8 @@ const otherProps = computed(() => {
     :is="
       h(
         compo,
-        mergeProps($attrs, otherProps, {
+        mergeProps($attrs, {
+          ...otherProps,
           options: finallyOptions,
           modelValue: innerModelValue,
           onChange: (...args: OnChangeParams) => {

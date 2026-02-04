@@ -66,7 +66,8 @@ function compoRef(instance: any) {
     :is="
       h(
         compo,
-        mergeProps($attrs, otherProps, {
+        mergeProps($attrs, {
+          ...otherProps,
           onChange: (...args: OnChangeParams) => {
             emit('update:modelValue', args[0])
             props.onChange?.(...args)

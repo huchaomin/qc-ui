@@ -340,7 +340,8 @@ defineExpose({} as FormInstance)
   <component
     :is="compo"
     v-bind="
-      mergeProps($attrs, otherProps, {
+      mergeProps($attrs, {
+        ...otherProps,
         ref: compoRef,
       })
     "

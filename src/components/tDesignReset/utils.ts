@@ -48,20 +48,18 @@ type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void
  */
 
 export function useDefaultValue<T, P extends any[]>(
-  value: Ref<T>,
+  value: Ref<T | undefined>,
   defaultValue: T,
-  onChange: ChangeHandler<T, P>,
+  onChange: ChangeHandler<T, P> | undefined,
   propsName: string,
 ): [Ref<T>, ChangeHandler<T, P>] {
   const { emit, vnode } = getCurrentInstance()!
   const vProps = vnode.props ?? {}
-  const isVMP =
-    Object.prototype.hasOwnProperty.call(vProps, propsName) ||
-    Object.prototype.hasOwnProperty.call(vProps, _.kebabCase(propsName))
+  const isVMP = vProps[propsName] !== undefined || vProps[_.kebabCase(propsName)] !== undefined
 
   if (isVMP) {
     return [
-      value,
+      value as Ref<T>,
       (newValue, ...args) => {
         emit(`update:${propsName}`, newValue)
         onChange?.(newValue, ...args)

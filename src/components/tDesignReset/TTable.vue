@@ -11,7 +11,7 @@ import type { UnwrapRef } from 'vue'
 import type { CellObjConfig, CellObjConfigFn } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
-import { tablePropsInit } from '@/components/tDesignReset/utils'
+import { tablePropsInit, useDefaultValue } from '@/components/tDesignReset/utils'
 import { getCellRender } from '@/plugins/tableRenders/cell'
 
 export interface CellRenderContext {
@@ -441,6 +441,15 @@ onUnmounted(() => {
   tfootTagRef.value = null
   tableContentRef.value = null
 })
+
+const { selectedRowKeys } = toRefs(props)
+const [innerSelectedRowKeys, setInnerSelectedRowKeys] = useDefaultValue(
+  selectedRowKeys,
+  props.defaultSelectedRowKeys ?? [],
+  props.onSelectChange,
+  'selectedRowKeys',
+)
+
 defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
 
@@ -496,14 +505,20 @@ defineExpose({} as EnhancedTableInstanceFunctions)
           :is="
             h(
               compo,
-              mergeProps(otherProps, {
-                ref: compoRef,
-                columns,
-                data,
-                height: flexHeight || isFullscreen ? tableParentHeight : otherProps.height,
-                maxHeight: flexHeight || isFullscreen ? undefined : otherProps.maxHeight,
-                resizable: otherProps.bordered ? otherProps.resizable : false,
-              }),
+              mergeProps(
+                {},
+                {
+                  ...otherProps,
+                  ref: compoRef,
+                  columns,
+                  data,
+                  height: flexHeight || isFullscreen ? tableParentHeight : otherProps.height,
+                  maxHeight: flexHeight || isFullscreen ? undefined : otherProps.maxHeight,
+                  resizable: otherProps.bordered ? otherProps.resizable : false,
+                  selectedRowKeys: innerSelectedRowKeys,
+                  onSelectChange: setInnerSelectedRowKeys,
+                },
+              ),
             )
           "
         >
