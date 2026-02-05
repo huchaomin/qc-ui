@@ -1,5 +1,3 @@
-import type { Ref } from 'vue'
-
 export const tablePropsInit = {
   bordered: true,
   disableDataPage: true,
@@ -40,40 +38,3 @@ export const formPropsInit = {
   resetType: 'initial',
   showErrorMessage: true,
 } as const
-
-type ChangeHandler<T, P extends any[]> = (value: T, ...args: P) => void
-
-/**
- * @description: @tdesign/shared-hooks useDefaultValue
- */
-
-export function useDefaultValue<T, P extends any[]>(
-  value: Ref<T | undefined>,
-  defaultValue: T,
-  onChange: ChangeHandler<T, P> | undefined,
-  propsName: string,
-): [Ref<T>, ChangeHandler<T, P>] {
-  const { emit, vnode } = getCurrentInstance()!
-  const vProps = vnode.props ?? {}
-  const isVMP = vProps[propsName] !== undefined || vProps[_.kebabCase(propsName)] !== undefined
-
-  if (isVMP) {
-    return [
-      value as Ref<T>,
-      (newValue, ...args) => {
-        emit(`update:${propsName}`, newValue)
-        onChange?.(newValue, ...args)
-      },
-    ]
-  }
-
-  const internalValue = ref(defaultValue)
-
-  return [
-    internalValue as Ref<T>,
-    (newValue, ...args) => {
-      internalValue.value = newValue
-      onChange?.(newValue, ...args)
-    },
-  ]
-}

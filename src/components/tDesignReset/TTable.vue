@@ -11,7 +11,7 @@ import type { UnwrapRef } from 'vue'
 import type { CellObjConfig, CellObjConfigFn } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
-import { tablePropsInit, useDefaultValue } from '@/components/tDesignReset/utils'
+import { tablePropsInit } from '@/components/tDesignReset/utils'
 import { getCellRender } from '@/plugins/tableRenders/cell'
 
 export interface CellRenderContext {
@@ -82,6 +82,7 @@ export type TableProps = {
   | 'allowResizeColumnWidth'
   | 'columns'
   | 'data'
+  | 'defaultSelectedRowKeys'
   | 'fixedRows'
   | 'footerAffixProps'
   | 'headerAffixProps'
@@ -103,16 +104,13 @@ type FinallyTableCol = Omit<
   }
   width: number
 }
+type OnSelectChangeParams = Parameters<NonNullable<EnhancedTableProps['onSelectChange']>>
+type SelectedRowKeys = Array<number | string>
 defineOptions({
   inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<TableProps>(), tablePropsInit)
-
-defineEmits<{
-  'update:selectedRowKeys': Array<number | string>
-}>()
-
 const route = useRoute()
 
 function checkColumns(arr: TableCol[]): string | true {
@@ -447,13 +445,9 @@ onUnmounted(() => {
   tableContentRef.value = null
 })
 
-const { selectedRowKeys } = toRefs(props)
-const [innerSelectedRowKeys, setInnerSelectedRowKeys] = useDefaultValue(
-  selectedRowKeys,
-  props.defaultSelectedRowKeys ?? [],
-  props.onSelectChange,
-  'selectedRowKeys',
-)
+const selectedRowKeys = defineModel<SelectedRowKeys>('selectedRowKeys', {
+  default: () => [],
+})
 
 defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
@@ -515,8 +509,11 @@ defineExpose({} as EnhancedTableInstanceFunctions)
                   height: flexHeight || isFullscreen ? tableParentHeight : otherProps.height,
                   maxHeight: flexHeight || isFullscreen ? undefined : otherProps.maxHeight,
                   resizable: otherProps.bordered ? otherProps.resizable : false,
-                  selectedRowKeys: innerSelectedRowKeys,
-                  onSelectChange: setInnerSelectedRowKeys,
+                  selectedRowKeys,
+                  onSelectChange: (...args: OnSelectChangeParams) => {
+                    selectedRowKeys = args[0]
+                    props.onSelectChange?.(...args)
+                  },
                 },
               ),
             )

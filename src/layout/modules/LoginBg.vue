@@ -21,8 +21,8 @@ const logoUrl = Object.values(
     style="background: linear-gradient(159deg, #baccf6 0%, #fff 43%, #fff 61%, #baccf6 100%)"
   >
     <div class="bg_inner flex items-stretch justify-between">
-      <TImage class="left_banner" :src="url" style="transform: scale(1.2)"></TImage>
-      <TCard class="login_form_wrapper flex-shrink-0 !px-4" :body-full-height="true">
+      <TImage class="left_banner" :src="url" style="transform: scale(1.4)"></TImage>
+      <TCard class="login_form_wrapper shrink-0 px-4!" :body-full-height="true">
         <slot></slot>
       </TCard>
     </div>
@@ -41,7 +41,7 @@ const logoUrl = Object.values(
 
 .bg_inner {
   width: calc(12% + 860px);
-  height: 500px;
+  height: 450px;
 }
 
 .login_form_wrapper {

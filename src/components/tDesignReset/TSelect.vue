@@ -6,7 +6,6 @@ import type {
   TdOptionProps,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { useDefaultValue } from '@/components/tDesignReset/utils'
 
 export type SelectProps = Omit<
   _SelectProps,
@@ -18,6 +17,8 @@ export type SelectProps = Omit<
 }
 
 type OnChangeParams = Parameters<NonNullable<_SelectProps['onChange']>>
+type OnInputChangeParams = Parameters<NonNullable<_SelectProps['onInputChange']>>
+type OnPopupVisibleChangeParams = Parameters<NonNullable<_SelectProps['onPopupVisibleChange']>>
 defineOptions({
   inheritAttrs: false,
 })
@@ -152,19 +153,12 @@ const otherProps = computed(() => {
   })
   return obj
 })
-const { inputValue, popupVisible } = toRefs(props)
-const [innerPopupVisible, setInnerPopupVisible] = useDefaultValue(
-  popupVisible,
-  false,
-  props.onPopupVisibleChange,
-  'popupVisible',
-)
-const [innerInputValue, setInputValue] = useDefaultValue(
-  inputValue,
-  '',
-  props.onInputChange,
-  'inputValue',
-)
+const innerPopupVisible = defineModel<boolean>('popupVisible', {
+  default: false,
+})
+const innerInputValue = defineModel<string>('inputValue', {
+  default: '',
+})
 // const { width } = useElementSize(() => vm.exposed!.$el) // 为什么会多出 一点宽度呢？
 const width = ref(0)
 
@@ -195,9 +189,15 @@ onMounted(() => {
             props.onChange?.(...args)
           },
           popupVisible: innerPopupVisible,
-          onPopupVisibleChange: setInnerPopupVisible,
+          onPopupVisibleChange: (...args: OnPopupVisibleChangeParams) => {
+            innerPopupVisible = args[0]
+            props.onPopupVisibleChange?.(...args)
+          },
           inputValue: innerInputValue,
-          onInputChange: setInputValue,
+          onInputChange: (...args: OnInputChangeParams) => {
+            innerInputValue = args[0]
+            props.onInputChange?.(...args)
+          },
           ref: compoRef,
           popupProps: {
             ...(otherProps.popupProps ?? {}),
