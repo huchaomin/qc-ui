@@ -46,6 +46,7 @@ export default createAlova({
         use600Alert: true,
         useDataResult: true,
         useDownload: false,
+        useEmptyData: false,
         useEmptyParams: true,
         useFailMsg: true,
         useFormData: false,
@@ -60,8 +61,15 @@ export default createAlova({
     }
 
     const loginStore = useLoginStore()
-    const { useEmptyParams, useFormData, useInPolling, useLoading, useResponseBlob, useToken } =
-      method.meta as ThisAlovaCustomTypes
+    const {
+      useEmptyData,
+      useEmptyParams,
+      useFormData,
+      useInPolling,
+      useLoading,
+      useResponseBlob,
+      useToken,
+    } = method.meta as ThisAlovaCustomTypes
 
     if (!useInPolling) {
       const commonStore = useCommonStore()
@@ -86,6 +94,20 @@ export default createAlova({
 
     if (typeof params !== 'string') {
       method.config.params = getParamsString(params, useEmptyParams)
+    }
+
+    // 处理 data 参数
+    if (useEmptyData && method.data !== undefined && method.data.constructor === Object) {
+      const obj: Arg = {}
+      const data = method.data as Arg
+
+      Object.keys(data).forEach((key: string) => {
+        if (!isFalsy(data[key])) {
+          // eslint-disable-next-line ts/no-unsafe-assignment
+          obj[key] = data[key]
+        }
+      })
+      method.data = obj
     }
 
     // 处理 formData 参数
@@ -177,7 +199,10 @@ export default createAlova({
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
         if (useDownload !== false) {
-          void saveAs(await response.blob(), useDownload as string) // TODO true 从响应头获取文件名
+          const blob = await response.blob()
+
+          void saveAs(blob, useDownload as string) // TODO true 从响应头获取文件名
+          return blob
         }
 
         return response.blob()

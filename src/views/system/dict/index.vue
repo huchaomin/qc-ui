@@ -194,6 +194,19 @@ const config: PageListProps = {
       },
       permission: 'system:dict:remove',
     }),
+    {
+      default: '导出',
+      onClick: async () => {
+        await alovaInst.Post('system/dict/type/export', pageListRef.value!.queryParams, {
+          meta: {
+            useDownload: `字典类型_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+            useEmptyData: true,
+            useResponseBlob: true,
+          },
+        })
+      },
+      permission: 'system:dict:export',
+    },
   ],
 }
 </script>

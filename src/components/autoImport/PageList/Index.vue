@@ -67,7 +67,10 @@ function doReset() {
 
 defineExpose({
   query: doQuery,
-  queryParams,
+  queryParams: computed(() => ({
+    ...queryParams.value,
+    ...(pageTableRef.value?.page ?? {}),
+  })),
   reset: doReset,
   selectedRows: computed(() => pageTableRef.value?.selectedRows ?? []),
 })

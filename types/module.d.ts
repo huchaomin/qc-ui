@@ -50,7 +50,12 @@ declare module 'alova' {
        */
       useDownload?: boolean | string
       /**
-       * 是否去除请求参数 params 里面 isFalsy 的值， 默认true
+       * 是否去除请求参数 data 里面 isFalsy 的值 默认false
+       */
+      useEmptyData?: boolean
+
+      /**
+       * 是否去除请求参数 params 里面 isFalsy 的值 和 空数组， 默认true
        */
       useEmptyParams?: boolean
       /**

@@ -111,6 +111,10 @@ function reset() {
 const tableRef = useTemplateRef('tableRef')
 
 defineExpose({
+  page: computed(() => ({
+    pageNum: pageNum.value,
+    pageSize: pageSize.value,
+  })),
   query,
   reset,
   selectedRows: computed(() => tableRef.value?.selectedRows ?? []),
