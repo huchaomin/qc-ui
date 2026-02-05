@@ -62,6 +62,10 @@ export type TableCol = {
 } & Omit<_TableCol<TableRowData>, 'cell' | 'colKey' | 'render' | 'resize' | 'width'>
 
 export type TableProps = {
+  /**
+   * @description: 数据变化时是否检查选中状态，默认 true
+   */
+  checkSelectedOnDataChange?: boolean
   columns: Array<TableCol>
   data: Array<TableRowData>
   /**
@@ -160,7 +164,7 @@ watch(
   },
 )
 
-const data = computed(() => {
+const finallyData = computed<TableRowData[]>(() => {
   return props.data.map((item, index) => {
     return {
       ...item,
@@ -285,6 +289,7 @@ const otherProps = computed(() => {
   delete obj.showToggleFullscreenBtn
   delete obj.showColumnConfigBtn
   delete obj.flexHeight
+  delete obj.checkSelectedOnDataChange
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
@@ -449,6 +454,33 @@ const selectedRowKeys = defineModel<SelectedRowKeys>('selectedRowKeys', {
   default: () => [],
 })
 
+watch(
+  () => props.data,
+  () => {
+    if (!props.checkSelectedOnDataChange) {
+      return
+    }
+
+    const rowKey = otherProps.value.rowKey!
+    const newSelectedRowKeys = selectedRowKeys.value.filter((key) => {
+      return props.data.some((item) => item[rowKey] === key)
+    })
+
+    if (_.difference(selectedRowKeys.value, newSelectedRowKeys).length > 0) {
+      selectedRowKeys.value = newSelectedRowKeys
+      props.onSelectChange?.(newSelectedRowKeys, {
+        currentRowKey: 'DATA_CHANGE',
+        selectedRowData: finallyData.value.filter((item) =>
+          newSelectedRowKeys.includes(item[rowKey]),
+        ),
+        type: 'uncheck',
+      })
+    }
+  },
+  {
+    deep: 2,
+  },
+)
 defineExpose({} as EnhancedTableInstanceFunctions)
 </script>
 
@@ -465,7 +497,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
     >
       <div class="table_operations_wrapper items-end justify-end gap-3">
         <div class="flex flex-1 items-end">
-          <slot name="table-operations" v-bind="{ columns, data }"></slot>
+          <slot name="table-operations" v-bind="{ columns, data: finallyData }"></slot>
         </div>
         <TTooltip v-if="showColumnConfigBtn" content="列显示配置">
           <TButton shape="square" variant="outline" @click="handleColumnHideConfig">
@@ -489,7 +521,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
           </TButton>
         </TTooltip>
       </div>
-      <slot name="table-top" v-bind="{ columns, data }"></slot>
+      <slot name="table-top" v-bind="{ columns, data: finallyData }"></slot>
       <div
         ref="tableParentRef"
         class="table_parent"
@@ -505,7 +537,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
                   ...otherProps,
                   ref: compoRef,
                   columns,
-                  data,
+                  data: finallyData,
                   height: flexHeight || isFullscreen ? tableParentHeight : otherProps.height,
                   maxHeight: flexHeight || isFullscreen ? undefined : otherProps.maxHeight,
                   resizable: otherProps.bordered ? otherProps.resizable : false,
@@ -527,7 +559,7 @@ defineExpose({} as EnhancedTableInstanceFunctions)
           </template>
         </component>
       </div>
-      <slot name="table-bottom" v-bind="{ columns, data }"></slot>
+      <slot name="table-bottom" v-bind="{ columns, data: finallyData }"></slot>
     </div>
   </Teleport>
 </template>

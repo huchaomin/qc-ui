@@ -1,5 +1,6 @@
 export const tablePropsInit = {
   bordered: true,
+  checkSelectedOnDataChange: true,
   disableDataPage: true,
   disableSpaceInactiveRow: true,
   flexHeight: false,
