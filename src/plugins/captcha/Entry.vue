@@ -195,7 +195,7 @@ function refresh() {
         :src="backImgBase64 ? `data:image/png;base64,${backImgBase64}` : defaultImg"
         class="block h-full w-full"
       />
-      <TButton class="!absolute top-0 right-0" variant="text" shape="square" @click="refresh">
+      <TButton class="absolute! top-0 right-0" variant="text" shape="square" @click="refresh">
         <template #icon>
           <Icon icon="material-symbols-light:refresh"></Icon>
         </template>
@@ -216,7 +216,7 @@ function refresh() {
     >
       <span v-show="checkState === 'default'">向右滑动完成验证</span>
       <div
-        class="absolute top-0 left-0 translate-x-[-1px] translate-y-[-1px] border bg-[#f0fff0]"
+        class="absolute top-0 left-0 -translate-x-px -translate-y-px border bg-[#f0fff0]"
         :style="{
           width: moveBlockLeft === 0 ? `${sizeConfig.barHeight}px` : `${moveBlockLeft}px`,
           height: `${sizeConfig.barHeight}px`,
@@ -224,7 +224,7 @@ function refresh() {
         }"
       >
         <div
-          class="hover:text-white absolute top-0 left-0 flex translate-x-[-1px] translate-y-[-1px] cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-[var(--td-brand-color)]"
+          class="hover:text-white absolute top-0 left-0 flex -translate-x-px -translate-y-px cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-[var(--td-brand-color)]"
           :style="{
             width: `${sizeConfig.barHeight}px`,
             height: `${sizeConfig.barHeight}px`,

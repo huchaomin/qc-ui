@@ -219,8 +219,6 @@ const compo = _Form
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
-  const exposed = instance ?? {}
-
   if (instance !== null) {
     const inst = instance as _FormInstanceFunctions
 
@@ -276,6 +274,8 @@ function compoRef(instance: any) {
       inst.validateOnly._alreadyReplace = true
     }
   }
+
+  const exposed = instance ?? {}
 
   vm.exposed = exposed
   vm.exposeProxy = exposed

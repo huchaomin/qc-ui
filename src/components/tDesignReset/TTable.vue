@@ -356,10 +356,21 @@ const _tfootTransformY = computed(() => {
   )
 })
 const tfootTransformY = refDebounced(_tfootTransformY, 100)
+const selectedRowKeys = defineModel<SelectedRowKeys>('selectedRowKeys', {
+  default: () => [],
+})
 const compo = _Table
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
+  if (instance !== null) {
+    instance.selectedRows = computed(() =>
+      finallyData.value.filter((item) =>
+        selectedRowKeys.value.includes(item[otherProps.value.rowKey!]),
+      ),
+    )
+  }
+
   const exposed = instance ?? {}
 
   vm.exposed = exposed
@@ -449,11 +460,6 @@ onUnmounted(() => {
   tfootTagRef.value = null
   tableContentRef.value = null
 })
-
-const selectedRowKeys = defineModel<SelectedRowKeys>('selectedRowKeys', {
-  default: () => [],
-})
-
 watch(
   () => props.data,
   () => {
@@ -481,7 +487,11 @@ watch(
     deep: 2,
   },
 )
-defineExpose({} as EnhancedTableInstanceFunctions)
+defineExpose(
+  {} as EnhancedTableInstanceFunctions & {
+    selectedRows: ComputedRef<TableRowData[]>
+  },
+)
 </script>
 
 <template>

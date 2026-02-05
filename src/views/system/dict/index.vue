@@ -17,6 +17,10 @@ const config: PageListProps = {
   },
   columns: [
     {
+      colKey: 'row-select',
+      type: 'multiple',
+    },
+    {
       colKey: 'dictId',
       title: '字典编号',
     },
@@ -177,10 +181,23 @@ const config: PageListProps = {
       },
       permission: 'system:dict:remove',
     },
+    reactive({
+      default: '批量删除',
+      disabled: computed(() => (pageListRef.value?.selectedRows ?? []).length === 0),
+      onClick: async () => {
+        await $confirm('确认删除所选项吗?')
+        await alovaInst.Delete(
+          `system/dict/type/${pageListRef.value!.selectedRows.map((item) => item.dictId).join(',')}`,
+        )
+        $msg.success('删除成功')
+        pageListRef.value!.query()
+      },
+      permission: 'system:dict:remove',
+    }),
   ],
 }
 </script>
 
 <template>
-  <PageList ref="pageListRef" v-bind="config"> </PageList>
+  <PageList ref="pageListRef" v-bind="config"></PageList>
 </template>

@@ -108,14 +108,17 @@ function reset() {
   queryParamsChangeTimer.value++
 }
 
+const tableRef = useTemplateRef('tableRef')
+
 defineExpose({
   query,
   reset,
+  selectedRows: computed(() => tableRef.value?.selectedRows ?? []),
 })
 </script>
 
 <template>
-  <TTable :data="data.rows" :loading="loading" v-bind="otherProps">
+  <TTable ref="tableRef" :data="data.rows" :loading="loading" v-bind="otherProps">
     <template
       v-for="k in Object.keys($slots).filter((k) => k !== 'table-bottom')"
       :key="k"

@@ -69,6 +69,7 @@ defineExpose({
   query: doQuery,
   queryParams,
   reset: doReset,
+  selectedRows: computed(() => pageTableRef.value?.selectedRows ?? []),
 })
 </script>
 
