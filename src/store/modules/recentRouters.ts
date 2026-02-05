@@ -21,7 +21,7 @@ export default defineStore(
     }
 
     function add(fromName: RouteRecordNameGeneric, options: recentRoutersConfig): void {
-      const copyOptions = _.cloneDeep(options)
+      const copyOptions = _cloneDeep(options)
       const index = recentRouters.value.findIndex(
         (item) =>
           item.name === copyOptions.name ||

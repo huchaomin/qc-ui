@@ -12,12 +12,12 @@ const emit = defineEmits<{
   query: [FormData: Record<string, any>]
   reset: [FormData: Record<string, any>]
 }>()
-const formData = ref(_.cloneDeep(props.data))
+const formData = ref(_cloneDeep(props.data))
 
 watch(
   () => props.data,
   (newVal) => {
-    formData.value = _.cloneDeep(newVal)
+    formData.value = _cloneDeep(newVal)
   },
   {
     deep: true,
@@ -66,7 +66,7 @@ function calcFormItemToggle(): void {
       item.style.display = getComputedStyle(formItemsDomList[0]!).display
     })
 
-    const co = _.groupBy(formItemsDomList, (item) => {
+    const co = _groupBy(formItemsDomList, (item) => {
       return item.offsetTop
     })
     const keys = Object.keys(co).sort((a, b) => Number(a) - Number(b))
@@ -102,7 +102,7 @@ async function handleQuery() {
 }
 
 async function handleReset() {
-  formData.value = _.cloneDeep(props.data)
+  formData.value = _cloneDeep(props.data)
   await formRef.value!.validate()
   emit('reset', formData.value)
 }

@@ -168,7 +168,7 @@ const finallyData = computed<TableRowData[]>(() => {
   return props.data.map((item, index) => {
     return {
       ...item,
-      _ROW_KEY: _.uniqueId(String(index)), // 兜底的rowKey
+      _ROW_KEY: _uniqueId(String(index)), // 兜底的rowKey
     }
   })
 })
@@ -472,7 +472,7 @@ watch(
       return props.data.some((item) => item[rowKey] === key)
     })
 
-    if (_.difference(selectedRowKeys.value, newSelectedRowKeys).length > 0) {
+    if (_difference(selectedRowKeys.value, newSelectedRowKeys).length > 0) {
       selectedRowKeys.value = newSelectedRowKeys
       props.onSelectChange?.(newSelectedRowKeys, {
         currentRowKey: 'DATA_CHANGE',

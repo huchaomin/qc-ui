@@ -38,12 +38,12 @@ const defaultUserInfo: UserInfo = {
 export default defineStore(
   'user',
   () => {
-    const userInfo: Ref<UserInfo> = ref(_.cloneDeep(defaultUserInfo))
+    const userInfo: Ref<UserInfo> = ref(_cloneDeep(defaultUserInfo))
     const permissions: Ref<string[]> = ref([])
     const roles: Ref<string[]> = ref([])
 
     function clear() {
-      userInfo.value = _.cloneDeep(defaultUserInfo)
+      userInfo.value = _cloneDeep(defaultUserInfo)
       permissions.value = []
       roles.value = []
     }

@@ -50,7 +50,7 @@ const pageTableRef = useTemplateRef('pageTableRef')
 const queryParams = ref({})
 
 function doQuery() {
-  queryParams.value = _.cloneDeep(pageQueryRef.value!.formData)
+  queryParams.value = _cloneDeep(pageQueryRef.value!.formData)
   pageTableRef.value!.query()
 }
 
@@ -61,7 +61,7 @@ if (!props.isFirstQueryByParent) {
 }
 
 function doReset() {
-  queryParams.value = _.cloneDeep(pageQueryRef.value!.formData)
+  queryParams.value = _cloneDeep(pageQueryRef.value!.formData)
   pageTableRef.value!.reset()
 }
 

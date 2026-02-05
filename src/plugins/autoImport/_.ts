@@ -1,19 +1,8 @@
-import { cloneDeep, difference, groupBy, kebabCase, pick, uniqueId } from 'lodash-es'
-
-const _: {
-  cloneDeep: typeof cloneDeep
-  difference: typeof difference
-  groupBy: typeof groupBy
-  kebabCase: typeof kebabCase
-  pick: typeof pick
-  uniqueId: typeof uniqueId
-} = {
-  cloneDeep,
-  difference,
-  groupBy,
-  kebabCase,
-  pick,
-  uniqueId,
-}
-
-export default _
+export {
+  cloneDeep as _cloneDeep,
+  difference as _difference,
+  groupBy as _groupBy,
+  kebabCase as _kebabCase,
+  pick as _pick,
+  uniqueId as _uniqueId,
+} from 'lodash-es'
