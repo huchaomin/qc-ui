@@ -10,7 +10,7 @@ import type {
   FormItemProps,
   ValidateResultList,
 } from 'tdesign-vue-next'
-import type { AllowedComponentProps, Reactive } from 'vue'
+import type { AllowedComponentProps } from 'vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
@@ -20,12 +20,13 @@ import type { TextareaProps } from './TTextarea.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
-export type FormItemType = {
+export type FormItem = ((formData: FormData) => _FormItem) | _FormItem
+
+type _FormItem = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & {
   show?: boolean // 是否显示
 } & XOR<ComponentItemType, SlotItemType>
-
 type _FormItemProps = AllowedComponentProps &
   Omit<FormItemProps, 'labelWidth' | 'name'> & {
     required?: boolean
@@ -66,6 +67,7 @@ type ComponentItemType = AllowedComponentProps &
   > & {
     model: string
   }
+type FormData = Record<string, any>
 interface SlotItemType {
   model?: string // 传给 name 参与校验
   slot: string
@@ -77,8 +79,8 @@ defineOptions({
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 
 export type FormProps = {
-  data?: Record<string, any>
-  items: FormItemType[]
+  data?: FormData
+  items: FormItem[]
   labelAlign?: 'right' | 'top'
   /**
    * @description: 是否在验证失败时显示错误信息
@@ -88,7 +90,7 @@ export type FormProps = {
 
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
-    return reactive(item)
+    return typeof item === 'function' ? item(props.data) : item
   })
 })
 
@@ -123,25 +125,24 @@ function getComponent(compo: string | undefined): Component {
   return resolveComponent('TInput') as Component
 }
 
-function getComponentProps(item: Reactive<FormItemType>): Record<string, any> {
+function getComponentProps(item: _FormItem): Record<string, any> {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (!key.startsWith('_') && !['component', 'model', 'show'].includes(key)) {
-      // @ts-expect-error 类型实例化过深，且可能无限
-      obj[key] = item[key as keyof Reactive<FormItemType>]
+      obj[key] = item[key as keyof _FormItem]
     }
   }
 
   return obj
 }
 
-function getFormItemProps(item: Reactive<FormItemType>): FormItemProps {
+function getFormItemProps(item: _FormItem): FormItemProps {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (key.startsWith('_')) {
-      obj[key.slice(1)] = item[key as keyof Reactive<FormItemType>]
+      obj[key.slice(1)] = item[key as keyof _FormItem]
     }
   }
 
@@ -335,13 +336,11 @@ onMounted(() => {
 
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   getFormData: GetFormData
-  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormProps['data']>
-  validateOnly: (
-    ...arg: Parameters<_FormInstanceFunctions['validateOnly']>
-  ) => Promise<FormProps['data']>
+  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormData>
+  validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<FormData>
 }
 
-type GetFormData = () => NonNullable<FormProps['data']>
+type GetFormData = () => FormData
 
 function calcLabelWidth() {
   const arr = [...formItemLabelEls.value!] as HTMLElement[]

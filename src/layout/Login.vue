@@ -35,7 +35,7 @@ async function onSubmit() {
   }
 }
 
-const formItems: FormItemType[] = [
+const formItems: FormItem[] = [
   {
     _label: '账户',
     clearable: false,

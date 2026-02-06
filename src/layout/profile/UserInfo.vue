@@ -25,7 +25,7 @@ watchEffect(
   },
 )
 
-const formItems: FormItemType[] = reactive([
+const formItems: FormItem[] = reactive([
   {
     _label: '用户昵称',
     _required: true,

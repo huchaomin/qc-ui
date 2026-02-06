@@ -186,7 +186,7 @@ export default defineConfig(({ command, mode }) => {
           },
           {
             from: '@/components/tDesignReset/TForm.vue',
-            imports: ['FormItemType'],
+            imports: ['FormItem'],
             type: true,
           },
           {

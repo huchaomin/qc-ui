@@ -4,12 +4,7 @@ const { showFooter = true } = defineProps<{
 }>()
 const loginStore = useLoginStore()
 const route = useRoute()
-const formData = reactive({
-  confirmPassword: '',
-  newPassword: '',
-  oldPassword: '',
-})
-const formItems: FormItemType[] = [
+const formItems: FormItem[] = [
   {
     _label: '旧密码',
     _required: true,
@@ -28,7 +23,7 @@ const formItems: FormItemType[] = [
     model: 'newPassword',
     type: 'password',
   },
-  {
+  (formData) => ({
     _label: '确认密码',
     _required: true,
     _rules: [
@@ -47,7 +42,7 @@ const formItems: FormItemType[] = [
     ],
     model: 'confirmPassword',
     type: 'password',
-  },
+  }),
   ...(showFooter
     ? [
         {
@@ -63,7 +58,8 @@ function handleClose() {
 }
 
 async function handleSubmit() {
-  await formRef.value!.validate()
+  const formData = await formRef.value!.validate()
+
   await alovaInst.Put('system/user/profile/updatePwd', undefined, {
     meta: {
       useLoading: '保存中...',
@@ -83,7 +79,7 @@ defineExpose({
 </script>
 
 <template>
-  <TForm ref="form" :data="formData" :items="formItems" layout="vertical" label-align="right">
+  <TForm ref="form" :items="formItems" layout="vertical" label-align="right">
     <template #footer>
       <TButton @click="handleSubmit">保存</TButton>
       <TButton theme="default" class="ml-4!" @click="handleClose">关闭</TButton>
