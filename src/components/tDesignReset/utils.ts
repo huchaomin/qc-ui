@@ -31,6 +31,7 @@ export const buttonPropsInit = {} as const
 
 export const formPropsInit = {
   colon: true,
+  data: () => reactive({}),
   labelAlign: 'top',
   layout: 'inline',
   msgErrorWhenValidate: true,

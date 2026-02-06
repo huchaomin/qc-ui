@@ -4,24 +4,26 @@ const emit = defineEmits<{
 }>()
 const route = useRoute()
 const userInfo = inject<ComputedRef<Record<string, any> | undefined>>('userInfo')!
-const formData = reactive({
-  email: '',
-  nickName: '',
-  phonenumber: '',
-  sex: '1',
-})
+const formRef = useTemplateRef('form')
 
-watchEffect(() => {
-  const val = userInfo.value
+watchEffect(
+  () => {
+    const val = userInfo.value
 
-  if (val) {
-    Object.keys(formData).forEach((key) => {
-      if (!isFalsy(val[key])) {
-        formData[key as keyof typeof formData] = val[key]
-      }
-    })
-  }
-})
+    if (val) {
+      const formData = formRef.value!.getFormData()
+
+      Object.keys(formData).forEach((key) => {
+        if (!isFalsy(val[key])) {
+          formData[key as keyof typeof formData] = val[key]
+        }
+      })
+    }
+  },
+  {
+    flush: 'post',
+  },
+)
 
 const formItems: FormItemType[] = reactive([
   {
@@ -65,14 +67,14 @@ const formItems: FormItemType[] = reactive([
     slot: 'footer',
   },
 ])
-const formRef = useTemplateRef('form')
 
 function handleClose() {
   useRecentRoutersStore().close(route.name)
 }
 
 async function handleSubmit() {
-  await formRef.value!.validate()
+  const formData = await formRef.value!.validate()
+
   await alovaInst.Put('system/user/profile', formData, {
     meta: {
       useLoading: '保存中...',
@@ -85,10 +87,10 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <TForm ref="form" :data="formData" :items="formItems" layout="vertical" label-align="right">
+  <TForm ref="form" :items="formItems" layout="vertical" label-align="right">
     <template #footer>
       <TButton @click="handleSubmit">保存</TButton>
-      <TButton theme="default" class="!ml-4" @click="handleClose">关闭</TButton>
+      <TButton theme="default" class="ml-4!" @click="handleClose">关闭</TButton>
     </template>
   </TForm>
 </template>

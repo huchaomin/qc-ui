@@ -77,7 +77,7 @@ defineOptions({
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 
 export type FormProps = {
-  data: Record<string, any>
+  data?: Record<string, any>
   items: FormItemType[]
   labelAlign?: 'right' | 'top'
   /**
@@ -91,6 +91,29 @@ const formItemsConfig = computed(() => {
     return reactive(item)
   })
 })
+
+watch(
+  formItemsConfig,
+  (config) => {
+    config.forEach((item) => {
+      if (
+        item.model !== undefined &&
+        !Object.prototype.hasOwnProperty.call(props.data, item.model)
+      ) {
+        const isArr =
+          ['TCheckboxGroup', 'TDateRangePicker'].includes(item.component as string) ||
+          (item.multiple === true && item.component === 'TSelect')
+
+        // eslint-disable-next-line vue/no-mutating-props
+        props.data[item.model] = isArr ? [] : ''
+      }
+    })
+  },
+  {
+    deep: 2,
+    immediate: true,
+  },
+)
 
 function getComponent(compo: string | undefined): Component {
   if (typeof compo === 'string') {
@@ -220,7 +243,9 @@ const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {
   if (instance !== null) {
-    const inst = instance as _FormInstanceFunctions
+    const inst = instance as _FormInstanceFunctions & {
+      getFormData: GetFormData
+    }
 
     // @ts-expect-error 内部属性
     if (!inst.validate._alreadyReplace) {
@@ -273,6 +298,10 @@ function compoRef(instance: any) {
       // @ts-expect-error 内部属性
       inst.validateOnly._alreadyReplace = true
     }
+
+    inst.getFormData = () => {
+      return props.data
+    }
   }
 
   const exposed = instance ?? {}
@@ -305,11 +334,14 @@ onMounted(() => {
 })
 
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
+  getFormData: GetFormData
   validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormProps['data']>
   validateOnly: (
     ...arg: Parameters<_FormInstanceFunctions['validateOnly']>
   ) => Promise<FormProps['data']>
 }
+
+type GetFormData = () => NonNullable<FormProps['data']>
 
 function calcLabelWidth() {
   const arr = [...formItemLabelEls.value!] as HTMLElement[]

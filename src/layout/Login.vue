@@ -7,10 +7,7 @@ const loginStore = useLoginStore()
 const commonStore = useCommonStore()
 const router = useRouter()
 const appName = computed(() => commonStore.appInfo.appName)
-const formData = reactive<LoginData>({
-  password: '',
-  username: '',
-})
+const formRef = useTemplateRef('formRef')
 
 async function loginSubmit(formData: LoginData) {
   await loginStore.login(formData)
@@ -18,6 +15,8 @@ async function loginSubmit(formData: LoginData) {
 }
 
 async function onSubmit() {
+  const formData = formRef.value!.getFormData() as LoginData
+
   if (formData.username === '') {
     $msg.error('请输入账户名')
     return
@@ -77,9 +76,9 @@ const formItems: FormItemType[] = [
       :colors="['#000000', '#444951', '#8791a1']"
       class-name="text-center text-2xl !font-bold mt-12 mb-10"
     />
-    <TForm class="!mt-8" :data="formData" :items="formItems" @submit="onSubmit">
+    <TForm ref="formRef" class="mt-8!" :items="formItems" @submit="onSubmit">
       <template #submitBtn>
-        <TButton type="submit" block size="large" class="!mt-4">登录</TButton>
+        <TButton type="submit" block size="large" class="mt-4!">登录</TButton>
       </template>
     </TForm>
   </LoginBg>

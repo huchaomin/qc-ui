@@ -86,7 +86,7 @@ defineExpose({
   <TForm ref="form" :data="formData" :items="formItems" layout="vertical" label-align="right">
     <template #footer>
       <TButton @click="handleSubmit">保存</TButton>
-      <TButton theme="default" class="!ml-4" @click="handleClose">关闭</TButton>
+      <TButton theme="default" class="ml-4!" @click="handleClose">关闭</TButton>
     </template>
   </TForm>
 </template>
