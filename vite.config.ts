@@ -186,17 +186,12 @@ export default defineConfig(({ command, mode }) => {
           },
           {
             from: '@/components/tDesignReset/TForm.vue',
-            imports: ['FormItem'],
+            imports: ['FormItem', 'FormInstance', 'FormProps'],
             type: true,
           },
           {
             from: '@/components/autoImport/PageList/Index.vue',
             imports: ['PageListProps'],
-            type: true,
-          },
-          {
-            from: '@/components/tDesignReset/TForm.vue',
-            imports: ['FormInstance', 'FormProps'],
             type: true,
           },
           {

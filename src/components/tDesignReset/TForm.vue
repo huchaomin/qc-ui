@@ -106,6 +106,7 @@ watch(
           ['TCheckboxGroup', 'TDateRangePicker'].includes(item.component as string) ||
           (item.multiple === true && item.component === 'TSelect')
 
+        // 这里类型有增多的话 inst.emptyFormData 也要处理一下
         // eslint-disable-next-line vue/no-mutating-props
         props.data[item.model] = isArr ? [] : ''
       }
@@ -245,6 +246,7 @@ const vm = getCurrentInstance()!
 function compoRef(instance: any) {
   if (instance !== null) {
     const inst = instance as _FormInstanceFunctions & {
+      emptyFormData: EmptyFormData
       getFormData: GetFormData
     }
 
@@ -303,6 +305,20 @@ function compoRef(instance: any) {
     inst.getFormData = () => {
       return props.data
     }
+
+    inst.emptyFormData = (initData) => {
+      const obj: FormData = {}
+
+      Object.keys(props.data).forEach((key) => {
+        if (Array.isArray(props.data[key])) {
+          obj[key] = []
+        } else {
+          obj[key] = ''
+        }
+      })
+      // eslint-disable-next-line vue/no-mutating-props
+      return Object.assign(props.data, obj, _cloneDeep(initData ?? {}))
+    }
   }
 
   const exposed = instance ?? {}
@@ -335,11 +351,13 @@ onMounted(() => {
 })
 
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
+  emptyFormData: EmptyFormData
   getFormData: GetFormData
   validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormData>
   validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<FormData>
 }
 
+type EmptyFormData = (initData?: FormData) => FormData
 type GetFormData = () => FormData
 
 function calcLabelWidth() {

@@ -9,15 +9,15 @@ defineOptions({
 
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 const emit = defineEmits<{
-  query: [FormData: Record<string, any>]
-  reset: [FormData: Record<string, any>]
+  query: [formData: Record<string, any>]
+  reset: [formData: Record<string, any>]
 }>()
 const formData = ref(_cloneDeep(props.data))
 
 watch(
   () => props.data,
   (newVal) => {
-    formData.value = _cloneDeep(newVal)
+    Object.assign(formData.value, _cloneDeep(newVal))
   },
   {
     deep: true,
@@ -102,7 +102,7 @@ async function handleQuery() {
 }
 
 async function handleReset() {
-  formData.value = _cloneDeep(props.data)
+  formRef.value!.emptyFormData(props.data)
   await formRef.value!.validate()
   emit('reset', formData.value)
 }

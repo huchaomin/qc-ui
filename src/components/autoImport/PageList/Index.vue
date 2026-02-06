@@ -27,7 +27,7 @@ export interface PageListProps {
   /**
    * @description: 初始化查询表单数据
    */
-  initialFormData: FormProps['data']
+  initialFormData?: FormProps['data']
   /**
    * @description: 第一次查询是否要父组件来发起, 默认 false
    */
