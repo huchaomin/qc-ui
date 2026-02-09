@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Method } from 'alova'
+import type { Arg, Method } from 'alova'
 import type { TableProps } from '@/components/tDesignReset/TTable.vue'
 import { tablePropsInit } from '@/components/tDesignReset/utils'
-import { getParamsString } from '@/plugins/alova/index'
+import { getFilterEmptyParamsObj, getParamsString } from '@/plugins/alova/index'
 
 export type PageTableProps = {
   /**
@@ -15,10 +15,6 @@ export type PageTableProps = {
    */
   queryParams?: Record<string, any>
   /**
-   * @description: 与method的meta.useEmptyParams 一致, 默认 true, 用于对比get查询参数是否变化
-   */
-  useEmptyParams?: boolean
-  /**
    * @description: 是否监听传给分页接口的参数, 默认 true
    */
   watchQueryParams?: boolean
@@ -28,7 +24,6 @@ const props = withDefaults(defineProps<PageTableProps>(), {
   ...tablePropsInit,
   initialQuery: true,
   queryParams: () => ({}),
-  useEmptyParams: true,
   watchQueryParams: true,
 })
 const otherProps = computed(() => {
@@ -40,11 +35,7 @@ const otherProps = computed(() => {
   delete obj.queryParams
   delete obj.watchQueryParams
   delete obj.initialQuery
-  delete obj.useEmptyParams
-  return obj as Omit<
-    PageTableProps,
-    'initialQuery' | 'method' | 'queryParams' | 'useEmptyParams' | 'watchQueryParams'
-  >
+  return obj as Omit<PageTableProps, 'initialQuery' | 'method' | 'queryParams' | 'watchQueryParams'>
 })
 const listMethod = computed(() => {
   if (typeof props.method === 'string') {
@@ -59,7 +50,7 @@ const listMethod = computed(() => {
 const pageNum = ref(1)
 const pageSize = ref(10)
 const queryParamsChangeTimer = ref(0)
-const { data, loading } = useWatcher(
+const { data, loading, onSuccess } = useWatcher(
   // immediate 为true 初始化时这个函数会执行两遍
   () =>
     listMethod.value({
@@ -76,6 +67,13 @@ const { data, loading } = useWatcher(
     },
   },
 )
+const finallyQueryParams = ref<Record<string, any> | undefined>(undefined)
+const useEmptyParams = ref(true)
+
+onSuccess(({ method }) => {
+  useEmptyParams.value = method.config.meta?.useEmptyParams ?? true
+  finallyQueryParams.value = getFilterEmptyParamsObj(method.config.params, useEmptyParams.value)
+})
 
 if (props.initialQuery) {
   queryParamsChangeTimer.value++
@@ -86,8 +84,8 @@ watch(
   (newVal, oldVal) => {
     if (props.watchQueryParams) {
       if (
-        getParamsString(newVal, props.useEmptyParams) !==
-        getParamsString(oldVal, props.useEmptyParams)
+        getParamsString(newVal, useEmptyParams.value) !==
+        getParamsString(oldVal, useEmptyParams.value)
       ) {
         queryParamsChangeTimer.value++
       }
@@ -111,10 +109,7 @@ function reset() {
 const tableRef = useTemplateRef('tableRef')
 
 defineExpose({
-  page: computed(() => ({
-    pageNum: pageNum.value,
-    pageSize: pageSize.value,
-  })),
+  finallyQueryParams,
   query,
   reset,
   selectedRows: computed(() => tableRef.value?.selectedRows ?? []),

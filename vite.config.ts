@@ -190,6 +190,11 @@ export default defineConfig(({ command, mode }) => {
             type: true,
           },
           {
+            from: '@/components/tDesignReset/TTable.vue',
+            imports: ['TableRowData'],
+            type: true,
+          },
+          {
             from: '@/components/autoImport/PageList/Index.vue',
             imports: ['PageListProps'],
             type: true,

@@ -1,14 +1,22 @@
 <script setup lang="ts">
+import type { Method } from 'alova'
 import type { PageTableProps } from '@/components/autoImport/PageTable.vue'
 import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
-import type { TableProps } from '@/components/tDesignReset/TTable.vue'
+import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
 import PageQuery from './PageQuery.vue'
 
 export interface PageListProps {
   apis: {
     delete?: {
-      method: PageTableProps['method']
+      method: ((rows: TableRowData[]) => Method) | string
+      permission?: string
+      showBatch?: boolean
+    }
+    export?: {
+      exportFileName?: string
+      method: ((params: Record<string, any>) => Method) | string
+      permission?: string
     }
     list: {
       method: PageTableProps['method']
@@ -45,9 +53,10 @@ export interface PageListProps {
 const props = withDefaults(defineProps<PageListProps>(), {
   isFirstQueryByParent: false,
 })
+const route = useRoute()
 const pageQueryRef = useTemplateRef('pageQueryRef')
 const pageTableRef = useTemplateRef('pageTableRef')
-const queryParams = ref({})
+const queryParams = ref<Record<string, any>>({})
 
 function doQuery() {
   queryParams.value = _cloneDeep(pageQueryRef.value!.formData)
@@ -65,14 +74,63 @@ function doReset() {
   pageTableRef.value!.reset()
 }
 
+const selectedRows = computed(() => pageTableRef.value?.selectedRows ?? [])
+const batchDeleteProps = computed(() => {
+  const config = props.apis.delete
+
+  if (!config) {
+    return {}
+  }
+
+  return {
+    default: '批量删除',
+    disabled: selectedRows.value.length === 0,
+    onClick: async () => {
+      await $confirm('确认删除所选项吗?')
+      await (typeof config.method === 'string'
+        ? alovaInst.Delete(
+            `${config.method}/${selectedRows.value.map((item) => item.id).join(',')}`,
+          )
+        : config.method(selectedRows.value))
+      $msg.success('删除成功')
+      doQuery()
+    },
+    permission: config.permission,
+  }
+})
+const exportProps = computed(() => {
+  const config = props.apis.export
+
+  if (!config) {
+    return {}
+  }
+
+  const finallyQueryParams = pageTableRef.value?.finallyQueryParams
+  const postConfig = {
+    meta: {
+      useDownload: `${config.exportFileName ?? route.meta.title}_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+      useEmptyData: true,
+      useResponseBlob: true,
+    },
+  }
+
+  return {
+    default: '导出',
+    disabled: finallyQueryParams === undefined,
+    onClick: async () => {
+      await $confirm('确定导出吗?')
+      await (typeof config.method === 'string'
+        ? alovaInst.Post(config.method, finallyQueryParams, postConfig)
+        : config.method(finallyQueryParams!))
+    },
+    permission: config.permission,
+  }
+})
+
 defineExpose({
   query: doQuery,
-  queryParams: computed(() => ({
-    ...queryParams.value,
-    ...(pageTableRef.value?.page ?? {}),
-  })),
   reset: doReset,
-  selectedRows: computed(() => pageTableRef.value?.selectedRows ?? []),
+  selectedRows,
 })
 </script>
 
@@ -110,6 +168,8 @@ defineExpose({
       <template #table-operations>
         <TButton v-for="(operation, index) in props.operations" :key="index" v-bind="operation">
         </TButton>
+        <TButton v-if="props.apis.delete?.showBatch" v-bind="batchDeleteProps"></TButton>
+        <TButton v-if="props.apis.export" v-bind="exportProps"></TButton>
       </template>
       <template
         v-for="k in Object.keys($slots).filter((key) =>

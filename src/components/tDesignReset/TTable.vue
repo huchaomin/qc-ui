@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type {
   TableCol as _TableCol,
+  TableRowData as _TableRowData,
   CellData,
   EnhancedTableInstanceFunctions,
   EnhancedTableProps,
-  TableRowData,
   TNode,
 } from 'tdesign-vue-next'
 import type { UnwrapRef } from 'vue'
@@ -93,6 +93,8 @@ export type TableProps = {
   | 'rowKey'
   | 'sortOnRowDraggable'
 >
+
+export type TableRowData = _TableRowData
 
 type FinallyTableCol = Omit<
   UnwrapRef<typeof _columns>[number],

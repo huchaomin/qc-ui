@@ -13,15 +13,17 @@ export interface ButtonsProps {
 </script>
 
 <template>
-  <TButton
-    v-for="(child, index) in props.buttons"
-    :key="index"
-    v-bind="{
-      theme: 'primary',
-      variant: 'text',
-      ...child,
-    }"
-  >
-    {{ child.default }}
-  </TButton>
+  <div class="flex">
+    <TButton
+      v-for="(child, index) in props.buttons"
+      :key="index"
+      v-bind="{
+        theme: 'primary',
+        variant: 'text',
+        ...child,
+      }"
+    >
+      {{ child.default }}
+    </TButton>
+  </div>
 </template>

@@ -2,6 +2,17 @@
 const pageListRef = useTemplateRef('pageListRef')
 const config: PageListProps = {
   apis: {
+    delete: {
+      method: (rows: TableRowData[]) => {
+        return alovaInst.Delete(`system/dict/type/${rows.map((item) => item.dictId).join(',')}`)
+      },
+      permission: 'system:dict:remove',
+      showBatch: true,
+    },
+    export: {
+      method: 'system/dict/type/export',
+      permission: 'system:dict:export',
+    },
     list: {
       method: (o: Record<string, any>) => {
         return alovaInst.Get('system/dict/type/list', {
@@ -109,12 +120,6 @@ const config: PageListProps = {
       model: 'dateRange',
     },
   ],
-  initialFormData: {
-    dateRange: [],
-    dictName: '',
-    dictType: '',
-    status: '',
-  },
   operations: [
     {
       default: '新增',
@@ -180,32 +185,6 @@ const config: PageListProps = {
         pageListRef.value!.query()
       },
       permission: 'system:dict:remove',
-    },
-    reactive({
-      default: '批量删除',
-      disabled: computed(() => (pageListRef.value?.selectedRows ?? []).length === 0),
-      onClick: async () => {
-        await $confirm('确认删除所选项吗?')
-        await alovaInst.Delete(
-          `system/dict/type/${pageListRef.value!.selectedRows.map((item) => item.dictId).join(',')}`,
-        )
-        $msg.success('删除成功')
-        pageListRef.value!.query()
-      },
-      permission: 'system:dict:remove',
-    }),
-    {
-      default: '导出',
-      onClick: async () => {
-        await alovaInst.Post('system/dict/type/export', pageListRef.value!.queryParams, {
-          meta: {
-            useDownload: `字典类型_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
-            useEmptyData: true,
-            useResponseBlob: true,
-          },
-        })
-      },
-      permission: 'system:dict:export',
     },
   ],
 }

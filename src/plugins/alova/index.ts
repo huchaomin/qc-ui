@@ -11,17 +11,24 @@ const NETWORK_ERR_MSG = '网络错误，请稍后再试'
 
 type ThisAlovaCustomTypes = Required<AlovaCustomTypes['meta']>
 
-export function getParamsString(params: Arg, useEmptyParams = true): string {
-  const paramsCopy = new URLSearchParams()
+export function getFilterEmptyParamsObj(params: Arg, useEmptyParams = true): Arg {
+  const obj: Arg = {}
 
   Object.keys(params).forEach((key: string) => {
     if (
       !useEmptyParams ||
       (Array.isArray(params[key]) ? params[key].length > 0 : !isFalsy(params[key]))
     ) {
-      paramsCopy.append(key, params[key] as string)
+      // eslint-disable-next-line ts/no-unsafe-assignment
+      obj[key] = params[key]
     }
   })
+  return obj
+}
+
+export function getParamsString(params: Arg, useEmptyParams = true): string {
+  const paramsCopy = new URLSearchParams(getFilterEmptyParamsObj(params, useEmptyParams))
+
   return paramsCopy.toString()
 }
 
