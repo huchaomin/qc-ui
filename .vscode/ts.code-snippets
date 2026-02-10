@@ -47,5 +47,33 @@
       ")"
     ],
     "description": "usePagination alova"
+  },
+  "$confirm_form": {
+    "prefix": "$confirm_form",
+    "body": [
+      "const formRef = ref<FormInstance | null>(null)",
+      "",
+      "\\$confirm({",
+      "  body: () =>",
+      "    h(resolveComponent('TForm') as Component<FormProps>, {",
+      "      items: pickFormItems(formItems, ['dictName'], {",
+      "        dictName: {",
+      "          _required: true,",
+      "        },",
+      "      }),",
+      "      labelAlign: 'right',",
+      "      layout: 'vertical',",
+      "      ref: formRef,",
+      "    }),",
+      "  header: '添加字典类型',",
+      "  onConfirmCallback: async () => {",
+      "    await alovaInst.Post('system/dict/type', await formRef.value!.validate())",
+      "    \\$msg.success('字典添加成功')",
+      "    pageListRef.value!.query()",
+      "  },",
+      "  width: 430,",
+      "})"
+    ],
+    "description": "$confirm_form"
   }
 }

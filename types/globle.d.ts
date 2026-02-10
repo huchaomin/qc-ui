@@ -2,5 +2,6 @@ export {} // 为了让这个声明文件变成模块声明文件，而不是一�
 
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
 declare global {
+  type ExcludeFunction<T> = T extends (...args: any[]) => any ? never : T
   type XOR<T, U> = T | U extends object ? (T & Without<U, T>) | (U & Without<T, U>) : T | U
 }

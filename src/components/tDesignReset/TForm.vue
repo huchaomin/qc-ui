@@ -26,47 +26,50 @@ type _FormItem = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & {
   show?: boolean // 是否显示
-} & XOR<ComponentItemType, SlotItemType>
+} & XOR<
+    AllowedComponentProps &
+      ComponentItemType & {
+        model: string
+      },
+    SlotItemType
+  >
 type _FormItemProps = AllowedComponentProps &
   Omit<FormItemProps, 'labelWidth' | 'name'> & {
     required?: boolean
   }
-type ComponentItemType = AllowedComponentProps &
+type ComponentItemType = XOR<
   XOR<
+    Omit<DateRangePickerProps, 'modelValue'> & {
+      component: 'TDateRangePicker'
+    },
     XOR<
-      Omit<DateRangePickerProps, 'modelValue'> & {
-        component: 'TDateRangePicker'
-      },
       XOR<
         XOR<
           XOR<
-            XOR<
-              Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-                component: 'TCheckbox'
-              },
-              Omit<InputProps, 'modelValue'> & {
-                component?: 'TInput'
-              }
-            >,
-            Omit<RadioGroupProps, 'modelValue'> & {
-              component: 'TRadioGroup'
+            Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
+              component: 'TCheckbox'
+            },
+            Omit<InputProps, 'modelValue'> & {
+              component?: 'TInput'
             }
           >,
-          Omit<CheckboxGroupProps, 'modelValue'> & {
-            component: 'TCheckboxGroup'
+          Omit<RadioGroupProps, 'modelValue'> & {
+            component: 'TRadioGroup'
           }
         >,
-        Omit<SelectProps, 'modelValue'> & {
-          component: 'TSelect'
+        Omit<CheckboxGroupProps, 'modelValue'> & {
+          component: 'TCheckboxGroup'
         }
-      >
-    >,
-    Omit<TextareaProps, 'modelValue'> & {
-      component: 'TTextarea'
-    }
-  > & {
-    model: string
+      >,
+      Omit<SelectProps, 'modelValue'> & {
+        component: 'TSelect'
+      }
+    >
+  >,
+  Omit<TextareaProps, 'modelValue'> & {
+    component: 'TTextarea'
   }
+>
 type FormData = Record<string, any>
 interface SlotItemType {
   model?: string // 传给 name 参与校验
@@ -242,6 +245,18 @@ const otherProps = computed(() => {
 })
 const compo = _Form
 const vm = getCurrentInstance()!
+const getFormData: GetFormData = () => {
+  const obj: FormData = {
+    ...props.data,
+  }
+
+  formItemsConfig.value.forEach((item) => {
+    if (item.show === false) {
+      delete obj[item.model as keyof typeof obj]
+    }
+  })
+  return obj
+}
 
 function compoRef(instance: any) {
   if (instance !== null) {
@@ -258,7 +273,7 @@ function compoRef(instance: any) {
         return new Promise((resolve, reject) => {
           orgValidate(...arg).then((res) => {
             if (res === true) {
-              resolve(props.data)
+              resolve(getFormData())
             } else {
               if (props.msgErrorWhenValidate) {
                 Object.keys(res).forEach((key) => {
@@ -290,7 +305,7 @@ function compoRef(instance: any) {
         return new Promise((resolve, reject) => {
           orgValidateOnly(...arg).then((res) => {
             if (res === true) {
-              resolve(props.data)
+              resolve(getFormData())
             } else {
               reject(res)
             }
@@ -302,9 +317,7 @@ function compoRef(instance: any) {
       inst.validateOnly._alreadyReplace = true
     }
 
-    inst.getFormData = () => {
-      return props.data
-    }
+    inst.getFormData = getFormData
 
     inst.emptyFormData = (initData) => {
       const obj: FormData = {}

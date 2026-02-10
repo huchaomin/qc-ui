@@ -1,5 +1,32 @@
 <script setup lang="ts">
 const pageListRef = useTemplateRef('pageListRef')
+const formItems: FormItem[] = [
+  {
+    _label: '字典名称',
+    model: 'dictName',
+  },
+  {
+    _label: '字典类型',
+    model: 'dictType',
+  },
+  {
+    _label: '状态',
+    component: 'TSelect',
+    dicCode: 'sys_normal_disable',
+    model: 'status',
+  },
+  {
+    _class: 'col-span-2',
+    _label: '创建时间',
+    component: 'TDateRangePicker',
+    model: 'dateRange',
+  },
+  {
+    _label: '备注',
+    component: 'TTextarea',
+    model: 'remark',
+  },
+]
 const config: PageListProps = {
   apis: {
     delete: {
@@ -70,37 +97,53 @@ const config: PageListProps = {
       cell: {
         _component: 'Buttons',
         buttons: [
-          {
+          ({ row }) => ({
             default: '编辑',
-          },
+            onClick: () => {
+              const formRef = ref<FormInstance | null>(null)
+
+              $confirm({
+                body: () =>
+                  h(resolveComponent('TForm') as Component<FormProps>, {
+                    data: reactive({
+                      dictId: row.dictId,
+                      dictName: row.dictName,
+                      dictType: row.dictType,
+                      remark: row.remark,
+                      status: row.status,
+                    }),
+                    items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
+                      dictName: {
+                        _required: true,
+                      },
+                      dictType: {
+                        _required: true,
+                      },
+                      status: {
+                        component: 'TRadioGroup',
+                      },
+                    }),
+                    labelAlign: 'right',
+                    layout: 'vertical',
+                    ref: formRef,
+                  }),
+                header: '修改字典类型',
+                onConfirmCallback: async () => {
+                  await alovaInst.Put('system/dict/type', await formRef.value!.validate())
+                  $msg.success('字典修改成功')
+                  pageListRef.value!.query()
+                },
+                width: 430,
+              })
+            },
+          }),
         ],
       },
       colKey: '_operation',
       title: '操作',
     },
   ],
-  formItems: [
-    {
-      _label: '字典名称',
-      model: 'dictName',
-    },
-    {
-      _label: '字典类型',
-      model: 'dictType',
-    },
-    {
-      _label: '状态',
-      component: 'TSelect',
-      dicCode: 'sys_normal_disable',
-      model: 'status',
-    },
-    {
-      _class: 'col-span-2',
-      _label: '创建时间',
-      component: 'TDateRangePicker',
-      model: 'dateRange',
-    },
-  ],
+  formItems: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'dateRange']),
   operations: [
     {
       default: '新增',
@@ -111,35 +154,19 @@ const config: PageListProps = {
           body: () =>
             h(resolveComponent('TForm') as Component<FormProps>, {
               data: reactive({
-                dictId: '',
-                dictName: '',
-                dictType: '',
-                remark: '',
                 status: '0',
               }),
-              items: [
-                {
-                  _label: '字典名称',
+              items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
+                dictName: {
                   _required: true,
-                  model: 'dictName',
                 },
-                {
-                  _label: '字典类型',
+                dictType: {
                   _required: true,
-                  model: 'dictType',
                 },
-                {
-                  _label: '状态',
+                status: {
                   component: 'TRadioGroup',
-                  dicCode: 'sys_normal_disable',
-                  model: 'status',
                 },
-                {
-                  _label: '备注',
-                  component: 'TTextarea',
-                  model: 'remark',
-                },
-              ],
+              }),
               labelAlign: 'right',
               layout: 'vertical',
               ref: formRef,

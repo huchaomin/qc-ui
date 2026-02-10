@@ -63,7 +63,7 @@
 - zx —— 真正像 JavaScript 的 Shell 脚本
 - vue-skills
 - CheckboxProps
-- formdata show
+- FormData type 为专有名词
 
 ### 分析包大小
 
