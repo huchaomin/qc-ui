@@ -47,10 +47,16 @@ function compoRef(instance: any) {
         withDirectives(
           h(
             compo,
-            mergeProps($attrs, {
-              ...otherProps,
-              ref: compoRef,
-            }),
+            mergeProps(
+              $attrs,
+              {
+                ...otherProps,
+                ref: compoRef,
+              },
+              {
+                class: 'flex-shrink-0',
+              },
+            ),
             $slots,
           ),
           [[resolveDirective('permission'), props.permission]],
@@ -63,10 +69,16 @@ function compoRef(instance: any) {
       withDirectives(
         h(
           compo,
-          mergeProps($attrs, {
-            ...otherProps,
-            ref: compoRef,
-          }),
+          mergeProps(
+            $attrs,
+            {
+              ...otherProps,
+              ref: compoRef,
+            },
+            {
+              class: 'flex-shrink-0',
+            },
+          ),
           $slots,
         ),
         [[resolveDirective('permission'), props.permission]],

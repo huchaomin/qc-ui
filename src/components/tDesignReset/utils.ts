@@ -17,6 +17,7 @@ export const tablePropsInit = {
   }),
   selectOnRowClick: true,
   showHeader: true,
+  showSerialNumber: true,
   showToggleFullscreenBtn: false,
   stripe: true,
   tableLayout: 'fixed',

@@ -78,6 +78,14 @@ export type TableProps = {
    */
   showColumnConfigBtn?: boolean
   /**
+   * @description: 是否显示选择列, multiple 多选, single 单选
+   */
+  showRowSelect?: 'multiple' | 'single'
+  /**
+   * @description: 是否显示序号列
+   */
+  showSerialNumber?: boolean
+  /**
    * @description: 是否显示全屏按钮
    */
   showToggleFullscreenBtn?: boolean
@@ -142,7 +150,7 @@ const _columns = computed(() => {
     return []
   }
 
-  return props.columns
+  const arr = props.columns
     .filter((c) => c.visible !== false)
     .map((c) => {
       const obj = {
@@ -152,6 +160,26 @@ const _columns = computed(() => {
       delete obj.visible
       return obj as Omit<typeof c, 'visible'>
     })
+
+  if (props.showRowSelect && !arr.some((c) => c.colKey === 'row-select')) {
+    const serialIndex = arr.findIndex((c) => c.colKey === 'serial-number')
+
+    arr.splice(serialIndex === -1 ? 0 : serialIndex, 0, {
+      colKey: 'row-select',
+      title: '选择',
+      type: props.showRowSelect,
+    })
+  }
+
+  if (props.showSerialNumber && !arr.some((c) => c.colKey === 'serial-number')) {
+    arr.unshift({
+      align: 'center',
+      colKey: 'serial-number',
+      title: '序号',
+    })
+  }
+
+  return arr
 })
 
 watch(
@@ -182,7 +210,10 @@ const columnConfigShows = ref<string[]>([])
 const columnConfigOptions = computed(() => {
   return _columns.value
     .filter(
-      (c) => !isFalsy(c.title) && !['row-select'].includes(c.colKey) && !c.colKey.startsWith('_'),
+      (c) =>
+        !isFalsy(c.title) &&
+        !['row-select', 'serial-number'].includes(c.colKey) &&
+        !c.colKey.startsWith('_'),
     )
     .map((column) => ({
       label: column.title as string | TNode,

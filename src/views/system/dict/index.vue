@@ -28,10 +28,6 @@ const config: PageListProps = {
   },
   columns: [
     {
-      colKey: 'row-select',
-      type: 'multiple',
-    },
-    {
       colKey: 'dictId',
       title: '字典编号',
     },

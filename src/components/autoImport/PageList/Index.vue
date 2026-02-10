@@ -154,22 +154,23 @@ defineExpose({
     </PageQuery>
     <PageTable
       ref="pageTableRef"
-      :method="props.apis.list.method"
-      :columns="props.columns"
+      :method="apis.list.method"
+      :columns="columns"
       :watch-query-params="false"
       :query-params="queryParams"
       :initial-query="false"
+      :show-row-select="apis.delete?.showBatch === true ? 'multiple' : undefined"
       :show-toggle-fullscreen-btn="true"
       :show-column-config-btn="true"
       :flex-height="true"
       class="flex-1"
-      v-bind="props.tableOtherProps"
+      v-bind="tableOtherProps"
     >
       <template #table-operations>
-        <TButton v-for="(operation, index) in props.operations" :key="index" v-bind="operation">
+        <TButton v-for="(operation, index) in operations" :key="index" v-bind="operation">
         </TButton>
-        <TButton v-if="props.apis.delete?.showBatch" v-bind="batchDeleteProps"></TButton>
-        <TButton v-if="props.apis.export" v-bind="exportProps"></TButton>
+        <TButton v-if="apis.delete?.showBatch" v-bind="batchDeleteProps"></TButton>
+        <TButton v-if="apis.export" v-bind="exportProps"></TButton>
       </template>
       <template
         v-for="k in Object.keys($slots).filter((key) =>
