@@ -126,6 +126,59 @@ const exportProps = computed(() => {
     permission: config.permission,
   }
 })
+const finallyColumns = computed(() => {
+  const deleteConfig = props.apis.delete
+
+  if (deleteConfig !== undefined) {
+    const _operationColumnIndex = props.columns.findIndex((c) => c.colKey === '_operation')
+    const copyColumns = [...props.columns]
+    const rowDelete = ({ row }: { row: TableRowData }) => ({
+      default: '删除',
+      permission: deleteConfig.permission,
+      popconfirm: {
+        content: '确认删除吗',
+        onConfirm: async () => {
+          await (typeof deleteConfig.method === 'string'
+            ? alovaInst.Delete(`${deleteConfig.method}/${row.id}`)
+            : deleteConfig.method([row]))
+          $msg.success('删除成功')
+          doQuery()
+        },
+      },
+    })
+
+    if (_operationColumnIndex === -1) {
+      copyColumns.push({
+        cell: {
+          _component: 'Buttons',
+          buttons: [rowDelete],
+        },
+        colKey: '_operation',
+        title: '操作',
+      })
+      return copyColumns
+    }
+
+    const buttonsArr = props.columns[_operationColumnIndex]?.cell?.buttons
+
+    if (Array.isArray(buttonsArr)) {
+      copyColumns[_operationColumnIndex] = {
+        ...(copyColumns[_operationColumnIndex] as {
+          colKey: string
+        }),
+        cell: {
+          ...(copyColumns[_operationColumnIndex]!.cell as {
+            _component: 'Buttons'
+          }),
+          buttons: [...buttonsArr, rowDelete],
+        },
+      }
+      return copyColumns
+    }
+  }
+
+  return props.columns
+})
 
 defineExpose({
   query: doQuery,
@@ -155,7 +208,7 @@ defineExpose({
     <PageTable
       ref="pageTableRef"
       :method="apis.list.method"
-      :columns="columns"
+      :columns="finallyColumns"
       :watch-query-params="false"
       :query-params="queryParams"
       :initial-query="false"

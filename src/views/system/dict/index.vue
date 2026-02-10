@@ -7,7 +7,6 @@ const config: PageListProps = {
         return alovaInst.Delete(`system/dict/type/${rows.map((item) => item.dictId).join(',')}`)
       },
       permission: 'system:dict:remove',
-      showBatch: true,
     },
     export: {
       method: 'system/dict/type/export',
@@ -68,27 +67,13 @@ const config: PageListProps = {
       title: '创建时间',
     },
     {
-      cell: (_, { row }) => {
-        return {
-          _component: 'Buttons',
-          buttons: [
-            {
-              default: '编辑',
-            },
-            {
-              default: '删除',
-              permission: 'system:dict:remove',
-              popconfirm: {
-                content: '确认删除吗',
-                onConfirm: async () => {
-                  await alovaInst.Delete(`system/dict/type/${row.dictId}`)
-                  $msg.success('删除成功')
-                  pageListRef.value!.query()
-                },
-              },
-            },
-          ],
-        }
+      cell: {
+        _component: 'Buttons',
+        buttons: [
+          {
+            default: '编辑',
+          },
+        ],
       },
       colKey: '_operation',
       title: '操作',

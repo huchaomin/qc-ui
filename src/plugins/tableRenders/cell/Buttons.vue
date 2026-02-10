@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -8,8 +9,10 @@ defineOptions({
 const props = withDefaults(defineProps<ButtonsProps>(), {})
 
 export interface ButtonsProps {
-  buttons: ButtonProps[]
+  buttons: Array<((context: CellRenderContext) => ButtonProps) | ButtonProps>
 }
+
+const attrs = useAttrs() as unknown as CellRenderContext
 </script>
 
 <template>
@@ -20,10 +23,10 @@ export interface ButtonsProps {
       v-bind="{
         theme: 'primary',
         variant: 'text',
-        ...child,
+        ...(typeof child === 'function' ? child(attrs) : child),
       }"
     >
-      {{ child.default }}
+      {{ attrs.row[attrs.col.colKey] }}
     </TButton>
   </div>
 </template>

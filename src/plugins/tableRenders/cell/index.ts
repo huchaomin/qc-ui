@@ -1,4 +1,3 @@
-import type { ButtonProps } from './Button.vue'
 import type { ButtonsProps } from './Buttons.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { LinkProps } from './Link.vue'
@@ -8,16 +7,13 @@ import type {
   TableCol,
 } from '@/components/tDesignReset/TTable.vue'
 
-export type CellObjConfig = XOR<XOR<XOR<DicLabelConfig, LinkConfig>, ButtonConfig>, ButtonsConfig>
+export type CellObjConfig = XOR<XOR<DicLabelConfig, LinkConfig>, ButtonsConfig>
 
 export type CellObjConfigFn = (
   h: typeof import('vue').h,
   context: CellRenderContext,
 ) => CellObjConfig
 
-type ButtonConfig = ButtonProps & {
-  _component: 'Button'
-}
 type ButtonsConfig = ButtonsProps & {
   _component: 'Buttons'
 }
