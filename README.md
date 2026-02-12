@@ -64,6 +64,8 @@
 - vue-skills
 - CheckboxProps
 - FormData type 为专有名词
+- [https://juejin.cn/post/7263810695459438653]
+- (泛型的联合类型分发)[https://juejin.cn/post/7228833037743915067#heading-18]
 
 ### 分析包大小
 

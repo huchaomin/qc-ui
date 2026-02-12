@@ -190,6 +190,10 @@ export default defineConfig(({ command, mode }) => {
             type: true,
           },
           {
+            from: '@/components/tDesignReset/TForm.vue',
+            imports: ['createFormItems', 'pickFormItems'],
+          },
+          {
             from: '@/components/tDesignReset/TTable.vue',
             imports: ['TableRowData'],
             type: true,

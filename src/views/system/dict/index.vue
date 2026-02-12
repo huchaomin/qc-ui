@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const pageListRef = useTemplateRef('pageListRef')
-const formItems: FormItem[] = [
+const formItems = createFormItems([
   {
     _label: '字典名称',
     model: 'dictName',
@@ -26,7 +26,7 @@ const formItems: FormItem[] = [
     component: 'TTextarea',
     model: 'remark',
   },
-]
+] as const)
 const config: PageListProps = {
   apis: {
     delete: {
@@ -120,6 +120,7 @@ const config: PageListProps = {
                         _required: true,
                       },
                       status: {
+                        // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
                         component: 'TRadioGroup',
                       },
                     }),
@@ -164,6 +165,7 @@ const config: PageListProps = {
                   _required: true,
                 },
                 status: {
+                  // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
                   component: 'TRadioGroup',
                 },
               }),

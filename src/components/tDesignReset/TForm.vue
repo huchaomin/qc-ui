@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 /**
  * @description: form reset 时， show 为 false 的不会一起reset
  * @description: 要监听 formItem 的值变化时，可用onChange事件, 暂时没考虑 onUpdate:modelValue 事件
@@ -20,66 +20,29 @@ import type { TextareaProps } from './TTextarea.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
+export interface ComponentPropsMap {
+  TCheckbox: Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'>
+  TCheckboxGroup: Omit<CheckboxGroupProps, 'modelValue'>
+  TDateRangePicker: Omit<DateRangePickerProps, 'modelValue'>
+  TInput: Omit<InputProps, 'modelValue'>
+  TRadioGroup: Omit<RadioGroupProps, 'modelValue'>
+  TSelect: Omit<SelectProps, 'modelValue'>
+  TTextarea: Omit<TextareaProps, 'modelValue'>
+}
+
+export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
+  emptyFormData: EmptyFormData
+  getFormData: GetFormData
+  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormData>
+  validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<FormData>
+}
+
 export type FormItem = ((formData: FormData) => _FormItem) | _FormItem
 
-type _FormItem = {
-  [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
-} & {
-  show?: boolean // 是否显示
-} & XOR<
-    AllowedComponentProps &
-      ComponentItemType & {
-        model: string
-      },
-    SlotItemType
-  >
-type _FormItemProps = AllowedComponentProps &
-  Omit<FormItemProps, 'labelWidth' | 'name'> & {
-    required?: boolean
+export type FormItemWithoutSlot = ComponentItemType &
+  FormItemWithoutSlotAndComponentItemTypeAndModel & {
+    model: string
   }
-type ComponentItemType = XOR<
-  XOR<
-    Omit<DateRangePickerProps, 'modelValue'> & {
-      component: 'TDateRangePicker'
-    },
-    XOR<
-      XOR<
-        XOR<
-          XOR<
-            Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'> & {
-              component: 'TCheckbox'
-            },
-            Omit<InputProps, 'modelValue'> & {
-              component?: 'TInput'
-            }
-          >,
-          Omit<RadioGroupProps, 'modelValue'> & {
-            component: 'TRadioGroup'
-          }
-        >,
-        Omit<CheckboxGroupProps, 'modelValue'> & {
-          component: 'TCheckboxGroup'
-        }
-      >,
-      Omit<SelectProps, 'modelValue'> & {
-        component: 'TSelect'
-      }
-    >
-  >,
-  Omit<TextareaProps, 'modelValue'> & {
-    component: 'TTextarea'
-  }
->
-type FormData = Record<string, any>
-interface SlotItemType {
-  model?: string // 传给 name 参与校验
-  slot: string
-}
-defineOptions({
-  inheritAttrs: false,
-})
-
-const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 
 export type FormProps = {
   data?: FormData
@@ -91,6 +54,91 @@ export type FormProps = {
   msgErrorWhenValidate?: boolean
 } & Omit<_FormProps, 'data' | 'labelAlign' | 'labelWidth'>
 
+type _FormItem = FormItemBase &
+  XOR<
+    AllowedComponentProps &
+      ComponentItemType & {
+        model: string
+      },
+    SlotItem
+  >
+type _FormItemProps = AllowedComponentProps &
+  Omit<FormItemProps, 'labelWidth' | 'name'> & {
+    required?: boolean
+  }
+type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] &
+  (T extends 'TInput' ? { component?: T } : { component: T })
+type ComponentItemType = UnionToNestedXOR<
+  keyof ComponentPropsMap extends infer T
+    ? T extends keyof ComponentPropsMap
+      ? ComponentConfig<T>
+      : never
+    : never
+>
+type CreateFormItemsReturn<T extends FormItemWithoutSlot[]> = {
+  [K in keyof T]: T[K] extends FormItemWithoutSlot
+    ? ('component' extends keyof T[K]
+        ? [T[K]['component']] extends [undefined]
+          ? ComponentConfig<'TInput'>
+          : T[K]['component'] extends keyof ComponentPropsMap
+            ? ComponentConfig<T[K]['component']>
+            : never
+        : ComponentConfig<'TInput'>) &
+        FormItemWithoutSlotAndComponentItemTypeAndModel & { model: T[K]['model'] }
+    : never
+}
+type EmptyFormData = (initData?: FormData) => FormData
+type FormData = Record<string, any>
+type FormItemBase = {
+  [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
+} & {
+  show?: boolean // 是否显示
+}
+type FormItemWithoutSlotAndComponentItemTypeAndModel = AllowedComponentProps & FormItemBase
+type GetFormData = () => FormData
+interface SlotItem {
+  model?: string // 传给 name 参与校验
+  slot: string
+}
+
+export function createFormItems<T extends FormItemWithoutSlot[]>(items: T) {
+  return items as CreateFormItemsReturn<T>
+}
+
+export function pickFormItems<
+  T extends FormItemWithoutSlot,
+  Items extends readonly T[],
+  ModelUnion extends Items[number]['model'],
+  Keys extends readonly ModelUnion[],
+>(
+  items: Items,
+  modelKeys: Keys,
+  mergeConfig: {
+    [M in Keys[number]]?: Partial<Omit<Extract<Items[number], { model: M }>, 'model'>>
+  } = {},
+): {
+  [K in keyof Keys]: Keys[K] extends ModelUnion ? Extract<Items[number], { model: Keys[K] }> : never
+} {
+  const arr: any = []
+
+  modelKeys.forEach((key) => {
+    const item = items.find((item) => item.model === key)!
+
+    arr.push({
+      ...item,
+      ...(mergeConfig[key] ?? {}),
+    })
+  })
+  return arr
+}
+</script>
+
+<script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
     return typeof item === 'function' ? item(props.data) : item
@@ -363,16 +411,6 @@ onMounted(() => {
   })
 })
 
-export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
-  emptyFormData: EmptyFormData
-  getFormData: GetFormData
-  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormData>
-  validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<FormData>
-}
-
-type EmptyFormData = (initData?: FormData) => FormData
-type GetFormData = () => FormData
-
 function calcLabelWidth() {
   const arr = [...formItemLabelEls.value!] as HTMLElement[]
 
@@ -426,11 +464,7 @@ defineExpose({} as FormInstance)
       "
       :name="item.model"
     >
-      <slot
-        v-if="(item as SlotItemType).slot"
-        :name="(item as SlotItemType).slot"
-        :item="item"
-      ></slot>
+      <slot v-if="(item as SlotItem).slot" :name="(item as SlotItem).slot" :item="item"></slot>
       <component
         :is="getComponent(item.component)"
         v-else
