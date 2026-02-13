@@ -6,11 +6,11 @@
 import type {
   FormInstanceFunctions as _FormInstanceFunctions,
   FormProps as _FormProps,
-  CheckboxProps,
   FormItemProps,
   ValidateResultList,
 } from 'tdesign-vue-next'
 import type { AllowedComponentProps } from 'vue'
+import type { CheckboxProps } from './TCheckbox.vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
@@ -21,7 +21,7 @@ import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
 export interface ComponentPropsMap {
-  TCheckbox: Omit<CheckboxProps, 'checked' | 'defaultChecked' | 'modelValue'>
+  TCheckbox: Omit<CheckboxProps, 'modelValue'>
   TCheckboxGroup: Omit<CheckboxGroupProps, 'modelValue'>
   TDateRangePicker: Omit<DateRangePickerProps, 'modelValue'>
   TInput: Omit<InputProps, 'modelValue'>
@@ -147,7 +147,7 @@ function formItemsConfigChangeHandler(config: _FormItem[]) {
 
       // 这里类型有增多的话 inst.emptyFormData 也要处理一下
       // eslint-disable-next-line vue/no-mutating-props
-      props.data[item.model] = isArr ? [] : ''
+      props.data[item.model] = isArr ? [] : item.component === 'TCheckbox' ? false : ''
     }
   })
 }

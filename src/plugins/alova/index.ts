@@ -25,13 +25,11 @@ export function getFilterEmptyParamsObj(params: Arg, useEmptyParams = true): Arg
   })
   return obj
 }
-
 export function getParamsString(params: Arg, useEmptyParams = true): string {
   const paramsCopy = new URLSearchParams(getFilterEmptyParamsObj(params, useEmptyParams))
 
   return paramsCopy.toString()
 }
-
 export default createAlova({
   baseURL: VITE_BASE_URL, // 如果你在某个具体请求中提供了包含协议头（如 http://或 https://）的完整 URL，Alova 会自动忽略 baseURL的拼接，直接使用该完整地址
   // 请求前拦截器 可以为异步函数

@@ -4,6 +4,7 @@ import type { DialogPluginType } from 'tdesign-vue-next/es/dialog/plugin.d.ts'
 import _TDesign, {
   Button as _Button,
   Card as _Card,
+  Checkbox as _Checkbox,
   CheckboxGroup as _CheckboxGroup,
   DateRangePicker as _DateRangePicker,
   DialogPlugin as _DialogPlugin,
@@ -46,11 +47,13 @@ const Pagination = _Pagination as (typeof import('tdesign-vue-next'))['Paginatio
 const Link = _Link as (typeof import('tdesign-vue-next'))['Link']
 const Textarea = _Textarea as (typeof import('tdesign-vue-next'))['Textarea']
 const Popconfirm = _Popconfirm as (typeof import('tdesign-vue-next'))['Popconfirm']
+const Checkbox = _Checkbox as (typeof import('tdesign-vue-next'))['Checkbox']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
   Button,
   Card,
+  Checkbox,
   CheckboxGroup,
   DateRangePicker,
   DialogPlugin,

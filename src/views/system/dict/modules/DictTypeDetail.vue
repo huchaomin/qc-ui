@@ -91,14 +91,6 @@ const config: PageListProps = {
       title: '备注',
     },
     {
-      colKey: 'updateBy',
-      title: '更新人',
-    },
-    {
-      colKey: 'updateTime',
-      title: '更新时间',
-    },
-    {
       colKey: 'createBy',
       title: '创建人',
     },
