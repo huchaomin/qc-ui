@@ -63,6 +63,7 @@ export default antfu(
             prev: '*',
           },
           { blankLine: 'never', next: 'import', prev: 'import' },
+          { blankLine: 'never', next: 'export', prev: 'export' },
           {
             blankLine: 'never',
             next: ['const', 'let', 'var'],

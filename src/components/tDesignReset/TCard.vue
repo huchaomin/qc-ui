@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import type { CardProps as _CardProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import { cardPropsInit } from './utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<CardProps>(), {
-  bodyFullHeight: false,
-  headerBordered: true,
-  shadow: true,
-})
+const props = withDefaults(defineProps<CardProps>(), cardPropsInit)
 
-export type CardProps = _CardProps & {
+export type CardProps = Omit<_CardProps, 'content'> & {
   bodyFullHeight?: boolean
 }
 

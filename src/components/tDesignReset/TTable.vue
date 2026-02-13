@@ -300,9 +300,9 @@ function getRowKey(): string | undefined {
     return 'id'
   }
 
-  if (keys.filter((k) => k.endsWith('Id')).length === 1) {
-    return keys.find((k) => k.endsWith('Id'))!
-  }
+  // if (keys.filter((k) => k.endsWith('Id')).length === 1) {
+  //   return keys.find((k) => k.endsWith('Id'))!
+  // }
 
   if (keys.includes('key')) {
     return 'key'
@@ -402,6 +402,8 @@ function compoRef(instance: any) {
         selectedRowKeys.value.includes(item[otherProps.value.rowKey!]),
       ),
     )
+    instance.selectedRowKeys = selectedRowKeys
+    instance.rowKey = computed(() => otherProps.value.rowKey!)
   }
 
   const exposed = instance ?? {}
@@ -521,9 +523,12 @@ watch(
   },
 )
 defineExpose(
-  {} as EnhancedTableInstanceFunctions & {
+  {} as {
+    rowKey: ComputedRef<string>
+    // 如果初始化提供的 selectedRowKeys 在 data 中找不到，或者 checkSelectedOnDataChange 为 false, selectedRowKeys 会比 selectedRows 选的多
+    selectedRowKeys: Ref<SelectedRowKeys>
     selectedRows: ComputedRef<TableRowData[]>
-  },
+  } & EnhancedTableInstanceFunctions,
 )
 </script>
 

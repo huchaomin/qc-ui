@@ -32,6 +32,7 @@ type UnionToFnReturnIntersection<T> = (T extends any ? (fn: () => T) => void : n
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
 declare global {
   type ExcludeFunction<T> = T extends (...args: any[]) => any ? never : T
+  type NoExtraProperties<T, U> = T extends U ? (keyof T extends keyof U ? T : never) : never
   /**
    * @description: 联合类型转嵌套的 XOR 类型
    */

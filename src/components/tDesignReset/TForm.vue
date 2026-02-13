@@ -29,21 +29,17 @@ export interface ComponentPropsMap {
   TSelect: Omit<SelectProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
 }
-
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   emptyFormData: EmptyFormData
   getFormData: GetFormData
   validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormData>
   validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<FormData>
 }
-
 export type FormItem = ((formData: FormData) => _FormItem) | _FormItem
-
 export type FormItemWithoutSlot = ComponentItemType &
   FormItemWithoutSlotAndComponentItemTypeAndModel & {
     model: string
   }
-
 export type FormProps = {
   data?: FormData
   items: FormItem[]
@@ -77,14 +73,10 @@ type ComponentItemType = UnionToNestedXOR<
 >
 type CreateFormItemsReturn<T extends FormItemWithoutSlot[]> = {
   [K in keyof T]: T[K] extends FormItemWithoutSlot
-    ? ('component' extends keyof T[K]
-        ? [T[K]['component']] extends [undefined]
-          ? ComponentConfig<'TInput'>
-          : T[K]['component'] extends keyof ComponentPropsMap
-            ? ComponentConfig<T[K]['component']>
-            : never
-        : ComponentConfig<'TInput'>) &
-        FormItemWithoutSlotAndComponentItemTypeAndModel & { model: T[K]['model'] }
+    ? FormItemWithoutSlotAndComponentItemTypeAndModel &
+        (T[K]['component'] extends keyof ComponentPropsMap
+          ? ComponentConfig<T[K]['component']>
+          : ComponentConfig<'TInput'>) & { model: T[K]['model'] }
     : never
 }
 type EmptyFormData = (initData?: FormData) => FormData
@@ -101,15 +93,16 @@ interface SlotItem {
   slot: string
 }
 
-export function createFormItems<T extends FormItemWithoutSlot[]>(items: T) {
-  return items as CreateFormItemsReturn<T>
+export function createFormItems<T extends FormItemWithoutSlot[]>(items: {
+  [K in keyof T]: NoExtraProperties<T[K], FormItemWithoutSlot>
+}) {
+  return items as unknown as CreateFormItemsReturn<T>
 }
-
 export function pickFormItems<
   T extends FormItemWithoutSlot,
-  Items extends readonly T[],
+  Items extends T[],
   ModelUnion extends Items[number]['model'],
-  Keys extends readonly ModelUnion[],
+  Keys extends ModelUnion[],
 >(
   items: Items,
   modelKeys: Keys,
@@ -145,27 +138,28 @@ const formItemsConfig = computed(() => {
   })
 })
 
-watch(
-  formItemsConfig,
-  (config) => {
-    config.forEach((item) => {
-      if (
-        item.model !== undefined &&
-        !Object.prototype.hasOwnProperty.call(props.data, item.model)
-      ) {
-        const isArr =
-          ['TCheckboxGroup', 'TDateRangePicker'].includes(item.component as string) ||
-          (item.multiple === true && item.component === 'TSelect')
+function formItemsConfigChangeHandler(config: _FormItem[]) {
+  config.forEach((item) => {
+    if (item.model !== undefined && !Object.prototype.hasOwnProperty.call(props.data, item.model)) {
+      const isArr =
+        ['TCheckboxGroup', 'TDateRangePicker'].includes(item.component as string) ||
+        (item.multiple === true && item.component === 'TSelect')
 
-        // 这里类型有增多的话 inst.emptyFormData 也要处理一下
-        // eslint-disable-next-line vue/no-mutating-props
-        props.data[item.model] = isArr ? [] : ''
-      }
-    })
-  },
-  {
-    deep: 2,
-    immediate: true,
+      // 这里类型有增多的话 inst.emptyFormData 也要处理一下
+      // eslint-disable-next-line vue/no-mutating-props
+      props.data[item.model] = isArr ? [] : ''
+    }
+  })
+}
+
+watch(formItemsConfig, formItemsConfigChangeHandler, {
+  deep: 2,
+  immediate: true,
+})
+watch(
+  () => props.data,
+  () => {
+    formItemsConfigChangeHandler(formItemsConfig.value)
   },
 )
 

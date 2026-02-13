@@ -64,13 +64,9 @@ export function useClearDic() {
   promiseMap.clear()
   refMap.clear()
 }
-
 export function useDicLabel(code: string): ComputedRef<string[]>
-
 export function useDicLabel(code: string, value: string): ComputedRef<string>
-
 export function useDicLabel(code: string, value: string[]): ComputedRef<string[]>
-
 export function useDicLabel(
   code: string,
   value?: string | string[],
@@ -87,7 +83,6 @@ export function useDicLabel(
     }
   })
 }
-
 export function useDicOptions(code: string, includeArr?: string[]) {
   let arr: Ref<DicItem[]>
 
@@ -105,7 +100,6 @@ export function useDicOptions(code: string, includeArr?: string[]) {
     arr.value.filter((item) => (includeArr === undefined ? true : includeArr.includes(item.value))),
   )
 }
-
 export function useRefreshDic(code: string): void {
   promiseMap.delete(code)
 

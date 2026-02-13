@@ -112,6 +112,8 @@ defineExpose({
   finallyQueryParams,
   query,
   reset,
+  rowKey: computed(() => tableRef.value?.rowKey ?? ''),
+  selectedRowKeys: computed(() => tableRef.value?.selectedRowKeys ?? []),
   selectedRows: computed(() => tableRef.value?.selectedRows ?? []),
 })
 </script>

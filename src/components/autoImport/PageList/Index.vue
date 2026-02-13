@@ -2,8 +2,10 @@
 import type { Method } from 'alova'
 import type { PageTableProps } from '@/components/autoImport/PageTable.vue'
 import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
+import type { CardProps } from '@/components/tDesignReset/TCard.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
+import { mergeProps } from 'vue'
 import PageQuery from './PageQuery.vue'
 
 export interface PageListProps {
@@ -22,16 +24,20 @@ export interface PageListProps {
       method: PageTableProps['method']
     }
   }
+  /**
+   * @description: 卡片配置
+   */
+  cardProps?: CardProps
   columns: TableProps['columns']
   /**
    * @description: 查询表单配置项
    */
-  formItems: FormProps['items']
+  formItems?: FormProps['items']
+
   /**
    * @description: 其他查询表单配置
    */
   formOtherProps?: Omit<FormProps, 'data' | 'items'>
-
   /**
    * @description: 初始化查询表单数据
    */
@@ -50,6 +56,10 @@ export interface PageListProps {
   tableOtherProps?: Omit<PageTableProps, 'columns' | 'method'>
 }
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const props = withDefaults(defineProps<PageListProps>(), {
   isFirstQueryByParent: false,
 })
@@ -59,7 +69,7 @@ const pageTableRef = useTemplateRef('pageTableRef')
 const queryParams = ref<Record<string, any>>({})
 
 function doQuery() {
-  queryParams.value = _cloneDeep(pageQueryRef.value!.formData)
+  queryParams.value = _cloneDeep(pageQueryRef.value?.formData ?? {})
   pageTableRef.value!.query()
 }
 
@@ -70,11 +80,12 @@ if (!props.isFirstQueryByParent) {
 }
 
 function doReset() {
-  queryParams.value = _cloneDeep(pageQueryRef.value!.formData)
+  queryParams.value = _cloneDeep(pageQueryRef.value?.formData ?? {})
   pageTableRef.value!.reset()
 }
 
 const selectedRows = computed(() => pageTableRef.value?.selectedRows ?? [])
+const selectedRowKeys = computed(() => pageTableRef.value?.selectedRowKeys ?? [])
 const batchDeleteProps = computed(() => {
   const config = props.apis.delete
 
@@ -84,13 +95,11 @@ const batchDeleteProps = computed(() => {
 
   return {
     default: '批量删除',
-    disabled: selectedRows.value.length === 0,
+    disabled: selectedRowKeys.value.length === 0,
     onClick: async () => {
       await $confirm('确认删除所选项吗?')
       await (typeof config.method === 'string'
-        ? alovaInst.Delete(
-            `${config.method}/${selectedRows.value.map((item) => item.id).join(',')}`,
-          )
+        ? alovaInst.Delete(`${config.method}/${selectedRowKeys.value.join(',')}`)
         : config.method(selectedRows.value))
       $msg.success('删除成功')
       doQuery()
@@ -139,7 +148,7 @@ const finallyColumns = computed(() => {
         content: '确认删除吗',
         onConfirm: async () => {
           await (typeof deleteConfig.method === 'string'
-            ? alovaInst.Delete(`${deleteConfig.method}/${row.id}`)
+            ? alovaInst.Delete(`${deleteConfig.method}/${row[pageTableRef.value?.rowKey ?? '']}`)
             : deleteConfig.method([row]))
           $msg.success('删除成功')
           doQuery()
@@ -183,17 +192,35 @@ const finallyColumns = computed(() => {
 defineExpose({
   query: doQuery,
   reset: doReset,
+  selectedRowKeys,
   selectedRows,
 })
 </script>
 
 <template>
-  <TCard class="h-full" :body-full-height="true" body-class-name="!flex flex-col overflow-y-auto">
+  <TCard
+    v-bind="
+      mergeProps(
+        $attrs,
+        {
+          ...(cardProps ?? {}),
+          bodyFullHeight: true,
+          bodyClassName: ['!flex flex-col overflow-y-auto', cardProps?.bodyClassName]
+            .filter(Boolean)
+            .join(' '),
+        },
+        {
+          class: 'h-full',
+        },
+      )
+    "
+  >
     <PageQuery
+      v-if="formItems !== undefined && formItems.length > 0"
       ref="pageQueryRef"
-      :data="props.initialFormData"
-      :items="props.formItems"
-      v-bind="props.formOtherProps"
+      :data="initialFormData"
+      :items="formItems"
+      v-bind="formOtherProps"
       @query="doQuery"
       @reset="doReset"
     >

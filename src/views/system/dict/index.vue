@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import DictTypeDetail from './modules/DictTypeDetail.vue'
+
 const pageListRef = useTemplateRef('pageListRef')
 const formItems = createFormItems([
   {
@@ -30,9 +32,7 @@ const formItems = createFormItems([
 const config: PageListProps = {
   apis: {
     delete: {
-      method: (rows: TableRowData[]) => {
-        return alovaInst.Delete(`system/dict/type/${rows.map((item) => item.dictId).join(',')}`)
-      },
+      method: 'system/dict/type',
       permission: 'system:dict:remove',
     },
     export: {
@@ -66,7 +66,15 @@ const config: PageListProps = {
         return {
           _component: 'Link',
           onClick: () => {
-            console.log(row)
+            $dialog({
+              body: () =>
+                h(DictTypeDetail, {
+                  dictType: row.dictType,
+                }),
+              footer: false,
+              header: `字典类型: ${row.dictName}(${row.dictType})`,
+              width: 1500,
+            })
           },
         }
       },
@@ -197,6 +205,9 @@ const config: PageListProps = {
       permission: 'system:dict:remove',
     },
   ],
+  tableOtherProps: {
+    rowKey: 'dictId',
+  },
 }
 </script>
 

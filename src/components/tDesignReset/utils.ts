@@ -23,13 +23,10 @@ export const tablePropsInit = {
   tableLayout: 'fixed',
   tree: () => ({}), // 解决表格报错问题
 } as const
-
 export const linkPropsInit = {
   theme: 'primary',
 } as const
-
 export const buttonPropsInit = {} as const
-
 export const formPropsInit = {
   colon: true,
   data: () => reactive({}),
@@ -40,4 +37,9 @@ export const formPropsInit = {
   requiredMark: undefined,
   resetType: 'initial',
   showErrorMessage: true,
+} as const
+export const cardPropsInit = {
+  bodyFullHeight: false,
+  headerBordered: true,
+  shadow: true,
 } as const

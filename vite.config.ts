@@ -246,7 +246,7 @@ export default defineConfig(({ command, mode }) => {
       // vite preview 也会走该代理
       host: '0.0.0.0', // 可以用ip访问
       open: false,
-      port: VITE_API_PROXY_PORT_ARRAY[0][1] + 1001,
+      port: VITE_API_PROXY_PORT_ARRAY[0][1] + 1000,
       proxy: Object.fromEntries(
         VITE_API_PROXY_PORT_ARRAY.map(([prefix, port], index) => [
           path.posix.join(VITE_BASE_URL, prefix),
