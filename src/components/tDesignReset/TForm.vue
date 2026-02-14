@@ -34,16 +34,18 @@ export interface ComponentPropsMap {
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   emptyFormData: EmptyFormData
   getFormData: GetFormData
-  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormData>
-  validateOnly: (...arg: Parameters<_FormInstanceFunctions['validateOnly']>) => Promise<FormData>
+  validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormPropsData>
+  validateOnly: (
+    ...arg: Parameters<_FormInstanceFunctions['validateOnly']>
+  ) => Promise<FormPropsData>
 }
-export type FormItem = ((formData: FormData) => _FormItem) | _FormItem
+export type FormItem = ((formData: FormPropsData) => _FormItem) | _FormItem
 export type FormItemWithoutSlot = ComponentItemType &
   FormItemWithoutSlotAndComponentItemTypeAndModel & {
     model: string
   }
 export type FormProps = {
-  data?: FormData
+  data?: FormPropsData
   items: FormItem[]
   labelAlign?: 'right' | 'top'
   /**
@@ -81,15 +83,15 @@ type CreateFormItemsReturn<T extends FormItemWithoutSlot[]> = {
           : ComponentConfig<'TInput'>) & { model: T[K]['model'] }
     : never
 }
-type EmptyFormData = (initData?: FormData) => FormData
-type FormData = Record<string, any>
+type EmptyFormData = (initData?: FormPropsData) => FormPropsData
 type FormItemBase = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & {
   show?: boolean // 是否显示
 }
 type FormItemWithoutSlotAndComponentItemTypeAndModel = AllowedComponentProps & FormItemBase
-type GetFormData = () => FormData
+type FormPropsData = Record<string, any>
+type GetFormData = () => FormPropsData
 interface SlotItem {
   model?: string // 传给 name 参与校验
   slot: string
@@ -290,7 +292,7 @@ const otherProps = computed(() => {
 const compo = _Form
 const vm = getCurrentInstance()!
 const getFormData: GetFormData = () => {
-  const obj: FormData = {
+  const obj: FormPropsData = {
     ...props.data,
   }
 
@@ -364,7 +366,7 @@ function compoRef(instance: any) {
     inst.getFormData = getFormData
 
     inst.emptyFormData = (initData) => {
-      const obj: FormData = {}
+      const obj: FormPropsData = {}
 
       Object.keys(props.data).forEach((key) => {
         if (Array.isArray(props.data[key])) {

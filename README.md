@@ -59,7 +59,6 @@
 - [AutoDecimal](https://juejin.cn/post/7450708775008747557)
 - zx —— 真正像 JavaScript 的 Shell 脚本
 - vue-skills
-- FormData type 为专有名词
 - [https://juejin.cn/post/7263810695459438653]
 - (泛型的联合类型分发)[https://juejin.cn/post/7228833037743915067#heading-18]
 
