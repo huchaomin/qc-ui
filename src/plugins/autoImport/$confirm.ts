@@ -17,7 +17,7 @@ export default (
               body: arg1,
               onCancel: () => {
                 dialogInstance.hide()
-                reject()
+                reject(new Error('confirm_cancel'))
               },
               onConfirm: () => {
                 dialogInstance.hide()
@@ -33,7 +33,7 @@ export default (
               onCancel: async () => {
                 await arg1.onCancelCallback?.()
                 dialogInstance.hide()
-                reject()
+                reject(new Error('confirm_cancel'))
               },
               onConfirm: async () => {
                 await arg1.onConfirmCallback?.()

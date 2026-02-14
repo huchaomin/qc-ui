@@ -22,3 +22,24 @@ window.addEventListener('load', () => {
     removeLanding()
   }
 })
+window.addEventListener(
+  'unhandledrejection',
+  function (event) {
+    if (event.reason instanceof Error) {
+      if (event.reason.message === 'confirm_cancel') {
+        event.preventDefault() // 去掉控制台的显示异常
+      }
+    }
+
+    if (_isPlainObject(event.reason)) {
+      if (
+        Object.values(event.reason as Record<string, any>).some(
+          (v) => Array.isArray(v) && v.some((item: Record<string, any>) => item.result === false),
+        )
+      ) {
+        event.preventDefault() // 去掉控制台的显示异常
+      }
+    }
+  },
+  true,
+)
