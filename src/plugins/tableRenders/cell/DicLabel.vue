@@ -12,7 +12,7 @@ defineOptions({
 const props = withDefaults(defineProps<DicLabelProps>(), {})
 const attrs = useAttrs() as unknown as CellRenderContext
 const dicLabel = computed(() => {
-  const value = attrs.row[attrs.col.colKey]
+  const value = _get(attrs.row, attrs.col.colKey)
 
   return value ? useDicLabel(props.dicCode, value).value : ''
 })

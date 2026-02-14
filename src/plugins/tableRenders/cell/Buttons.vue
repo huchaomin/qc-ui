@@ -26,7 +26,7 @@ const attrs = useAttrs() as unknown as CellRenderContext
         ...(typeof child === 'function' ? child(attrs) : child),
       }"
     >
-      {{ attrs.row[attrs.col.colKey] }}
+      {{ _get(attrs.row, attrs.col.colKey) }}
     </TButton>
   </div>
 </template>

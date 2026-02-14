@@ -1,6 +1,7 @@
 export {
   cloneDeep as _cloneDeep,
   difference as _difference,
+  get as _get,
   groupBy as _groupBy,
   isPlainObject as _isPlainObject,
   kebabCase as _kebabCase,

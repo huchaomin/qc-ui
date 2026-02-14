@@ -18,6 +18,6 @@ const attrs = useAttrs() as unknown as CellRenderContext
 
 <template>
   <TLink v-bind="props">
-    {{ attrs.row[attrs.col.colKey] }}
+    {{ _get(attrs.row, attrs.col.colKey) }}
   </TLink>
 </template>

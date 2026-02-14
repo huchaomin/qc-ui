@@ -10,14 +10,17 @@ defineOptions({
 
 const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
 
-export type ButtonProps = Omit<_ButtonProps, 'content'> & {
+export type ButtonProps = {
+  /**
+   * @description: 按钮权限点
+   */
   permission?: Parameters<typeof checkPermissions>[0]
   popconfirm?: Omit<PopconfirmProps, 'default'>
   /**
    * @description: 按钮是否渲染，默认 true
    */
   show?: boolean
-}
+} & Omit<_ButtonProps, 'content'>
 
 const otherProps = computed(() => {
   const obj: Partial<ButtonProps> = {
