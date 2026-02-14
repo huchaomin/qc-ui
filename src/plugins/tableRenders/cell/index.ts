@@ -1,6 +1,7 @@
 import type { ButtonsProps } from './Buttons.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { LinkProps } from './Link.vue'
+import type { OptionLabelProps } from './OptionLabel.vue'
 import type { TypographyTextProps } from './TypographyText.vue'
 import type {
   CellRenderContext,
@@ -27,6 +28,7 @@ interface ComponentPropsMap {
   Buttons: ButtonsProps
   DicLabel: DicLabelProps
   Link: LinkProps
+  OptionLabel: OptionLabelProps
   TypographyText: TypographyTextProps
 }
 
