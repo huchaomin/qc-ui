@@ -136,6 +136,7 @@ const config: PageListProps = {
                 width: 430,
               })
             },
+            permission: 'system:dict:edit',
           }),
         ],
       },
