@@ -12,6 +12,7 @@ import _TDesign, {
   Form as _Form,
   Image as _Image,
   Input as _Input,
+  InputNumber as _InputNumber,
   Link as _Link,
   LoadingPlugin as _LoadingPlugin,
   Message as _Message,
@@ -48,6 +49,7 @@ const Link = _Link as (typeof import('tdesign-vue-next'))['Link']
 const Textarea = _Textarea as (typeof import('tdesign-vue-next'))['Textarea']
 const Popconfirm = _Popconfirm as (typeof import('tdesign-vue-next'))['Popconfirm']
 const Checkbox = _Checkbox as (typeof import('tdesign-vue-next'))['Checkbox']
+const InputNumber = _InputNumber as (typeof import('tdesign-vue-next'))['InputNumber']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -60,6 +62,7 @@ export {
   Form,
   Image,
   Input,
+  InputNumber,
   Link,
   LoadingPlugin,
   Message,

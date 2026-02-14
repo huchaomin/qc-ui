@@ -25,7 +25,10 @@ const formItems = createFormItems([
   {
     _label: '字典排序',
     _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
     model: 'dictSort',
+    theme: 'row',
   },
   {
     _label: '状态',
@@ -38,7 +41,7 @@ const formItems = createFormItems([
     component: 'TTextarea',
     model: 'remark',
   },
-])
+] as const)
 const config: PageListProps = {
   apis: {
     delete: {

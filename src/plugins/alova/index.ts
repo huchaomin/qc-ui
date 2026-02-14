@@ -102,7 +102,7 @@ export default createAlova({
     }
 
     // 处理 data 参数
-    if (useEmptyData && method.data !== undefined && method.data.constructor === Object) {
+    if (useEmptyData && _isPlainObject(method.data)) {
       const obj: Arg = {}
       const data = method.data as Arg
 

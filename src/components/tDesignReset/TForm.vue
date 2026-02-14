@@ -14,6 +14,7 @@ import type { CheckboxProps } from './TCheckbox.vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
+import type { InputNumberProps } from './TInputNumber.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
 import type { TextareaProps } from './TTextarea.vue'
@@ -25,6 +26,7 @@ export interface ComponentPropsMap {
   TCheckboxGroup: Omit<CheckboxGroupProps, 'modelValue'>
   TDateRangePicker: Omit<DateRangePickerProps, 'modelValue'>
   TInput: Omit<InputProps, 'modelValue'>
+  TInputNumber: Omit<InputNumberProps, 'modelValue'>
   TRadioGroup: Omit<RadioGroupProps, 'modelValue'>
   TSelect: Omit<SelectProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
@@ -367,6 +369,8 @@ function compoRef(instance: any) {
       Object.keys(props.data).forEach((key) => {
         if (Array.isArray(props.data[key])) {
           obj[key] = []
+        } else if (typeof props.data[key] === 'boolean') {
+          obj[key] = false
         } else {
           obj[key] = ''
         }

@@ -9,6 +9,9 @@ defineOptions({
 const props = withDefaults(defineProps<CheckboxProps>(), {
   value: undefined, // 多选框的值
 })
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+}>()
 
 export type CheckboxProps = Omit<
   _CheckboxProps,
@@ -16,6 +19,8 @@ export type CheckboxProps = Omit<
 > & {
   modelValue: boolean
 }
+
+type OnChangeParams = Parameters<NonNullable<_CheckboxProps['onChange']>>
 
 const otherProps = computed(() => {
   const obj: Partial<CheckboxProps> = {
@@ -27,7 +32,6 @@ const otherProps = computed(() => {
       delete obj[key as keyof typeof obj]
     }
   })
-  console.log(obj)
   return obj
 })
 const compo = _Checkbox
@@ -48,6 +52,10 @@ function compoRef(instance: any) {
         compo,
         mergeProps($attrs, {
           ...otherProps,
+          onChange: (...args: OnChangeParams) => {
+            emit('update:modelValue', args[0])
+            props.onChange?.(...args)
+          },
           ref: compoRef,
         }),
         $slots,

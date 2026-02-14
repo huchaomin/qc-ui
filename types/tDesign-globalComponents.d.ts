@@ -64,7 +64,7 @@ declare module 'vue' {
     // TInput: typeof import('tdesign-vue-next')['Input'];
     TInputAdornment: typeof import('tdesign-vue-next')['InputAdornment'];
     TInputGroup: typeof import('tdesign-vue-next')['InputGroup'];
-    TInputNumber: typeof import('tdesign-vue-next')['InputNumber'];
+    // TInputNumber: typeof import('tdesign-vue-next')['InputNumber'];
     TLayout: typeof import('tdesign-vue-next')['Layout'];
     // TLink: typeof import('tdesign-vue-next')['Link'];
     TList: typeof import('tdesign-vue-next')['List'];
@@ -145,6 +145,7 @@ declare module 'vue' {
     TTextarea: (typeof import('@/components/tDesignReset/TTextarea.vue'))['default']
     TPopconfirm: (typeof import('@/components/tDesignReset/TPopconfirm.vue'))['default']
     TCheckbox: (typeof import('@/components/tDesignReset/TCheckbox.vue'))['default']
+    TInputNumber: (typeof import('@/components/tDesignReset/TInputNumber.vue'))['default']
   }
 }
 
