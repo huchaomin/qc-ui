@@ -13,6 +13,10 @@ const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
 export type ButtonProps = Omit<_ButtonProps, 'content'> & {
   permission?: Parameters<typeof checkPermissions>[0]
   popconfirm?: Omit<PopconfirmProps, 'default'>
+  /**
+   * @description: 按钮是否渲染，默认 true
+   */
+  show?: boolean
 }
 
 const otherProps = computed(() => {
@@ -27,6 +31,7 @@ const otherProps = computed(() => {
   })
   delete obj.permission
   delete obj.popconfirm
+  delete obj.show
   return obj
 })
 const compo = _Button
@@ -38,54 +43,34 @@ function compoRef(instance: any) {
   vm.exposed = exposed
   vm.exposeProxy = exposed
 }
+
+const TButtonComponent = computed(() => {
+  const vNode = h(
+    compo,
+    mergeProps(
+      useAttrs(),
+      {
+        ...otherProps.value,
+        ref: compoRef,
+      },
+      {
+        class: 'flex-shrink-0',
+      },
+    ),
+    useSlots(),
+  )
+
+  return withDirectives(vNode, [[resolveDirective('permission'), props.permission]])
+})
 </script>
 
 <template>
-  <TPopconfirm v-if="props.popconfirm" v-bind="props.popconfirm">
-    <component
-      :is="
-        withDirectives(
-          h(
-            compo,
-            mergeProps(
-              $attrs,
-              {
-                ...otherProps,
-                ref: compoRef,
-              },
-              {
-                class: 'flex-shrink-0',
-              },
-            ),
-            $slots,
-          ),
-          [[resolveDirective('permission'), props.permission]],
-        )
-      "
-    ></component>
-  </TPopconfirm>
-  <component
-    :is="
-      withDirectives(
-        h(
-          compo,
-          mergeProps(
-            $attrs,
-            {
-              ...otherProps,
-              ref: compoRef,
-            },
-            {
-              class: 'flex-shrink-0',
-            },
-          ),
-          $slots,
-        ),
-        [[resolveDirective('permission'), props.permission]],
-      )
-    "
-    v-else
-  ></component>
+  <template v-if="props.show">
+    <TPopconfirm v-if="props.popconfirm" v-bind="props.popconfirm">
+      <TButtonComponent></TButtonComponent>
+    </TPopconfirm>
+    <TButtonComponent v-else></TButtonComponent>
+  </template>
 </template>
 
 <style scoped>

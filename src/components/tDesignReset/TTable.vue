@@ -20,9 +20,7 @@ export interface CellRenderContext {
   row: TableRowData
   rowIndex: number
 }
-
 export type CellRenderFn = TNode<CellRenderContext>
-
 export type TableCol = {
   /**
    * @description: 单元格渲染
@@ -36,6 +34,16 @@ export type TableCol = {
                                                               },
                                                             }
                                                           }
+   * @description: 渲染方式4(vue组件，需要行列信息作为参数的, 且渲染多个的): {
+                                                                              _component: 'Buttons',
+                                                                              buttons: [
+                                                                                ({ row }) => ({
+                                                                                  default: '编辑',
+                                                                                  onClick: () => {
+                                                                                  },
+                                                                                }),
+                                                                              ],
+                                                                            },
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
   cell?: XOR<XOR<CellRenderFn, CellObjConfig>, CellObjConfigFn>
@@ -60,7 +68,6 @@ export type TableCol = {
    */
   width?: number
 } & Omit<_TableCol<TableRowData>, 'cell' | 'colKey' | 'render' | 'resize' | 'width'>
-
 export type TableProps = {
   /**
    * @description: 数据变化时是否检查选中状态，默认 true
@@ -101,7 +108,6 @@ export type TableProps = {
   | 'rowKey'
   | 'sortOnRowDraggable'
 >
-
 export type TableRowData = _TableRowData
 
 type FinallyTableCol = Omit<

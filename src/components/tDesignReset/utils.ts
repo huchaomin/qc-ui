@@ -26,7 +26,9 @@ export const tablePropsInit = {
 export const linkPropsInit = {
   theme: 'primary',
 } as const
-export const buttonPropsInit = {} as const
+export const buttonPropsInit = {
+  show: true,
+} as const
 export const formPropsInit = {
   colon: true,
   data: () => reactive({}),

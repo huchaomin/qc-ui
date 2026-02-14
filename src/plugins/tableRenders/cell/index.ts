@@ -1,27 +1,33 @@
 import type { ButtonsProps } from './Buttons.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { LinkProps } from './Link.vue'
+import type { TypographyTextProps } from './TypographyText.vue'
 import type {
   CellRenderContext,
   CellRenderFn,
   TableCol,
 } from '@/components/tDesignReset/TTable.vue'
 
-export type CellObjConfig = XOR<XOR<DicLabelConfig, LinkConfig>, ButtonsConfig>
-
+export type CellObjConfig = UnionToNestedXOR<
+  keyof ComponentPropsMap extends infer T
+    ? T extends keyof ComponentPropsMap
+      ? ComponentConfig<T>
+      : never
+    : never
+>
 export type CellObjConfigFn = (
   h: typeof import('vue').h,
   context: CellRenderContext,
 ) => CellObjConfig
 
-type ButtonsConfig = ButtonsProps & {
-  _component: 'Buttons'
+type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] & {
+  _component: T
 }
-type DicLabelConfig = DicLabelProps & {
-  _component: 'DicLabel'
-}
-type LinkConfig = LinkProps & {
-  _component: 'Link'
+interface ComponentPropsMap {
+  Buttons: ButtonsProps
+  DicLabel: DicLabelProps
+  Link: LinkProps
+  TypographyText: TypographyTextProps
 }
 
 const compos: Record<string, Component> = import.meta.glob('./*.vue', {
