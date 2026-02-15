@@ -1,8 +1,9 @@
 <script setup lang="ts">
+import { passwordReg, passwordRegMessage } from '@/utils/config'
+
 const { showFooter = true } = defineProps<{
   showFooter?: boolean
 }>()
-const loginStore = useLoginStore()
 const route = useRoute()
 const formItems: FormItem[] = [
   {
@@ -16,8 +17,8 @@ const formItems: FormItem[] = [
     _required: true,
     _rules: [
       {
-        message: loginStore.passwordRegMessage,
-        pattern: loginStore.passwordReg,
+        message: passwordRegMessage,
+        pattern: passwordReg,
       },
     ],
     model: 'newPassword',

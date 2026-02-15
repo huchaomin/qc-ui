@@ -62,7 +62,9 @@
 - [https://juejin.cn/post/7263810695459438653]
 - (泛型的联合类型分发)[https://juejin.cn/post/7228833037743915067#heading-18]
 - 用户管理：用户类型
-- useList 去除缓存
+- useList 去除缓存 拆开
+- TDESIGN 错误邮箱提示语
+- 更换部门
 
 ## todo 后端
 
