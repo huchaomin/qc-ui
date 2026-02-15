@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps, RadioValue } from 'tdesign-vue-next'
+import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
 
-export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'value'> & {
+export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'options' | 'value'> & {
   dicCode?: string
   modelValue: RadioValue
+  options?: _RadioGroupProps['options'] | UseListKey
 }
 
 type OnChangeParams = Parameters<NonNullable<_RadioGroupProps['onChange']>>
@@ -38,7 +40,7 @@ const finallyOptions = computed(() => {
     }))
   }
 
-  return props.options
+  return typeof props.options === 'string' ? useList(props.options).value : props.options
 })
 const otherProps = computed(() => {
   const obj: Partial<RadioGroupProps> = {

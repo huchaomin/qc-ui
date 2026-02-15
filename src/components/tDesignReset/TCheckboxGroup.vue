@@ -3,11 +3,13 @@ import type {
   CheckboxGroupProps as _CheckboxGroupProps,
   CheckboxGroupValue,
 } from 'tdesign-vue-next'
+import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
 
-export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'value'> & {
+export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'options' | 'value'> & {
   dicCode?: string
   modelValue: CheckboxGroupValue
+  options?: _CheckboxGroupProps['options'] | UseListKey
   showCheckAll?: boolean
 }
 
@@ -40,19 +42,16 @@ const finallyOptions = computed(() => {
       $notify.error('TCheckboxGroup: dicCode and options cannot be used together')
     }
 
-    arr = useDicOptions(props.dicCode).value.map((item) => ({
-      label: item.label,
-      value: item.value,
-    })) as CheckboxGroupProps['options']
+    arr = useDicOptions(props.dicCode).value
   } else {
-    arr = props.options
+    arr = typeof props.options === 'string' ? useList(props.options).value : props.options
   }
 
   if (props.showCheckAll) {
     if (arr === undefined) {
       $notify.error('TCheckboxGroup: options is required, when showCheckAll is true')
     } else {
-      arr.unshift({
+      ;(arr as any[]).unshift({
         checkAll: true,
         label: '全选',
       })

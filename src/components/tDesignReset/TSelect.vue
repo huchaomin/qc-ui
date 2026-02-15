@@ -5,14 +5,16 @@ import type {
   SelectValue,
   TdOptionProps,
 } from 'tdesign-vue-next'
+import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
 
 export type SelectProps = Omit<
   _SelectProps,
-  'defaultInputValue' | 'defaultPopupVisible' | 'defaultValue' | 'value'
+  'defaultInputValue' | 'defaultPopupVisible' | 'defaultValue' | 'options' | 'value'
 > & {
   dicCode?: string
   modelValue: SelectValue
+  options?: _SelectProps['options'] | UseListKey
   showCheckAll?: boolean
 }
 
@@ -85,7 +87,7 @@ const finallyOptions = computed(() => {
       [props.keys?.value ?? 'value']: item.value,
     })) as TdOptionProps[]
   } else {
-    arr = props.options
+    arr = typeof props.options === 'string' ? useList(props.options).value : props.options
   }
 
   if (props.showCheckAll) {
