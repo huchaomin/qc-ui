@@ -93,8 +93,23 @@ const config: PageListProps = {
           _component: 'Switch',
           customValue: ['0', '1'],
           modelValue: row.status as string,
-          onChange: (value) => {
-            row.status = value
+          onChange: async (value) => {
+            const text = row.status === '1' ? '启用' : '停用'
+
+            await $confirm(`确认${text}${row.userName}用户吗？`)
+            await alovaInst.Put(
+              'system/user/changeStatus',
+              {
+                status: value,
+                userId: row.userId,
+              },
+              {
+                meta: {
+                  useSuccessMsg: true,
+                },
+              },
+            )
+            pageListRef.value!.query()
           },
         }
       },
