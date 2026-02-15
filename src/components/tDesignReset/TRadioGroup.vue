@@ -34,10 +34,7 @@ const finallyOptions = computed(() => {
       $notify.error('TRadioGroup: dicCode and options cannot be used together')
     }
 
-    return useDicOptions(props.dicCode).value.map((item) => ({
-      label: item.label,
-      value: item.value,
-    }))
+    return useDicOptions(props.dicCode).value
   }
 
   return typeof props.options === 'string' ? useList(props.options).value : props.options

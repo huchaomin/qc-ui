@@ -124,7 +124,7 @@ declare module 'vue' {
     TTooltipLite: typeof import('tdesign-vue-next')['TooltipLite'];
     TTransfer: typeof import('tdesign-vue-next')['Transfer'];
     TTree: typeof import('tdesign-vue-next')['Tree'];
-    TTreeSelect: typeof import('tdesign-vue-next')['TreeSelect'];
+    // TTreeSelect: typeof import('tdesign-vue-next')['TreeSelect'];
     TTypography: typeof import('tdesign-vue-next')['Typography'];
     TUpload: typeof import('tdesign-vue-next')['Upload'];
     TWatermark: typeof import('tdesign-vue-next')['Watermark'];
@@ -147,6 +147,7 @@ declare module 'vue' {
     TCheckbox: (typeof import('@/components/tDesignReset/TCheckbox.vue'))['default']
     TInputNumber: (typeof import('@/components/tDesignReset/TInputNumber.vue'))['default']
     TSwitch: (typeof import('@/components/tDesignReset/TSwitch.vue'))['default']
+    TTreeSelect: (typeof import('@/components/tDesignReset/TTreeSelect.vue'))['default']
   }
 }
 

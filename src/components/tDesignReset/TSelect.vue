@@ -1,10 +1,5 @@
 <script setup lang="ts">
-import type {
-  SelectProps as _SelectProps,
-  SelectOptionGroup,
-  SelectValue,
-  TdOptionProps,
-} from 'tdesign-vue-next'
+import type { SelectProps as _SelectProps, SelectOptionGroup, SelectValue } from 'tdesign-vue-next'
 import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
 
@@ -85,9 +80,15 @@ const finallyOptions = computed(() => {
     arr = useDicOptions(props.dicCode).value.map((item) => ({
       [props.keys?.label ?? 'label']: item.label,
       [props.keys?.value ?? 'value']: item.value,
-    })) as TdOptionProps[]
+    }))
   } else {
-    arr = typeof props.options === 'string' ? useList(props.options).value : props.options
+    arr =
+      typeof props.options === 'string'
+        ? useList(props.options).value.map((item) => ({
+            [props.keys?.label ?? 'label']: item.label,
+            [props.keys?.value ?? 'value']: item.value,
+          }))
+        : props.options
   }
 
   if (props.showCheckAll) {

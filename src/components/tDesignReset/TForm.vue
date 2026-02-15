@@ -19,6 +19,7 @@ import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
 import type { SwitchProps } from './TSwitch.vue'
 import type { TextareaProps } from './TTextarea.vue'
+import type { TreeSelectProps } from './TTreeSelect.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
@@ -32,6 +33,7 @@ export interface ComponentPropsMap {
   TSelect: Omit<SelectProps, 'modelValue'>
   TSwitch: Omit<SwitchProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
+  TTreeSelect: Omit<TreeSelectProps, 'modelValue'>
 }
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   emptyFormData: EmptyFormData
