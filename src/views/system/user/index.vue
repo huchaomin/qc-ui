@@ -29,6 +29,7 @@ const formItems = createFormItems([
     model: 'remark',
   },
 ] as const)
+const brandOptions = useList('brand')
 const config: PageListProps = {
   apis: {
     delete: {
@@ -48,14 +49,6 @@ const config: PageListProps = {
             'params[beginTime]': o.dateRange[0] ?? '',
             'params[endTime]': o.dateRange[1] ?? '',
           },
-          // transform: (res:any) => {
-          //   return {
-          //     rows: res.rows.map(r => {
-          //       ...r,
-          //     }),
-          //     total: res.total,
-          //   }
-          // }
         })
       },
     },
@@ -77,7 +70,7 @@ const config: PageListProps = {
       cell: {
         _component: 'OptionLabel',
         multiple: true,
-        useListKey: 'brand',
+        options: 'brand',
         valueKey: 'deptId',
       },
       colKey: 'userDeptIds',

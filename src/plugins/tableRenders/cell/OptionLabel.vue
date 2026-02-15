@@ -22,11 +22,11 @@ export interface OptionLabelProps {
    * @description: 是否是多个组合在一起的值
    */
   multiple?: boolean
+  options: Array<Record<string, any>> | UseListKey
   /**
    * @description: 多个值之间的分隔符, 默认是逗号
    */
   splitSymbol?: string
-  useListKey: UseListKey
   /**
    * @description: 值的键名
    */
@@ -34,7 +34,7 @@ export interface OptionLabelProps {
 }
 
 const attrs = useAttrs() as unknown as CellRenderContext
-const rowValueArr = computed(() => {
+const cellValue = computed(() => {
   let v = _get(attrs.row, attrs.col.colKey)
 
   if (typeof v === 'number') {
@@ -52,12 +52,11 @@ const rowValueArr = computed(() => {
   return [v]
 })
 const label = computed(() => {
-  const options = useList(props.useListKey)
+  const options = typeof props.options === 'string' ? useList(props.options).value : props.options
 
-  return rowValueArr.value
+  return cellValue.value
     .map(
-      (item) =>
-        options.value.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? item,
+      (item) => options.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? item,
     )
     .filter(Boolean)
     .join(props.splitSymbol)

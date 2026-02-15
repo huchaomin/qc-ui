@@ -139,6 +139,7 @@ body {
 
     .t-dialog {
       min-width: 320px;
+      max-width: calc(100% - 20px);
       border-radius: var(--td-radius-default);
       box-shadow:
         rgb(58 53 65 / 8%) 0 11px 15px -7px,
