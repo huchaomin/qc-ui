@@ -29,7 +29,6 @@ const formItems = createFormItems([
     model: 'remark',
   },
 ] as const)
-const brandOptions = useList('brand')
 const config: PageListProps = {
   apis: {
     delete: {
@@ -89,9 +88,15 @@ const config: PageListProps = {
       title: '手机号码',
     },
     {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'sys_normal_disable',
+      cell: (_, { row }) => {
+        return {
+          _component: 'Switch',
+          customValue: ['0', '1'],
+          modelValue: row.status as string,
+          onChange: (value) => {
+            row.status = value
+          },
+        }
       },
       colKey: 'status',
       title: '状态',

@@ -22,6 +22,7 @@ import _TDesign, {
   Popconfirm as _Popconfirm,
   RadioGroup as _RadioGroup,
   Select as _Select,
+  Switch as _Switch,
   TabPanel as _TabPanel,
   Textarea as _Textarea,
   // @ts-expect-error 开发环境使用
@@ -50,6 +51,7 @@ const Textarea = _Textarea as (typeof import('tdesign-vue-next'))['Textarea']
 const Popconfirm = _Popconfirm as (typeof import('tdesign-vue-next'))['Popconfirm']
 const Checkbox = _Checkbox as (typeof import('tdesign-vue-next'))['Checkbox']
 const InputNumber = _InputNumber as (typeof import('tdesign-vue-next'))['InputNumber']
+const Switch = _Switch as (typeof import('tdesign-vue-next'))['Switch']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -72,6 +74,7 @@ export {
   Popconfirm,
   RadioGroup,
   Select,
+  Switch,
   Table,
   TabPanel,
   TDesign,

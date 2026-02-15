@@ -17,6 +17,7 @@ import type { InputProps } from './TInput.vue'
 import type { InputNumberProps } from './TInputNumber.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
+import type { SwitchProps } from './TSwitch.vue'
 import type { TextareaProps } from './TTextarea.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
@@ -29,6 +30,7 @@ export interface ComponentPropsMap {
   TInputNumber: Omit<InputNumberProps, 'modelValue'>
   TRadioGroup: Omit<RadioGroupProps, 'modelValue'>
   TSelect: Omit<SelectProps, 'modelValue'>
+  TSwitch: Omit<SwitchProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
 }
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
@@ -151,7 +153,15 @@ function formItemsConfigChangeHandler(config: _FormItem[]) {
 
       // 这里类型有增多的话 inst.emptyFormData 也要处理一下
       // eslint-disable-next-line vue/no-mutating-props
-      props.data[item.model] = isArr ? [] : item.component === 'TCheckbox' ? false : ''
+      props.data[item.model] = isArr
+        ? []
+        : item.component === 'TCheckbox'
+          ? false
+          : item.component === 'TSwitch'
+            ? Array.isArray(item.customValue)
+              ? item.customValue[1]
+              : false
+            : ''
     }
   })
 }

@@ -202,10 +202,9 @@ watch(
 
 const finallyData = computed<TableRowData[]>(() => {
   return props.data.map((item, index) => {
-    return {
-      ...item,
-      _ROW_KEY: _uniqueId(String(index)), // 兜底的rowKey
-    }
+    return Object.assign(item, {
+      _ROW_KEY: _uniqueId(String(index)),
+    })
   })
 })
 const _columnWidths = ref<Record<string, number>>({})

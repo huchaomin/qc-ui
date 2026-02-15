@@ -45,3 +45,6 @@ export const cardPropsInit = {
   headerBordered: true,
   shadow: true,
 } as const
+export const switchPropsInit = {
+  size: 'large',
+} as const

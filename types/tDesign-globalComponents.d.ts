@@ -107,7 +107,7 @@ declare module 'vue' {
     TSubmenu: typeof import('tdesign-vue-next')['Submenu'];
     TSwiper: typeof import('tdesign-vue-next')['Swiper'];
     TSwiperItem: typeof import('tdesign-vue-next')['SwiperItem'];
-    TSwitch: typeof import('tdesign-vue-next')['Switch'];
+    // TSwitch: typeof import('tdesign-vue-next')['Switch'];
     // TTable: typeof import('tdesign-vue-next')['Table'];
     // TTabPanel: typeof import('tdesign-vue-next')['TabPanel'];
     TTabs: typeof import('tdesign-vue-next')['Tabs'];
@@ -146,6 +146,7 @@ declare module 'vue' {
     TPopconfirm: (typeof import('@/components/tDesignReset/TPopconfirm.vue'))['default']
     TCheckbox: (typeof import('@/components/tDesignReset/TCheckbox.vue'))['default']
     TInputNumber: (typeof import('@/components/tDesignReset/TInputNumber.vue'))['default']
+    TSwitch: (typeof import('@/components/tDesignReset/TSwitch.vue'))['default']
   }
 }
 

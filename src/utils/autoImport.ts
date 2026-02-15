@@ -6,6 +6,7 @@ export {
   isPlainObject as _isPlainObject,
   kebabCase as _kebabCase,
   pick as _pick,
+  set as _set,
   uniqueId as _uniqueId,
 } from 'lodash-es'
 
