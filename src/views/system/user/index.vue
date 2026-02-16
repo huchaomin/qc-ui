@@ -1,29 +1,106 @@
 <script setup lang="ts">
+import { passwordReg, passwordRegMessage } from '@/utils/config'
 // import DictTypeDetail from './modules/DictTypeDetail.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const formItems = createFormItems([
   {
-    _label: '字典名称',
-    model: 'dictName',
+    _label: '用户昵称',
+    maxlength: 30,
+    model: 'nickName',
   },
   {
-    _label: '字典类型',
-    model: 'dictType',
+    _label: '品牌',
+    component: 'TSelect',
+    keys: {
+      value: 'deptId',
+    },
+    model: 'userDeptIds',
+    multiple: true,
+    options: 'brand',
+  },
+  {
+    _label: '归属部门',
+    component: 'TTreeSelect',
+    data: 'systemDeptTree',
+    model: 'deptId',
+    treeProps: {
+      expandAll: true,
+    },
+  },
+  {
+    _label: '手机号码',
+    _rules: [
+      {
+        telnumber: true,
+      },
+    ],
+    model: 'phonenumber',
+  },
+  {
+    _label: '邮箱',
+    _rules: [
+      {
+        email: true,
+        message: '请填写正确的邮箱', // TODO
+      },
+    ],
+    model: 'email',
+  },
+  {
+    _label: '登录账号',
+    _rules: [
+      {
+        message: '登录账号长度为2-20个字符',
+        min: 2,
+      },
+      {
+        max: 20,
+        message: '登录账号长度为2-20个字符',
+      },
+    ],
+    model: 'userName',
+  },
+  {
+    _label: '登录密码',
+    _rules: [
+      {
+        message: passwordRegMessage,
+        pattern: passwordReg,
+      },
+    ],
+    autocomplete: 'new-password',
+    model: 'password',
+    type: 'password',
+  },
+  {
+    _label: '用户性别',
+    component: 'TRadioGroup',
+    dicCode: 'sys_user_sex',
+    model: 'sex',
   },
   {
     _label: '状态',
-    component: 'TSelect',
+    component: 'TRadioGroup',
     dicCode: 'sys_normal_disable',
     model: 'status',
   },
   {
-    _class: 'col-span-2',
-    _label: '创建时间',
-    component: 'TDateRangePicker',
-    model: 'dateRange',
+    _label: '岗位',
+    component: 'TSelect',
+    model: 'postIds',
+    multiple: true,
+    options: [],
   },
   {
+    _label: '角色',
+    component: 'TSelect',
+    model: 'roleIds',
+    multiple: true,
+    options: [],
+  },
+  {
+    _class: 'col-span-full',
     _label: '备注',
     component: 'TTextarea',
     model: 'remark',
@@ -129,6 +206,14 @@ const config: PageListProps = {
       title: '创建时间',
     },
     {
+      colKey: 'updateBy',
+      title: '更新人',
+    },
+    {
+      colKey: 'updateTime',
+      title: '更新时间',
+    },
+    {
       cell: {
         _component: 'Buttons',
         buttons: [
@@ -179,7 +264,26 @@ const config: PageListProps = {
       title: '操作',
     },
   ],
-  formItems: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'dateRange']),
+  formItems: [
+    ...pickFormItems(formItems, ['deptId', 'userName', 'phonenumber', 'status'], {
+      phonenumber: {
+        _rules: [],
+      },
+      status: {
+        // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
+        component: 'TSelect',
+      },
+      userName: {
+        _rules: [],
+      },
+    }),
+    {
+      _class: 'col-span-2',
+      _label: '创建时间',
+      component: 'TDateRangePicker',
+      model: 'dateRange',
+    },
+  ],
   operations: [
     {
       default: '新增',
