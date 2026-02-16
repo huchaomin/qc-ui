@@ -100,6 +100,8 @@ function create(
           ) {
             return false
           }
+
+          document.body.dispatchEvent(new Event('mousedown')) // 关闭popup
         },
         // exact: true, // 必须为target,不能为其子元素
         preventDefault: true,
