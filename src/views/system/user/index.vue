@@ -2,9 +2,17 @@
 import { passwordReg, passwordRegMessage } from '@/utils/config'
 // import DictTypeDetail from './modules/DictTypeDetail.vue'
 
-const { send } = useRequest((id) => alovaInst.Get<any>(`system/user/${id}`, {}), {
-  immediate: false,
-})
+const { send } = useRequest(
+  (id) =>
+    alovaInst.Get<any>(`system/user/${id}`, {
+      meta: {
+        useDataResult: false,
+      },
+    }),
+  {
+    immediate: false,
+  },
+)
 const pageListRef = useTemplateRef('pageListRef')
 const formItems = createFormItems([
   {
@@ -226,42 +234,72 @@ const config: PageListProps = {
         buttons: [
           ({ row }) => ({
             default: '编辑',
-            onClick: () => {
+            onClick: async () => {
+              const { data, postIds, posts, roleIds, roles } = await send(row.userId)
               const formRef = ref<FormInstance | null>(null)
 
               $confirm({
                 body: () =>
                   h(resolveComponent('TForm') as Component<FormProps>, {
                     data: reactive({
-                      dictId: row.dictId,
-                      dictName: row.dictName,
-                      dictType: row.dictType,
-                      remark: row.remark,
-                      status: row.status,
+                      deptId: data.deptId,
+                      email: data.email,
+                      nickName: data.nickName,
+                      phonenumber: data.phonenumber,
+                      postIds,
+                      remark: data.remark,
+                      roleIds,
+                      sex: data.sex,
+                      status: data.status,
+                      userDeptIds: (data.userDeptIds ?? '').split(',').filter(Boolean),
                     }),
-                    items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
-                      dictName: {
-                        _required: true,
+                    items: pickFormItems(
+                      formItems,
+                      [
+                        'nickName',
+                        'userDeptIds',
+                        'deptId',
+                        'phonenumber',
+                        'email',
+                        'sex',
+                        'status',
+                        'postIds',
+                        'roleIds',
+                        'remark',
+                      ],
+                      {
+                        postIds: {
+                          options: posts.map((item: any) => ({
+                            disabled: item.status === '1',
+                            label: item.postName,
+                            value: item.postId,
+                          })),
+                        },
+                        roleIds: {
+                          options: roles.map((item: any) => ({
+                            disabled: item.status === '1',
+                            label: item.roleName,
+                            value: item.roleId,
+                          })),
+                        },
                       },
-                      dictType: {
-                        _required: true,
-                      },
-                      status: {
-                        // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
-                        component: 'TRadioGroup',
-                      },
-                    }),
-                    labelAlign: 'right',
-                    layout: 'vertical',
+                    ),
                     ref: formRef,
                   }),
-                header: '修改字典类型',
+                header: '修改用户',
                 onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/type', await formRef.value!.validate())
-                  $msg.success('字典修改成功')
+                  const formData = await formRef.value!.validate()
+
+                  await alovaInst.Put('system/user', {
+                    ...formData,
+                    userDeptIds: formData.userDeptIds.join(','),
+                    userId: data.userId,
+                    userName: data.userName,
+                  })
+                  $msg.success('用户修改成功')
                   pageListRef.value!.query()
                 },
-                width: 430,
+                width: 730,
               })
             },
           }),
