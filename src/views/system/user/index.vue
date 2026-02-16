@@ -2,15 +2,20 @@
 import { passwordReg, passwordRegMessage } from '@/utils/config'
 // import DictTypeDetail from './modules/DictTypeDetail.vue'
 
+const { send } = useRequest((id) => alovaInst.Get<any>(`system/user/${id}`, {}), {
+  immediate: false,
+})
 const pageListRef = useTemplateRef('pageListRef')
 const formItems = createFormItems([
   {
     _label: '用户昵称',
+    _required: true,
     maxlength: 30,
     model: 'nickName',
   },
   {
     _label: '品牌',
+    _required: true,
     component: 'TSelect',
     keys: {
       value: 'deptId',
@@ -49,6 +54,7 @@ const formItems = createFormItems([
   },
   {
     _label: '登录账号',
+    _required: true,
     _rules: [
       {
         message: '登录账号长度为2-20个字符',
@@ -63,6 +69,7 @@ const formItems = createFormItems([
   },
   {
     _label: '登录密码',
+    _required: true,
     _rules: [
       {
         message: passwordRegMessage,
@@ -75,7 +82,7 @@ const formItems = createFormItems([
   },
   {
     _label: '用户性别',
-    component: 'TRadioGroup',
+    component: 'TSelect',
     dicCode: 'sys_user_sex',
     model: 'sex',
   },
@@ -267,6 +274,7 @@ const config: PageListProps = {
   formItems: [
     ...pickFormItems(formItems, ['deptId', 'userName', 'phonenumber', 'status'], {
       phonenumber: {
+        _required: false,
         _rules: [],
       },
       status: {
@@ -274,6 +282,7 @@ const config: PageListProps = {
         component: 'TSelect',
       },
       userName: {
+        _required: false,
         _rules: [],
       },
     }),
@@ -287,7 +296,8 @@ const config: PageListProps = {
   operations: [
     {
       default: '新增',
-      onClick: () => {
+      onClick: async () => {
+        const { posts, roles } = await send('')
         const formRef = ref<FormInstance | null>(null)
 
         $confirm({
@@ -296,29 +306,53 @@ const config: PageListProps = {
               data: reactive({
                 status: '0',
               }),
-              items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
-                dictName: {
-                  _required: true,
+              items: pickFormItems(
+                formItems,
+                [
+                  'nickName',
+                  'userDeptIds',
+                  'deptId',
+                  'phonenumber',
+                  'email',
+                  'userName',
+                  'password',
+                  'sex',
+                  'status',
+                  'postIds',
+                  'roleIds',
+                  'remark',
+                ],
+                {
+                  postIds: {
+                    options: posts.map((item: any) => ({
+                      disabled: item.status === '1',
+                      label: item.postName,
+                      value: item.postId,
+                    })),
+                  },
+                  roleIds: {
+                    options: roles.map((item: any) => ({
+                      disabled: item.status === '1',
+                      label: item.roleName,
+                      value: item.roleId,
+                    })),
+                  },
                 },
-                dictType: {
-                  _required: true,
-                },
-                status: {
-                  // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
-                  component: 'TRadioGroup',
-                },
-              }),
-              labelAlign: 'right',
-              layout: 'vertical',
+              ),
               ref: formRef,
             }),
-          header: '添加字典类型',
+          header: '添加用户',
           onConfirmCallback: async () => {
-            await alovaInst.Post('system/dict/type', await formRef.value!.validate())
-            $msg.success('字典添加成功')
+            const formData = await formRef.value!.validate()
+
+            await alovaInst.Post('system/user', {
+              ...formData,
+              userDeptIds: formData.userDeptIds.join(','),
+            })
+            $msg.success('用户添加成功')
             pageListRef.value!.query()
           },
-          width: 430,
+          width: 730,
         })
       },
       permission: 'system:user:add',

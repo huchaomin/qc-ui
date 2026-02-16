@@ -38,6 +38,7 @@ export interface ComponentPropsMap {
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   emptyFormData: EmptyFormData
   getFormData: GetFormData
+  setFormData: SetFormData
   validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormPropsData>
   validateOnly: (
     ...arg: Parameters<_FormInstanceFunctions['validateOnly']>
@@ -96,6 +97,7 @@ type FormItemBase = {
 type FormItemWithoutSlotAndComponentItemTypeAndModel = AllowedComponentProps & FormItemBase
 type FormPropsData = Record<string, any>
 type GetFormData = () => FormPropsData
+type SetFormData = (data: FormPropsData) => void
 interface SlotItem {
   model?: string // 传给 name 参与校验
   slot: string
@@ -165,6 +167,13 @@ function formItemsConfigChangeHandler(config: _FormItem[]) {
               : false
             : ''
     }
+  })
+  nextTick(() => {
+    nextTick(() => {
+      nextTick(() => {
+        vm.exposed!.clearValidate()
+      })
+    })
   })
 }
 
@@ -321,6 +330,7 @@ function compoRef(instance: any) {
     const inst = instance as _FormInstanceFunctions & {
       emptyFormData: EmptyFormData
       getFormData: GetFormData
+      setFormData: SetFormData
     }
 
     // @ts-expect-error 内部属性
@@ -376,6 +386,13 @@ function compoRef(instance: any) {
     }
 
     inst.getFormData = getFormData
+
+    inst.setFormData = (data) => {
+      Object.keys(props.data).forEach((key) => {
+        // eslint-disable-next-line vue/no-mutating-props
+        props.data[key] = data[key]
+      })
+    }
 
     inst.emptyFormData = (initData) => {
       const obj: FormPropsData = {}

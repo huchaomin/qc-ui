@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import type { SelectProps as _SelectProps, SelectOptionGroup, SelectValue } from 'tdesign-vue-next'
+import type {
+  SelectProps as _SelectProps,
+  SelectOption,
+  SelectOptionGroup,
+  SelectValue,
+} from 'tdesign-vue-next'
 import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
 
@@ -9,7 +14,7 @@ export type SelectProps = Omit<
 > & {
   dicCode?: string
   modelValue: SelectValue
-  options?: _SelectProps['options'] | UseListKey
+  options?: SelectOption[] | UseListKey
   showCheckAll?: boolean
 }
 
@@ -29,6 +34,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
     label: 'label',
     value: 'value',
   }),
+  minCollapsedNum: 2,
   /**
    * @description: 是否多选
    */
@@ -77,18 +83,9 @@ const finallyOptions = computed(() => {
       $notify.error('TSelect: dicCode and options cannot be used together')
     }
 
-    arr = useDicOptions(props.dicCode).value.map((item) => ({
-      [props.keys?.label ?? 'label']: item.label,
-      [props.keys?.value ?? 'value']: item.value,
-    }))
+    arr = useDicOptions(props.dicCode).value
   } else {
-    arr =
-      typeof props.options === 'string'
-        ? useList(props.options).value.map((item) => ({
-            [props.keys?.label ?? 'label']: item.label,
-            [props.keys?.value ?? 'value']: item.value,
-          }))
-        : props.options
+    arr = typeof props.options === 'string' ? useList(props.options).value : props.options
   }
 
   if (props.showCheckAll) {
@@ -98,7 +95,7 @@ const finallyOptions = computed(() => {
       if (arr === undefined) {
         $notify.error('TSelect: options is required, when showCheckAll is true')
       } else {
-        arr.unshift({
+        ;(arr as SelectOption[]).unshift({
           checkAll: true,
           [props.keys?.label ?? 'label']: '全选',
         })
@@ -110,7 +107,7 @@ const finallyOptions = computed(() => {
 })
 const innerModelValue = computed(() => {
   if (finallyOptions.value !== undefined) {
-    const flatOptions = finallyOptions.value.flatMap(
+    const flatOptions = (finallyOptions.value as SelectOption[]).flatMap(
       (item) => (item as SelectOptionGroup).children ?? [item],
     )
     const valueKey = props.keys?.value ?? 'value'

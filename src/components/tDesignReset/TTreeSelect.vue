@@ -43,6 +43,10 @@ const otherProps = computed(() => {
     ...props,
   }
 
+  obj.selectInputProps = {
+    minCollapsedNum: 2,
+    ...(obj.selectInputProps ?? {}),
+  }
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]
