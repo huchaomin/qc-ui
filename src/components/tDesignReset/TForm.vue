@@ -529,6 +529,12 @@ defineExpose({} as FormInstance)
         opacity: 0;
       }
     }
+
+    &:only-child {
+      .t-form__label {
+        display: none;
+      }
+    }
   }
 
   .t-date-range-picker {

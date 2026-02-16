@@ -34,7 +34,7 @@ async function create(
   return NotifyPlugin[type]({
     closeBtn: true,
     content,
-    duration: 0,
+    duration: 1000 * 10,
     title: '提示',
     ...obj,
   })

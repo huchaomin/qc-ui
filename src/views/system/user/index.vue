@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { passwordReg, passwordRegMessage } from '@/utils/config'
-// import DictTypeDetail from './modules/DictTypeDetail.vue'
 
 const { send } = useRequest(
   (id) =>
@@ -302,6 +301,47 @@ const config: PageListProps = {
                 width: 730,
               })
             },
+            permission: 'system:user:edit',
+          }),
+          ({ row }) => ({
+            default: '重置密码',
+            onClick: async () => {
+              const formRef = ref<FormInstance | null>(null)
+
+              $confirm({
+                body: () =>
+                  h(resolveComponent('TForm') as Component<FormProps>, {
+                    items: [
+                      {
+                        _required: true,
+                        _rules: [
+                          {
+                            message: passwordRegMessage,
+                            pattern: passwordReg,
+                          },
+                        ],
+                        model: 'newPassword',
+                        type: 'password',
+                      },
+                    ],
+                    ref: formRef,
+                  }),
+                header: `请输入${row.userName}用户的新密码`,
+                onConfirmCallback: async () => {
+                  const newPassword = (await formRef.value!.validate()).newPassword
+
+                  await alovaInst.Put('system/user/resetPwd', {
+                    password: newPassword,
+                    userId: row.userId,
+                  })
+                  $notify(`密码修改成功，新密码是：${newPassword}`)
+                  pageListRef.value!.query()
+                },
+                width: 430,
+              })
+            },
+            permission: 'system:user:resetPwd',
+            show: row.userId !== '1',
           }),
         ],
       },
