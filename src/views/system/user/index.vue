@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TTable from '@/components/tDesignReset/TTable.vue'
 import { passwordReg, passwordRegMessage } from '@/utils/config'
 
 const { send } = useRequest(
@@ -341,6 +342,68 @@ const config: PageListProps = {
               })
             },
             permission: 'system:user:resetPwd',
+            show: row.userId !== '1',
+          }),
+          ({ row }) => ({
+            default: '分配角色',
+            onClick: async () => {
+              const { roles, user } = await alovaInst.Get<any>(`system/user/authRole/${row.userId}`)
+              const tableRef = ref<InstanceType<typeof TTable> | null>(null)
+
+              $confirm({
+                body: () =>
+                  h(TTable, {
+                    columns: [
+                      {
+                        colKey: 'roleId',
+                        title: '角色编号',
+                      },
+                      {
+                        colKey: 'roleName',
+                        title: '角色名称',
+                      },
+                      {
+                        colKey: 'roleKey',
+                        title: '权限字符',
+                      },
+                      {
+                        colKey: 'createTime',
+                        title: '创建时间',
+                      },
+                      {
+                        colKey: 'remark',
+                        title: '角色说明',
+                      },
+                    ],
+                    data: roles,
+                    ref: tableRef,
+                    rowKey: 'roleId',
+                    selectedRowKeys: roles
+                      .filter((item: any) => item.flag)
+                      .map((item: any) => item.roleId),
+                    showRowSelect: 'multiple',
+                  }),
+                header: `为用户${user.nickName}(${user.userName})分配角色`,
+                onConfirmCallback: async () => {
+                  await alovaInst.Put(
+                    'system/user/authRole',
+                    {},
+                    {
+                      meta: {
+                        useSuccessMsg: true,
+                      },
+                      params: {
+                        roleIds: tableRef.value!.selectedRowKeys.join(','),
+                        userId: row.userId,
+                      },
+                    },
+                  )
+                  pageListRef.value!.query()
+                },
+                width: 800,
+              })
+            },
+            permission: 'system:user:edit',
             show: row.userId !== '1',
           }),
         ],
