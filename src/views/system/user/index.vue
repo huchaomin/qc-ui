@@ -123,10 +123,6 @@ const formItems = createFormItems([
 ] as const)
 const config: PageListProps = {
   apis: {
-    delete: {
-      method: 'system/user',
-      permission: 'system:user:remove',
-    },
     export: {
       method: 'system/user/export',
       permission: 'system:user:export',
@@ -303,6 +299,7 @@ const config: PageListProps = {
               })
             },
             permission: 'system:user:edit',
+            show: row.userId !== '1',
           }),
           ({ row }) => ({
             default: '重置密码',
@@ -406,6 +403,19 @@ const config: PageListProps = {
             permission: 'system:user:edit',
             show: row.userId !== '1',
           }),
+          ({ row }) => ({
+            default: '删除',
+            permission: 'system:user:remove',
+            popconfirm: {
+              content: '确认删除吗',
+              onConfirm: async () => {
+                await alovaInst.Delete(`system/user/${row.userId}`)
+                $msg('删除成功')
+                pageListRef.value!.query()
+              },
+            },
+            show: row.userId !== '1',
+          }),
         ],
       },
       colKey: '_operation',
@@ -499,16 +509,62 @@ const config: PageListProps = {
       permission: 'system:user:add',
     },
     {
-      default: '刷新缓存',
+      default: '导入',
       onClick: async () => {
-        await alovaInst.Delete('system/dict/type/refreshCache', undefined, {
-          meta: {
-            useSuccessMsg: true,
+        const formRef = ref<FormInstance | null>(null)
+
+        $confirm({
+          body: () =>
+            h(resolveComponent('TForm') as Component<FormProps>, {
+              items: [
+                {
+                  _required: true,
+                  component: 'TUpload',
+                  downloadTemplate: alovaInst.Post<Blob>(
+                    'system/user/importTemplate',
+                    {},
+                    {
+                      meta: {
+                        useDownload: '用户管理导入模板.xlsx',
+                        useResponseBlob: true,
+                      },
+                    },
+                  ),
+                  model: 'file',
+                  tips: '请下载模板，并按照模板格式导入',
+                },
+                {
+                  component: 'TCheckbox',
+                  label: '是否更新已经存在的用户数据',
+                  model: 'updateSupport',
+                },
+              ],
+              ref: formRef,
+            }),
+          header: '导入用户',
+          onConfirmCallback: async () => {
+            const formData = await formRef.value!.validate()
+
+            await alovaInst.Post(
+              'system/user/importTemplate',
+              {
+                file: formData.file[0].raw,
+              },
+              {
+                meta: {
+                  useFormData: true,
+                },
+                params: {
+                  updateSupport: formData.updateSupport,
+                },
+              },
+            )
+            pageListRef.value!.query()
           },
+          width: 480,
         })
-        pageListRef.value!.query()
       },
-      permission: 'system:user:remove',
+      permission: 'system:user:import',
     },
   ],
   tableOtherProps: {

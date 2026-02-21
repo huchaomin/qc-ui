@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Method } from 'alova'
+import type { AlovaGenerics, Method } from 'alova'
 import type {
   UploadFile as _UploadFile,
   UploadInstanceFunctions as _UploadInstanceFunctions,
@@ -44,6 +44,11 @@ export type UploadProps = Omit<
   | 'requestMethod'
   | 'value'
 > & {
+  downloadTemplate?: Method<
+    Omit<AlovaGenerics, 'Responded'> & {
+      Responded: Blob
+    }
+  >
   requestMethod?: (file: UploadFile | UploadFile[]) => Method
 }
 
@@ -82,6 +87,12 @@ const otherProps = computed(() => {
       delete obj[key as keyof typeof obj]
     }
   })
+  delete obj.downloadTemplate
+
+  if (obj.theme === 'file') {
+    delete obj.tips
+  }
+
   return obj
 })
 const compo = _Upload
@@ -102,16 +113,22 @@ defineExpose({} as UploadInstanceFunctions)
     :is="
       h(
         compo,
-        mergeProps($attrs, {
-          ...otherProps,
-          requestMethod: finallyRequestMethod,
-          modelValue: innerModelValue,
-          onChange: (...args: OnChangeParams) => {
-            innerModelValue = args[0]
-            props.onChange?.(...args)
+        mergeProps(
+          $attrs,
+          {
+            ...otherProps,
+            requestMethod: finallyRequestMethod,
+            modelValue: innerModelValue,
+            onChange: (...args: OnChangeParams) => {
+              innerModelValue = args[0]
+              props.onChange?.(...args)
+            },
+            ref: compoRef,
           },
-          ref: compoRef,
-        }),
+          {
+            class: otherProps.theme,
+          },
+        ),
       )
     "
   >
@@ -119,9 +136,35 @@ defineExpose({} as UploadInstanceFunctions)
       <slot :name="k" v-bind="slotScope"></slot>
     </template>
     <template v-if="otherProps.theme === 'file'" #trigger="{ files }">
-      <TButton theme="primary">
-        {{ files.length > 0 ? (otherProps.multiple ? '继续上传' : '重新上传') : '选择文件' }}
-      </TButton>
+      <div class="flex items-center">
+        <TButton theme="primary">
+          {{ files.length > 0 ? (otherProps.multiple ? '继续上传' : '重新上传') : '选择文件' }}
+        </TButton>
+        <TButton
+          v-if="downloadTemplate"
+          theme="primary"
+          variant="outline"
+          @click.stop="downloadTemplate.send()"
+          >下载模板</TButton
+        >
+        <span class="ml-3 text-xs text-[var(--td-text-color-placeholder)]">{{ props.tips }}</span>
+      </div>
     </template>
   </component>
 </template>
+
+<style scoped>
+.t-upload {
+  &.file {
+    :deep() {
+      .t-upload__trigger {
+        pointer-events: none;
+
+        .t-button {
+          pointer-events: auto;
+        }
+      }
+    }
+  }
+}
+</style>
