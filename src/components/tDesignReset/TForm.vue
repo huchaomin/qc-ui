@@ -20,6 +20,7 @@ import type { SelectProps } from './TSelect.vue'
 import type { SwitchProps } from './TSwitch.vue'
 import type { TextareaProps } from './TTextarea.vue'
 import type { TreeSelectProps } from './TTreeSelect.vue'
+import type { UploadProps } from './TUpload.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
@@ -34,6 +35,7 @@ export interface ComponentPropsMap {
   TSwitch: Omit<SwitchProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
   TTreeSelect: Omit<TreeSelectProps, 'modelValue'>
+  TUpload: Omit<UploadProps, 'modelValue'>
 }
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   emptyFormData: EmptyFormData
@@ -152,7 +154,7 @@ function formItemsConfigChangeHandler(config: _FormItem[]) {
   config.forEach((item) => {
     if (item.model !== undefined && !Object.prototype.hasOwnProperty.call(props.data, item.model)) {
       const isArr =
-        ['TCheckboxGroup', 'TDateRangePicker'].includes(item.component as string) ||
+        ['TCheckboxGroup', 'TDateRangePicker', 'TUpload'].includes(item.component as string) ||
         (item.multiple === true && item.component === 'TSelect')
 
       // 这里类型有增多的话 inst.emptyFormData 也要处理一下
@@ -218,8 +220,10 @@ function getFormItemProps(item: _FormItem): FormItemProps {
   }
 
   const isSelect = ['TCheckbox', 'TCheckboxGroup', 'TRadioGroup'].includes(item.component as string)
-  const message =
-    typeof obj.label === 'string'
+  const isUpload = item.component === 'TUpload'
+  const message = isUpload
+    ? '请上传文件'
+    : typeof obj.label === 'string'
       ? isSelect
         ? `请选择${obj.label}`
         : `请填写${obj.label}`
@@ -505,10 +509,6 @@ defineExpose({} as FormInstance)
 </template>
 
 <style scoped>
-.t-form {
-  --td-comp-margin-xxl: var(--td-comp-margin-xl);
-}
-
 :deep() {
   .t-form__label {
     padding-right: var(--td-size-1);
@@ -524,14 +524,6 @@ defineExpose({} as FormInstance)
 
     &.no_label_item {
       .t-form__label {
-        height: 1px;
-        padding-right: 0;
-        opacity: 0;
-      }
-    }
-
-    &:only-child {
-      .t-form__label {
         display: none;
       }
     }
@@ -539,6 +531,23 @@ defineExpose({} as FormInstance)
 
   .t-date-range-picker {
     width: 100%;
+  }
+}
+
+.t-form {
+  --td-comp-margin-xxl: var(--td-comp-margin-xl);
+
+  &:has(.t-form__item:not(.no_label_item)) {
+    :deep() {
+      .no_label_item {
+        .t-form__label {
+          display: block;
+          height: 1px;
+          padding-right: 0;
+          opacity: 0;
+        }
+      }
+    }
   }
 }
 

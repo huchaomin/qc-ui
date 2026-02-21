@@ -166,12 +166,14 @@ const _columns = computed(() => {
       delete obj.visible
       return obj as Omit<typeof c, 'visible'>
     })
+  const hasFixedLeft = arr.some((c) => c.fixed === 'left')
 
   if (props.showRowSelect && !arr.some((c) => c.colKey === 'row-select')) {
     const serialIndex = arr.findIndex((c) => c.colKey === 'serial-number')
 
     arr.splice(serialIndex === -1 ? 0 : serialIndex, 0, {
       colKey: 'row-select',
+      fixed: hasFixedLeft ? 'left' : undefined,
       title: '选择',
       type: props.showRowSelect,
     })
@@ -181,6 +183,7 @@ const _columns = computed(() => {
     arr.unshift({
       align: 'center',
       colKey: 'serial-number',
+      fixed: hasFixedLeft ? 'left' : undefined,
       title: '序号',
     })
   }
@@ -282,6 +285,7 @@ const columns = computed<FinallyTableCol[]>(() => {
       return {
         ellipsis: true,
         ellipsisTitle: true,
+        fixed: column.fixed ?? (column.colKey === '_operation' ? ('right' as const) : undefined),
         stopPropagation: true,
         ...column,
         attrs: (context: CellData<TableRowData>) => {

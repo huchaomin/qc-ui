@@ -199,6 +199,11 @@ export default defineConfig(({ command, mode }) => {
             type: true,
           },
           {
+            from: '@/components/tDesignReset/TUpload.vue',
+            imports: ['UploadFile', 'UploadInstanceFunctions'],
+            type: true,
+          },
+          {
             from: '@/components/autoImport/PageList/Index.vue',
             imports: ['PageListProps'],
             type: true,

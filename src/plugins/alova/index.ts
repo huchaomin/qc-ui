@@ -203,18 +203,32 @@ export default createAlova({
 
       // 有时候后端没有返回文件流，而是返回了json数据，这里可能是因为后端返回了错误信息，所以要加上后面的判断
       if (useResponseBlob && !headers.get('content-type')?.includes('application/json')) {
-        if (useDownload !== false) {
-          const blob = await response.blob()
+        let blob: Blob
 
+        try {
+          blob = await response.blob()
+        } catch (e) {
+          void $notify.error('返回的 response 不能被blob() 方法所解析')
+          return Promise.reject(e)
+        }
+
+        if (useDownload !== false) {
           void saveAs(blob, useDownload as string) // TODO true 从响应头获取文件名
           return blob
         }
 
-        return response.blob()
+        return blob
       }
 
-      // eslint-disable-next-line ts/no-unsafe-assignment
-      const resData = await response.json()
+      let resData: any
+
+      try {
+        // eslint-disable-next-line ts/no-unsafe-assignment
+        resData = await response.json()
+      } catch (e) {
+        void $notify.error('返回的 response 不能被json() 方法所解析')
+        return Promise.reject(e)
+      }
 
       // eslint-disable-next-line ts/no-unsafe-member-access
       if (resData?.code !== undefined) {

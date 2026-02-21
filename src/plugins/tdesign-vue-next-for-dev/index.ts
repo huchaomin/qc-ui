@@ -26,6 +26,7 @@ import _TDesign, {
   TabPanel as _TabPanel,
   Textarea as _Textarea,
   TreeSelect as _TreeSelect,
+  Upload as _Upload,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
 
@@ -54,6 +55,7 @@ const Checkbox = _Checkbox as (typeof import('tdesign-vue-next'))['Checkbox']
 const InputNumber = _InputNumber as (typeof import('tdesign-vue-next'))['InputNumber']
 const Switch = _Switch as (typeof import('tdesign-vue-next'))['Switch']
 const TreeSelect = _TreeSelect as (typeof import('tdesign-vue-next'))['TreeSelect']
+const Upload = _Upload as (typeof import('tdesign-vue-next'))['Upload']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -82,4 +84,5 @@ export {
   TDesign,
   Textarea,
   TreeSelect,
+  Upload,
 }
