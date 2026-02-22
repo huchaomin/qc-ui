@@ -99,7 +99,19 @@ type FormItemBase = {
 type FormItemWithoutSlotAndComponentItemTypeAndModel = AllowedComponentProps & FormItemBase
 type FormPropsData = Record<string, any>
 type GetFormData = () => FormPropsData
-type SetFormData = (data: FormPropsData) => void
+type SetFormData = (
+  data: FormPropsData,
+  options?: {
+    /**
+     * @description: 是否只回填非空值
+     */
+    onlyIsFalsy?: boolean
+    /**
+     * @description: 覆盖部分数据
+     */
+    override?: FormPropsData
+  },
+) => void
 interface SlotItem {
   model?: string // 传给 name 参与校验
   slot: string
@@ -391,10 +403,22 @@ function compoRef(instance: any) {
 
     inst.getFormData = getFormData
 
-    inst.setFormData = (data) => {
+    inst.setFormData = (data, options) => {
+      const { onlyIsFalsy = false, override = {} } = options ?? {}
+
       Object.keys(props.data).forEach((key) => {
-        // eslint-disable-next-line vue/no-mutating-props
-        props.data[key] = data[key]
+        if (Object.prototype.hasOwnProperty.call(override, key)) {
+          // eslint-disable-next-line vue/no-mutating-props
+          props.data[key] = override[key]
+        } else if (onlyIsFalsy) {
+          if (isFalsy(data[key])) {
+            // eslint-disable-next-line vue/no-mutating-props
+            props.data[key] = data[key]
+          }
+        } else {
+          // eslint-disable-next-line vue/no-mutating-props
+          props.data[key] = data[key]
+        }
       })
     }
 

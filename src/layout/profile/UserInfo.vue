@@ -11,12 +11,8 @@ watchEffect(
     const val = userInfo.value
 
     if (val) {
-      const formData = formRef.value!.getFormData()
-
-      Object.keys(formData).forEach((key) => {
-        if (!isFalsy(val[key])) {
-          formData[key as keyof typeof formData] = val[key]
-        }
+      formRef.value!.setFormData(val, {
+        onlyIsFalsy: true,
       })
     }
   },
