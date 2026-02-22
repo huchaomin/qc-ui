@@ -105,7 +105,7 @@ type SetFormData = (
     /**
      * @description: 是否只回填非空值
      */
-    onlyIsFalsy?: boolean
+    isNotFalsy?: boolean
     /**
      * @description: 覆盖部分数据
      */
@@ -404,14 +404,14 @@ function compoRef(instance: any) {
     inst.getFormData = getFormData
 
     inst.setFormData = (data, options) => {
-      const { onlyIsFalsy = false, override = {} } = options ?? {}
+      const { isNotFalsy = false, override = {} } = options ?? {}
 
       Object.keys(props.data).forEach((key) => {
         if (Object.prototype.hasOwnProperty.call(override, key)) {
           // eslint-disable-next-line vue/no-mutating-props
           props.data[key] = override[key]
-        } else if (onlyIsFalsy) {
-          if (isFalsy(data[key])) {
+        } else if (isNotFalsy) {
+          if (!isFalsy(data[key])) {
             // eslint-disable-next-line vue/no-mutating-props
             props.data[key] = data[key]
           }

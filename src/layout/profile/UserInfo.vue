@@ -12,7 +12,7 @@ watchEffect(
 
     if (val) {
       formRef.value!.setFormData(val, {
-        onlyIsFalsy: true,
+        isNotFalsy: true,
       })
     }
   },
