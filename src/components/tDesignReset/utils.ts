@@ -27,6 +27,7 @@ export const linkPropsInit = {
   theme: 'primary',
 } as const
 export const buttonPropsInit = {
+  autoIcon: true,
   show: true,
 } as const
 export const formPropsInit = {
