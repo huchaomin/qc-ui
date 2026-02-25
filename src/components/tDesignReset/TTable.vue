@@ -425,7 +425,6 @@ function compoRef(instance: any) {
   const exposed = instance ?? {}
 
   vm.exposed = exposed
-  vm.exposeProxy = exposed
 }
 
 /**
