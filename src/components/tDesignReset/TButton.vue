@@ -142,8 +142,6 @@ const TButtonComponent = computed(() => {
 <style scoped>
 :deep() {
   .iconify {
-    position: relative;
-    top: 1px;
     flex-shrink: 0;
     font-size: calc(1em + 2px) !important;
 
