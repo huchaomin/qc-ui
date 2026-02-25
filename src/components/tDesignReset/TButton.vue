@@ -56,30 +56,25 @@ function setTextContent() {
   textContent.value = vm.exposed!.$el?.textContent ?? ''
 }
 
-onMounted(() => {
-  setTextContent()
-})
-onUpdated(() => {
-  setTextContent()
-})
-
 const autoIcon = computed(() => {
   if (!props.autoIcon || textContent.value.trim() === '') {
     return undefined
   }
 
   const map = {
-    'mdi:account-outline': ['角色'],
-    'mdi:add': ['新增', '添加'],
-    'mdi:close': ['关闭', '取消'],
-    'mdi:content-save': ['保存', '提交'],
+    'line-md:account': ['角色'],
+    'line-md:chevron-down': ['展开'],
+    'line-md:chevron-up': ['收起'],
+    'line-md:clipboard-check': ['保存', '提交'],
+    'line-md:close': ['关闭', '取消'],
+    'line-md:download-outline': ['下载', '导出'],
+    'line-md:edit': ['编辑'],
+    'line-md:file-document': ['文件'],
+    'line-md:plus': ['新增', '添加'],
+    'line-md:search': ['查询', '搜索'],
+    'line-md:upload-outline': ['上传', '导入'],
     'mdi:delete-outline': ['删除'],
-    'mdi:download': ['下载', '导出'],
-    'mdi:file-edit-outline': ['编辑'],
-    'mdi:file-outline': ['文件'],
     'mdi:refresh': ['刷新', '重置'],
-    'mdi:search': ['查询', '搜索'],
-    'mdi:upload': ['上传', '导入'],
   }
   let icon: string | undefined
 
@@ -118,7 +113,7 @@ const TButtonComponent = computed(() => {
 <template>
   <template v-if="props.show">
     <TPopconfirm v-if="props.popconfirm" v-bind="props.popconfirm">
-      <TButtonComponent>
+      <TButtonComponent @vue:updated="setTextContent" @vue:mounted="setTextContent">
         <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
           <slot :name="k" v-bind="slotScope"></slot>
         </template>
@@ -127,7 +122,7 @@ const TButtonComponent = computed(() => {
         </template>
       </TButtonComponent>
     </TPopconfirm>
-    <TButtonComponent v-else>
+    <TButtonComponent v-else @vue:updated="setTextContent" @vue:mounted="setTextContent">
       <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
         <slot :name="k" v-bind="slotScope"></slot>
       </template>

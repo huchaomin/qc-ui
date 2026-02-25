@@ -136,10 +136,7 @@ defineExpose({
         variant="outline"
         @click="showExtraFormItems = !showExtraFormItems"
       >
-        展开
-        <template #icon>
-          <Icon :icon="showExtraFormItems ? 'ep:arrow-up' : 'ep:arrow-down'"></Icon>
-        </template>
+        {{ showExtraFormItems ? '收起' : '展开' }}
       </TButton>
     </template>
   </TForm>
