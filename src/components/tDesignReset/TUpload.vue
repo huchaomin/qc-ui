@@ -146,7 +146,7 @@ defineExpose({} as UploadInstanceFunctions)
           @click.stop="downloadTemplate.send()"
           >下载模板</TButton
         >
-        <span class="ml-3 text-xs text-[var(--td-text-color-placeholder)]">{{ props.tips }}</span>
+        <span class="ml-3 text-xs text-(--td-text-color-placeholder)">{{ props.tips }}</span>
       </div>
     </template>
   </component>

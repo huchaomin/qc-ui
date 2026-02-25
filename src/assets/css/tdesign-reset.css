@@ -44,6 +44,14 @@ body {
     height: 20px;
   }
 
+  .t-radio {
+    &.t-is-checked {
+      .t-radio__input {
+        border-width: 2px;
+      }
+    }
+  }
+
   .t-checkbox {
     &.t-is-checked {
       .t-checkbox__input {

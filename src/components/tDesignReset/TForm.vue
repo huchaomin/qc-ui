@@ -162,8 +162,8 @@ const formItemsConfig = computed(() => {
   })
 })
 
-function formItemsConfigChangeHandler(config: _FormItem[]) {
-  config.forEach((item) => {
+function setInitFormDataValues() {
+  formItemsConfig.value.forEach((item) => {
     if (item.model !== undefined && !Object.prototype.hasOwnProperty.call(props.data, item.model)) {
       const isArr =
         ['TCheckboxGroup', 'TDateRangePicker', 'TUpload'].includes(item.component as string) ||
@@ -191,14 +191,15 @@ function formItemsConfigChangeHandler(config: _FormItem[]) {
   })
 }
 
-watch(formItemsConfig, formItemsConfigChangeHandler, {
+watch(formItemsConfig, setInitFormDataValues, {
   deep: 2,
   immediate: true,
 })
 watch(
   () => props.data,
   () => {
-    formItemsConfigChangeHandler(formItemsConfig.value)
+    debugger // TODO 排查一下会不会走这里
+    setInitFormDataValues()
   },
 )
 
@@ -428,8 +429,6 @@ function compoRef(instance: any) {
       Object.keys(props.data).forEach((key) => {
         if (Array.isArray(props.data[key])) {
           obj[key] = []
-        } else if (typeof props.data[key] === 'boolean') {
-          obj[key] = false
         } else {
           obj[key] = ''
         }
@@ -491,6 +490,7 @@ function calcLabelWidth() {
   })
 }
 
+provide('formData', props.data)
 defineExpose({} as FormInstance)
 </script>
 
@@ -523,7 +523,7 @@ defineExpose({} as FormInstance)
       "
       :name="item.model"
     >
-      <slot v-if="(item as SlotItem).slot" :name="(item as SlotItem).slot" :item="item"></slot>
+      <slot v-if="(item as SlotItem).slot" :name="(item as SlotItem).slot"></slot>
       <component
         :is="getComponent(item.component)"
         v-else

@@ -61,8 +61,6 @@ function compoRef(instance: any) {
 
   vm.exposed = exposed
 }
-
-console.log(useAttrs())
 </script>
 
 <template>
