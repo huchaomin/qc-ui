@@ -123,7 +123,7 @@ declare module 'vue' {
     TTooltip: typeof import('tdesign-vue-next')['Tooltip'];
     TTooltipLite: typeof import('tdesign-vue-next')['TooltipLite'];
     TTransfer: typeof import('tdesign-vue-next')['Transfer'];
-    TTree: typeof import('tdesign-vue-next')['Tree'];
+    // TTree: typeof import('tdesign-vue-next')['Tree'];
     // TTreeSelect: typeof import('tdesign-vue-next')['TreeSelect'];
     TTypography: typeof import('tdesign-vue-next')['Typography'];
     // TUpload: typeof import('tdesign-vue-next')['Upload'];
@@ -149,6 +149,7 @@ declare module 'vue' {
     TSwitch: (typeof import('@/components/tDesignReset/TSwitch.vue'))['default']
     TTreeSelect: (typeof import('@/components/tDesignReset/TTreeSelect.vue'))['default']
     TUpload: (typeof import('@/components/tDesignReset/TUpload.vue'))['default']
+    TTree: (typeof import('@/components/tDesignReset/TTree.vue'))['default']
   }
 }
 

@@ -25,18 +25,16 @@ const value = computed(() => {
 
   return route.name as string
 })
-
-console.log(routerStore.routersRaw)
 </script>
 
 <template>
   <TAside
     :width="commonStore.drawerOpen ? undefined : '0px'"
-    class="overflow-hidden border-r border-r-[var(--td-border-level-2-color)]"
+    class="overflow-hidden border-r border-r-(--td-border-level-2-color)"
   >
     <TMenu :value="value" :default-expanded="defaultExpanded">
       <template #logo>
-        <div class="!ml-2 flex items-center">
+        <div class="ml-2! flex items-center">
           <TImage :src="logoUrl" class="logo" style="width: 28px; height: 28px"></TImage>
           <GradientText
             :text="appName"

@@ -19,6 +19,7 @@ import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { SelectProps } from './TSelect.vue'
 import type { SwitchProps } from './TSwitch.vue'
 import type { TextareaProps } from './TTextarea.vue'
+import type { TreeProps } from './TTree.vue'
 import type { TreeSelectProps } from './TTreeSelect.vue'
 import type { UploadProps } from './TUpload.vue'
 import { mergeProps } from 'vue'
@@ -34,6 +35,7 @@ export interface ComponentPropsMap {
   TSelect: Omit<SelectProps, 'modelValue'>
   TSwitch: Omit<SwitchProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
+  TTree: Omit<TreeProps, 'modelValue'>
   TTreeSelect: Omit<TreeSelectProps, 'modelValue'>
   TUpload: Omit<UploadProps, 'modelValue'>
 }
@@ -185,7 +187,9 @@ function setInitFormDataValues() {
   nextTick(() => {
     nextTick(() => {
       nextTick(() => {
-        vm.exposed!.clearValidate()
+        nextTick(() => {
+          vm.exposed!.clearValidate()
+        })
       })
     })
   })
@@ -198,7 +202,6 @@ watch(formItemsConfig, setInitFormDataValues, {
 watch(
   () => props.data,
   () => {
-    debugger // TODO 排查一下会不会走这里
     setInitFormDataValues()
   },
 )
@@ -490,7 +493,10 @@ function calcLabelWidth() {
   })
 }
 
-provide('formData', props.data)
+provide(
+  'formData',
+  computed(() => props.data),
+)
 defineExpose({} as FormInstance)
 </script>
 
