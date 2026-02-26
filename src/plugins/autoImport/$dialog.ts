@@ -30,6 +30,9 @@ function create(
   context: Parameters<CreateDialogFnType>[1],
 ) {
   const el = ref<HTMLDivElement | null>(null)
+  const bodyCache = computed(() => {
+    return typeof _options.body === 'function' ? _options.body(h) : _options.body
+  })
   const options = {
     closeOnEscKeydown: false,
     closeOnOverlayClick: false,
@@ -40,6 +43,7 @@ function create(
     placement: 'center' as const,
     width: 'fit-content',
     ...(_options ?? {}),
+    body: () => bodyCache.value,
   }
   const isCustomDragEnabled = options.draggable === true && options.mode === 'modal'
   const id = `${isCustomDragEnabled ? 'drag' : 'normal'}-dialog-${++index.value}`

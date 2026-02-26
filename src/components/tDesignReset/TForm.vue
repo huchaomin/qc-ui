@@ -202,7 +202,7 @@ watch(formItemsConfig, setInitFormDataValues, {
 watch(
   () => props.data,
   () => {
-    setInitFormDataValues()
+    $notify.error(`TForm: data is changed`)
   },
 )
 
@@ -411,10 +411,7 @@ function compoRef(instance: any) {
       const { isNotFalsy = false, override = {} } = options ?? {}
 
       Object.keys(props.data).forEach((key) => {
-        if (Object.prototype.hasOwnProperty.call(override, key)) {
-          // eslint-disable-next-line vue/no-mutating-props
-          props.data[key] = override[key]
-        } else if (isNotFalsy) {
+        if (isNotFalsy) {
           if (!isFalsy(data[key])) {
             // eslint-disable-next-line vue/no-mutating-props
             props.data[key] = data[key]
@@ -424,6 +421,8 @@ function compoRef(instance: any) {
           props.data[key] = data[key]
         }
       })
+      // eslint-disable-next-line vue/no-mutating-props
+      Object.assign(props.data, override)
     }
 
     inst.emptyFormData = (initData) => {
