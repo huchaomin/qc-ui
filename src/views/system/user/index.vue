@@ -148,7 +148,6 @@ const config: PageListProps = {
     {
       cell: {
         _component: 'TypographyText',
-        copyable: true,
       },
       colKey: 'userName',
       title: '登录账号',

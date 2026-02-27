@@ -64,17 +64,19 @@ const config: PageListProps = {
     {
       cell: (_, { row }) => {
         return {
-          _component: 'Link',
-          onClick: () => {
-            $dialog({
-              body: () =>
-                h(DictTypeDetail, {
-                  dictType: row.dictType,
-                }),
-              footer: false,
-              header: `字典类型: ${row.dictName}(${row.dictType})`,
-              width: 1500,
-            })
+          _component: 'TypographyTextLink',
+          link: {
+            onClick: () => {
+              $dialog({
+                body: () =>
+                  h(DictTypeDetail, {
+                    dictType: row.dictType,
+                  }),
+                footer: false,
+                header: `字典类型: ${row.dictName}(${row.dictType})`,
+                width: 1500,
+              })
+            },
           },
         }
       },

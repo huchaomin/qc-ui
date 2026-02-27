@@ -186,4 +186,18 @@ body {
     border: 1px solid var(--td-border-level-2-color);
     box-shadow: var(--td-shadow-2);
   }
+
+  .t-link {
+    display: inline;
+
+    .t-link__prefix-icon {
+      display: inline;
+      margin-right: 0;
+    }
+
+    .t-link__suffix-icon {
+      display: inline;
+      margin-left: 0;
+    }
+  }
 }

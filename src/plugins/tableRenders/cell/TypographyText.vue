@@ -6,7 +6,9 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<TypographyTextProps>(), {})
+const props = withDefaults(defineProps<TypographyTextProps>(), {
+  copyable: true,
+})
 
 export type TypographyTextProps = _TdTextProps
 
@@ -14,24 +16,17 @@ const attrs = useAttrs() as unknown as CellRenderContext
 </script>
 
 <template>
-  <TTypographyText v-bind="props">
+  <TTypographyText
+    v-bind="{
+      ...props,
+      copyable:
+        props.copyable === true
+          ? {
+              text: _get(attrs.row, attrs.col.colKey),
+            }
+          : props.copyable,
+    }"
+  >
     {{ _get(attrs.row, attrs.col.colKey) }}
   </TTypographyText>
 </template>
-
-<style>
-.t-table {
-  *:has(> .t-typography) {
-    position: relative;
-    padding-right: 26px;
-
-    .t-button {
-      --td-comp-size-m: 22px;
-
-      position: absolute;
-      top: 0;
-      right: 0;
-    }
-  }
-}
-</style>

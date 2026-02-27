@@ -620,6 +620,9 @@ defineExpose(
           <template #empty>
             <TEmpty></TEmpty>
           </template>
+          <template #ellipsis="{ row, col }">
+            <span>{{ _get(row, col.colKey) }}</span>
+          </template>
         </component>
       </div>
       <slot name="table-bottom" v-bind="{ columns, data: finallyData }"></slot>
@@ -713,6 +716,20 @@ defineExpose(
   }
 
   :deep() {
+    *:has(> * > .t-button > .t-icon-copy),
+    *:has(> * > .t-button > .t-icon-check) {
+      position: relative;
+      padding-right: 26px;
+
+      .t-button {
+        --td-comp-size-m: 22px;
+
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+
     .t-table__empty {
       position: absolute;
       /* stylelint-disable-next-line value-keyword-case */

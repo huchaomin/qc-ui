@@ -5,6 +5,7 @@ import type { LinkProps } from './Link.vue'
 import type { OptionLabelProps } from './OptionLabel.vue'
 import type { SwitchProps } from './Switch.vue'
 import type { TypographyTextProps } from './TypographyText.vue'
+import type { TypographyTextLinkProps } from './TypographyTextLink.vue'
 import type {
   CellRenderContext,
   CellRenderFn,
@@ -34,6 +35,7 @@ interface ComponentPropsMap {
   OptionLabel: OptionLabelProps
   Switch: SwitchProps
   TypographyText: TypographyTextProps
+  TypographyTextLink: TypographyTextLinkProps
 }
 
 const compos: Record<string, Component> = import.meta.glob('./*.vue', {
