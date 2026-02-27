@@ -184,15 +184,6 @@ function setInitFormDataValues() {
             : ''
     }
   })
-  nextTick(() => {
-    nextTick(() => {
-      nextTick(() => {
-        nextTick(() => {
-          vm.exposed!.clearValidate()
-        })
-      })
-    })
-  })
 }
 
 watch(formItemsConfig, setInitFormDataValues, {
@@ -492,10 +483,7 @@ function calcLabelWidth() {
   })
 }
 
-provide(
-  'formData',
-  computed(() => props.data),
-)
+provide('formData', props.data)
 defineExpose({} as FormInstance)
 </script>
 

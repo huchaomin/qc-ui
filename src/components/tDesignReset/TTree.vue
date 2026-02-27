@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { TreeProps as _TreeProps, TreeNodeValue } from 'tdesign-vue-next'
+import type {
+  TreeProps as _TreeProps,
+  TreeInstanceFunctions,
+  TreeNodeValue,
+} from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 defineOptions({
@@ -53,6 +57,8 @@ function compoRef(instance: any) {
 
   vm.exposed = exposed
 }
+
+defineExpose({} as TreeInstanceFunctions)
 </script>
 
 <template>
