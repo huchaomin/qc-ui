@@ -62,20 +62,23 @@ const autoIcon = computed(() => {
   }
 
   const map = {
-    'line-md:account': ['角色'],
+    /* eslint-disable perfectionist/sort-objects */
+    'line-md:plus': ['新增', '添加'],
+    'line-md:account': ['角色', '用户'],
+    'line-md:cancel': ['取消'],
     'line-md:chevron-down': ['展开'],
     'line-md:chevron-up': ['收起'],
     'line-md:clipboard-check': ['保存', '提交'],
-    'line-md:close': ['关闭', '取消'],
+    'line-md:close': ['关闭'],
     'line-md:download-outline': ['下载', '导出'],
     'line-md:edit': ['编辑'],
     'line-md:file-document': ['文件'],
-    'line-md:plus': ['新增', '添加'],
     'line-md:rotate-270': ['刷新', '重置'],
     'line-md:search': ['查询', '搜索'],
     'line-md:security': ['权限'],
     'line-md:upload-outline': ['上传', '导入'],
     'mdi:delete-outline': ['删除'],
+    /* eslint-enable perfectionist/sort-objects */
   }
   let icon: string | undefined
 

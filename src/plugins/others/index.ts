@@ -25,9 +25,16 @@ window.addEventListener('load', () => {
 window.addEventListener(
   'unhandledrejection',
   function (event) {
+    // 空的reject
+    if (event.reason === undefined) {
+      event.preventDefault() // 去掉控制台的显示异常
+      return
+    }
+
     if (event.reason instanceof Error) {
       if (event.reason.message === 'confirm_cancel') {
         event.preventDefault() // 去掉控制台的显示异常
+        return
       }
     }
 

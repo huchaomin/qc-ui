@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TTable from '@/components/tDesignReset/TTable.vue'
+import AssignUser from './modules/AssignUser.vue'
 import SelectDept from './modules/SelectDept.vue'
 import SelectMenu from './modules/SelectMenu.vue'
 
@@ -315,6 +315,7 @@ const config: PageListProps = {
                 header: `给${row.roleName}分配数据权限`,
                 onConfirmCallback: async () => {
                   await alovaInst.Put('system/role/dataScope', {
+                    deptIds: [],
                     ...(await formRef.value!.validate()),
                     deptCheckStrictly: false,
                     roleId: row.roleId,
@@ -329,62 +330,16 @@ const config: PageListProps = {
             show: row.roleId !== '1',
           }),
           ({ row }) => ({
-            default: '分配角色',
+            default: '分配用户',
             onClick: async () => {
-              const { roles, user } = await alovaInst.Get<any>(`system/user/authRole/${row.userId}`)
-              const tableRef = ref<InstanceType<typeof TTable> | null>(null)
-
-              $confirm({
+              $dialog({
                 body: () =>
-                  h(TTable, {
-                    columns: [
-                      {
-                        colKey: 'roleId',
-                        title: '角色编号',
-                      },
-                      {
-                        colKey: 'roleName',
-                        title: '角色名称',
-                      },
-                      {
-                        colKey: 'roleKey',
-                        title: '权限字符',
-                      },
-                      {
-                        colKey: 'createTime',
-                        title: '创建时间',
-                      },
-                      {
-                        colKey: 'remark',
-                        title: '角色说明',
-                      },
-                    ],
-                    data: roles,
-                    ref: tableRef,
-                    rowKey: 'roleId',
-                    selectedRowKeys: roles
-                      .filter((item: any) => item.flag)
-                      .map((item: any) => item.roleId),
-                    showRowSelect: 'multiple',
+                  h(AssignUser, {
+                    roleId: row.roleId,
                   }),
-                header: `为用户${user.nickName}(${user.userName})分配角色`,
-                onConfirmCallback: async () => {
-                  await alovaInst.Put(
-                    'system/user/authRole',
-                    {},
-                    {
-                      meta: {
-                        useSuccessMsg: true,
-                      },
-                      params: {
-                        roleIds: tableRef.value!.selectedRowKeys.join(','),
-                        userId: row.userId,
-                      },
-                    },
-                  )
-                  pageListRef.value!.query()
-                },
-                width: 800,
+                footer: false,
+                header: `给${row.roleName}分配用户`,
+                width: 1500,
               })
             },
             permission: 'system:role:edit',

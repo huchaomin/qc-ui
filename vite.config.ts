@@ -195,7 +195,7 @@ export default defineConfig(({ command, mode }) => {
           },
           {
             from: '@/components/tDesignReset/TTable.vue',
-            imports: ['TableRowData'],
+            imports: ['TableRowData', 'TableCol'],
             type: true,
           },
           {
