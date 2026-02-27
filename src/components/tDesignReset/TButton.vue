@@ -71,10 +71,11 @@ const autoIcon = computed(() => {
     'line-md:edit': ['编辑'],
     'line-md:file-document': ['文件'],
     'line-md:plus': ['新增', '添加'],
+    'line-md:rotate-270': ['刷新', '重置'],
     'line-md:search': ['查询', '搜索'],
+    'line-md:security': ['权限'],
     'line-md:upload-outline': ['上传', '导入'],
     'mdi:delete-outline': ['删除'],
-    'mdi:refresh': ['刷新', '重置'],
   }
   let icon: string | undefined
 

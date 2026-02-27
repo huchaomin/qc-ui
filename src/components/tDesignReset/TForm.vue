@@ -441,26 +441,23 @@ const formItemLabelEls = shallowRef<HTMLCollection>()
 onMounted(() => {
   formItemLabelEls.value = vm.exposed!.$el.getElementsByClassName('t-form__label')
   calcLabelWidth()
+  useMutationObserver(
+    vm.exposed!.$el,
+    () => {
+      calcLabelWidth()
+    },
+    {
+      attributeFilter: ['class'],
+      characterData: true,
+      childList: true,
+      subtree: true,
+    },
+  )
+  // 在dialog里面，需要监听窗口大小变化
+  useResizeObserver(vm.exposed!.$el, () => {
+    calcLabelWidth()
+  })
 })
-useMutationObserver(
-  () => vm.exposed?.$el,
-  () => {
-    calcLabelWidth()
-  },
-  {
-    attributeFilter: ['class'],
-    characterData: true,
-    childList: true,
-    subtree: true,
-  },
-)
-// 在dialog里面，需要监听窗口大小变化
-useResizeObserver(
-  () => vm.exposed?.$el,
-  () => {
-    calcLabelWidth()
-  },
-)
 
 function calcLabelWidth() {
   const arr = [...formItemLabelEls.value!] as HTMLElement[]

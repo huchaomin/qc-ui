@@ -23,7 +23,6 @@ const formItems = createFormItems([
   },
   {
     _label: '品牌',
-    _required: true,
     component: 'TSelect',
     keys: {
       value: 'deptId',
@@ -34,6 +33,7 @@ const formItems = createFormItems([
   },
   {
     _label: '归属部门',
+    _required: true,
     component: 'TTreeSelect',
     data: 'systemDeptTree',
     model: 'deptId',
@@ -424,6 +424,9 @@ const config: PageListProps = {
   ],
   formItems: [
     ...pickFormItems(formItems, ['deptId', 'userName', 'phonenumber', 'status'], {
+      deptId: {
+        _required: false,
+      },
       phonenumber: {
         _required: false,
         _rules: [],

@@ -34,13 +34,13 @@ onMounted(() => {
 <template>
   <THeader
     height="var(--td-comp-size-xxl)"
-    class="flex items-center border-b border-b-[var(--td-border-level-2-color)] px-2"
+    class="flex items-center border-b border-b-(--td-border-level-2-color) px-2"
   >
     <TButton
       shape="circle"
       variant="text"
       size="large"
-      class="flex-shrink-0"
+      class="shrink-0"
       @click="commonStore.drawerOpen = !commonStore.drawerOpen"
     >
       <Icon icon="lineicons:menu-hamburger-1" />
@@ -48,7 +48,7 @@ onMounted(() => {
     <TTabs
       ref="tabsRef"
       :value="route.name as string"
-      class="!mx-2 flex-1"
+      class="mx-2! flex-1"
       @remove="handleRemove"
       @change="handleChange"
     >
