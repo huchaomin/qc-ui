@@ -343,7 +343,7 @@ const config: PageListProps = {
               })
             },
             permission: 'system:role:edit',
-            show: row.userId !== '1',
+            show: row.roleId !== '1',
           }),
           ({ row }) => ({
             default: '删除',
@@ -351,12 +351,12 @@ const config: PageListProps = {
             popconfirm: {
               content: '确认删除吗',
               onConfirm: async () => {
-                await alovaInst.Delete(`system/user/${row.userId}`)
+                await alovaInst.Delete(`system/role/${row.roleId}`)
                 $msg('删除成功')
                 pageListRef.value!.query()
               },
             },
-            show: row.userId !== '1',
+            show: row.roleId !== '1',
           }),
         ],
       },
