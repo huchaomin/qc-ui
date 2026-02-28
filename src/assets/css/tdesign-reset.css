@@ -220,6 +220,6 @@ body {
   }
 
   .t-tree__line--leaf::before {
-    width: 34px;
+    width: 42px;
   }
 }
