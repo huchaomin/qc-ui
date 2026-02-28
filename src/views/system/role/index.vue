@@ -293,18 +293,20 @@ const config: PageListProps = {
                           dicCode: 'role_data_scope',
                           model: 'dataScope',
                         },
-                        (formData) => ({
-                          _label: '数据权限',
-                          _rules: [
-                            {
-                              message: '请选择数据权限',
-                              required: true,
-                            },
-                          ],
-                          model: 'deptIds',
-                          show: formData.dataScope === '2',
+                        {
+                          __others: (formData) => ({
+                            _label: '数据权限',
+                            _rules: [
+                              {
+                                message: '请选择数据权限',
+                                required: true,
+                              },
+                            ],
+                            model: 'deptIds',
+                            show: formData.dataScope === '2',
+                          }),
                           slot: 'dept_ids',
-                        }),
+                        },
                       ],
                       ref: formRef,
                     },

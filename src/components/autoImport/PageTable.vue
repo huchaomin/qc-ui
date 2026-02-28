@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Arg, Method } from 'alova'
+import type { Method } from 'alova'
 import type { TableProps } from '@/components/tDesignReset/TTable.vue'
 import { tablePropsInit } from '@/components/tDesignReset/utils'
 import { getFilterEmptyParamsObj, getParamsString } from '@/plugins/alova/index'

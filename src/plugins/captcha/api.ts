@@ -10,7 +10,6 @@ export function checkCaptcha(data: Arg) {
     },
   })
 }
-
 export function getCaptcha() {
   return alovaInst.Post<Record<string, any>>(
     `${PREFIX}/get`,

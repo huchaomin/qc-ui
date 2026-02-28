@@ -48,7 +48,23 @@ export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOn
     ...arg: Parameters<_FormInstanceFunctions['validateOnly']>
   ) => Promise<FormPropsData>
 }
-export type FormItem = ((formData: FormPropsData) => _FormItem) | _FormItem
+export type FormItem = XOR<
+  _FormItem,
+  XOR<
+    {
+      __others?: (
+        formData: FormPropsData,
+      ) => AllowedComponentProps & ComponentItemType & FormItemBase
+      model: string
+    },
+    {
+      __others?: (formData: FormPropsData) => FormItemBase & {
+        model?: string
+      }
+      slot: string
+    }
+  >
+>
 export type FormItemWithoutSlot = ComponentItemType &
   FormItemWithoutSlotAndComponentItemTypeAndModel & {
     model: string
@@ -160,7 +176,17 @@ defineOptions({
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
-    return typeof item === 'function' ? item(props.data) : item
+    if (typeof item.__others === 'function') {
+      const obj = {
+        ...item.__others(props.data),
+        ...item,
+      }
+
+      delete obj.__others
+      return obj as _FormItem
+    }
+
+    return item
   })
 })
 

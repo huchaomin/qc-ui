@@ -153,5 +153,4 @@ function getRoute(name: string) {
 }
 
 export { getRoute }
-
 export default router

@@ -24,26 +24,28 @@ const formItems: FormItem[] = [
     model: 'newPassword',
     type: 'password',
   },
-  (formData) => ({
-    _label: '确认密码',
-    _required: true,
-    _rules: [
-      {
-        validator: (val) => {
-          if (val === formData.newPassword) {
-            return true
-          }
+  {
+    __others: (formData) => ({
+      _label: '确认密码',
+      _required: true,
+      _rules: [
+        {
+          validator: (val) => {
+            if (val === formData.newPassword) {
+              return true
+            }
 
-          return {
-            message: '两次输入的密码不一致',
-            result: false,
-          }
+            return {
+              message: '两次输入的密码不一致',
+              result: false,
+            }
+          },
         },
-      },
-    ],
+      ],
+      type: 'password',
+    }),
     model: 'confirmPassword',
-    type: 'password',
-  }),
+  },
   ...(showFooter
     ? [
         {

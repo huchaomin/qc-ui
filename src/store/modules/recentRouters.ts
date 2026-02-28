@@ -5,7 +5,6 @@ export interface recentRoutersConfig {
   name: string
   query: LocationQuery
 }
-
 export default defineStore(
   'recentRouters',
   () => {

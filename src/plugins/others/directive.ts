@@ -1,7 +1,6 @@
 import type { App, Directive } from 'vue'
 
 export type VPermissionDirective = Directive<HTMLElement, Parameters<typeof checkPermissions>[0]>
-
 export function checkPermissions(v?: string | string[]): boolean {
   if (v === undefined) {
     return true
@@ -13,7 +12,6 @@ export function checkPermissions(v?: string | string[]): boolean {
     return permission === '*:*:*' || value.includes(permission)
   })
 }
-
 export default {
   install(app: App): void {
     app.directive('permission', {
