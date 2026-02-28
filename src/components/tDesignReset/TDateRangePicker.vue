@@ -2,6 +2,7 @@
 import type {
   DateRangePickerProps as _DateRangePickerProps,
   DateRangeValue,
+  PresetRange,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
@@ -14,16 +15,17 @@ const props = withDefaults(defineProps<DateRangePickerProps>(), {
   firstDayOfWeek: 7,
   needConfirm: true,
   panelPreselection: true,
-  presets: () => ({
-    上一个月: [
-      dayjs().subtract(1, 'month').startOf('month').toDate(),
-      dayjs().subtract(1, 'month').endOf('month').toDate(),
-    ],
-    最近一个月: [dayjs().subtract(1, 'month').toDate(), dayjs().toDate()],
-    最近一周: [dayjs().subtract(1, 'week').toDate(), dayjs().toDate()],
-    最近三个月: [dayjs().subtract(3, 'month').toDate(), dayjs().toDate()],
-    本月: [dayjs().startOf('month').toDate(), dayjs().endOf('month').toDate()],
-  }),
+  presets: () =>
+    ({
+      上一个月: [
+        dayjs().subtract(1, 'month').startOf('month').toDate(),
+        dayjs().subtract(1, 'month').endOf('month').toDate(),
+      ],
+      最近一个月: [dayjs().subtract(1, 'month').toDate(), dayjs().toDate()],
+      最近一周: [dayjs().subtract(1, 'week').toDate(), dayjs().toDate()],
+      最近三个月: [dayjs().subtract(3, 'month').toDate(), dayjs().toDate()],
+      本月: [dayjs().startOf('month').toDate(), dayjs().endOf('month').toDate()],
+    }) as PresetRange,
 })
 const emit = defineEmits<{
   'update:modelValue': [value: DateRangeValue]
