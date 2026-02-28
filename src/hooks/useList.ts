@@ -1,3 +1,5 @@
+import { flatArrToTree } from '@/utils'
+
 export type UseListAllKey = keyof typeof promiseMap
 export type UseListKey = Exclude<UseListAllKey, UseListTreeKey>
 export type UseListTreeKey = TreeKeys<typeof promiseMap>
@@ -48,6 +50,22 @@ const promiseMap = {
       }
 
       return fn(res as Record<string, any>[])
+    },
+  }),
+  systemMenuTree: alovaInst.Get<TreeListItem[]>('system/menu/list', {
+    transform: (res) => {
+      return flatArrToTree(
+        (res as Record<string, any>[]).map((item) => {
+          return {
+            ...item,
+            label: item.menuName as string,
+            value: item.menuId as string,
+          }
+        }),
+        {
+          idKey: 'value',
+        },
+      ) as TreeListItem[]
     },
   }),
 }

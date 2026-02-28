@@ -6,23 +6,13 @@ const props = withDefaults(
   {},
 )
 const pageListRef = useTemplateRef('pageListRef')
-const formItems = createFormItems([
-  {
-    _label: '字典类型',
-    disabled: true,
-    model: 'dictType',
-  },
-  {
+const formItemMap = {
+  dictLabel: {
     _label: '数据名',
     _required: true,
     model: 'dictLabel',
   },
-  {
-    _label: '数据值',
-    _required: true,
-    model: 'dictValue',
-  },
-  {
+  dictSort: {
     _label: '字典排序',
     _required: true,
     component: 'TInputNumber',
@@ -30,18 +20,28 @@ const formItems = createFormItems([
     model: 'dictSort',
     theme: 'row',
   },
-  {
+  dictType: {
+    _label: '字典类型',
+    disabled: true,
+    model: 'dictType',
+  },
+  dictValue: {
+    _label: '数据值',
+    _required: true,
+    model: 'dictValue',
+  },
+  remark: {
+    _label: '备注',
+    component: 'TTextarea',
+    model: 'remark',
+  },
+  status: {
     _label: '状态',
     component: 'TRadioGroup',
     dicCode: 'sys_normal_disable',
     model: 'status',
   },
-  {
-    _label: '备注',
-    component: 'TTextarea',
-    model: 'remark',
-  },
-] as const)
+} satisfies Record<string, FormItem>
 const config: PageListProps = {
   apis: {
     delete: {
@@ -110,19 +110,26 @@ const config: PageListProps = {
             onClick: () => {
               const formRef = ref<FormInstance | null>(null)
 
+              watch(
+                formRef,
+                () => {
+                  formRef.value!.setFormData(row)
+                },
+                {
+                  once: true,
+                },
+              )
               $confirm({
                 body: () =>
                   h(resolveComponent('TForm') as Component<FormProps>, {
-                    data: reactive({
-                      dictCode: row.dictCode,
-                      dictLabel: row.dictLabel,
-                      dictSort: row.dictSort,
-                      dictType: row.dictType,
-                      dictValue: row.dictValue,
-                      remark: row.remark,
-                      status: row.status,
-                    }),
-                    items: formItems,
+                    items: [
+                      formItemMap.dictType,
+                      formItemMap.dictLabel,
+                      formItemMap.dictValue,
+                      formItemMap.dictSort,
+                      formItemMap.status,
+                      formItemMap.remark,
+                    ],
                     labelAlign: 'right',
                     layout: 'vertical',
                     ref: formRef,
@@ -157,7 +164,14 @@ const config: PageListProps = {
                 dictType: props.dictType,
                 status: '0',
               }),
-              items: formItems,
+              items: [
+                formItemMap.dictType,
+                formItemMap.dictLabel,
+                formItemMap.dictValue,
+                formItemMap.dictSort,
+                formItemMap.status,
+                formItemMap.remark,
+              ],
               labelAlign: 'right',
               layout: 'vertical',
               ref: formRef,

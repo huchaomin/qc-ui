@@ -2,33 +2,35 @@
 import DictTypeDetail from './modules/DictTypeDetail.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
-const formItems = createFormItems([
-  {
-    _label: '字典名称',
-    model: 'dictName',
-  },
-  {
-    _label: '字典类型',
-    model: 'dictType',
-  },
-  {
-    _label: '状态',
-    component: 'TSelect',
-    dicCode: 'sys_normal_disable',
-    model: 'status',
-  },
-  {
+const formItemMap = {
+  dateRange: {
     _class: 'col-span-2',
     _label: '创建时间',
     component: 'TDateRangePicker',
     model: 'dateRange',
   },
-  {
+  dictName: {
+    _label: '字典名称',
+    _required: true,
+    model: 'dictName',
+  },
+  dictType: {
+    _label: '字典类型',
+    _required: true,
+    model: 'dictType',
+  },
+  remark: {
     _label: '备注',
     component: 'TTextarea',
     model: 'remark',
   },
-] as const)
+  status: {
+    _label: '状态',
+    component: 'TSelect',
+    dicCode: 'sys_normal_disable',
+    model: 'status',
+  },
+} satisfies Record<string, FormItem>
 const config: PageListProps = {
   apis: {
     delete: {
@@ -112,28 +114,27 @@ const config: PageListProps = {
             onClick: () => {
               const formRef = ref<FormInstance | null>(null)
 
+              watch(
+                formRef,
+                () => {
+                  formRef.value!.setFormData(row)
+                },
+                {
+                  once: true,
+                },
+              )
               $confirm({
                 body: () =>
                   h(resolveComponent('TForm') as Component<FormProps>, {
-                    data: reactive({
-                      dictId: row.dictId,
-                      dictName: row.dictName,
-                      dictType: row.dictType,
-                      remark: row.remark,
-                      status: row.status,
-                    }),
-                    items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
-                      dictName: {
-                        _required: true,
-                      },
-                      dictType: {
-                        _required: true,
-                      },
-                      status: {
-                        // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
+                    items: [
+                      formItemMap.dictName,
+                      formItemMap.dictType,
+                      {
+                        ...formItemMap.status,
                         component: 'TRadioGroup',
                       },
-                    }),
+                      formItemMap.remark,
+                    ],
                     labelAlign: 'right',
                     layout: 'vertical',
                     ref: formRef,
@@ -154,7 +155,12 @@ const config: PageListProps = {
       title: '操作',
     },
   ],
-  formItems: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'dateRange']),
+  formItems: [
+    formItemMap.dictName,
+    formItemMap.dictType,
+    formItemMap.status,
+    formItemMap.dateRange,
+  ],
   operations: [
     {
       default: '新增',
@@ -167,18 +173,15 @@ const config: PageListProps = {
               data: reactive({
                 status: '0',
               }),
-              items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
-                dictName: {
-                  _required: true,
-                },
-                dictType: {
-                  _required: true,
-                },
-                status: {
-                  // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
+              items: [
+                formItemMap.dictName,
+                formItemMap.dictType,
+                {
+                  ...formItemMap.status,
                   component: 'TRadioGroup',
                 },
-              }),
+                formItemMap.remark,
+              ],
               labelAlign: 'right',
               layout: 'vertical',
               ref: formRef,

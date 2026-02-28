@@ -14,24 +14,8 @@ const { send } = useRequest(
   },
 )
 const pageListRef = useTemplateRef('pageListRef')
-const formItems = createFormItems([
-  {
-    _label: '用户昵称',
-    _required: true,
-    maxlength: 30,
-    model: 'nickName',
-  },
-  {
-    _label: '品牌',
-    component: 'TSelect',
-    keys: {
-      value: 'deptId',
-    },
-    model: 'userDeptIds',
-    multiple: true,
-    options: 'brand',
-  },
-  {
+const formItemMap = {
+  deptId: {
     _label: '归属部门',
     _required: true,
     component: 'TTreeSelect',
@@ -41,16 +25,7 @@ const formItems = createFormItems([
       expandAll: true,
     },
   },
-  {
-    _label: '手机号码',
-    _rules: [
-      {
-        telnumber: true,
-      },
-    ],
-    model: 'phonenumber',
-  },
-  {
+  email: {
     _label: '邮箱',
     _rules: [
       {
@@ -60,7 +35,77 @@ const formItems = createFormItems([
     ],
     model: 'email',
   },
-  {
+  nickName: {
+    _label: '用户昵称',
+    _required: true,
+    maxlength: 30,
+    model: 'nickName',
+  },
+  password: {
+    _label: '登录密码',
+    _required: true,
+    _rules: [
+      {
+        message: passwordRegMessage,
+        pattern: passwordReg,
+      },
+    ],
+    autocomplete: 'new-password',
+    model: 'password',
+    type: 'password',
+  },
+  phonenumber: {
+    _label: '手机号码',
+    _rules: [
+      {
+        telnumber: true,
+      },
+    ],
+    model: 'phonenumber',
+  },
+  postIds: {
+    _label: '岗位',
+    component: 'TSelect',
+    model: 'postIds',
+    multiple: true,
+    options: [],
+  },
+  remark: {
+    _class: 'col-span-full',
+    _label: '备注',
+    component: 'TTextarea',
+    model: 'remark',
+  },
+  roleIds: {
+    _label: '角色',
+    component: 'TSelect',
+    model: 'roleIds',
+    multiple: true,
+    options: [],
+  },
+  sex: {
+    _label: '用户性别',
+    component: 'TSelect',
+    dicCode: 'sys_user_sex',
+    model: 'sex',
+  },
+  status: {
+    _label: '状态',
+    component: 'TRadioGroup',
+    dicCode: 'sys_normal_disable',
+    model: 'status',
+  },
+  userDeptIds: {
+    _label: '品牌',
+    component: 'TSelect',
+    keys: {
+      value: 'deptId',
+    },
+    model: 'userDeptIds',
+    multiple: true,
+    options: 'brand',
+  },
+  userName: {
     _label: '登录账号',
     _required: true,
     _rules: [
@@ -75,52 +120,7 @@ const formItems = createFormItems([
     ],
     model: 'userName',
   },
-  {
-    _label: '登录密码',
-    _required: true,
-    _rules: [
-      {
-        message: passwordRegMessage,
-        pattern: passwordReg,
-      },
-    ],
-    autocomplete: 'new-password',
-    model: 'password',
-    type: 'password',
-  },
-  {
-    _label: '用户性别',
-    component: 'TSelect',
-    dicCode: 'sys_user_sex',
-    model: 'sex',
-  },
-  {
-    _label: '状态',
-    component: 'TRadioGroup',
-    dicCode: 'sys_normal_disable',
-    model: 'status',
-  },
-  {
-    _label: '岗位',
-    component: 'TSelect',
-    model: 'postIds',
-    multiple: true,
-    options: [],
-  },
-  {
-    _label: '角色',
-    component: 'TSelect',
-    model: 'roleIds',
-    multiple: true,
-    options: [],
-  },
-  {
-    _class: 'col-span-full',
-    _label: '备注',
-    component: 'TTextarea',
-    model: 'remark',
-  },
-] as const)
+} satisfies Record<string, FormItem>
 const config: PageListProps = {
   apis: {
     export: {
@@ -248,37 +248,32 @@ const config: PageListProps = {
                       status: data.status,
                       userDeptIds: (data.userDeptIds ?? '').split(',').filter(Boolean),
                     }),
-                    items: pickFormItems(
-                      formItems,
-                      [
-                        'nickName',
-                        'userDeptIds',
-                        'deptId',
-                        'phonenumber',
-                        'email',
-                        'sex',
-                        'status',
-                        'postIds',
-                        'roleIds',
-                        'remark',
-                      ],
+                    items: [
+                      formItemMap.nickName,
+                      formItemMap.userDeptIds,
+                      formItemMap.deptId,
+                      formItemMap.phonenumber,
+                      formItemMap.email,
+                      formItemMap.sex,
+                      formItemMap.status,
                       {
-                        postIds: {
-                          options: posts.map((item: any) => ({
-                            disabled: item.status === '1',
-                            label: item.postName,
-                            value: item.postId,
-                          })),
-                        },
-                        roleIds: {
-                          options: roles.map((item: any) => ({
-                            disabled: item.status === '1',
-                            label: item.roleName,
-                            value: item.roleId,
-                          })),
-                        },
+                        ...formItemMap.postIds,
+                        options: posts.map((item: any) => ({
+                          disabled: item.status === '1',
+                          label: item.postName,
+                          value: item.postId,
+                        })),
                       },
-                    ),
+                      {
+                        ...formItemMap.roleIds,
+                        options: roles.map((item: any) => ({
+                          disabled: item.status === '1',
+                          label: item.roleName,
+                          value: item.roleId,
+                        })),
+                      },
+                      formItemMap.remark,
+                    ],
                     ref: formRef,
                   }),
                 header: '修改用户',
@@ -422,23 +417,13 @@ const config: PageListProps = {
     },
   ],
   formItems: [
-    ...pickFormItems(formItems, ['deptId', 'userName', 'phonenumber', 'status'], {
-      deptId: {
-        _required: false,
-      },
-      phonenumber: {
-        _required: false,
-        _rules: [],
-      },
-      status: {
-        // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
-        component: 'TSelect',
-      },
-      userName: {
-        _required: false,
-        _rules: [],
-      },
-    }),
+    formItemMap.deptId,
+    formItemMap.userName,
+    formItemMap.phonenumber,
+    {
+      ...formItemMap.status,
+      component: 'TSelect',
+    },
     {
       _class: 'col-span-2',
       _label: '创建时间',
@@ -459,39 +444,34 @@ const config: PageListProps = {
               data: reactive({
                 status: '0',
               }),
-              items: pickFormItems(
-                formItems,
-                [
-                  'nickName',
-                  'userDeptIds',
-                  'deptId',
-                  'phonenumber',
-                  'email',
-                  'userName',
-                  'password',
-                  'sex',
-                  'status',
-                  'postIds',
-                  'roleIds',
-                  'remark',
-                ],
+              items: [
+                formItemMap.nickName,
+                formItemMap.userDeptIds,
+                formItemMap.deptId,
+                formItemMap.phonenumber,
+                formItemMap.email,
+                formItemMap.userName,
+                formItemMap.password,
+                formItemMap.sex,
+                formItemMap.status,
                 {
-                  postIds: {
-                    options: posts.map((item: any) => ({
-                      disabled: item.status === '1',
-                      label: item.postName,
-                      value: item.postId,
-                    })),
-                  },
-                  roleIds: {
-                    options: roles.map((item: any) => ({
-                      disabled: item.status === '1',
-                      label: item.roleName,
-                      value: item.roleId,
-                    })),
-                  },
+                  ...formItemMap.postIds,
+                  options: posts.map((item: any) => ({
+                    disabled: item.status === '1',
+                    label: item.postName,
+                    value: item.postId,
+                  })),
                 },
-              ),
+                {
+                  ...formItemMap.roleIds,
+                  options: roles.map((item: any) => ({
+                    disabled: item.status === '1',
+                    label: item.roleName,
+                    value: item.roleId,
+                  })),
+                },
+                formItemMap.remark,
+              ],
               ref: formRef,
             }),
           header: '添加用户',

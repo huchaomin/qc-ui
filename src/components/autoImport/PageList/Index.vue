@@ -188,6 +188,19 @@ const finallyColumns = computed(() => {
 
   return props.columns
 })
+const finallyFormItems = computed(() => {
+  return (
+    props.formItems?.map((item) => {
+      const obj = {
+        ...item,
+      }
+
+      delete obj._required
+      delete obj._rules
+      return obj
+    }) ?? []
+  )
+})
 
 defineExpose({
   query: doQuery,
@@ -216,10 +229,10 @@ defineExpose({
     "
   >
     <PageQuery
-      v-if="formItems !== undefined && formItems.length > 0"
+      v-if="finallyFormItems.length > 0"
       ref="pageQueryRef"
       :data="initialFormData"
-      :items="formItems"
+      :items="finallyFormItems"
       v-bind="formOtherProps"
       @query="doQuery"
       @reset="doReset"

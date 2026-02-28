@@ -5,9 +5,44 @@ const pageListRef = useTemplateRef('pageListRef')
 const expandedTreeNodes = ref<Array<number | string>>([])
 const formItems = createFormItems([
   {
+    _label: '上级菜单',
+    _required: true,
+    component: 'TTreeSelect',
+    data: 'systemMenuTree',
+    model: 'parentId',
+  },
+  {
+    _class: 'col-span-full',
+    _label: '菜单类型',
+    component: 'TRadioGroup',
+    model: 'menuType',
+    options: [
+      {
+        label: '目录',
+        value: 'M',
+      },
+      {
+        label: '菜单',
+        value: 'C',
+      },
+      {
+        label: '按钮',
+        value: 'F',
+      },
+    ],
+  },
+  {
     _label: '菜单名称',
     _required: true,
     model: 'menuName',
+  },
+  {
+    _label: '显示排序',
+    _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
+    model: 'orderNum',
+    theme: 'row',
   },
   // {
   //   _label: '字典类型',
@@ -161,58 +196,33 @@ const config: PageListProps = {
       _required: false,
     },
   }),
-  // operations: [
-  //   {
-  //     default: '新增',
-  //     onClick: () => {
-  //       const formRef = ref<FormInstance | null>(null)
+  operations: [
+    {
+      default: '新增',
+      onClick: () => {
+        const formRef = ref<FormInstance | null>(null)
 
-  //       $confirm({
-  //         body: () =>
-  //           h(resolveComponent('TForm') as Component<FormProps>, {
-  //             data: reactive({
-  //               status: '0',
-  //             }),
-  //             items: pickFormItems(formItems, ['dictName', 'dictType', 'status', 'remark'], {
-  //               dictName: {
-  //                 _required: true,
-  //               },
-  //               dictType: {
-  //                 _required: true,
-  //               },
-  //               status: {
-  //                 // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
-  //                 component: 'TRadioGroup',
-  //               },
-  //             }),
-  //             labelAlign: 'right',
-  //             layout: 'vertical',
-  //             ref: formRef,
-  //           }),
-  //         header: '添加字典类型',
-  //         onConfirmCallback: async () => {
-  //           await alovaInst.Post('system/dict/type', await formRef.value!.validate())
-  //           $msg.success('字典添加成功')
-  //           pageListRef.value!.query()
-  //         },
-  //         width: 430,
-  //       })
-  //     },
-  //     permission: 'system:menu:add',
-  //   },
-  //   {
-  //     default: '刷新缓存',
-  //     onClick: async () => {
-  //       await alovaInst.Delete('system/dict/type/refreshCache', undefined, {
-  //         meta: {
-  //           useSuccessMsg: true,
-  //         },
-  //       })
-  //       pageListRef.value!.query()
-  //     },
-  //     permission: 'system:menu:remove',
-  //   },
-  // ],
+        $confirm({
+          body: () =>
+            h(resolveComponent('TForm') as Component<FormProps>, {
+              data: reactive({
+                menuType: 'M',
+              }),
+              items: pickFormItems(formItems, ['parentId', 'menuType', 'menuName', 'orderNum'], {}),
+              ref: formRef,
+            }),
+          header: '添加字典类型',
+          onConfirmCallback: async () => {
+            await alovaInst.Post('system/dict/type', await formRef.value!.validate())
+            $msg.success('字典添加成功')
+            pageListRef.value!.query()
+          },
+          width: 730,
+        })
+      },
+      permission: 'system:menu:add',
+    },
+  ],
   tableOtherProps: reactive({
     expandedTreeNodes,
     onExpandedTreeNodesChange: (keys: Array<number | string>) => {

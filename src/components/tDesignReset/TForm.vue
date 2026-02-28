@@ -65,10 +65,6 @@ export type FormItem = XOR<
     }
   >
 >
-export type FormItemWithoutSlot = ComponentItemType &
-  FormItemWithoutSlotAndComponentItemTypeAndModel & {
-    model: string
-  }
 export type FormProps = {
   data?: FormPropsData
   items: FormItem[]
@@ -100,21 +96,12 @@ type ComponentItemType = UnionToNestedXOR<
       : never
     : never
 >
-type CreateFormItemsReturn<T extends FormItemWithoutSlot[]> = {
-  [K in keyof T]: T[K] extends FormItemWithoutSlot
-    ? FormItemWithoutSlotAndComponentItemTypeAndModel &
-        (T[K]['component'] extends keyof ComponentPropsMap
-          ? ComponentConfig<T[K]['component']>
-          : ComponentConfig<'TInput'>) & { model: T[K]['model'] }
-    : never
-}
 type EmptyFormData = (initData?: FormPropsData) => FormPropsData
 type FormItemBase = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & {
   show?: boolean // 是否显示
 }
-type FormItemWithoutSlotAndComponentItemTypeAndModel = AllowedComponentProps & FormItemBase
 type FormPropsData = Record<string, any>
 type GetFormData = () => FormPropsData
 type SetFormData = (
@@ -133,38 +120,6 @@ type SetFormData = (
 interface SlotItem {
   model?: string // 传给 name 参与校验
   slot: string
-}
-
-export function createFormItems<T extends FormItemWithoutSlot[]>(items: {
-  [K in keyof T]: NoExtraProperties<T[K], FormItemWithoutSlot>
-}) {
-  return items as unknown as CreateFormItemsReturn<T>
-}
-export function pickFormItems<
-  T extends FormItemWithoutSlot,
-  Items extends T[],
-  ModelUnion extends Items[number]['model'],
-  Keys extends ModelUnion[],
->(
-  items: Items,
-  modelKeys: Keys,
-  mergeConfig: {
-    [M in Keys[number]]?: Partial<Omit<Extract<Items[number], { model: M }>, 'model'>>
-  } = {},
-): {
-  [K in keyof Keys]: Keys[K] extends ModelUnion ? Extract<Items[number], { model: Keys[K] }> : never
-} {
-  const arr: any = []
-
-  modelKeys.forEach((key) => {
-    const item = items.find((item) => item.model === key)!
-
-    arr.push({
-      ...item,
-      ...(mergeConfig[key] ?? {}),
-    })
-  })
-  return arr
 }
 </script>
 
@@ -425,7 +380,7 @@ function compoRef(instance: any) {
     inst.getFormData = getFormData
 
     inst.setFormData = (data, options) => {
-      const { isNotFalsy = false, override = {} } = options ?? {}
+      const { isNotFalsy = true, override = {} } = options ?? {}
 
       Object.keys(props.data).forEach((key) => {
         if (isNotFalsy) {

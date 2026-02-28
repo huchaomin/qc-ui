@@ -11,9 +11,7 @@ watchEffect(
     const val = userInfo.value
 
     if (val) {
-      formRef.value!.setFormData(val, {
-        isNotFalsy: true,
-      })
+      formRef.value!.setFormData(val)
     }
   },
   {

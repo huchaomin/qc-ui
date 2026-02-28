@@ -4,19 +4,37 @@ import SelectDept from './modules/SelectDept.vue'
 import SelectMenu from './modules/SelectMenu.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
-const formItems = createFormItems([
-  {
+const formItemMap = {
+  menu_ids: {
+    _class: 'col-span-full',
+    _label: '角色类型',
+    _rules: [
+      {
+        message: '请选择角色类型',
+        required: true,
+      },
+    ],
+    model: 'menuIds',
+    slot: 'menu_ids',
+  },
+  remark: {
+    _class: 'col-span-full',
+    _label: '备注',
+    component: 'TTextarea',
+    model: 'remark',
+  },
+  roleKey: {
+    _label: '权限字符',
+    _required: true,
+    model: 'roleKey',
+  },
+  roleName: {
     _label: '角色名称',
     _required: true,
     maxlength: 30,
     model: 'roleName',
   },
-  {
-    _label: '权限字符',
-    _required: true,
-    model: 'roleKey',
-  },
-  {
+  roleSort: {
     _label: '显示顺序',
     _required: true,
     component: 'TInputNumber',
@@ -24,19 +42,13 @@ const formItems = createFormItems([
     model: 'roleSort',
     theme: 'row',
   },
-  {
+  status: {
     _label: '角色状态',
     component: 'TRadioGroup',
     dicCode: 'sys_normal_disable',
     model: 'status',
   },
-  {
-    _class: 'col-span-full',
-    _label: '备注',
-    component: 'TTextarea',
-    model: 'remark',
-  },
-] as const)
+} satisfies Record<string, FormItem>
 const config: PageListProps = {
   apis: {
     export: {
@@ -166,9 +178,7 @@ const config: PageListProps = {
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row, {
-                    isNotFalsy: true,
-                  })
+                  formRef.value!.setFormData(row)
                 },
                 {
                   once: true,
@@ -183,20 +193,12 @@ const config: PageListProps = {
                         menuIds: checkedKeys,
                       }),
                       items: [
-                        ...pickFormItems(formItems, ['roleName', 'roleKey', 'roleSort', 'status']),
-                        {
-                          _class: 'col-span-full',
-                          _label: '角色类型',
-                          _rules: [
-                            {
-                              message: '请选择角色类型',
-                              required: true,
-                            },
-                          ],
-                          model: 'menuIds',
-                          slot: 'menu_ids',
-                        },
-                        ...pickFormItems(formItems, ['remark']),
+                        formItemMap.roleName,
+                        formItemMap.roleKey,
+                        formItemMap.roleSort,
+                        formItemMap.status,
+                        formItemMap.menu_ids,
+                        formItemMap.remark,
                       ],
                       ref: formRef,
                     },
@@ -260,9 +262,7 @@ const config: PageListProps = {
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row, {
-                    isNotFalsy: true,
-                  })
+                  formRef.value!.setFormData(row)
                 },
                 {
                   once: true,
@@ -367,18 +367,12 @@ const config: PageListProps = {
     },
   ],
   formItems: [
-    ...pickFormItems(formItems, ['roleName', 'roleKey', 'status'], {
-      roleKey: {
-        _required: false,
-      },
-      roleName: {
-        _required: false,
-      },
-      status: {
-        // @ts-expect-error TRadioGroup 和 TSelect 的 props 在此处是兼容的
-        component: 'TSelect',
-      },
-    }),
+    formItemMap.roleName,
+    formItemMap.roleKey,
+    {
+      ...formItemMap.status,
+      component: 'TSelect',
+    },
     {
       _class: 'col-span-2',
       _label: '创建时间',
@@ -403,20 +397,12 @@ const config: PageListProps = {
                   status: '0',
                 }),
                 items: [
-                  ...pickFormItems(formItems, ['roleName', 'roleKey', 'roleSort', 'status']),
-                  {
-                    _class: 'col-span-full',
-                    _label: '角色类型',
-                    _rules: [
-                      {
-                        message: '请选择角色类型',
-                        required: true,
-                      },
-                    ],
-                    model: 'menuIds',
-                    slot: 'menu_ids',
-                  },
-                  ...pickFormItems(formItems, ['remark']),
+                  formItemMap.roleName,
+                  formItemMap.roleKey,
+                  formItemMap.roleSort,
+                  formItemMap.status,
+                  formItemMap.menu_ids,
+                  formItemMap.remark,
                 ],
                 ref: formRef,
               },
