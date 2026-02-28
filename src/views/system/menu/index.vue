@@ -57,7 +57,7 @@ const config: PageListProps = {
     },
   },
   columns: [
-  {
+    {
       colKey: 'orderNum',
       title: '排序',
     },

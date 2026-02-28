@@ -131,6 +131,8 @@ export default defineConfig(({ command, mode }) => {
         '@vueuse/integrations/useCookies',
         '@iconify/vue',
         '@formkit/auto-animate',
+        '@formkit/auto-animate/vue',
+        'dayjs',
       ],
     },
     plugins: [
