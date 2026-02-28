@@ -107,6 +107,7 @@ export type TableProps = {
   | 'headerAffixProps'
   | 'rowKey'
   | 'sortOnRowDraggable'
+  | 'treeExpandAndFoldIcon' // 全局中定义
 >
 export type TableRowData = _TableRowData
 

@@ -1,7 +1,25 @@
 <script setup lang="ts">
 import type { GlobalConfigProvider } from 'tdesign-vue-next'
 
-const globalConfig: GlobalConfigProvider = {}
+const globalConfig: GlobalConfigProvider = {
+  table: {
+    treeExpandAndFoldIcon: (h, { type }) => {
+      const icon = resolveComponent('Icon')
+      const button = resolveComponent('TButton')
+
+      return h(
+        button,
+        {
+          shape: 'circle',
+          variant: 'text',
+        },
+        {
+          icon: () => h(icon, { icon: `line-md:chevron-${type === 'expand' ? 'right' : 'down'}` }),
+        },
+      )
+    },
+  },
+}
 const userStore = useUserStore()
 </script>
 

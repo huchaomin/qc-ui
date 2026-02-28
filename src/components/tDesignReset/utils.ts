@@ -21,7 +21,10 @@ export const tablePropsInit = {
   showToggleFullscreenBtn: false,
   stripe: true,
   tableLayout: 'fixed',
-  tree: () => ({}), // 解决表格报错问题
+  tree: () => ({
+    indent: 40,
+    treeNodeColumnIndex: 0,
+  }), // 解决表格报错问题
 } as const
 export const linkPropsInit = {
   theme: 'primary',
