@@ -105,6 +105,7 @@ export type TableProps = {
   | 'fixedRows'
   | 'footerAffixProps'
   | 'headerAffixProps'
+  | 'onTreeExpandChange' // 废弃，请使用 onExpandedTreeNodesChange
   | 'rowKey'
   | 'sortOnRowDraggable'
   | 'treeExpandAndFoldIcon' // 全局中定义
@@ -451,7 +452,7 @@ onMounted(() => {
    * @description: col span 的暂时没考虑， footer 的没考虑
    */
   useMutationObserver(
-    vm.exposed!.$el,
+    tableParentRef,
     (mutations) => {
       mutations.forEach((item) => {
         const parent =

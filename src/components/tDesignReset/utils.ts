@@ -1,3 +1,7 @@
+import type { TreeNodeModel, TreeOptionData } from 'tdesign-vue-next'
+import Icon from '../autoImport/Icon.vue'
+import Button from './TButton.vue'
+
 export const tablePropsInit = {
   bordered: true,
   checkSelectedOnDataChange: true,
@@ -51,4 +55,47 @@ export const cardPropsInit = {
 } as const
 export const switchPropsInit = {
   size: 'large',
+} as const
+export const treePropsInit = {
+  checkable: false,
+  expandOnClickNode: undefined,
+  hover: true,
+  icon: () => (h: typeof import('vue').h, node: TreeNodeModel<TreeOptionData>) => {
+    let iconName = ''
+
+    // node.children is undefined on some cases
+    // eslint-disable-next-line ts/strict-boolean-expressions
+    if (node.getChildren && node.getChildren(false)) {
+      if (node.expanded) {
+        iconName = 'line-md:chevron-down-circle'
+
+        if (node.loading) {
+          iconName = 'line-md:loading-twotone-loop'
+        }
+      } else {
+        iconName = 'line-md:chevron-right-circle'
+      }
+    }
+
+    if (iconName === '') {
+      return null
+    }
+
+    return h(
+      Button,
+      {
+        shape: 'circle',
+        style: 'font-size: 20px;',
+        variant: 'text',
+      },
+      {
+        icon: () => h(Icon, { icon: iconName }),
+      },
+    )
+  },
+  label: true,
+  lazy: true,
+  line: true,
+  transition: true,
+  valueMode: 'all',
 } as const

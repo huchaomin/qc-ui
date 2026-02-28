@@ -200,4 +200,26 @@ body {
       margin-left: 0;
     }
   }
+
+  .t-tree__icon {
+    width: 32px;
+  }
+
+  .t-tree__item {
+    padding: 0 0 0 calc(32px * var(--level));
+  }
+
+  .t-tree__line {
+    --space: 32px;
+
+    &::before {
+      width: 20px;
+    }
+
+    left: calc(32px * var(--level) - 16px);
+  }
+
+  .t-tree__line--leaf::before {
+    width: 34px;
+  }
 }

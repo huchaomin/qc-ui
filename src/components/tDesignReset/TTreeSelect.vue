@@ -6,6 +6,7 @@ import type {
 } from 'tdesign-vue-next'
 import type { UseListTreeKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
+import { treePropsInit } from './utils'
 
 defineOptions({
   inheritAttrs: false,
@@ -46,6 +47,12 @@ const otherProps = computed(() => {
   obj.selectInputProps = {
     minCollapsedNum: 2,
     ...(obj.selectInputProps ?? {}),
+  }
+  obj.treeProps = {
+    ...treePropsInit,
+    expandOnClickNode: false,
+    icon: treePropsInit.icon(),
+    ...(obj.treeProps ?? {}),
   }
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {

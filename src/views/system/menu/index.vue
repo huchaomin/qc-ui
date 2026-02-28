@@ -2,6 +2,7 @@
 import { flatArrToTree } from '@/utils'
 
 const pageListRef = useTemplateRef('pageListRef')
+const expandedTreeNodes = ref<Array<number | string>>([])
 const formItems = createFormItems([
   {
     _label: '菜单名称',
@@ -58,14 +59,15 @@ const config: PageListProps = {
   },
   columns: [
     {
+      colKey: 'menuName',
+      fixed: 'left',
+      title: '菜单名称',
+      width: 280,
+    },
+    {
       colKey: 'orderNum',
       title: '排序',
     },
-    {
-      colKey: 'menuName',
-      title: '菜单名称',
-    },
-
     {
       colKey: 'icon',
       title: '图标',
@@ -211,10 +213,14 @@ const config: PageListProps = {
   //     permission: 'system:menu:remove',
   //   },
   // ],
-  tableOtherProps: {
+  tableOtherProps: reactive({
+    expandedTreeNodes,
+    onExpandedTreeNodesChange: (keys: Array<number | string>) => {
+      expandedTreeNodes.value = keys
+    },
     rowKey: 'menuId',
     showSerialNumber: false,
-  },
+  }),
 }
 </script>
 

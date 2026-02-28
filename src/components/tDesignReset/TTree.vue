@@ -5,21 +5,13 @@ import type {
   TreeNodeValue,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import { treePropsInit } from './utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<TreeProps>(), {
-  checkable: false,
-  expandOnClickNode: undefined,
-  hover: true,
-  icon: true,
-  label: true,
-  lazy: true,
-  transition: true,
-  valueMode: 'all',
-})
+const props = withDefaults(defineProps<TreeProps>(), treePropsInit)
 
 export type TreeProps = Omit<_TreeProps, 'defaultValue' | 'value'>
 
