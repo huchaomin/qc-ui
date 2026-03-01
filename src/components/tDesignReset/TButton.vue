@@ -96,7 +96,6 @@ const autoIcon = computed(() => {
   return icon
 })
 const attrs = useAttrs()
-const slots = useSlots()
 const buttonBindProps = computed(() => {
   return mergeProps(
     attrs,
@@ -109,33 +108,48 @@ const buttonBindProps = computed(() => {
     },
   )
 })
-const buttonBindSlots = computed(() => {
-  return {
-    ...(autoIcon.value
-      ? {
-          icon: () => h(resolveComponent('Icon'), { icon: autoIcon.value }),
-        }
-      : {}),
-    ...slots,
-  }
-})
+// 这样子写 有bug, 树的展开按钮不展开
+// const buttonBindSlots = computed(() => {
+//   return {
+//     ...(autoIcon.value
+//       ? {
+//           icon: () => h(resolveComponent('Icon'), { icon: autoIcon.value }),
+//         }
+//       : {}),
+//     ...slots,
+//   }
+// })
 </script>
 
 <template>
   <template v-if="show && checkPermissions(permission)">
     <TPopconfirm v-if="popconfirm" v-bind="popconfirm">
       <component
-        :is="h(compo, buttonBindProps, buttonBindSlots)"
+        :is="h(compo, buttonBindProps)"
         @vue:updated="setTextContent"
         @vue:mounted="setTextContent"
-      ></component>
+      >
+        <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
+          <slot :name="k" v-bind="slotScope"></slot>
+        </template>
+        <template v-if="autoIcon" #icon>
+          <Icon :icon="autoIcon"></Icon>
+        </template>
+      </component>
     </TPopconfirm>
     <component
-      :is="h(compo, buttonBindProps, buttonBindSlots)"
+      :is="h(compo, buttonBindProps)"
       v-else
       @vue:updated="setTextContent"
       @vue:mounted="setTextContent"
-    ></component>
+    >
+      <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
+        <slot :name="k" v-bind="slotScope"></slot>
+      </template>
+      <template v-if="autoIcon" #icon>
+        <Icon :icon="autoIcon"></Icon>
+      </template>
+    </component>
   </template>
 </template>
 
