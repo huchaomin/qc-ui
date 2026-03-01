@@ -42,28 +42,32 @@ function compoRef(instance: any) {
   vm.exposed = exposed
 }
 
-const ComposeComponent = computed(() => {
-  const input = h(
-    compo,
-    mergeProps(useAttrs(), {
-      ...otherProps,
-      onChange: (...args: OnChangeParams) => {
-        emit('update:modelValue', args[0])
-        props.onChange?.(...args)
-      },
-      ref: compoRef,
-    }),
-    useSlots(),
-  )
-
-  return props.adornment
-    ? h(resolveComponent('TInputAdornment'), props.adornment, {
-        default: () => input,
-      })
-    : input
+const attrs = useAttrs()
+const inputBindProps = computed(() => {
+  return mergeProps(attrs, {
+    ...otherProps.value,
+    onChange: (...args: OnChangeParams) => {
+      emit('update:modelValue', args[0])
+      props.onChange?.(...args)
+    },
+    ref: compoRef,
+  })
 })
 </script>
 
 <template>
-  <ComposeComponent></ComposeComponent>
+  <component
+    :is="
+      h(
+        resolveComponent('TInputAdornment'),
+        {},
+        {
+          ...adornment,
+          default: () => h(compo, inputBindProps, $slots),
+        },
+      )
+    "
+    v-if="adornment"
+  ></component>
+  <component :is="h(compo, inputBindProps, $slots)" v-else></component>
 </template>

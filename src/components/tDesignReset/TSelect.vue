@@ -178,7 +178,7 @@ onMounted(() => {
 const attrs = useAttrs()
 const selectBindProps = computed(() => {
   return mergeProps(attrs, {
-    ...otherProps,
+    ...otherProps.value,
     inputValue: innerInputValue.value,
     modelValue: innerModelValue.value,
     onChange: (...args: OnChangeParams) => {
@@ -213,8 +213,18 @@ const selectBindProps = computed(() => {
 </script>
 
 <template>
-  <TInputAdornment v-if="adornment" :adornment="adornment">
-    <component :is="h(compo, selectBindProps, $slots)"></component>
-  </TInputAdornment>
+  <component
+    :is="
+      h(
+        resolveComponent('TInputAdornment'),
+        {},
+        {
+          ...adornment,
+          default: () => h(compo, selectBindProps, $slots),
+        },
+      )
+    "
+    v-if="adornment"
+  ></component>
   <component :is="h(compo, selectBindProps, $slots)" v-else></component>
 </template>
