@@ -244,6 +244,50 @@ const config: PageListProps = {
                 width: 730,
               })
             },
+            permission: 'system:menu:edit',
+          }),
+          ({ row }) => ({
+            default: '新增',
+            onClick: () => {
+              const formRef = ref<FormInstance | null>(null)
+
+              $confirm({
+                body: () =>
+                  h(resolveComponent('TForm') as Component<FormProps>, {
+                    data: reactive({
+                      isCache: '0',
+                      menuType: 'M',
+                      parentId: row.menuId,
+                      status: '0',
+                      visible: '0',
+                    }),
+                    items: [
+                      {
+                        ...formItemMap.parentId,
+                        disabled: true,
+                      },
+                      formItemMap.menuType,
+                      formItemMap.menuName,
+                      formItemMap.orderNum,
+                      formItemMap.path,
+                      formItemMap.component,
+                      formItemMap.perms,
+                      formItemMap.isCache,
+                      formItemMap.visible,
+                      formItemMap.status,
+                    ],
+                    ref: formRef,
+                  }),
+                header: '新增菜单',
+                onConfirmCallback: async () => {
+                  await alovaInst.Post('system/menu', await formRef.value!.validate())
+                  $msg.success('菜单修改成功')
+                  pageListRef.value!.query()
+                },
+                width: 730,
+              })
+            },
+            permission: 'system:menu:add',
           }),
         ],
       },
@@ -251,7 +295,13 @@ const config: PageListProps = {
       title: '操作',
     },
   ],
-  formItems: [formItemMap.menuName, formItemMap.status],
+  formItems: [
+    formItemMap.menuName,
+    {
+      ...formItemMap.status,
+      component: 'TSelect',
+    },
+  ],
   operations: [
     {
       default: '新增',
