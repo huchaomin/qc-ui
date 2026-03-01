@@ -35,17 +35,17 @@ const formItemMap = {
   parentId: {
     __others: (formData) => {
       return {
-        _label: '上级部门',
-        _required: true,
-        component: 'TTreeSelect',
-        data: 'systemDeptTree',
         show: formData.parentId !== '0',
-        treeProps: {
-          expandAll: true,
-        },
       }
     },
+    _label: '上级部门',
+    _required: true,
+    component: 'TTreeSelect',
+    data: 'systemDeptTree',
     model: 'parentId',
+    treeProps: {
+      expandAll: true,
+    },
   },
   phone: {
     _label: '联系电话',

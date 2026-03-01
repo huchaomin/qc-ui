@@ -295,16 +295,16 @@ const config: PageListProps = {
                         },
                         {
                           __others: (formData) => ({
-                            _label: '数据权限',
-                            _rules: [
-                              {
-                                message: '请选择数据权限',
-                                required: true,
-                              },
-                            ],
-                            model: 'deptIds',
                             show: formData.dataScope === '2',
                           }),
+                          _label: '数据权限',
+                          _rules: [
+                            {
+                              message: '请选择数据权限',
+                              required: true,
+                            },
+                          ],
+                          model: 'deptIds',
                           slot: 'dept_ids',
                         },
                       ],

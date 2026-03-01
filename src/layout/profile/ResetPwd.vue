@@ -26,8 +26,6 @@ const formItems: FormItem[] = [
   },
   {
     __others: (formData) => ({
-      _label: '确认密码',
-      _required: true,
       _rules: [
         {
           validator: (val) => {
@@ -42,9 +40,11 @@ const formItems: FormItem[] = [
           },
         },
       ],
-      type: 'password',
     }),
+    _label: '确认密码',
+    _required: true,
     model: 'confirmPassword',
+    type: 'password',
   },
   ...(showFooter
     ? [

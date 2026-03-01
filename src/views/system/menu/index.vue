@@ -7,20 +7,17 @@ const formItemMap = {
   component: {
     __others: (formData) => {
       return {
-        _class: 'col-span-full',
-        _label: '组件路径',
-        placeholder:
-          '访问的组件路径，如：`system/user/index`，必须以index结尾，默认在`views`目录下',
         show: formData.menuType === 'C',
       }
     },
+    _class: 'col-span-full',
+    _label: '组件路径',
     model: 'component',
+    placeholder: '访问的组件路径，如：`system/user/index`，必须以index结尾，默认在`views`目录下',
   },
   icon: {
     __others: (formData) => {
       return {
-        _label: '菜单图标',
-        _required: true,
         adornment: {
           append: () =>
             h(
@@ -41,27 +38,29 @@ const formItemMap = {
         show: formData.menuType !== 'F' && isFalsy(formData.parentId),
       }
     },
+    _label: '菜单图标',
+    _required: true,
     model: 'icon',
   },
   isCache: {
     __others: (formData) => {
       return {
-        _label: '是否被keep-alive缓存',
-        component: 'TRadioGroup',
-        options: [
-          {
-            label: '缓存',
-            value: '0',
-          },
-          {
-            label: '不缓存',
-            value: '1',
-          },
-        ],
         show: formData.menuType === 'C',
       }
     },
+    _label: '是否被keep-alive缓存',
+    component: 'TRadioGroup',
     model: 'isCache',
+    options: [
+      {
+        label: '缓存',
+        value: '0',
+      },
+      {
+        label: '不缓存',
+        value: '1',
+      },
+    ],
   },
   menuName: {
     _class: 'col-start-1',
@@ -107,24 +106,24 @@ const formItemMap = {
   path: {
     __others: (formData) => {
       return {
-        _class: 'col-span-full',
-        _label: '路由地址',
-        _required: true,
-        placeholder: '请输入路由地址, router.name就是该字段首字母大写后的结果',
         show: formData.menuType !== 'F',
       }
     },
+    _class: 'col-span-full',
+    _label: '路由地址',
+    _required: true,
     model: 'path',
+    placeholder: '请输入路由地址, router.name就是该字段首字母大写后的结果',
   },
   perms: {
     __others: (formData) => {
       return {
-        _label: '权限标识',
-        placeholder: '如：system:user:list',
         show: formData.menuType !== 'M',
       }
     },
+    _label: '权限标识',
     model: 'perms',
+    placeholder: '如：system:user:list',
   },
   status: {
     _label: '状态',
@@ -135,12 +134,12 @@ const formItemMap = {
   visible: {
     __others: (formData) => {
       return {
-        _label: '是否显示',
-        component: 'TRadioGroup',
-        dicCode: 'sys_show_hide',
         show: formData.menuType !== 'F',
       }
     },
+    _label: '是否显示',
+    component: 'TRadioGroup',
+    dicCode: 'sys_show_hide',
     model: 'visible',
   },
 } satisfies Record<string, FormItem>
