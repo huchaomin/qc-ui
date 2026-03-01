@@ -1,18 +1,16 @@
 <script lang="ts" setup>
 /**
- * @description: https://icon-sets.iconify.design/?category=UI+24px
+ * @description: https://icon-sets.iconify.design
  */
 import { Icon } from '@iconify/vue'
 
-defineProps({
-  icon: {
-    required: true,
-    type: String,
-  },
-  size: {
-    default: '24',
-    type: String,
-  },
+export interface IconProps {
+  icon: string
+  size?: string
+}
+
+withDefaults(defineProps<IconProps>(), {
+  size: '24',
 })
 </script>
 

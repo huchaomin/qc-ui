@@ -1,6 +1,7 @@
 import type { ButtonsProps } from './Buttons.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { FormatDateProps } from './FormatDate.vue'
+import type { IconProps } from './Icon.vue'
 import type { LinkProps } from './Link.vue'
 import type { OptionLabelProps } from './OptionLabel.vue'
 import type { SwitchProps } from './Switch.vue'
@@ -31,6 +32,7 @@ interface ComponentPropsMap {
   Buttons: ButtonsProps
   DicLabel: DicLabelProps
   FormatDate: FormatDateProps
+  Icon: IconProps
   Link: LinkProps
   OptionLabel: OptionLabelProps
   Switch: SwitchProps

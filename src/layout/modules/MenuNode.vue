@@ -20,7 +20,7 @@ export default {
     <template v-if="item.meta.hidden !== true">
       <TSubmenu v-if="item.children" :value="item.name" :title="item.meta.title">
         <template v-if="level === 0" #icon>
-          <Icon :icon="getIcon(item)" class="mr-2.5"></Icon>
+          <Icon :icon="getIcon(item)" class="mr-3.5" size="20"></Icon>
         </template>
         <MenuNode :model="item.children" :level="level + 1"></MenuNode>
       </TSubmenu>
@@ -30,7 +30,7 @@ export default {
         :value="item.name"
       >
         <template v-if="level === 0" #icon>
-          <Icon :icon="getIcon(item)" class="mr-2.5"></Icon>
+          <Icon :icon="getIcon(item)" class="mr-3.5" size="20"></Icon>
         </template>
         {{ item.meta.title }}
       </TMenuItem>

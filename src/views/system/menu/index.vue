@@ -182,10 +182,12 @@ const config: PageListProps = {
       title: '排序',
     },
     {
+      cell: {
+        _component: 'Icon',
+      },
       colKey: 'icon',
       title: '图标',
     },
-
     {
       colKey: 'perms',
       title: '权限标识',
