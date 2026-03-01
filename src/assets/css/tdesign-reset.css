@@ -222,4 +222,13 @@ body {
 
     left: calc(32px * var(--level) - 16px);
   }
+
+  .t-input-adornment {
+    @apply flex-auto;
+  }
+
+  .t-input-adornment__append,
+  .t-input-adornment__prepend {
+    @apply flex items-center;
+  }
 }

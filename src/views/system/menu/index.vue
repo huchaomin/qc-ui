@@ -16,6 +16,33 @@ const formItemMap = {
     },
     model: 'component',
   },
+  icon: {
+    __others: (formData) => {
+      return {
+        _label: '菜单图标',
+        _required: true,
+        adornment: {
+          append: () =>
+            h(
+              resolveComponent('TButton'),
+              {
+                default: '去选择',
+                onClick: () => {
+                  window.open('https://icon-sets.iconify.design/', '_blank')
+                },
+                variant: 'text',
+              },
+              {
+                icon: () => h(resolveComponent('Icon'), { icon: 'line-md:link' }),
+              },
+            ),
+          prepend: () => h(resolveComponent('Icon'), { class: 'mx-1', icon: formData.icon }),
+        },
+        show: formData.menuType !== 'F' && isFalsy(formData.parentId),
+      }
+    },
+    model: 'icon',
+  },
   isCache: {
     __others: (formData) => {
       return {
@@ -37,12 +64,12 @@ const formItemMap = {
     model: 'isCache',
   },
   menuName: {
+    _class: 'col-start-1',
     _label: '菜单名称',
     _required: true,
     model: 'menuName',
   },
   menuType: {
-    _class: 'col-span-full',
     _label: '菜单类型',
     component: 'TRadioGroup',
     model: 'menuType',
@@ -218,6 +245,7 @@ const config: PageListProps = {
                     items: [
                       formItemMap.parentId,
                       formItemMap.menuType,
+                      formItemMap.icon,
                       formItemMap.menuName,
                       formItemMap.orderNum,
                       formItemMap.path,
@@ -267,6 +295,7 @@ const config: PageListProps = {
                         disabled: true,
                       },
                       formItemMap.menuType,
+                      formItemMap.icon,
                       formItemMap.menuName,
                       formItemMap.orderNum,
                       formItemMap.path,
@@ -320,6 +349,7 @@ const config: PageListProps = {
               items: [
                 formItemMap.parentId,
                 formItemMap.menuType,
+                formItemMap.icon,
                 formItemMap.menuName,
                 formItemMap.orderNum,
                 formItemMap.path,
