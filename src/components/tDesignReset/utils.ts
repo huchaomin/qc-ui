@@ -26,7 +26,7 @@ export const tablePropsInit = {
   stripe: true,
   tableLayout: 'fixed',
   tree: () => ({
-    indent: 40,
+    indent: 41,
     treeNodeColumnIndex: 0,
   }), // 解决表格报错问题
 } as const

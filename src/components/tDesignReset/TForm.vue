@@ -121,13 +121,13 @@ interface SlotItem {
   model?: string // 传给 name 参与校验
   slot: string
 }
+
+export default {
+  inheritAttrs: false,
+}
 </script>
 
 <script setup lang="ts">
-defineOptions({
-  inheritAttrs: false,
-})
-
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {

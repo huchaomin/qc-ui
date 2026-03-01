@@ -48,19 +48,24 @@
     ],
     "description": "usePagination alova"
   },
-  "$confirm_form": {
-    "prefix": "$confirm_form",
+  "新建一个form弹窗": {
+    "prefix": "$form_confirm",
     "body": [
       "const formRef = ref<FormInstance | null>(null)",
       "",
+      "watch(",
+      "  formRef,",
+      "  () => {",
+      "    formRef.value!.setFormData(row)",
+      "  },",
+      "  {",
+      "    once: true,",
+      "  },",
+      ")",
       "\\$confirm({",
       "  body: () =>",
       "    h(resolveComponent('TForm') as Component<FormProps>, {",
-      "      items: pickFormItems(formItems, ['dictName'], {",
-      "        dictName: {",
-      "          _required: true,",
-      "        },",
-      "      }),",
+      "      items: [formItemMap.menuName],",
       "      labelAlign: 'right',",
       "      layout: 'vertical',",
       "      ref: formRef,",
@@ -71,9 +76,9 @@
       "    \\$msg.success('字典添加成功')",
       "    pageListRef.value!.query()",
       "  },",
-      "  width: 430,",
+      "  width: 430, // 730",
       "})"
     ],
-    "description": "$confirm_form"
+    "description": "新建一个form弹窗"
   }
 }

@@ -203,6 +203,10 @@ body {
 
   .t-tree__icon {
     width: 32px;
+
+    &:empty {
+      display: none;
+    }
   }
 
   .t-tree__item {
@@ -217,9 +221,5 @@ body {
     }
 
     left: calc(32px * var(--level) - 16px);
-  }
-
-  .t-tree__line--leaf::before {
-    width: 42px;
   }
 }
