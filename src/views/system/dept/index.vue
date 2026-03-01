@@ -74,10 +74,21 @@ const config: PageListProps = {
             pageSize: undefined,
           },
           transform: (res: Record<string, any>[]) => {
+            const tree = flatArrToTree(res, {
+              idKey: 'deptId',
+            })
+            const insertParentId = (nodes: typeof tree) => {
+              nodes.forEach((node) => {
+                if ((node.children ?? []).length > 0) {
+                  expandedTreeNodes.value.push(node.deptId)
+                  insertParentId(node.children!)
+                }
+              })
+            }
+
+            insertParentId(tree)
             return {
-              rows: flatArrToTree(res, {
-                idKey: 'deptId',
-              }),
+              rows: tree,
               total: 0,
             }
           },
