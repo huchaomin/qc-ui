@@ -4,17 +4,17 @@ import type { GlobalConfigProvider } from 'tdesign-vue-next'
 const globalConfig: GlobalConfigProvider = {
   table: {
     treeExpandAndFoldIcon: (h, { type }) => {
-      const icon = resolveComponent('Icon')
-      const button = resolveComponent('TButton')
-
       return h(
-        button,
+        resolveComponent('TButton'),
         {
           shape: 'circle',
           variant: 'text',
         },
         {
-          icon: () => h(icon, { icon: `line-md:chevron-${type === 'expand' ? 'right' : 'down'}` }),
+          icon: () =>
+            h(resolveComponent('Icon'), {
+              icon: `line-md:chevron-${type === 'expand' ? 'right' : 'down'}`,
+            }),
         },
       )
     },

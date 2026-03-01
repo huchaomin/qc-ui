@@ -31,7 +31,39 @@ const promiseMap = {
       }))
     },
   }),
-  systemDeptTree: alovaInst.Get<TreeListItem[]>('system/user/deptTree', {
+  systemDeptTree: alovaInst.Get<TreeListItem[]>('system/dept/list', {
+    transform: (res) => {
+      return flatArrToTree(
+        (res as Record<string, any>[]).map((item) => {
+          return {
+            ...item,
+            label: item.deptName as string,
+            value: item.deptId as string,
+          }
+        }),
+        {
+          idKey: 'value',
+        },
+      ) as TreeListItem[]
+    },
+  }),
+  systemMenuTree: alovaInst.Get<TreeListItem[]>('system/menu/list', {
+    transform: (res) => {
+      return flatArrToTree(
+        (res as Record<string, any>[]).map((item) => {
+          return {
+            ...item,
+            label: item.menuName as string,
+            value: item.menuId as string,
+          }
+        }),
+        {
+          idKey: 'value',
+        },
+      ) as TreeListItem[]
+    },
+  }),
+  systemUserDeptTree: alovaInst.Get<TreeListItem[]>('system/user/deptTree', {
     transform: (res) => {
       const fn = (item: Record<string, any>[]): TreeListItem[] => {
         return item.map((i) => {
@@ -50,22 +82,6 @@ const promiseMap = {
       }
 
       return fn(res as Record<string, any>[])
-    },
-  }),
-  systemMenuTree: alovaInst.Get<TreeListItem[]>('system/menu/list', {
-    transform: (res) => {
-      return flatArrToTree(
-        (res as Record<string, any>[]).map((item) => {
-          return {
-            ...item,
-            label: item.menuName as string,
-            value: item.menuId as string,
-          }
-        }),
-        {
-          idKey: 'value',
-        },
-      ) as TreeListItem[]
     },
   }),
 }

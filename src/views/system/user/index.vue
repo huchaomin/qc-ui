@@ -19,7 +19,7 @@ const formItemMap = {
     _label: '归属部门',
     _required: true,
     component: 'TTreeSelect',
-    data: 'systemDeptTree',
+    data: 'systemUserDeptTree',
     model: 'deptId',
     treeProps: {
       expandAll: true,
