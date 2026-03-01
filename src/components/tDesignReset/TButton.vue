@@ -95,45 +95,47 @@ const autoIcon = computed(() => {
 
   return icon
 })
-const TButtonComponent = computed(() => {
-  const vNode = h(
-    compo,
-    mergeProps(
-      useAttrs(),
-      {
-        ...otherProps.value,
-        ref: compoRef,
-      },
-      {
-        class: 'flex-shrink-0',
-      },
-    ),
+const attrs = useAttrs()
+const slots = useSlots()
+const buttonBindProps = computed(() => {
+  return mergeProps(
+    attrs,
+    {
+      ...otherProps.value,
+      ref: compoRef,
+    },
+    {
+      class: 'flex-shrink-0',
+    },
   )
-
-  return withDirectives(vNode, [[resolveDirective('permission'), props.permission]])
+})
+const buttonBindSlots = computed(() => {
+  return {
+    ...(autoIcon.value
+      ? {
+          icon: () => h(resolveComponent('Icon'), { icon: autoIcon.value }),
+        }
+      : {}),
+    ...slots,
+  }
 })
 </script>
 
 <template>
-  <template v-if="props.show">
-    <TPopconfirm v-if="props.popconfirm" v-bind="props.popconfirm">
-      <TButtonComponent @vue:updated="setTextContent" @vue:mounted="setTextContent">
-        <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
-          <slot :name="k" v-bind="slotScope"></slot>
-        </template>
-        <template v-if="autoIcon" #icon>
-          <Icon :icon="autoIcon"></Icon>
-        </template>
-      </TButtonComponent>
+  <template v-if="show && checkPermissions(permission)">
+    <TPopconfirm v-if="popconfirm" v-bind="popconfirm">
+      <component
+        :is="h(compo, buttonBindProps, buttonBindSlots)"
+        @vue:updated="setTextContent"
+        @vue:mounted="setTextContent"
+      ></component>
     </TPopconfirm>
-    <TButtonComponent v-else @vue:updated="setTextContent" @vue:mounted="setTextContent">
-      <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
-        <slot :name="k" v-bind="slotScope"></slot>
-      </template>
-      <template v-if="autoIcon" #icon>
-        <Icon :icon="autoIcon"></Icon>
-      </template>
-    </TButtonComponent>
+    <component
+      :is="h(compo, buttonBindProps, buttonBindSlots)"
+      v-else
+      @vue:updated="setTextContent"
+      @vue:mounted="setTextContent"
+    ></component>
   </template>
 </template>
 

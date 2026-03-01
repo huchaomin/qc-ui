@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import type { InputProps as _InputProps, InputValue } from 'tdesign-vue-next'
+import type { InputProps as _InputProps, InputAdornmentProps, InputValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
 export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'> & {
+  adornment?: InputAdornmentProps
   modelValue: InputValue
 }
 
@@ -24,6 +25,7 @@ const otherProps = computed(() => {
     ...props,
   }
 
+  delete obj.adornment
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]
@@ -39,24 +41,29 @@ function compoRef(instance: any) {
 
   vm.exposed = exposed
 }
+
+const ComposeComponent = computed(() => {
+  const input = h(
+    compo,
+    mergeProps(useAttrs(), {
+      ...otherProps,
+      onChange: (...args: OnChangeParams) => {
+        emit('update:modelValue', args[0])
+        props.onChange?.(...args)
+      },
+      ref: compoRef,
+    }),
+    useSlots(),
+  )
+
+  return props.adornment
+    ? h(resolveComponent('TInputAdornment'), props.adornment, {
+        default: () => input,
+      })
+    : input
+})
 </script>
 
 <template>
-  <component
-    :is="
-      h(
-        compo,
-        mergeProps($attrs, {
-          ...otherProps,
-          onChange: (...args: OnChangeParams) => {
-            emit('update:modelValue', args[0])
-            props.onChange?.(...args)
-          },
-          ref: compoRef,
-        }),
-        $slots,
-      )
-    "
-  >
-  </component>
+  <ComposeComponent></ComposeComponent>
 </template>

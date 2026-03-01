@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type {
   SelectProps as _SelectProps,
+  InputAdornmentProps,
   SelectOption,
   SelectOptionGroup,
   SelectValue,
@@ -12,6 +13,7 @@ export type SelectProps = Omit<
   _SelectProps,
   'defaultInputValue' | 'defaultPopupVisible' | 'defaultValue' | 'options' | 'value'
 > & {
+  adornment?: InputAdornmentProps
   dicCode?: string
   modelValue: SelectValue
   options?: SelectOption[] | UseListKey
@@ -145,6 +147,7 @@ const otherProps = computed(() => {
 
   delete obj.dicCode
   delete obj.showCheckAll
+  delete obj.adornment
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]
@@ -158,7 +161,6 @@ const innerPopupVisible = defineModel<boolean>('popupVisible', {
 const innerInputValue = defineModel<string>('inputValue', {
   default: '',
 })
-// const { width } = useElementSize(() => vm.exposed!.$el) // 为什么会多出 一点宽度呢？
 const width = ref(0)
 
 onMounted(() => {
@@ -172,48 +174,47 @@ onMounted(() => {
     },
   )
 })
+
+const attrs = useAttrs()
+const selectBindProps = computed(() => {
+  return mergeProps(attrs, {
+    ...otherProps,
+    inputValue: innerInputValue.value,
+    modelValue: innerModelValue.value,
+    onChange: (...args: OnChangeParams) => {
+      emit('update:modelValue', args[0])
+      props.onChange?.(...args)
+    },
+    onInputChange: (...args: OnInputChangeParams) => {
+      innerInputValue.value = args[0]
+      props.onInputChange?.(...args)
+    },
+    onPopupVisibleChange: (...args: OnPopupVisibleChangeParams) => {
+      innerPopupVisible.value = args[0]
+      props.onPopupVisibleChange?.(...args)
+    },
+    options: finallyOptions.value,
+    popupProps: {
+      ...(otherProps.value.popupProps ?? {}),
+      overlayInnerStyle: (triggerElement: HTMLElement, popupElement: HTMLElement) => {
+        return {
+          minWidth: `${width.value}px`,
+          width: 'auto',
+          ...(typeof otherProps.value.popupProps?.overlayInnerStyle === 'function'
+            ? otherProps.value.popupProps.overlayInnerStyle(triggerElement, popupElement)
+            : (otherProps.value.popupProps?.overlayInnerStyle ?? {})),
+        }
+      },
+    },
+    popupVisible: innerPopupVisible.value,
+    ref: compoRef,
+  })
+})
 </script>
 
 <template>
-  <component
-    :is="
-      h(
-        compo,
-        mergeProps($attrs, {
-          ...otherProps,
-          options: finallyOptions,
-          modelValue: innerModelValue,
-          onChange: (...args: OnChangeParams) => {
-            emit('update:modelValue', args[0])
-            props.onChange?.(...args)
-          },
-          popupVisible: innerPopupVisible,
-          onPopupVisibleChange: (...args: OnPopupVisibleChangeParams) => {
-            innerPopupVisible = args[0]
-            props.onPopupVisibleChange?.(...args)
-          },
-          inputValue: innerInputValue,
-          onInputChange: (...args: OnInputChangeParams) => {
-            innerInputValue = args[0]
-            props.onInputChange?.(...args)
-          },
-          ref: compoRef,
-          popupProps: {
-            ...(otherProps.popupProps ?? {}),
-            overlayInnerStyle: (triggerElement: HTMLElement, popupElement: HTMLElement) => {
-              return {
-                width: 'auto',
-                minWidth: `${width}px`,
-                ...(typeof otherProps.popupProps?.overlayInnerStyle === 'function'
-                  ? otherProps.popupProps.overlayInnerStyle(triggerElement, popupElement)
-                  : (otherProps.popupProps?.overlayInnerStyle ?? {})),
-              }
-            },
-          },
-        }),
-        $slots,
-      )
-    "
-  >
-  </component>
+  <TInputAdornment v-if="adornment" :adornment="adornment">
+    <component :is="h(compo, selectBindProps, $slots)"></component>
+  </TInputAdornment>
+  <component :is="h(compo, selectBindProps, $slots)" v-else></component>
 </template>
