@@ -23,7 +23,7 @@ export type CellObjConfig = UnionToNestedXOR<
 export type CellObjConfigFn = (
   h: typeof import('vue').h,
   context: CellRenderContext,
-) => CellObjConfig
+) => CellObjConfig | undefined
 
 type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] & {
   _component: T

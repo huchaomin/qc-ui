@@ -66,6 +66,8 @@
 - => Method
 - useList 没有刷新
 - FormItem 类型问题
+- 查看邮箱 这个功能抽成一个通用的
+- v-copy
 
 ## todo 项目对比
 

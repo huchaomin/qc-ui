@@ -76,10 +76,10 @@ export function useDicLabel(
   return computed(() => {
     if (value === undefined) {
       return arr.value.map((item) => item.label)
-    } else if (typeof value === 'string') {
-      return arr.value.find((item) => item.value === value)?.label ?? ''
-    } else {
+    } else if (Array.isArray(value)) {
       return value.map((c) => arr.value.find((item) => item.value === c)?.label ?? '')
+    } else {
+      return arr.value.find((item) => item.value === String(value))?.label ?? ''
     }
   })
 }

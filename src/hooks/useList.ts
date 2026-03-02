@@ -84,6 +84,15 @@ const promiseMap = {
       return fn(res as Record<string, any>[])
     },
   }),
+  task: alovaInst.Get<ListItem[]>('yq/task/getList', {
+    transform: (res) => {
+      return (res as Record<string, any>[]).map((item) => ({
+        label: item.name as string,
+        value: item.id as string,
+        ...item,
+      }))
+    },
+  }),
 }
 
 export function useList(key: UseListAllKey) {

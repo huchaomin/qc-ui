@@ -8,16 +8,6 @@ import '@/plugins/others'
 
 const app = createApp(App)
 
-app.config.errorHandler = (...args) => {
-  if (args[0] instanceof Error) {
-    if (args[0].message === 'confirm_cancel') {
-      return
-    }
-  }
-
-  console.error(args)
-}
-
 app.use(store)
 app.use(router)
 app.use(directives)

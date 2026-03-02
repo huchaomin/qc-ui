@@ -14,7 +14,7 @@ const attrs = useAttrs() as unknown as CellRenderContext
 const dicLabel = computed(() => {
   const value = _get(attrs.row, attrs.col.colKey)
 
-  return value ? useDicLabel(props.dicCode, value).value : ''
+  return isFalsy(value) ? '' : useDicLabel(props.dicCode, value).value
 })
 </script>
 

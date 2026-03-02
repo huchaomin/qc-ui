@@ -56,13 +56,15 @@ export type FormItem = XOR<
       FormItemBase & {
         __others?: (
           formData: FormPropsData,
-        ) => AllowedComponentProps & ComponentItemType & FormItemBase
+        ) => Partial<AllowedComponentProps & ComponentItemType & FormItemBase>
         model: string
       },
     FormItemBase & {
-      __others?: (formData: FormPropsData) => FormItemBase & {
-        model?: string
-      }
+      __others?: (formData: FormPropsData) => Partial<
+        FormItemBase & {
+          model?: string
+        }
+      >
       slot: string
     } & {
       model?: string
