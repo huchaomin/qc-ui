@@ -31,6 +31,15 @@ const promiseMap = {
       }))
     },
   }),
+  monitorPhrase: alovaInst.Get<ListItem[]>('yq/monitorPhrase/getList', {
+    transform: (res) => {
+      return (res as Record<string, any>[]).map((item) => ({
+        label: item.name as string,
+        value: item.id as string,
+        ...item,
+      }))
+    },
+  }),
   systemDeptTree: alovaInst.Get<TreeListItem[]>('system/dept/list', {
     transform: (res) => {
       return flatArrToTree(

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { InputProps as _InputProps, InputAdornmentProps, InputValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import { inputPropsInit } from './utils'
 
 export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'> & {
   adornment?: InputAdornmentProps
@@ -12,11 +13,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InputProps>(), {
-  autocomplete: 'off',
-  clearable: true,
-  placeholder: '请输入',
-})
+const props = withDefaults(defineProps<InputProps>(), inputPropsInit)
 const emit = defineEmits<{
   'update:modelValue': [value: InputValue]
 }>()

@@ -1,4 +1,5 @@
 import type { ButtonsProps } from './Buttons.vue'
+import type { DefaultProps } from './Default.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { FormatDateProps } from './FormatDate.vue'
 import type { IconProps } from './Icon.vue'
@@ -30,6 +31,7 @@ type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] &
 }
 interface ComponentPropsMap {
   Buttons: ButtonsProps
+  Default: DefaultProps
   DicLabel: DicLabelProps
   FormatDate: FormatDateProps
   Icon: IconProps

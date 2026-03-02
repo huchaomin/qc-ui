@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
     label: 'label',
     value: 'value',
   }),
-  minCollapsedNum: 2,
+  minCollapsedNum: 1,
   /**
    * @description: 是否多选
    */

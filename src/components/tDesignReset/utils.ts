@@ -99,3 +99,8 @@ export const treePropsInit = {
   transition: true,
   valueMode: 'all',
 } as const
+export const inputPropsInit = {
+  autocomplete: 'off',
+  clearable: true,
+  placeholder: '请输入',
+} as const

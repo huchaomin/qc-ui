@@ -22,10 +22,12 @@ import type { TextareaProps } from './TTextarea.vue'
 import type { TreeProps } from './TTree.vue'
 import type { TreeSelectProps } from './TTreeSelect.vue'
 import type { UploadProps } from './TUpload.vue'
+import type { CronProps } from '@/components/autoImport/Cron.vue'
 import { mergeProps } from 'vue'
 import { formPropsInit } from './utils'
 
 export interface ComponentPropsMap {
+  Cron: Omit<CronProps, 'modelValue'>
   TCheckbox: Omit<CheckboxProps, 'modelValue'>
   TCheckboxGroup: Omit<CheckboxGroupProps, 'modelValue'>
   TDateRangePicker: Omit<DateRangePickerProps, 'modelValue'>
@@ -184,8 +186,21 @@ watch(
   },
 )
 
+const asyncComponentCache = new Map<string, Component>()
+
 function getComponent(compo: string | undefined): Component {
   if (typeof compo === 'string') {
+    if (compo === 'Cron') {
+      if (!asyncComponentCache.has(compo)) {
+        asyncComponentCache.set(
+          compo,
+          defineAsyncComponent(() => import('@/components/autoImport/Cron.vue')),
+        )
+      }
+
+      return asyncComponentCache.get(compo)!
+    }
+
     return resolveComponent(compo) as Component
   }
 
