@@ -141,8 +141,11 @@ const config: PageListProps = {
                   }),
                 header: '修改字典类型',
                 onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/type', await formRef.value!.validate())
-                  $msg.success('字典修改成功')
+                  await alovaInst.Put('system/dict/type', {
+                    ...(await formRef.value!.validate()),
+                    dictId: row.dictId,
+                  })
+                  $msg.success('字典类型修改成功')
                   pageListRef.value!.query()
                 },
                 width: 430,

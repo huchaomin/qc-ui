@@ -136,7 +136,10 @@ const config: PageListProps = {
                   }),
                 header: '修改字典数据',
                 onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/data', await formRef.value!.validate())
+                  await alovaInst.Put('system/dict/data', {
+                    ...(await formRef.value!.validate()),
+                    dictCode: row.dictCode,
+                  })
                   $msg.success('字典数据修改成功')
                   pageListRef.value!.query()
                 },
