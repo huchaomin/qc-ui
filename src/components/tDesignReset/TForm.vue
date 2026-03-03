@@ -123,6 +123,10 @@ type SetFormData = (
      * @description: 覆盖部分数据
      */
     override?: FormPropsData
+    /**
+     * @description: 需要逗号分割成数组赋值的key
+     */
+    splitToArrKeys?: string[]
   },
 ) => void
 interface SlotItem {
@@ -401,10 +405,14 @@ function compoRef(instance: any) {
     inst.getFormData = getFormData
 
     inst.setFormData = (data, options) => {
-      const { isNotFalsy = true, override = {} } = options ?? {}
+      const { isNotFalsy = true, override = {}, splitToArrKeys = [] } = options ?? {}
 
       Object.keys(props.data).forEach((key) => {
-        if (isNotFalsy) {
+        if (splitToArrKeys.includes(key)) {
+          // eslint-disable-next-line vue/no-mutating-props
+          props.data[key] =
+            typeof data[key] === 'string' ? data[key].split(',').filter(Boolean) : []
+        } else if (isNotFalsy) {
           if (!isFalsy(data[key])) {
             // eslint-disable-next-line vue/no-mutating-props
             props.data[key] = data[key]

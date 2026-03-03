@@ -22,6 +22,19 @@ const { data: neWordsType2Data, send: neWordsType2Send } = useRequest(
     initialData: [],
   },
 )
+
+function taskTypeChange(taskType: string) {
+  if (taskType === '2') {
+    if (wordsType2Data.value.length === 0) {
+      wordsType2Send()
+    }
+  } else {
+    if (neWordsType2Data.value.length === 0) {
+      neWordsType2Send()
+    }
+  }
+}
+
 const formItemMap = {
   brandId: {
     _label: '品牌',
@@ -129,16 +142,7 @@ const formItemMap = {
       return {
         onChange: (value: any) => {
           formData.monitorPhraseIds = []
-
-          if (value === '2') {
-            if (wordsType2Data.value.length === 0) {
-              wordsType2Send()
-            }
-          } else {
-            if (neWordsType2Data.value.length === 0) {
-              neWordsType2Send()
-            }
-          }
+          taskTypeChange(value)
         },
       }
     },
@@ -307,10 +311,16 @@ const config: PageListProps = {
             onClick: () => {
               const formRef = ref<FormInstance | null>(null)
 
+              taskTypeChange(row.taskType)
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row)
+                  formRef.value!.setFormData(row, {
+                    override: {
+                      startEndTime: row.taskType === '1' ? [row.startTime, row.endTime] : [],
+                    },
+                    splitToArrKeys: ['monitorPhraseIds'],
+                  })
                 },
                 {
                   once: true,
@@ -320,26 +330,37 @@ const config: PageListProps = {
                 body: () =>
                   h(resolveComponent('TForm') as Component<FormProps>, {
                     items: [
-                      formItemMap.brandName,
-                      formItemMap.contacts,
-                      formItemMap.contactsPhone,
-                      {
-                        ...formItemMap.status,
-                        component: 'TRadioGroup',
-                      },
-                      formItemMap.screenData,
-                      formItemMap.contactsEmail,
-                      formItemMap.remark,
+                      formItemMap.name,
+                      formItemMap.taskType,
+                      formItemMap.startEndTime,
+                      formItemMap.brandId,
+                      formItemMap.monitorPhraseIds,
+                      formItemMap.targetDesc,
+                      formItemMap.searchFrequency,
+                      formItemMap.priority,
+                      formItemMap.daysToToday,
+                      formItemMap.useBrandWx,
+                      formItemMap.status,
                     ],
                     ref: formRef,
                   }),
-                header: '修改品牌',
+                header: '修改任务',
                 onConfirmCallback: async () => {
+                  const formData = await formRef.value!.validate()
+
+                  formData.monitorPhraseIds = formData.monitorPhraseIds.join(',')
+
+                  if (formData.taskType === '1') {
+                    formData.startTime = formData.startEndTime[0]
+                    formData.endTime = formData.startEndTime[1]
+                  }
+
+                  delete formData.startEndTime
                   await alovaInst.Put('yq/task', {
-                    ...(await formRef.value!.validate()),
+                    ...formData,
                     id: row.id,
                   })
-                  $msg.success('品牌修改成功')
+                  $msg.success('任务修改成功')
                   pageListRef.value!.query()
                 },
                 width: 730,
