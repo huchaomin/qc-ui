@@ -5,11 +5,15 @@ defineOptions({
   inheritAttrs: false,
 })
 
-export interface DefaultProps {}
+const props = withDefaults(defineProps<DefaultProps>(), {})
+
+export interface DefaultProps {
+  default?: string
+}
 
 const attrs = useAttrs() as unknown as CellRenderContext
 </script>
 
 <template>
-  {{ _get(attrs.row, attrs.col.colKey) }}
+  {{ props.default ?? _get(attrs.row, attrs.col.colKey) }}
 </template>

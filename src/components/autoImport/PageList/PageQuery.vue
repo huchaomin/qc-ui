@@ -129,11 +129,12 @@ defineExpose({
       <slot :name="k" v-bind="slotScope"></slot>
     </template>
     <template #_btn>
-      <TButton @click="handleQuery">查询</TButton>
-      <TButton theme="default" @click="handleReset">重置</TButton>
+      <TButton class="shrink" @click="handleQuery">查询</TButton>
+      <TButton theme="default" class="shrink" @click="handleReset">重置</TButton>
       <TButton
         v-if="showToggleBtn"
         variant="outline"
+        class="shrink"
         @click="showExtraFormItems = !showExtraFormItems"
       >
         {{ showExtraFormItems ? '收起' : '展开' }}

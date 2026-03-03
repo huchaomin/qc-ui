@@ -63,11 +63,18 @@ provide('dataType', 1)
             >{{ data.monitorWords }}</TTypographyText
           >
         </div>
-        <div>
+        <div class="flex items-center">
           <span class="text-(--td-text-color-placeholder)">当前搜索词：</span>
-          <span>{{ data.currentSearchWord }}</span>
+          <TTypographyText
+            :ellipsis="{
+              tooltipProps: {
+                content: data.currentSearchWord,
+              },
+            }"
+            class="my-0! flex-1"
+            >{{ data.currentSearchWord }}</TTypographyText
+          >
         </div>
-
         <div>
           <span class="text-(--td-text-color-placeholder)">最近执行开始时间：</span>
           <span>{{ data.lastRunStartTime }}</span>
