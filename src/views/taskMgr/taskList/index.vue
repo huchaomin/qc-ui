@@ -381,6 +381,67 @@ const config: PageListProps = {
             permission: 'yq:monitorTask:clearCurrentSearchWord',
           }),
           ({ row }) => ({
+            default: '修改数据源',
+            onClick: async () => {
+              const formRef = ref<FormInstance | null>(null)
+
+              watch(
+                formRef,
+                () => {
+                  formRef.value!.setFormData(row, {
+                    splitToArrKeys: ['dataSources', 'platformName'],
+                  })
+                },
+                {
+                  once: true,
+                },
+              )
+              $confirm({
+                body: () =>
+                  h(resolveComponent('TForm') as Component<FormProps>, {
+                    data: reactive({
+                      dataSources: [],
+                    }),
+                    items: [
+                      {
+                        _label: '数据源',
+                        _required: true,
+                        component: 'TCheckboxGroup',
+                        dicCode: 'data_source',
+                        model: 'dataSources',
+                      },
+                      {
+                        __others: (formData) => {
+                          return {
+                            show: formData.dataSources.includes('5'),
+                          }
+                        },
+                        _label: '中文名',
+                        component: 'TCheckboxGroup',
+                        dicCode: 'qb_platform_name',
+                        model: 'platformName',
+                      },
+                    ],
+                    layout: 'vertical',
+                    ref: formRef,
+                  }),
+                header: '修改数据源',
+                onConfirmCallback: async () => {
+                  const formData = await formRef.value!.validate()
+
+                  await alovaInst.Put('yq/task/updateDataSources', {
+                    dataSources: formData.dataSources.join(','),
+                    id: row.id,
+                    platformName: formData.platformName?.join(',') ?? '',
+                  })
+                  $msg.success('数据源修改成功')
+                  pageListRef.value!.query()
+                },
+              })
+            },
+            permission: 'yq:task:updateDataSources',
+          }),
+          ({ row }) => ({
             default: '开启',
             onClick: async () => {
               await $confirm(`确认要立即开启【${row.name}】任务吗？`)
@@ -485,98 +546,6 @@ const config: PageListProps = {
         })
       },
       permission: 'yq:task:add',
-    },
-    {
-      default: '发送邮件',
-      onClick: async () => {
-        const formRef = ref<FormInstance | null>(null)
-
-        $confirm({
-          body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
-              data: reactive({
-                brandIds: [],
-                days: 1,
-                reportType: '1',
-              }),
-              items: [
-                {
-                  _label: '距今天数',
-                  _required: true,
-                  component: 'TInputNumber',
-                  decimalPlaces: 0,
-                  max: 365,
-                  min: 1,
-                  model: 'days',
-                },
-                {
-                  __others: (formData) => {
-                    return {
-                      onChange: () => {
-                        formData.taskIds = []
-                      },
-                    }
-                  },
-                  _label: '品牌',
-                  _required: true,
-                  component: 'TSelect',
-                  model: 'brandIds',
-                  multiple: true,
-                  options: 'brand',
-                },
-                {
-                  __others: (formData) => {
-                    return {
-                      disabled: formData.brandIds.length === 0,
-                      options: useList('task').value.filter((item) =>
-                        formData.brandIds.includes(item.brandId),
-                      ),
-                    }
-                  },
-                  _label: '任务',
-                  component: 'TSelect',
-                  model: 'taskIds',
-                  multiple: true,
-                },
-                {
-                  _label: '日报类型',
-                  component: 'TRadioGroup',
-                  model: 'reportType',
-                  options: [
-                    {
-                      label: '老日报',
-                      value: '0',
-                    },
-                    {
-                      label: '新日报',
-                      value: '1',
-                    },
-                  ],
-                },
-              ],
-              ref: formRef,
-            }),
-          header: '确认发送邮件',
-          onConfirmCallback: async () => {
-            await alovaInst.Post(
-              'yq/task/sendEmails',
-              {
-                ...(await formRef.value!.validate()),
-                ids: pageListRef.value!.selectedRows.map((item) => item.id),
-              },
-              {
-                meta: {
-                  useLoading: '邮件发送中...',
-                },
-                timeout: 0,
-              },
-            )
-            $msg('邮件发送成功')
-          },
-          width: 430, // 730
-        })
-      },
-      permission: 'task:monitorTask:sendEmails',
     },
   ],
 }
