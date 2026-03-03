@@ -1,3 +1,4 @@
+import type { ComputedRef } from 'vue'
 import { flatArrToTree } from '@/utils'
 
 export type UseListAllKey = keyof typeof promiseMap
@@ -125,6 +126,40 @@ export function useList(key: UseListAllKey) {
   }
 
   return arr
+}
+export function useListLabel(key: UseListKey): ComputedRef<string[]>
+export function useListLabel(key: UseListKey, value: string): ComputedRef<string>
+export function useListLabel(key: UseListKey, value: string[]): ComputedRef<string[]>
+export function useListLabel(
+  key: UseListKey,
+  value?: string | string[],
+): ComputedRef<string | string[]> {
+  const arr = useList(key)
+
+  return computed(() => {
+    if (value === undefined) {
+      return arr.value.map((item) => item.label)
+    }
+
+    if (Array.isArray(value)) {
+      return value.map(
+        (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? '',
+      )
+    }
+
+    if (typeof value === 'string') {
+      const splitArr = value.split(',').filter(Boolean)
+
+      if (splitArr.length > 0) {
+        return splitArr
+          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? '')
+          .filter(Boolean)
+          .join(',')
+      }
+    }
+
+    return arr.value.find((item) => String(item.value) === String(value))?.label ?? ''
+  })
 }
 export function useListRefresh(key: UseListAllKey) {
   if (refMap.has(key)) {

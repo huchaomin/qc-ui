@@ -46,8 +46,7 @@ const listItems = computed(() => {
       ]
     : []
 })
-const tab = ref('userInfo')
-const tabs = reactive([
+const tabs = [
   {
     component: markRaw(UserInfo),
     label: '基本资料',
@@ -58,7 +57,8 @@ const tabs = reactive([
     label: '修改密码',
     value: 'resetPwd',
   },
-])
+]
+const tab = ref(tabs[0]!.value)
 
 provide(
   'userInfo',
@@ -70,7 +70,7 @@ provide(
   <div class="flex gap-4">
     <TCard title="个人信息" class="flex-1">
       <TList split>
-        <TListItem v-for="item in listItems" :key="item.title" class="!px-0">
+        <TListItem v-for="item in listItems" :key="item.title" class="px-0!">
           <TListItemMeta
             :title="item.title"
             :description="isFalsy(item.description) ? '/' : item.description"
@@ -79,9 +79,9 @@ provide(
       </TList>
     </TCard>
     <TCard title="基本资料" class="flex-1">
-      <TTabs v-model="tab" size="large" class="!-mt-4">
+      <TTabs v-model="tab" size="large" class="-mt-4!">
         <TTabPanel v-for="item in tabs" :key="item.value" :value="item.value" :label="item.label">
-          <Component :is="item.component" class="!mt-4" @update="send"></Component>
+          <Component :is="item.component" class="mt-4!" @update="send"></Component>
         </TTabPanel>
       </TTabs>
     </TCard>

@@ -76,11 +76,26 @@ export function useDicLabel(
   return computed(() => {
     if (value === undefined) {
       return arr.value.map((item) => item.label)
-    } else if (Array.isArray(value)) {
-      return value.map((c) => arr.value.find((item) => item.value === c)?.label ?? '')
-    } else {
-      return arr.value.find((item) => item.value === String(value))?.label ?? ''
     }
+
+    if (Array.isArray(value)) {
+      return value.map(
+        (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? '',
+      )
+    }
+
+    if (typeof value === 'string') {
+      const splitArr = value.split(',').filter(Boolean)
+
+      if (splitArr.length > 0) {
+        return splitArr
+          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? '')
+          .filter(Boolean)
+          .join(',')
+      }
+    }
+
+    return arr.value.find((item) => String(item.value) === String(value))?.label ?? ''
   })
 }
 export function useDicOptions(code: string, includeArr?: string[]) {

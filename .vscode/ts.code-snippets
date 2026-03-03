@@ -3,8 +3,8 @@
     "prefix": "useRequest",
     "body": [
       "const { data, loading, send } = useRequest(xxx, {",
-      "  initialData: [],",
       "  immediate: false,",
+      "  initialData: [],",
       "})"
     ],
     "description": "useRequest alova"
