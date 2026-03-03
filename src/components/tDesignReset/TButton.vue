@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ButtonProps as _ButtonProps } from 'tdesign-vue-next'
 import type { PopconfirmProps } from '@/components/tDesignReset/TPopconfirm.vue'
-import { mergeProps, resolveDirective, withDirectives } from 'vue'
+import { mergeProps } from 'vue'
 import { buttonPropsInit } from '@/components/tDesignReset/utils'
 
 defineOptions({
@@ -64,8 +64,11 @@ const autoIcon = computed(() => {
   const map = {
     /* eslint-disable perfectionist/sort-objects */
     'line-md:plus': ['新增', '添加'],
-    'line-md:account': ['角色', '用户'],
     'line-md:cancel': ['取消'],
+    'line-md:remove': ['清除'],
+    'material-symbols:restart-alt': ['开启'],
+    'material-symbols:pause': ['暂停'],
+    'line-md:account': ['角色', '用户'],
     'line-md:chevron-down': ['展开'],
     'line-md:chevron-up': ['收起'],
     'line-md:clipboard-check': ['保存', '提交'],

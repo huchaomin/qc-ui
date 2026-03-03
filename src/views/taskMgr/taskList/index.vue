@@ -368,6 +368,44 @@ const config: PageListProps = {
             },
             permission: 'yq:task:edit',
           }),
+          ({ row }) => ({
+            default: '清除搜索词',
+            onClick: async () => {
+              await $confirm(`确认要清除【${row.name}】任务的搜索词吗？`)
+              await alovaInst.Post('yq/task/clearCurrentSearchWord', {
+                id: row.id,
+              })
+              $msg.success('搜索词清除成功')
+              pageListRef.value!.query()
+            },
+            permission: 'yq:monitorTask:clearCurrentSearchWord',
+          }),
+          ({ row }) => ({
+            default: '开启',
+            onClick: async () => {
+              await $confirm(`确认要立即开启【${row.name}】任务吗？`)
+              await alovaInst.Post('yq/task/runTask', {
+                id: row.id,
+              })
+              $msg.success('执行成功')
+              pageListRef.value!.query()
+            },
+            permission: 'yq:task:runTask',
+            show: row.runStatus === 1,
+          }),
+          ({ row }) => ({
+            default: '暂停',
+            onClick: async () => {
+              await $confirm(`确认要立即暂停【${row.name}】任务吗？`)
+              await alovaInst.Post('yq/task/breakTask', {
+                id: row.id,
+              })
+              $msg.success('暂停成功')
+              pageListRef.value!.query()
+            },
+            permission: 'yq:task:breakTask',
+            show: row.runStatus === 0,
+          }),
         ],
       },
       colKey: '_operation',
