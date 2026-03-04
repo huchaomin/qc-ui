@@ -496,12 +496,14 @@ onMounted(() => {
     },
   )
 })
-onUpdated(() => {
+
+function innerTableUpdated() {
   theadTagRef.value = tableParentRef.value!.querySelector('thead')
   tbodyTagRef.value = tableParentRef.value!.querySelector('tbody')
   tfootTagRef.value = tableParentRef.value!.querySelector('tfoot')
   tableContentRef.value = tableParentRef.value!.querySelector('.t-table__content')
-})
+}
+
 onUnmounted(() => {
   if (columnHides.value.length === 0) {
     localStorage.removeItem(columnConfigStorageKey.value)
@@ -615,6 +617,7 @@ defineExpose(
               ),
             )
           "
+          @vue:updated="innerTableUpdated"
         >
           <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
             <slot :name="k" v-bind="slotScope"></slot>

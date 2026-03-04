@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { addFollow, updateDealMark, warnByHand } from '@/bus'
+import AddVideoManual from './AddVideoManual.vue'
 
 const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
@@ -292,6 +293,28 @@ const config: PageListProps = {
     formItemMap.brandProduct,
   ],
   operations: [
+    {
+      default: '手动添加视频',
+      onClick: () => {
+        const resetPwdRef = ref<InstanceType<typeof AddVideoManual> | null>(null)
+
+        void $confirm({
+          body: () =>
+            h(AddVideoManual, {
+              ref: resetPwdRef,
+              taskId: id,
+            }),
+          confirmBtn: checkPermissions('task:taskContent:handSearchSave') ? undefined : null,
+          header: '手动添加视频',
+          onConfirmCallback: async () => {
+            await resetPwdRef.value!.handleSubmit()
+            pageListRef.value!.query()
+          },
+          width: 1200, // 730
+        })
+      },
+      permission: 'task:taskContent:handSearch',
+    },
     reactive({
       default: '加入关注',
       disabled: computed(() => selectedRows.value.length === 0),

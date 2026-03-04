@@ -12,10 +12,12 @@ defineOptions({
   inheritAttrs: false,
 })
 
+const DEFAULT_ACCEPT = '.xlsx,.xls'
+// eslint-disable-next-line vue/define-macros-order
 const props = withDefaults(defineProps<UploadProps>(), {
+  accept: DEFAULT_ACCEPT,
   multiple: false,
   theme: 'file',
-  // accept: '.xlsx,.xls',
   /**
    * @description: 怎么展示文件名:前面8位，后面6位，中间省略号
    */
@@ -49,7 +51,12 @@ export type UploadProps = Omit<
       Responded: Blob
     }
   >
-  requestMethod?: (file: UploadFile | UploadFile[]) => Method
+  requestMethod?:
+    | ((file: UploadFile | UploadFile[]) => Method)
+    | {
+        biz: string
+        ossUrl?: string
+      }
 }
 
 type OnChangeParams = Parameters<NonNullable<_UploadProps['onChange']>>
@@ -61,25 +68,60 @@ const finallyRequestMethod = computed(() => {
 
   return (file: UploadFile | UploadFile[]) =>
     new Promise<RequestMethodResponse>((resolve) => {
-      props.requestMethod!(file)
-        .then((res) => {
-          resolve({
-            status: 'success',
-            ...res,
+      if (typeof props.requestMethod === 'function') {
+        props.requestMethod!(file)
+          .then((res) => {
+            resolve({
+              status: 'success',
+              ...res,
+            })
           })
-        })
-        .catch((err) => {
-          resolve({
-            error: err.message ?? '上传失败',
-            response: {},
-            status: 'fail',
+          .catch((err) => {
+            resolve({
+              error: err.message ?? '上传失败',
+              response: {},
+              status: 'fail',
+            })
           })
-        })
+      } else {
+        alovaInst
+          .Post<string>(
+            props.requestMethod!.ossUrl ?? 'common/uploadOss',
+            {
+              biz: props.requestMethod!.biz,
+              file: (file as UploadFile).raw,
+            },
+            {
+              meta: {
+                useFormData: true,
+              },
+            },
+          )
+          .then((res) => {
+            resolve({
+              response: {
+                url: res,
+              },
+              status: 'success',
+            })
+          })
+          .catch((err) => {
+            resolve({
+              error: err.message ?? '上传失败',
+              response: {},
+              status: 'fail',
+            })
+          })
+      }
     })
 })
 const otherProps = computed(() => {
   const obj: Partial<UploadProps> = {
     ...props,
+  }
+
+  if (['image', 'image-flow'].includes(obj.theme!)) {
+    obj.accept = obj.accept === DEFAULT_ACCEPT ? 'image/*' : obj.accept
   }
 
   Object.keys(obj).forEach((key) => {

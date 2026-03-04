@@ -75,6 +75,7 @@ const autoIcon = computed(() => {
     'line-md:chevron-up': ['收起'],
     'line-md:close': ['关闭'],
     'line-md:rotate-270': ['刷新', '重置'],
+    'ix:select-alt': ['选择'],
     'line-md:search': ['查询', '搜索'],
     'line-md:upload-outline': ['上传', '导入'],
     'mdi:delete-outline': ['删除'],

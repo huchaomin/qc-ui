@@ -80,5 +80,24 @@
       "})"
     ],
     "description": "新建一个form弹窗"
+  },
+  "新建一个confirm弹窗": {
+    "prefix": "$confirm",
+    "body": [
+      "const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)",
+      "",
+      "void \\$confirm({",
+      "  body: () =>",
+      "    h(ResetPwd, {",
+      "      ref: resetPwdRef,",
+      "    }),",
+      "  header: 'xxx',",
+      "  onConfirmCallback: async () => {",
+      "    await resetPwdRef.value!.handleSubmit()",
+      "  },",
+      "  width: 430, // 730",
+      "})"
+    ],
+    "description": "新建一个confirm弹窗"
   }
 }
