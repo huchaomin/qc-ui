@@ -68,6 +68,7 @@
 - FormItem 类型问题
 - 查看邮箱 这个功能抽成一个通用的
 - v-copy
+- emptyFormData 不需要
 
 ## todo 项目对比
 

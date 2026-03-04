@@ -16,6 +16,7 @@ import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
 import type { InputNumberProps } from './TInputNumber.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
+import type { RangeInputProps } from './TRangeInput.vue'
 import type { SelectProps } from './TSelect.vue'
 import type { SwitchProps } from './TSwitch.vue'
 import type { TextareaProps } from './TTextarea.vue'
@@ -34,6 +35,7 @@ export interface ComponentPropsMap {
   TInput: Omit<InputProps, 'modelValue'>
   TInputNumber: Omit<InputNumberProps, 'modelValue'>
   TRadioGroup: Omit<RadioGroupProps, 'modelValue'>
+  TRangeInput: Omit<RangeInputProps, 'modelValue'>
   TSelect: Omit<SelectProps, 'modelValue'>
   TSwitch: Omit<SwitchProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
@@ -161,7 +163,9 @@ function setInitFormDataValues() {
   formItemsConfig.value.forEach((item) => {
     if (item.model !== undefined && !Object.prototype.hasOwnProperty.call(props.data, item.model)) {
       const isArr =
-        ['TCheckboxGroup', 'TDateRangePicker', 'TUpload'].includes(item.component as string) ||
+        ['TCheckboxGroup', 'TDateRangePicker', 'TRangeInput', 'TUpload'].includes(
+          item.component as string,
+        ) ||
         (item.multiple === true && item.component === 'TSelect')
 
       // 这里类型有增多的话 inst.emptyFormData 也要处理一下

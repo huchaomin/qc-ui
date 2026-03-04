@@ -89,7 +89,7 @@ declare module 'vue' {
     TRadio: typeof import('tdesign-vue-next')['Radio'];
     TRadioButton: typeof import('tdesign-vue-next')['RadioButton'];
     // TRadioGroup: typeof import('tdesign-vue-next')['RadioGroup'];
-    TRangeInput: typeof import('tdesign-vue-next')['RangeInput'];
+    // TRangeInput: typeof import('tdesign-vue-next')['RangeInput'];
     TRangeInputPopup: typeof import('tdesign-vue-next')['RangeInputPopup'];
     TRate: typeof import('tdesign-vue-next')['Rate'];
     TRow: typeof import('tdesign-vue-next')['Row'];
@@ -150,6 +150,7 @@ declare module 'vue' {
     TTreeSelect: (typeof import('@/components/tDesignReset/TTreeSelect.vue'))['default']
     TUpload: (typeof import('@/components/tDesignReset/TUpload.vue'))['default']
     TTree: (typeof import('@/components/tDesignReset/TTree.vue'))['default']
+    TRangeInput: (typeof import('@/components/tDesignReset/TRangeInput.vue'))['default']
   }
 }
 

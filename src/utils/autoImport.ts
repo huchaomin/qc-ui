@@ -22,7 +22,7 @@ type FormatNumberConfig = ConstructorParameters<typeof Intl.NumberFormat>[1] & {
     | 'halfTrunc'
     | 'trunc'
 
-  trailingZeroDisplay: 'auto' | 'stripIfInteger'
+  trailingZeroDisplay?: 'auto' | 'stripIfInteger'
 }
 
 function formatNumber(n: any, config?: FormatNumberConfig): string {
