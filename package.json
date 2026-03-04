@@ -23,6 +23,7 @@
     "@vueuse/integrations": "^14.2.1",
     "alova": "^3.5.0",
     "crypto-js": "^4.2.0",
+    "echarts": "^6.0.0",
     "file-saver": "^2.0.5",
     "nprogress": "^0.2.0",
     "path-browserify": "^1.0.1",
@@ -31,6 +32,7 @@
     "tailwindcss": "^4.2.1",
     "tdesign-vue-next": "^1.18.2",
     "vue": "^3.5.29",
+    "vue-echarts": "^8.0.1",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
