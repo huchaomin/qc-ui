@@ -70,6 +70,7 @@
 - v-copy
 - emptyFormData 不需要
 - hooks 一部分清理到 bus, bus 的eslint 有问题
+- $fileView
 
 ## todo 项目对比
 

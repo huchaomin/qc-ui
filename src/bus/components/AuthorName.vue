@@ -1,0 +1,128 @@
+<script lang="ts" setup>
+import type { SelectInputProps } from 'tdesign-vue-next'
+
+defineOptions({
+  inheritAttrs: false,
+})
+
+const emit = defineEmits<{
+  change: [value: ListItem]
+}>()
+
+interface ListItem {
+  id: null | string
+  label: string
+  value: string
+}
+
+const inputValue = ref('')
+const selectValue = ref<ListItem | undefined>()
+const popupVisible = ref(false)
+const options = ref<ListItem[]>([])
+const { loading, onError, onSuccess, send } = useRequest(
+  (data: Record<string, any>) =>
+    alovaInst.Get<Array<Record<string, any>>>('yq/author/getAuthorList', {
+      meta: {
+        useLoading: false,
+      },
+      params: data,
+    }),
+  {
+    immediate: false,
+    initialData: [],
+  },
+)
+
+onError(() => {
+  options.value = []
+})
+onSuccess(({ data }) => {
+  options.value = data.map((item) => {
+    return {
+      id: item.id,
+      label: item.nickName,
+      value: item.authorName,
+    }
+  })
+})
+
+function onOptionClick(item: ListItem) {
+  selectValue.value = item
+  inputValue.value = item.label
+  popupVisible.value = false
+  emit('change', item)
+}
+
+// const onClear: SelectInputProps['onClear'] = () => {
+//   selectValue.value = undefined
+//   inputValue.value = ''
+//   options.value = []
+// }
+const onEnter: SelectInputProps['onEnter'] = () => {
+  if (inputValue.value.trim() === '') {
+    $msg.error('请输入作者名称')
+    return
+  }
+
+  popupVisible.value = true
+  send({
+    authorName: inputValue.value,
+  })
+}
+const onPopupVisibleChange: SelectInputProps['onPopupVisibleChange'] = (val, context) => {
+  if (context.trigger === 'trigger-element-click' && options.value.length === 0) {
+    return
+  }
+
+  popupVisible.value = val
+}
+/**
+ * @description: onOptionClick 不会触发 input-change 事件
+ */
+const onInputChange: SelectInputProps['onInputChange'] = (val) => {
+  inputValue.value = val
+  selectValue.value = undefined
+  popupVisible.value = false
+  options.value = []
+}
+</script>
+
+<template>
+  <TSelectInput
+    :value="inputValue"
+    :input-value="inputValue"
+    :popup-visible="popupVisible && !loading && options.length > 0"
+    :popup-props="{
+      overlayClassName: 't-select__dropdown',
+    }"
+    allow-input
+    placeholder="请输入作者名称按回车键搜索"
+    @enter="onEnter"
+    @popup-visible-change="onPopupVisibleChange"
+    @input-change="onInputChange"
+  >
+    <template #panel>
+      <div class="t-select__dropdown-inner t-select__dropdown-inner--size-m">
+        <ul class="t-select__list">
+          <li
+            v-for="item in options"
+            :key="item.value"
+            class="t-select-option t-size-m"
+            @click="() => onOptionClick(item)"
+          >
+            <span>
+              {{ item.label }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </template>
+    <template #suffixIcon>
+      <Icon
+        :icon="loading ? 'line-md:loading-twotone-loop' : 'tdesign:chevron-down'"
+        size="16"
+        class="text-(--td-text-color-placeholder)"
+      />
+    </template>
+  </TSelectInput>
+</template>
