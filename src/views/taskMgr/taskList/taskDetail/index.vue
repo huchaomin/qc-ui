@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TaskDetail from './modules/TaskDetail.vue'
-import ViewAnalysis from './modules/ViewAnalysis.vue'
+import ViewAnalysis from './modules/viewAnalysis/Index.vue'
 
 const route = useRoute()
 const id = route.query.id as string
