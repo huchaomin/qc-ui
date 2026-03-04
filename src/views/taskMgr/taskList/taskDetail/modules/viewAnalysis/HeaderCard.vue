@@ -13,7 +13,7 @@ const emit = defineEmits<{
   'update:modelValue': [modelValue: [] | [string, string]]
 }>()
 const id = inject<string>('id')!
-const taskData = inject<Ref<null | Record<string, any>>>('taskData')!
+const data = inject<Ref<null | Record<string, any>>>('data')!
 const dataType = inject<number>('dataType')!
 // 只有事件详情才有时间范围限制
 const limitTimeRange = inject<Ref<[] | [string, string]>>('limitTimeRange', ref([]))
@@ -113,7 +113,7 @@ function handleReportGenerate(): void {
   //   {
   //     canvasList,
   //     reqContent: `热度：${Number(taskViewData.value.hotCount ?? 0)};互动量：${Number(taskViewData.value.interactNum ?? 0)};评论数：${Number(taskViewData.value.commentCount ?? 0)};`,
-  //     taskData: taskData.value!,
+  //     data: data.value!,
   //     id,
   //   },
   // )
@@ -121,7 +121,7 @@ function handleReportGenerate(): void {
 </script>
 
 <template>
-  <div ref="headerCardRef" class="mb-4 pt-4">
+  <div ref="headerCardRef" class="mb-4">
     <div class="mb-4 flex items-center">
       <div style="font-size: 16px; font-weight: bold">分析总览</div>
       <span class="ml-auto">分析时间：</span>

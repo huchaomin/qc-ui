@@ -133,6 +133,8 @@ export default defineConfig(({ command, mode }) => {
         '@formkit/auto-animate',
         '@formkit/auto-animate/vue',
         'dayjs',
+        'dayjs/plugin/customParseFormat.js',
+        'dayjs/plugin/isSameOrBefore.js',
       ],
     },
     plugins: [
