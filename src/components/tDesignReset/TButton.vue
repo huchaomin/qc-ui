@@ -63,7 +63,7 @@ const autoIcon = computed(() => {
 
   const map = {
     /* eslint-disable perfectionist/sort-objects */
-    'line-md:plus': ['新增', '添加'],
+    'line-md:plus': ['新增', '添加', '加入'],
     'line-md:cancel': ['取消'],
     'line-md:remove': ['清除'],
     'material-symbols:restart-alt': ['开启'],
@@ -79,6 +79,9 @@ const autoIcon = computed(() => {
     'line-md:upload-outline': ['上传', '导入'],
     'mdi:delete-outline': ['删除'],
     'line-md:download-outline': ['下载', '导出'],
+    'line-md:alert-circle': ['预警'],
+    'subway:mark-1': ['标记'],
+    'majesticons:checkbox-list-detail-line': ['详情'],
     'line-md:account': ['角色', '用户'],
     'line-md:file-document': ['文件'],
     'line-md:security': ['权限'],

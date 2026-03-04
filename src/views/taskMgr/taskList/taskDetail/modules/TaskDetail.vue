@@ -1,104 +1,10 @@
 <script setup lang="ts">
+import { addFollow, updateDealMark, warnByHand } from '@/bus'
+
+const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
+const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const id = inject<string>('id')!
-// formItems: [
-//   {
-//     model: 'contentType',
-//     props: {
-//       label: '内容类型',
-//       options: $dicStore('data_type'),
-//     },
-//     component: 'CSelect',
-//   },
-//   {
-//     model: 'publishTime',
-//     props: {
-//       label: '发布时间',
-//       type: 'daterange',
-//       shortcuts: 'daterange',
-//       class: 'span_2',
-//     },
-//     component: 'CDate',
-//   },
-//   {
-//     model: 'authorName',
-//     props: {
-//       label: '发布账号',
-//     },
-//   },
-//   {
-//     model: 'platform',
-//     props: {
-//       label: '来源',
-//     },
-//   },
-//   {
-//     model: 'title',
-//     props: {
-//       label: '标题',
-//     },
-//   },
-//   {
-//     model: 'moodLevel',
-//     props: {
-//       label: '内容情绪',
-//       options: $dicStore('mood_level'),
-//     },
-//     component: 'CSelect',
-//   },
-//   {
-//     model: 'negativeCommentNum',
-//     props: {
-//       label: '评论负面数',
-//       placeholder: ['最小值', '最大值'],
-//     },
-//     component: 'MinMax',
-//   },
-//   {
-//     model: 'downloadStatus',
-//     props: {
-//       label: '下载状态',
-//       options: $dicStore('download_status'),
-//     },
-//     component: 'CSelect',
-//   },
-//   {
-//     model: 'transWordStatus',
-//     props: {
-//       label: '转换状态',
-//       options: $dicStore('trans_word_status'),
-//     },
-//     component: 'CSelect',
-//   },
-//   {
-//     model: 'analysisStatus',
-//     props: {
-//       label: '分析状态',
-//       options: $dicStore('analysis_status'),
-//     },
-//     component: 'CSelect',
-//   },
-//   {
-//     model: 'dealMark',
-//     props: {
-//       label: '处理标记',
-//       options: $dicStore('deal_mark'),
-//     },
-//     component: 'CSelect',
-//   },
-//   {
-//     model: 'coreViewpoints',
-//     props: {
-//       label: '核心观点',
-//     },
-//   },
-//   {
-//     model: 'brandProduct',
-//     props: {
-//       label: '内容品牌',
-//     },
-//   },
-// ],
 const formItemMap = {
   analysisStatus: {
     _label: '分析状态',
@@ -125,16 +31,11 @@ const formItemMap = {
     model: 'coreViewpoints',
   },
   dealMark: {
-    _label: '处理标记',
+    _label: '处理状态',
     component: 'TSelect',
     dicCode: 'deal_mark',
     model: 'dealMark',
   },
-  // negativeCommentNum: {
-  //   _label: '评论负面数',
-  //   component: 'MinMax',
-  //   model: 'negativeCommentNum',
-  // },
   downloadStatus: {
     _label: '下载状态',
     component: 'TSelect',
@@ -146,6 +47,11 @@ const formItemMap = {
     component: 'TSelect',
     dicCode: 'mood_level',
     model: 'moodLevel',
+  },
+  negativeCommentNum: {
+    _label: '评论负面数',
+    component: 'TRangeInput',
+    model: 'negativeCommentNum',
   },
   platform: {
     _label: '来源',
@@ -213,7 +119,7 @@ const config: PageListProps = {
         dicCode: 'deal_mark',
       },
       colKey: 'dealMark',
-      title: '处理标记',
+      title: '处理状态',
     },
     {
       colKey: 'platform',
@@ -335,47 +241,34 @@ const config: PageListProps = {
         _component: 'Buttons',
         buttons: [
           ({ row }) => ({
-            default: '编辑',
+            default: '详情',
             onClick: () => {
-              const formRef = ref<FormInstance | null>(null)
+              const url = router.resolve({
+                name: 'VideoDetail',
+                query: {
+                  id: row.bciId,
+                },
+              })
 
-              watch(
-                formRef,
-                () => {
-                  formRef.value!.setFormData(row)
-                },
-                {
-                  once: true,
-                },
-              )
-              $confirm({
-                body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
-                    items: [
-                      formItemMap.dictType,
-                      formItemMap.dictLabel,
-                      formItemMap.dictValue,
-                      formItemMap.dictSort,
-                      formItemMap.status,
-                      formItemMap.remark,
-                    ],
-                    labelAlign: 'right',
-                    layout: 'vertical',
-                    ref: formRef,
-                  }),
-                header: '修改字典数据',
-                onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/data', {
-                    ...(await formRef.value!.validate()),
-                    dictCode: row.dictCode,
-                  })
-                  $msg.success('字典数据修改成功')
-                  pageListRef.value!.query()
-                },
-                width: 430,
+              window.open(url.href, '_blank')
+            },
+            show: router.hasRoute('VideoDetail'),
+          }),
+          ({ row }) => ({
+            default: '手工预警',
+            onClick: () => {
+              warnByHand(row)
+            },
+            permission: 'data:brandContentInfo:warnByHand',
+          }),
+          ({ row }) => ({
+            default: '标记',
+            onClick: () => {
+              updateDealMark([row]).then(() => {
+                pageListRef.value!.query()
               })
             },
-            permission: 'system:dict:edit',
+            permission: 'task:taskContent:updateDealMark',
           }),
         ],
       },
@@ -390,6 +283,7 @@ const config: PageListProps = {
     formItemMap.platform,
     formItemMap.title,
     formItemMap.moodLevel,
+    formItemMap.negativeCommentNum,
     formItemMap.downloadStatus,
     formItemMap.transWordStatus,
     formItemMap.analysisStatus,
@@ -398,44 +292,28 @@ const config: PageListProps = {
     formItemMap.brandProduct,
   ],
   operations: [
-    {
-      default: '新增',
+    reactive({
+      default: '加入关注',
+      disabled: computed(() => selectedRows.value.length === 0),
       onClick: () => {
-        const formRef = ref<FormInstance | null>(null)
-
-        $confirm({
-          body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
-              data: reactive({
-                dictType: props.dictType,
-                status: '0',
-              }),
-              items: [
-                formItemMap.dictType,
-                formItemMap.dictLabel,
-                formItemMap.dictValue,
-                formItemMap.dictSort,
-                formItemMap.status,
-                formItemMap.remark,
-              ],
-              labelAlign: 'right',
-              layout: 'vertical',
-              ref: formRef,
-            }),
-          header: '添加字典数据',
-          onConfirmCallback: async () => {
-            await alovaInst.Post('system/dict/data', await formRef.value!.validate())
-            $msg.success('字典数据添加成功')
-            pageListRef.value!.query()
-          },
-          width: 430,
+        addFollow(selectedRows.value)
+      },
+      permission: 'yq:followDetail:add',
+    }),
+    reactive({
+      default: '批量标记',
+      disabled: computed(() => selectedRows.value.length === 0),
+      onClick: () => {
+        updateDealMark(selectedRows.value).then(() => {
+          pageListRef.value!.query()
         })
       },
-      permission: 'system:dict:add',
-    },
+      permission: 'task:taskContent:updateDealMark',
+    }),
   ],
   tableOtherProps: {
     flexHeight: false,
+    showRowSelect: 'multiple',
   },
 }
 </script>

@@ -73,7 +73,7 @@
       "  header: '添加字典类型',",
       "  onConfirmCallback: async () => {",
       "    await alovaInst.Post('system/dict/type', await formRef.value!.validate())",
-      "    \\$msg.success('字典添加成功')",
+      "    \\$msg('字典添加成功')",
       "    pageListRef.value!.query()",
       "  },",
       "  width: 430, // 730",
