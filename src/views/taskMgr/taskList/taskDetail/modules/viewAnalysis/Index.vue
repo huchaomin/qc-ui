@@ -2,10 +2,10 @@
 // import ActiveAuthors from './ActiveAuthors.vue'
 import EmotionalProportion from './EmotionalProportion.vue'
 import HeaderCard from './HeaderCard.vue'
-// import InformationSourceProportion from './InformationSourceProportion.vue'
+import InformationSourceProportion from './InformationSourceProportion.vue'
 import InfoSourceTrend from './InfoSourceTrend.vue'
 // import InteractiveVolumeTrend from './InteractiveVolumeTrend.vue'
-// import KeywordCloud from './KeywordCloud.vue'
+import KeywordCloud from './KeywordCloud.vue'
 // import MediaActivity from './MediaActivity.vue'
 // import RegionalDistribution from './RegionalDistribution.vue'
 import SentimentTrend from './SentimentTrend.vue'
@@ -58,8 +58,8 @@ provide('colorArr', [
     <InfoSourceTrend></InfoSourceTrend>
     <SentimentTrend></SentimentTrend>
     <EmotionalProportion></EmotionalProportion>
-    <!-- <InformationSourceProportion></InformationSourceProportion> -->
-    <!-- <KeywordCloud></KeywordCloud> -->
+    <InformationSourceProportion></InformationSourceProportion>
+    <KeywordCloud></KeywordCloud>
     <!-- <MediaActivity></MediaActivity> -->
     <!-- <ActiveAuthors></ActiveAuthors> -->
     <!-- <RegionalDistribution></RegionalDistribution> -->

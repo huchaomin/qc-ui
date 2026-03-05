@@ -33,7 +33,8 @@
     "tdesign-vue-next": "^1.18.2",
     "vue": "^3.5.29",
     "vue-echarts": "^8.0.1",
-    "vue-router": "^4.6.4"
+    "vue-router": "^4.6.4",
+    "wordcloud": "^1.2.3"
   },
   "devDependencies": {
     "@alova/wormhole": "^1.5.0",
@@ -49,6 +50,7 @@
     "@types/lodash": "^4.17.24",
     "@types/node": "^25.3.2",
     "@types/path-browserify": "^1.0.3",
+    "@types/wordcloud": "^1.2.2",
     "@vitejs/plugin-vue": "^6.0.4",
     "@vitejs/plugin-vue-jsx": "^5.1.4",
     "@vue/tsconfig": "^0.8.1",
