@@ -1,13 +1,13 @@
 <script setup lang="ts">
-// import ActiveAuthors from './ActiveAuthors.vue'
+import ActiveAuthors from './ActiveAuthors.vue'
 import EmotionalProportion from './EmotionalProportion.vue'
 import HeaderCard from './HeaderCard.vue'
 import InformationSourceProportion from './InformationSourceProportion.vue'
 import InfoSourceTrend from './InfoSourceTrend.vue'
-// import InteractiveVolumeTrend from './InteractiveVolumeTrend.vue'
+import InteractiveVolumeTrend from './InteractiveVolumeTrend.vue'
 import KeywordCloud from './KeywordCloud.vue'
-// import MediaActivity from './MediaActivity.vue'
-// import RegionalDistribution from './RegionalDistribution.vue'
+import MediaActivity from './MediaActivity.vue'
+import RegionalDistribution from './RegionalDistribution.vue'
 import SentimentTrend from './SentimentTrend.vue'
 
 const id = inject<string>('id')!
@@ -60,10 +60,10 @@ provide('colorArr', [
     <EmotionalProportion></EmotionalProportion>
     <InformationSourceProportion></InformationSourceProportion>
     <KeywordCloud></KeywordCloud>
-    <!-- <MediaActivity></MediaActivity> -->
-    <!-- <ActiveAuthors></ActiveAuthors> -->
-    <!-- <RegionalDistribution></RegionalDistribution> -->
-    <!-- <InteractiveVolumeTrend></InteractiveVolumeTrend> -->
+    <MediaActivity></MediaActivity>
+    <ActiveAuthors></ActiveAuthors>
+    <RegionalDistribution></RegionalDistribution>
+    <InteractiveVolumeTrend></InteractiveVolumeTrend>
   </div>
 </template>
 
