@@ -192,6 +192,7 @@ const config: PageListProps = {
     },
   ],
   tableOtherProps: {
+    flexHeight: false,
     rowKey: 'dictCode',
     showColumnConfigBtn: false,
     showToggleFullscreenBtn: false,

@@ -136,6 +136,7 @@ const config: PageListProps = {
     }),
   ],
   tableOtherProps: {
+    flexHeight: false,
     rowKey: 'userId',
     showColumnConfigBtn: false,
     showRowSelect: 'multiple',
