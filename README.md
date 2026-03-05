@@ -73,6 +73,9 @@
 - $fileView
 - 舆情报告生成
 - tabs 超出隐藏
+- saveAs
+- taskId taskData
+- 全局字体
 
 ## todo 项目对比
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import ActiveAuthors from './ActiveAuthors.vue'
-// import EmotionalProportion from './EmotionalProportion.vue'
+import EmotionalProportion from './EmotionalProportion.vue'
 import HeaderCard from './HeaderCard.vue'
 // import InformationSourceProportion from './InformationSourceProportion.vue'
 import InfoSourceTrend from './InfoSourceTrend.vue'
@@ -8,7 +8,7 @@ import InfoSourceTrend from './InfoSourceTrend.vue'
 // import KeywordCloud from './KeywordCloud.vue'
 // import MediaActivity from './MediaActivity.vue'
 // import RegionalDistribution from './RegionalDistribution.vue'
-// import SentimentTrend from './SentimentTrend.vue'
+import SentimentTrend from './SentimentTrend.vue'
 
 const id = inject<string>('id')!
 const dataType = inject<number>('dataType')!
@@ -56,14 +56,14 @@ provide('colorArr', [
   <div>
     <HeaderCard v-model="startEndTimeRange"></HeaderCard>
     <InfoSourceTrend></InfoSourceTrend>
-    <!-- <SentimentTrend></SentimentTrend>
+    <SentimentTrend></SentimentTrend>
     <EmotionalProportion></EmotionalProportion>
-    <InformationSourceProportion></InformationSourceProportion>
-    <KeywordCloud></KeywordCloud>
-    <MediaActivity></MediaActivity>
-    <ActiveAuthors></ActiveAuthors>
-    <RegionalDistribution></RegionalDistribution>
-    <InteractiveVolumeTrend></InteractiveVolumeTrend> -->
+    <!-- <InformationSourceProportion></InformationSourceProportion> -->
+    <!-- <KeywordCloud></KeywordCloud> -->
+    <!-- <MediaActivity></MediaActivity> -->
+    <!-- <ActiveAuthors></ActiveAuthors> -->
+    <!-- <RegionalDistribution></RegionalDistribution> -->
+    <!-- <InteractiveVolumeTrend></InteractiveVolumeTrend> -->
   </div>
 </template>
 

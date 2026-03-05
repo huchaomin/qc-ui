@@ -335,7 +335,6 @@ const config: PageListProps = {
     }),
   ],
   tableOtherProps: {
-    flexHeight: false,
     showRowSelect: 'multiple',
   },
 }

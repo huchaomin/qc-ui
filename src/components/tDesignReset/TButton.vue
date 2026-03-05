@@ -81,6 +81,7 @@ const autoIcon = computed(() => {
     'mdi:delete-outline': ['删除'],
     'line-md:download-outline': ['下载', '导出'],
     'line-md:alert-circle': ['预警'],
+    'line-md:document-report': ['报告'],
     'subway:mark-1': ['标记'],
     'majesticons:checkbox-list-detail-line': ['详情'],
     'line-md:account': ['角色', '用户'],

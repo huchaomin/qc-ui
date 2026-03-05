@@ -556,7 +556,7 @@ defineExpose(
     <div
       class="flex w-full flex-col gap-3"
       :class="{
-        'overflow-y-auto': flexHeight || isFullscreen,
+        'flex-1 overflow-y-auto': flexHeight || isFullscreen,
         'full_screen bg-(--td-bg-color-container) p-4': isFullscreen,
         transform_tfoot: tfootTransformY > 0,
       }"

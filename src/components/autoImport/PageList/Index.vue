@@ -256,7 +256,6 @@ defineExpose({
       :show-toggle-fullscreen-btn="true"
       :show-column-config-btn="true"
       :flex-height="true"
-      class="flex-1"
       v-bind="tableOtherProps"
     >
       <template #table-operations>
