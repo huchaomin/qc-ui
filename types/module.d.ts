@@ -82,6 +82,10 @@ declare module 'alova' {
        */
       useResponseBlob?: boolean
       /**
+       * 响应体是否为blob类型 默认false
+       */
+      useResponseText?: boolean
+      /**
        * 接口调用成功是否弹出 msg 默认false
        */
       useSuccessMsg?: boolean

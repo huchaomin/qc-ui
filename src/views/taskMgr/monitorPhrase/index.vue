@@ -1,0 +1,306 @@
+<script lang="ts">
+import type { TableCol } from '@/components/tDesignReset/TTable.vue'
+import AuthorName from '@/bus/components/AuthorName.vue'
+import MonitorWord from './modules/MonitorWord.vue'
+
+export const columns: TableCol[] = [
+  {
+    colKey: 'name',
+    title: '监控词组名称',
+  },
+  {
+    cell: {
+      _component: 'DicLabel',
+      dicCode: 'words_type',
+    },
+    colKey: 'wordsType',
+    title: '搜索类型',
+  },
+  {
+    colKey: 'monitorWord',
+    resize: {
+      maxWidth: 300,
+    },
+    title: '监控词',
+  },
+  {
+    cell: {
+      _component: 'DicLabel',
+      dicCode: 'status',
+    },
+    colKey: 'status',
+    title: '状态',
+  },
+  {
+    cell: {
+      _component: 'DicLabel',
+      dicCode: 'used_status',
+    },
+    colKey: 'usedStatus',
+    title: '蜜度使用状态',
+  },
+  {
+    colKey: 'createBy',
+    title: '创建人',
+  },
+  {
+    colKey: 'createTime',
+    title: '创建时间',
+  },
+  {
+    colKey: 'updateBy',
+    title: '更新人',
+  },
+  {
+    colKey: 'updateTime',
+    title: '更新时间',
+  },
+]
+</script>
+
+<script setup lang="ts">
+const pageListRef = useTemplateRef('pageListRef')
+const formItemMap = {
+  author_name: {
+    __others: (formData: Record<string, any>) => {
+      return {
+        show: formData.wordsType === '2',
+      }
+    },
+    _label: '作者名称',
+    slot: 'author_name',
+  },
+  filterWords: {
+    __others: (formData: Record<string, any>) => {
+      return {
+        show: formData.wordsType === '2',
+      }
+    },
+    _class: 'col-span-full',
+    _label: '过滤词',
+    component: 'TTextarea',
+    model: 'filterWords',
+    placeholder: '请输入过滤词,多个以英文逗号分割',
+  },
+  monitor_word: {
+    __others: (formData: Record<string, any>) => {
+      return {
+        _rules:
+          formData.wordsType === '1'
+            ? [
+                {
+                  message: '请输入正确的高级监控词',
+                  pattern:
+                    /^(?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\))(?:[+|](?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\)))*$/,
+                },
+              ]
+            : [],
+      }
+    },
+    _class: 'col-span-full',
+    _label: '监控词',
+    _required: true,
+    model: 'monitorWord',
+    slot: 'monitor_word',
+  },
+  name: {
+    _label: '监控词组名称',
+    _required: true,
+    model: 'name',
+  },
+  status: {
+    _label: '词组状态',
+    _required: true,
+    component: 'TRadioGroup',
+    dicCode: 'status',
+    model: 'status',
+  },
+  wordsType: {
+    __others: (formData: Record<string, any>, exposed: ComputedRef<FormExposed>) => {
+      return {
+        onChange: () => {
+          formData.monitorWord = ''
+          setTimeout(() => {
+            exposed.value!.clearValidate(['monitorWord'])
+          }, 100)
+        },
+      }
+    },
+    _label: '搜索类型',
+    _required: true,
+    component: 'TSelect',
+    dicCode: 'words_type',
+    model: 'wordsType',
+  },
+} satisfies Record<string, FormItem>
+const config: PageListProps = {
+  apis: {
+    delete: {
+      method: 'yq/monitorPhrase',
+      permission: 'yq:monitorPhrase:remove',
+    },
+    export: {
+      method: 'yq/monitorPhrase/export',
+      permission: 'yq:monitorPhrase:export',
+    },
+    list: {
+      method: 'yq/monitorPhrase/list',
+    },
+  },
+  columns: [
+    ...columns,
+    {
+      cell: {
+        _component: 'Buttons',
+        buttons: [
+          ({ row }) => ({
+            default: '编辑',
+            onClick: () => {
+              const formRef = ref<FormInstance | null>(null)
+
+              watch(
+                formRef,
+                () => {
+                  formRef.value!.setFormData(row)
+                },
+                {
+                  once: true,
+                },
+              )
+              $confirm({
+                body: () =>
+                  h(resolveComponent('TForm') as Component<FormProps>, {
+                    items: [
+                      formItemMap.dictName,
+                      formItemMap.dictType,
+                      {
+                        ...formItemMap.status,
+                        component: 'TRadioGroup',
+                      },
+                      formItemMap.remark,
+                    ],
+                    labelAlign: 'right',
+                    layout: 'vertical',
+                    ref: formRef,
+                  }),
+                header: '修改字典类型',
+                onConfirmCallback: async () => {
+                  await alovaInst.Put('system/dict/type', {
+                    ...(await formRef.value!.validate()),
+                    dictId: row.dictId,
+                  })
+                  $msg.success('字典类型修改成功')
+                  pageListRef.value!.query()
+                },
+                width: 430,
+              })
+            },
+          }),
+        ],
+      },
+      colKey: '_operation',
+      title: '操作',
+    },
+  ],
+  formItems: [
+    formItemMap.name,
+    {
+      ...formItemMap.wordsType,
+      __others: undefined,
+    },
+    {
+      _label: '监控词',
+      model: 'monitorWord',
+    },
+    {
+      _label: '蜜度使用状态',
+      component: 'TSelect',
+      dicCode: 'used_status',
+      model: 'usedStatus',
+    },
+    {
+      ...formItemMap.status,
+      component: 'TSelect',
+    },
+  ],
+  operations: [
+    {
+      default: '新增',
+      onClick: () => {
+        const formRef = ref<FormInstance | null>(null)
+
+        $confirm({
+          body: () =>
+            h(
+              resolveComponent('TForm') as Component<FormProps>,
+              {
+                data: reactive({
+                  status: '0',
+                }),
+                items: [
+                  formItemMap.name,
+                  formItemMap.status,
+                  formItemMap.wordsType,
+                  formItemMap.author_name,
+                  formItemMap.monitor_word,
+                  formItemMap.filterWords,
+                ],
+                ref: formRef,
+              },
+              {
+                author_name: () =>
+                  h(AuthorName, {
+                    onChange: async (
+                      data: { id: null | string; label: string; value: string },
+                      formData: Record<string, any>,
+                    ) => {
+                      if (
+                        !isFalsy(formData.monitorWord) &&
+                        formData.monitorWord.split(',').includes(data.label)
+                      ) {
+                        $msg.error('该作者已添加')
+                        return
+                      }
+
+                      formData.monitorWord += `${isFalsy(formData.monitorWord) ? '' : ','}${data.label}`
+
+                      if (isFalsy(data.id)) {
+                        await alovaInst.Post('yq/author/saveAuthorInfo', {
+                          authorName: data.label,
+                        })
+                      }
+                    },
+                  }),
+                monitor_word: () => h(MonitorWord),
+              },
+            ),
+          header: '添加搜索词组',
+          onConfirmCallback: async () => {
+            await alovaInst.Post('yq/monitorPhrase', await formRef.value!.validate())
+            $msg.success('搜索词组添加成功')
+            pageListRef.value!.query()
+          },
+          width: 730,
+        })
+      },
+      permission: 'yq:monitorPhrase:add',
+    },
+    {
+      default: '刷新缓存',
+      onClick: async () => {
+        await alovaInst.Delete('system/dict/type/refreshCache', undefined, {
+          meta: {
+            useSuccessMsg: true,
+          },
+        })
+        pageListRef.value!.query()
+      },
+      permission: 'yq:monitorPhrase:remove',
+    },
+  ],
+}
+</script>
+
+<template>
+  <PageList ref="pageListRef" v-bind="config"></PageList>
+</template>

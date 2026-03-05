@@ -6,7 +6,7 @@ defineOptions({
 })
 
 const emit = defineEmits<{
-  change: [value: ListItem]
+  change: [value: ListItem, formData: Record<string, any>]
 }>()
 
 interface ListItem {
@@ -15,6 +15,7 @@ interface ListItem {
   value: string
 }
 
+const formData = inject<Record<string, any>>('formData')!
 const inputValue = ref('')
 const selectValue = ref<ListItem | undefined>()
 const popupVisible = ref(false)
@@ -50,7 +51,7 @@ function onOptionClick(item: ListItem) {
   selectValue.value = item
   inputValue.value = item.label
   popupVisible.value = false
-  emit('change', item)
+  emit('change', item, formData)
 }
 
 // const onClear: SelectInputProps['onClear'] = () => {

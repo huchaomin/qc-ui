@@ -40,7 +40,7 @@ export default createAlova({
 
     if (
       !VITE_API_PREFIX_ARRAY_REST.some((prefix) =>
-        sysPath.join('/', method.url).startsWith(sysPath.join('/', prefix)),
+        sysPath.join('/', method.url).startsWith(sysPath.join('/', prefix, '/')),
       )
     ) {
       method.url = sysPath.join(VITE_API_PREFIX_ARRAY_FIRST!, method.url)
@@ -58,6 +58,7 @@ export default createAlova({
         useInPolling: false,
         useLoading: true,
         useResponseBlob: false,
+        useResponseText: false,
         useSuccessMsg: false,
         useSysFailMsg: true,
         useToken: true,
@@ -179,6 +180,7 @@ export default createAlova({
         useDownload,
         useFailMsg,
         useResponseBlob,
+        useResponseText,
         useSuccessMsg,
         useSysFailMsg,
         useToken,
@@ -231,6 +233,19 @@ export default createAlova({
         }
 
         return blob
+      }
+
+      if (useResponseText && !headers.get('content-type')?.includes('application/json')) {
+        let text: string
+
+        try {
+          text = await response.text()
+        } catch (e) {
+          void $notify.error('返回的 response text() 方法所解析')
+          return Promise.reject(e)
+        }
+
+        return text
       }
 
       let resData: any

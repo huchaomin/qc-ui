@@ -9,7 +9,7 @@ import type {
   FormItemProps,
   ValidateResultList,
 } from 'tdesign-vue-next'
-import type { AllowedComponentProps } from 'vue'
+import type { AllowedComponentProps, ComponentInternalInstance, ComputedRef } from 'vue'
 import type { CheckboxProps } from './TCheckbox.vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { DateRangePickerProps } from './TDateRangePicker.vue'
@@ -60,11 +60,15 @@ export type FormItem = XOR<
       FormItemBase & {
         __others?: (
           formData: FormPropsData,
+          exposed: ComputedRef<FormExposed>,
         ) => Partial<AllowedComponentProps & ComponentItemType & FormItemBase>
         model: string
       },
     FormItemBase & {
-      __others?: (formData: FormPropsData) => Partial<
+      __others?: (
+        formData: FormPropsData,
+        exposed: ComputedRef<FormExposed>,
+      ) => Partial<
         FormItemBase & {
           model?: string
         }
@@ -107,6 +111,7 @@ type ComponentItemType = UnionToNestedXOR<
     : never
 >
 type EmptyFormData = (initData?: FormPropsData) => FormPropsData
+type FormExposed = (ComponentInternalInstance['exposed'] & FormInstance) | null
 type FormItemBase = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & {
@@ -143,11 +148,15 @@ export default {
 
 <script setup lang="ts">
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
+const vm = getCurrentInstance()!
+const dynamicVmExposed = computed(() => {
+  return vm === null ? null : (vm.exposed as FormExposed)
+})
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
     if (typeof item.__others === 'function') {
       const obj = {
-        ...item.__others(props.data),
+        ...item.__others(props.data, dynamicVmExposed),
         ...item,
       }
 
@@ -332,7 +341,6 @@ const otherProps = computed(() => {
   return obj
 })
 const compo = _Form
-const vm = getCurrentInstance()!
 const getFormData: GetFormData = () => {
   const obj: FormPropsData = {
     ...props.data,
@@ -494,7 +502,7 @@ function calcLabelWidth() {
   })
 }
 
-provide('formData', props.data)
+provide('formData', reactive(props.data))
 defineExpose({} as FormInstance)
 </script>
 

@@ -94,7 +94,10 @@ body {
       .t-radio-button--focused,
       .t-range-input--focused,
       .t-select--focused,
-      .t-textarea__inner--focused {
+      .t-textarea__inner--focused,
+      .t-cascader.t-is-active,
+      .t-select.t-is-active,
+      .t-textarea__inner.t-is-focused {
         box-shadow: 0 0 0 1px var(--td-error-color) inset;
       }
     }

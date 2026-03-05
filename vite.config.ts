@@ -196,7 +196,7 @@ export default defineConfig(({ command, mode }) => {
           },
           {
             from: '@/components/tDesignReset/TForm.vue',
-            imports: ['FormItem', 'FormInstance', 'FormProps'],
+            imports: ['FormItem', 'FormInstance', 'FormProps', 'FormExposed'],
             type: true,
           },
           {
@@ -260,7 +260,7 @@ export default defineConfig(({ command, mode }) => {
       port: VITE_API_PROXY_PORT_ARRAY[0][1] + 1000,
       proxy: Object.fromEntries(
         VITE_API_PROXY_PORT_ARRAY.map(([prefix, port], index) => [
-          path.posix.join(VITE_BASE_URL, prefix),
+          `${path.posix.join(VITE_BASE_URL, prefix)}/`,
           {
             bypass,
             changeOrigin: true,
