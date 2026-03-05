@@ -13,7 +13,7 @@ const emit = defineEmits<{
   'update:modelValue': [modelValue: [] | [string, string]]
 }>()
 const id = inject<string>('id')!
-const data = inject<Ref<null | Record<string, any>>>('data')!
+const parentData = inject<Ref<null | Record<string, any>>>('data')!
 const dataType = inject<number>('dataType')!
 // 只有事件详情才有时间范围限制
 const limitTimeRange = inject<Ref<[] | [string, string]>>('limitTimeRange', ref([]))

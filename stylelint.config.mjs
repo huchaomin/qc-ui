@@ -48,5 +48,6 @@ export default defineConfig({
         message: '自定义 class 名称使用 snake_case',
       },
     ],
+    'value-keyword-case': ['lower', { ignoreFunctions: ['v-bind'] }],
   },
 })

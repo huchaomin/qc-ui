@@ -38,7 +38,7 @@ provide('bgColor', bgColor)
 provide('padding', padding)
 provide('id', id)
 provide('startEndTimeRange', startEndTimeRange)
-provide('aspectRatioX', 1800)
+provide('aspectRatioX', 1801)
 provide('taskViewData', taskViewData)
 provide('colorArr', [
   '#6DAFFE',
@@ -71,7 +71,7 @@ provide('colorArr', [
 :deep() {
   .chart_border {
     position: relative;
-    background-color: v-bind(bgcolor);
+    background-color: v-bind(bgColor);
     border: 1px dashed #e0e0e0;
 
     .operation {
@@ -81,10 +81,6 @@ provide('colorArr', [
       z-index: 1;
       display: flex;
       align-items: center;
-    }
-
-    .vxe-table--body {
-      background-color: v-bind(bgcolor);
     }
 
     &:not(:last-of-type) {

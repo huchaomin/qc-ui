@@ -5,7 +5,7 @@ import VChart from '@/plugins/echarts'
 
 const isMounted = useMounted()
 const chartRef = ref<InstanceType<typeof VChart> | null>(null)
-const data = inject<Ref<null | Record<string, any>>>('data')!
+const parentData = inject<Ref<null | Record<string, any>>>('data')!
 const padding = inject<number>('padding')!
 
 function handleDownloadImage(): void {
@@ -13,7 +13,7 @@ function handleDownloadImage(): void {
     type: 'png',
   })
 
-  saveAs(url, `${data.value!.name}_信息来源占比_${new Date().valueOf()}.png`)
+  saveAs(url, `${parentData.value!.name}_信息来源占比_${new Date().valueOf()}.png`)
 }
 
 const platformOptions = useDicOptions('platform')
