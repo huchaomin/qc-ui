@@ -173,6 +173,12 @@ body {
         &:has(> .t-form:is(:last-child)) {
           padding-bottom: 0;
         }
+
+        &:has(> .t-typography:is(:first-child)),
+        &:has(> div:is(:first-child) > .t-typography:is(:first-child)),
+        &:has(> div:is(:first-child) > div:is(:first-child) > .t-typography:is(:first-child)) {
+          padding-top: 0;
+        }
       }
 
       .t-dialog__footer {

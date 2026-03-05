@@ -29,7 +29,7 @@ const { copy } = useClipboard({
 async function handleSubmit(): Promise<void> {
   await copy(source.value)
   $msg('复制成功')
-  await updateMonitorPhraseUsedStatus({
+  await alovaInst.Post('yq/monitorPhrase/updateUsedStatus', {
     idList: props.data.map((item) => item.id),
     usedStatus: 1,
   })
@@ -52,5 +52,5 @@ defineExpose({
   <TTypographyTitle level="h5" class="mt-4"
     >词组汇总结果(一共{{ source.length }}个字)</TTypographyTitle
   >
-  <TTextarea :model-value="source" disabled :maxlength="0"></TTextarea>
+  <TTextarea :model-value="source" readonly :maxlength="0"></TTextarea>
 </template>
