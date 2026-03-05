@@ -155,7 +155,7 @@ const columns: TableCol[] = [
       class="flex flex-col p-3"
     >
       <div class="mb-3 flex items-center">
-        <div style="font-size: 16px; font-weight: bold">
+        <div style="font-size: 16px; font-weight: bold; color: #727476">
           {{ useDicLabel('mood_level', moodType) }}信息TOP20
         </div>
         <TSelect

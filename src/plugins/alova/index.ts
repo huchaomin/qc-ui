@@ -213,7 +213,20 @@ export default createAlova({
         }
 
         if (useDownload !== false) {
-          void saveAs(blob, useDownload as string) // TODO true 从响应头获取文件名
+          if (typeof useDownload === 'string') {
+            void saveAs(blob, useDownload)
+          } else {
+            const fileName = new URLSearchParams(
+              (response.headers.get('content-disposition') ?? '').replace(/;\s*/g, '&'),
+            ).get('filename')
+
+            if (fileName) {
+              void saveAs(blob, fileName)
+            } else {
+              void $notify.error('返回的 response header 没有文件名')
+            }
+          }
+
           return blob
         }
 

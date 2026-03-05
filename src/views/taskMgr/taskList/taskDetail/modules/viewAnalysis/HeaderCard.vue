@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// import SelectCanvas from './SelectCanvas.vue'
 import type { PresetRange } from 'tdesign-vue-next'
+import SelectCanvas from './SelectCanvas.vue'
 
 withDefaults(
   defineProps<{
@@ -89,6 +89,7 @@ async function handleDataDownload(): Promise<void> {
     {
       meta: {
         useDownload: `任务视图分析数据_${new Date().getTime()}.xlsx`,
+        useResponseBlob: true,
       },
     },
   )
@@ -97,26 +98,25 @@ async function handleDataDownload(): Promise<void> {
 const headerCardRef = ref<HTMLElement | null>(null)
 
 function handleReportGenerate(): void {
-  // const parentElement = headerCardRef.value!.parentElement
-  // const canvasList = [...parentElement!.querySelectorAll('canvas')!]
-  // const { componentRef, dialogRef } = $dialog(
-  //   {
-  //     hideAfterConfirm: false,
-  //     onConfirm: async () => {
-  //       await componentRef.value!.handleSubmit()
-  //       dialogRef.value!.hide()
-  //     },
-  //     title: '生成报告',
-  //     width: 1200,
-  //   },
-  //   SelectCanvas,
-  //   {
-  //     canvasList,
-  //     reqContent: `热度：${Number(taskViewData.value.hotCount ?? 0)};互动量：${Number(taskViewData.value.interactNum ?? 0)};评论数：${Number(taskViewData.value.commentCount ?? 0)};`,
-  //     data: data.value!,
-  //     id,
-  //   },
-  // )
+  const parentElement = headerCardRef.value!.parentElement
+  const canvasList = [...parentElement!.querySelectorAll('canvas')!]
+  const selectCanvasRef = ref<InstanceType<typeof SelectCanvas> | null>(null)
+
+  void $confirm({
+    body: () =>
+      h(SelectCanvas, {
+        canvasList,
+        data: parentData.value!,
+        id,
+        ref: selectCanvasRef,
+        reqContent: `热度：${Number(taskViewData.value.hotCount ?? 0)};互动量：${Number(taskViewData.value.interactNum ?? 0)};评论数：${Number(taskViewData.value.commentCount ?? 0)};`,
+      }),
+    header: '生成报告',
+    onConfirmCallback: async () => {
+      await selectCanvasRef.value!.handleSubmit()
+    },
+    width: 1200, // 730
+  })
 }
 </script>
 

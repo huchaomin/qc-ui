@@ -170,7 +170,12 @@ const columns: TableCol[] = [
       :style="{ aspectRatio: `${aspectRatioX / 2}/400` }"
       class="flex flex-col p-3"
     >
-      <div class="mb-3" style="font-size: 16px; font-weight: bold; line-height: 32px">热门词频</div>
+      <div
+        class="mb-3"
+        style="font-size: 16px; font-weight: bold; line-height: 32px; color: #727476"
+      >
+        热门词频
+      </div>
       <div class="flex flex-1 flex-col" style="overflow: hidden">
         <TTable :data="tableData" :columns="columns" flex-height></TTable>
       </div>
