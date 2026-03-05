@@ -133,6 +133,32 @@ const formItemMap = {
     model: 'wordsType',
   },
 } satisfies Record<string, FormItem>
+const slotMap = {
+  author_name: () =>
+    h(AuthorName, {
+      onChange: async (
+        data: { id: null | string; label: string; value: string },
+        formData: Record<string, any>,
+      ) => {
+        if (
+          !isFalsy(formData.monitorWord) &&
+          formData.monitorWord.split(',').includes(data.label)
+        ) {
+          $msg.error('该作者已添加')
+          return
+        }
+
+        formData.monitorWord += `${isFalsy(formData.monitorWord) ? '' : ','}${data.label}`
+
+        if (isFalsy(data.id)) {
+          await alovaInst.Post('yq/author/saveAuthorInfo', {
+            authorName: data.label,
+          })
+        }
+      },
+    }),
+  monitor_word: () => h(MonitorWord),
+}
 const config: PageListProps = {
   apis: {
     delete: {
@@ -161,7 +187,9 @@ const config: PageListProps = {
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row)
+                  formRef.value!.setFormData(row, {
+                    numberToStringKeys: ['wordsType'],
+                  })
                 },
                 {
                   once: true,
@@ -169,30 +197,31 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
-                    items: [
-                      formItemMap.dictName,
-                      formItemMap.dictType,
-                      {
-                        ...formItemMap.status,
-                        component: 'TRadioGroup',
-                      },
-                      formItemMap.remark,
-                    ],
-                    labelAlign: 'right',
-                    layout: 'vertical',
-                    ref: formRef,
-                  }),
-                header: '修改字典类型',
+                  h(
+                    resolveComponent('TForm') as Component<FormProps>,
+                    {
+                      items: [
+                        formItemMap.name,
+                        formItemMap.status,
+                        formItemMap.wordsType,
+                        formItemMap.author_name,
+                        formItemMap.monitor_word,
+                        formItemMap.filterWords,
+                      ],
+                      ref: formRef,
+                    },
+                    slotMap,
+                  ),
+                header: '修改搜索词组',
                 onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/type', {
+                  await alovaInst.Put('yq/monitorPhrase', {
                     ...(await formRef.value!.validate()),
-                    dictId: row.dictId,
+                    id: row.id,
                   })
-                  $msg.success('字典类型修改成功')
+                  $msg.success('搜索词组修改成功')
                   pageListRef.value!.query()
                 },
-                width: 430,
+                width: 730,
               })
             },
           }),
@@ -247,32 +276,7 @@ const config: PageListProps = {
                 ],
                 ref: formRef,
               },
-              {
-                author_name: () =>
-                  h(AuthorName, {
-                    onChange: async (
-                      data: { id: null | string; label: string; value: string },
-                      formData: Record<string, any>,
-                    ) => {
-                      if (
-                        !isFalsy(formData.monitorWord) &&
-                        formData.monitorWord.split(',').includes(data.label)
-                      ) {
-                        $msg.error('该作者已添加')
-                        return
-                      }
-
-                      formData.monitorWord += `${isFalsy(formData.monitorWord) ? '' : ','}${data.label}`
-
-                      if (isFalsy(data.id)) {
-                        await alovaInst.Post('yq/author/saveAuthorInfo', {
-                          authorName: data.label,
-                        })
-                      }
-                    },
-                  }),
-                monitor_word: () => h(MonitorWord),
-              },
+              slotMap,
             ),
           header: '添加搜索词组',
           onConfirmCallback: async () => {

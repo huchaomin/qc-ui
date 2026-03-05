@@ -127,6 +127,10 @@ type SetFormData = (
      */
     isNotFalsy?: boolean
     /**
+     * @description: 需要将数字转换成字符串的key
+     */
+    numberToStringKeys?: string[]
+    /**
      * @description: 覆盖部分数据
      */
     override?: FormPropsData
@@ -417,7 +421,12 @@ function compoRef(instance: any) {
     inst.getFormData = getFormData
 
     inst.setFormData = (data, options) => {
-      const { isNotFalsy = true, override = {}, splitToArrKeys = [] } = options ?? {}
+      const {
+        isNotFalsy = true,
+        numberToStringKeys = [],
+        override = {},
+        splitToArrKeys = [],
+      } = options ?? {}
 
       Object.keys(props.data).forEach((key) => {
         if (splitToArrKeys.includes(key)) {
@@ -432,6 +441,11 @@ function compoRef(instance: any) {
         } else {
           // eslint-disable-next-line vue/no-mutating-props
           props.data[key] = data[key]
+        }
+
+        if (numberToStringKeys.includes(key) && typeof props.data[key] === 'number') {
+          // eslint-disable-next-line vue/no-mutating-props
+          props.data[key] = String(props.data[key])
         }
       })
       // eslint-disable-next-line vue/no-mutating-props
