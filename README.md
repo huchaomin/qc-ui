@@ -49,6 +49,7 @@
 - 怎么给 page 添加 lazy-view loading
 - 定义refresh page store
 - 上传用户图片
+- 引入自定义字体
 - 600 现在是不管成功和失败，都弹窗，需要优化
 - admin 用户登录 判断哪些菜单生成了却没有被用到
 - z-vue-scan
@@ -72,9 +73,8 @@
 - hooks 一部分清理到 bus, bus 的eslint 有问题
 - $fileView
 - 舆情报告生成
-- tabs 超出隐藏
 
-- 全局字体
+
 
 ## todo 项目对比
 

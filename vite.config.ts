@@ -135,6 +135,12 @@ export default defineConfig(({ command, mode }) => {
         'dayjs',
         'dayjs/plugin/customParseFormat.js',
         'dayjs/plugin/isSameOrBefore.js',
+        'wordcloud',
+        'echarts/charts',
+        'echarts/components',
+        'echarts/core',
+        'echarts/renderers',
+        'vue-echarts',
       ],
     },
     plugins: [

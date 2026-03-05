@@ -2,6 +2,7 @@ import { TDesign } from '@/plugins/tdesign-vue-next-for-dev'
 import app from './main'
 import { getFilenameFromUrl } from './utils'
 import 'tdesign-vue-next/dist/tdesign.min.css'
+import '@/assets/css/main.css'
 
 const compos = import.meta.glob('./components/tDesignReset/*.vue', {
   eager: true,
