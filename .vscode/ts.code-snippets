@@ -84,16 +84,16 @@
   "新建一个confirm弹窗": {
     "prefix": "$confirm",
     "body": [
-      "const resetPwdRef = ref<InstanceType<typeof ResetPwd> | null>(null)",
+      "const compoRef = ref<InstanceType<typeof Component> | null>(null)",
       "",
       "void \\$confirm({",
       "  body: () =>",
-      "    h(ResetPwd, {",
-      "      ref: resetPwdRef,",
+      "    h(Component, {",
+      "      ref: compoRef,",
       "    }),",
       "  header: 'xxx',",
       "  onConfirmCallback: async () => {",
-      "    await resetPwdRef.value!.handleSubmit()",
+      "    await compoRef.value!.handleSubmit()",
       "  },",
       "  width: 430, // 730",
       "})"

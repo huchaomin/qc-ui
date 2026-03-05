@@ -1,6 +1,7 @@
 <script lang="ts">
 import type { TableCol } from '@/components/tDesignReset/TTable.vue'
 import AuthorName from '@/bus/components/AuthorName.vue'
+import HoneycombSummaryPhrases from './modules/HoneycombSummaryPhrases.vue'
 import MonitorWord from './modules/MonitorWord.vue'
 
 export const columns: TableCol[] = [
@@ -60,6 +61,7 @@ export const columns: TableCol[] = [
 
 <script setup lang="ts">
 const pageListRef = useTemplateRef('pageListRef')
+const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const formItemMap = {
   author_name: {
     __others: (formData: Record<string, any>) => {
@@ -289,19 +291,33 @@ const config: PageListProps = {
       },
       permission: 'yq:monitorPhrase:add',
     },
-    {
-      default: '刷新缓存',
+    reactive({
+      default: '蜜度汇总词组',
+      disabled: computed(() => selectedRows.value.length === 0),
       onClick: async () => {
-        await alovaInst.Delete('system/dict/type/refreshCache', undefined, {
-          meta: {
-            useSuccessMsg: true,
+        const honeycombSummaryPhrasesRef = ref<InstanceType<typeof HoneycombSummaryPhrases> | null>(
+          null,
+        )
+
+        void $confirm({
+          body: () =>
+            h(HoneycombSummaryPhrases, {
+              data: selectedRows.value,
+              ref: honeycombSummaryPhrasesRef,
+            }),
+          header: '蜜度汇总词组',
+          onConfirmCallback: async () => {
+            await honeycombSummaryPhrasesRef.value!.handleSubmit()
           },
+          width: 980, // 730
         })
-        pageListRef.value!.query()
       },
-      permission: 'yq:monitorPhrase:remove',
-    },
+      permission: 'yq:monitorPhrase:honeycomb',
+    }),
   ],
+  tableOtherProps: {
+    showRowSelect: 'multiple',
+  },
 }
 </script>
 
