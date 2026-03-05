@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { OptionType } from '@/plugins/echarts'
-import { saveAs } from 'file-saver'
 import VChart from '@/plugins/echarts'
+import { saveAs } from '@/utils/tool'
 
 const isMounted = useMounted()
 const chartRef = ref<InstanceType<typeof VChart> | null>(null)

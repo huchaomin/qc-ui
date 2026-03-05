@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import type { OptionType } from '@/plugins/echarts'
-import { saveAs } from 'file-saver'
 import slider from 'img/slider.png?url'
 import VChart from '@/plugins/echarts'
+import { saveAs } from '@/utils/tool'
 
 const chartDataType = ref(1)
 const id = inject<string>('id')!

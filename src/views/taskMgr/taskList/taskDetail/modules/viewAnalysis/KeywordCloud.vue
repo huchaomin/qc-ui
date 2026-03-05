@@ -1,7 +1,7 @@
 <!-- https://wordcloud2-js.timdream.org/#love -->
 <script setup lang="ts">
-import { saveAs } from 'file-saver'
 import WordCloud from 'wordcloud'
+import { saveAs } from '@/utils/tool'
 
 const parentData = inject<Ref<null | Record<string, any>>>('data')!
 const wordCloudRef = ref<HTMLCanvasElement | null>(null)
