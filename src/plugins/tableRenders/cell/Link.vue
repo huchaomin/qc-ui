@@ -21,3 +21,15 @@ const attrs = useAttrs() as unknown as CellRenderContext
     {{ _get(attrs.row, attrs.col.colKey) }}
   </TLink>
 </template>
+
+<style>
+.t-table {
+  .t-tooltip {
+    .t-link {
+      --td-brand-color: var(--td-font-white-1);
+
+      color: var(--td-font-white-1);
+    }
+  }
+}
+</style>

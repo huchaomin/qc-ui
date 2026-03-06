@@ -625,9 +625,9 @@ defineExpose(
           <template #empty>
             <TEmpty></TEmpty>
           </template>
-          <template #ellipsis="{ row, col }">
+          <!-- <template #ellipsis="{ row, col }">
             <span>{{ _get(row, col.colKey) }}</span>
-          </template>
+          </template> -->
         </component>
       </div>
       <slot name="table-bottom" v-bind="{ columns, data: finallyData }"></slot>
@@ -733,6 +733,21 @@ defineExpose(
         top: 0;
         right: 0;
       }
+    }
+
+    .t-tooltip {
+      .t-typography {
+        .t-button {
+          &:has(> .t-icon-copy, > .t-icon-check) {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .t-popup__content:has(> .t-typography) {
+      /* stylelint-disable-next-line custom-property-pattern */
+      padding-right: var(--td-comp-paddingLR-s);
     }
 
     .t-table__empty {
