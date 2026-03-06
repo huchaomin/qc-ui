@@ -7,6 +7,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<PopupProps>(), {
+  delay: () => [150, 100],
   hideEmptyPopup: true,
   showArrow: true,
 })
@@ -25,7 +26,6 @@ const otherProps = computed(() => {
       delete obj[key as keyof typeof obj]
     }
   })
-  console.log(obj)
   return obj
 })
 const compo = _Popup

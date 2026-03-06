@@ -14,7 +14,7 @@ withDefaults(defineProps<TypographyTextLinkProps>(), {
 
 export interface TypographyTextLinkProps {
   link?: _LinkProps
-  typographyText?: _TdTextProps
+  typographyText?: Omit<_TdTextProps, 'content' | 'default'>
 }
 
 const attrs = useAttrs() as unknown as CellRenderContext

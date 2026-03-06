@@ -3,8 +3,10 @@ import type { DefaultProps } from './Default.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { FormatDateProps } from './FormatDate.vue'
 import type { IconProps } from './Icon.vue'
+import type { InputProps } from './Input.vue'
 import type { LinkProps } from './Link.vue'
 import type { OptionLabelProps } from './OptionLabel.vue'
+import type { SelectProps } from './Select.vue'
 import type { SwitchProps } from './Switch.vue'
 import type { TypographyTextProps } from './TypographyText.vue'
 import type { TypographyTextLinkProps } from './TypographyTextLink.vue'
@@ -35,8 +37,10 @@ interface ComponentPropsMap {
   DicLabel: DicLabelProps
   FormatDate: FormatDateProps
   Icon: IconProps
+  Input: InputProps
   Link: LinkProps
   OptionLabel: OptionLabelProps
+  Select: SelectProps
   Switch: SwitchProps
   TypographyText: TypographyTextProps
   TypographyTextLink: TypographyTextLinkProps

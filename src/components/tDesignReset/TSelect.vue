@@ -8,6 +8,7 @@ import type {
 } from 'tdesign-vue-next'
 import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
+import { selectPropsInit } from './utils'
 
 export type SelectProps = Omit<
   _SelectProps,
@@ -27,41 +28,7 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<SelectProps>(), {
-  clearable: true,
-  filterable: true,
-  inputValue: undefined,
-  keys: () => ({
-    disabled: 'disabled',
-    label: 'label',
-    value: 'value',
-  }),
-  minCollapsedNum: 1,
-  /**
-   * @description: 是否多选
-   */
-  multiple: false,
-  placeholder: '请选择',
-  /**
-   * @description: 是否显示下拉框
-   */
-  popupVisible: undefined,
-  /**
-   * @description: 阈值 大于等于 150 时，启用虚拟滚动
-   */
-  scroll: () => ({
-    threshold: 150,
-    type: 'virtual',
-  }),
-  /**
-   * @description: 是否显示右侧箭头
-   */
-  showArrow: true,
-  /**
-   * @description: 是否显示全选
-   */
-  showCheckAll: false,
-})
+const props = withDefaults(defineProps<SelectProps>(), selectPropsInit)
 const emit = defineEmits<{
   'update:inputValue': [value: string]
   'update:modelValue': [value: SelectValue]

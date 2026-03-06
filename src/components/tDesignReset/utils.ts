@@ -104,3 +104,38 @@ export const inputPropsInit = {
   clearable: true,
   placeholder: '请输入',
 } as const
+export const selectPropsInit = {
+  clearable: true,
+  filterable: true,
+  inputValue: undefined,
+  keys: () => ({
+    disabled: 'disabled',
+    label: 'label',
+    value: 'value',
+  }),
+  minCollapsedNum: 1,
+  /**
+   * @description: 是否多选
+   */
+  multiple: false,
+  placeholder: '请选择',
+  /**
+   * @description: 是否显示下拉框
+   */
+  popupVisible: undefined,
+  /**
+   * @description: 阈值 大于等于 150 时，启用虚拟滚动
+   */
+  scroll: () => ({
+    threshold: 150,
+    type: 'virtual' as const,
+  }),
+  /**
+   * @description: 是否显示右侧箭头
+   */
+  showArrow: true,
+  /**
+   * @description: 是否显示全选
+   */
+  showCheckAll: false,
+} as const
