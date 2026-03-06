@@ -82,7 +82,7 @@ declare module 'vue' {
     TPaginationMini: typeof import('tdesign-vue-next')['PaginationMini'];
     TTypographyParagraph: typeof import('tdesign-vue-next')['Paragraph'];
     // TPopconfirm: typeof import('tdesign-vue-next')['Popconfirm'];
-    TPopup: typeof import('tdesign-vue-next')['Popup'];
+    // TPopup: typeof import('tdesign-vue-next')['Popup'];
     // TPrimaryTable: typeof import('tdesign-vue-next')['PrimaryTable'];
     TProgress: typeof import('tdesign-vue-next')['Progress'];
     TQrcode: typeof import('tdesign-vue-next')['QRCode'];
@@ -151,6 +151,7 @@ declare module 'vue' {
     TUpload: (typeof import('@/components/tDesignReset/TUpload.vue'))['default']
     TTree: (typeof import('@/components/tDesignReset/TTree.vue'))['default']
     TRangeInput: (typeof import('@/components/tDesignReset/TRangeInput.vue'))['default']
+    TPopup: (typeof import('@/components/tDesignReset/TPopup.vue'))['default']
   }
 }
 

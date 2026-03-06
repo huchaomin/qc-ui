@@ -20,6 +20,7 @@ import _TDesign, {
   NotifyPlugin as _NotifyPlugin,
   Pagination as _Pagination,
   Popconfirm as _Popconfirm,
+  Popup as _Popup,
   RadioGroup as _RadioGroup,
   RangeInput as _RangeInput,
   Select as _Select,
@@ -60,6 +61,7 @@ const TreeSelect = _TreeSelect as (typeof import('tdesign-vue-next'))['TreeSelec
 const Upload = _Upload as (typeof import('tdesign-vue-next'))['Upload']
 const Tree = _Tree as (typeof import('tdesign-vue-next'))['Tree']
 const RangeInput = _RangeInput as (typeof import('tdesign-vue-next'))['RangeInput']
+const Popup = _Popup as (typeof import('tdesign-vue-next'))['Popup']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -80,6 +82,7 @@ export {
   NotifyPlugin,
   Pagination,
   Popconfirm,
+  Popup,
   RadioGroup,
   RangeInput,
   Select,
