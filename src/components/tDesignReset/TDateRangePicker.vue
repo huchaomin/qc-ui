@@ -13,7 +13,7 @@ defineOptions({
 const props = withDefaults(defineProps<DateRangePickerProps>(), {
   clearable: true,
   firstDayOfWeek: 7,
-  needConfirm: true,
+  needConfirm: false,
   panelPreselection: true,
   presets: () =>
     ({

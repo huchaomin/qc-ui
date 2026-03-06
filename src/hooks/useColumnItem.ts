@@ -28,6 +28,35 @@ export function useAuthorNameColumn({ colKey = 'authorName', useLink = true } = 
     title: '作者名称',
   }
 }
+export function useEventNameColumn({ colKey = 'eventName', useLink = true } = {}): TableCol {
+  const router = useRouter()
+
+  return {
+    cell: (_, { row }) => {
+      if (useLink && router.hasRoute('EventDetail')) {
+        return {
+          _component: 'Link',
+          onClick: () => {
+            const url = router.resolve({
+              name: 'EventDetail',
+              query: {
+                id: (row as Record<string, any>).id as string,
+              },
+            })
+
+            window.open(url.href, '_blank')
+          },
+        }
+      }
+
+      return {
+        _component: 'Default',
+      }
+    },
+    colKey,
+    title: '事件名称',
+  }
+}
 export function useTaskNameNameColumn({ colKey = 'name', useLink = true } = {}): TableCol {
   const router = useRouter()
 
