@@ -46,7 +46,7 @@ export type TableCol = {
                                                                             },
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
-  cell?: XOR<XOR<CellRenderFn, CellObjConfig>, CellObjConfigFn>
+  cell?: CellObjConfig | CellObjConfigFn | CellRenderFn
   /**
    * @description: 列的key，必须要存在，且唯一
    */
@@ -871,6 +871,60 @@ defineExpose(
     tfoot {
       /* stylelint-disable-next-line value-keyword-case */
       transform: translateY(calc(v-bind(tfootTransformY) * 1px));
+    }
+  }
+}
+</style>
+
+<style>
+.t-table {
+  .t-cascader,
+  .t-input,
+  .t-radio-button,
+  .t-range-input,
+  /* .t-select, */
+  .t-textarea__inner {
+    border-color: var(--td-border-level-2-color) !important;
+
+    &:hover {
+      border-color: var(--td-brand-color) !important;
+    }
+
+    &.t-input--focused {
+      border-color: var(--td-brand-color) !important;
+      box-shadow: 0 0 0 1px var(--td-brand-color) inset !important;
+    }
+
+    .t-input__suffix > .t-icon {
+      color: var(--td-text-color-placeholder) !important;
+
+      &:hover {
+        color: var(--td-text-color-secondary) !important;
+      }
+    }
+  }
+}
+
+.t-is-error {
+  .t-table {
+    .t-cascader,
+    .t-input,
+    .t-radio-button,
+    .t-range-input,
+    /* .t-select, */
+    .t-textarea__inner {
+      &.t-is-error {
+        border-color: var(--td-error-color) !important;
+
+        &.t-input--focused {
+          border-color: var(--td-error-color) !important;
+          box-shadow: 0 0 0 1px var(--td-error-color) inset !important;
+        }
+
+        .t-input__suffix > .t-icon {
+          color: var(--td-error-color) !important;
+        }
+      }
     }
   }
 }
