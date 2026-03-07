@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { handPullComments } from '@/bus'
+import { viewEventStrategy } from '../eventStrategy/index.vue'
 import ClusterTags from './modules/ClusterTags.vue'
 import EventRule from './modules/EventRule.vue'
 import RelatedTask from './modules/RelatedTask.vue'
@@ -123,11 +124,7 @@ const config: PageListProps = {
           _component: 'Link',
           default: '查看',
           onClick: () => {
-            void $confirm({
-              body: () => h(EventRule, {}),
-              header: '事件策略',
-              width: 800, // 730
-            })
+            viewEventStrategy(row.eventRule)
           },
         }
       },

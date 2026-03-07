@@ -9,7 +9,7 @@ function handleAdd() {
 </script>
 
 <template>
-  <div class="flex items-center">
+  <div class="flex w-full items-center">
     <TSelect v-model="formData.eventRule" options="eventRule"></TSelect>
     <TButton class="ml-2!" permission="yq:eventRule:add" theme="default" @click="handleAdd"
       >新增</TButton

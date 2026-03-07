@@ -75,6 +75,61 @@ export function addEventStrategy(): Promise<void> {
     })
   })
 }
+export function viewEventStrategy(id: string): void {
+  alovaInst.Get<Record<string, any>>(`yq/eventRule/${id}`).then((res) => {
+    const formRef = ref<FormInstance | null>(null)
+
+    watch(
+      formRef,
+      () => {
+        formRef.value!.setFormData(res)
+      },
+      {
+        once: true,
+      },
+    )
+
+    const initialData = getEventConditionArray(res)
+
+    $confirm({
+      body: () =>
+        h(
+          resolveComponent('TForm') as Component<FormProps>,
+          {
+            disabled: true,
+            items: [
+              formItemMap.ruleName,
+              formItemMap.ruleType,
+              formItemMap.status,
+              formItemMap.ruleDesc,
+              formItemMap.event_condition,
+            ],
+            ref: formRef,
+          },
+          {
+            event_condition: () =>
+              h(EventCondition, {
+                initialData,
+              }),
+          },
+        ),
+      confirmBtn: null,
+      header: '查看事件策略',
+      width: 1200,
+    })
+  })
+}
+
+function getEventConditionArray(row: Record<string, any>): Array<Record<string, any>> {
+  return row.fieldConfig.map((item: Record<string, any>) => {
+    return {
+      filed: item.filed.split(','),
+      filterType: String(item.filterType),
+      keyWord: item.keyWord,
+      logicSymbol: item.logicSymbol,
+    }
+  })
+}
 </script>
 
 <script setup lang="ts">
@@ -150,14 +205,7 @@ const config: PageListProps = {
               )
 
               // 为什么这个写在下面会导致 循环渲染？
-              const initialData = row.fieldConfig.map((item: Record<string, any>) => {
-                return {
-                  filed: item.filed.split(','),
-                  filterType: String(item.filterType),
-                  keyWord: item.keyWord,
-                  logicSymbol: item.logicSymbol,
-                }
-              })
+              const initialData = getEventConditionArray(row)
 
               $confirm({
                 body: () =>
