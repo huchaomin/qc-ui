@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { handPullComments } from '@/bus'
 import ClusterTags from './modules/ClusterTags.vue'
 import EventRule from './modules/EventRule.vue'
 import RelatedTask from './modules/RelatedTask.vue'
@@ -252,6 +253,28 @@ const config: PageListProps = {
               })
             },
           }),
+          ({ row }) => ({
+            default: '重跑',
+            disabled: row.executionStatus === 0,
+            onClick: async () => {
+              await $confirm(`确认要重跑【${row.eventName}】事件吗?`)
+              await alovaInst.Put(`yq/eventManage/reRunEvent/${row.id}`)
+              $msg('重跑成功')
+              pageListRef.value!.query()
+            },
+            permission: 'yq:eventRule:reRunEvent',
+          }),
+          ({ row }) => ({
+            default: '更新评论',
+            onClick: async () => {
+              await handPullComments({
+                funcId: row.id,
+                funcName: row.eventName,
+                funcType: 3,
+              })
+            },
+            permission: 'data:commentInfo:handPullComments',
+          }),
         ],
       },
       colKey: '_operation',
@@ -319,18 +342,6 @@ const config: PageListProps = {
         })
       },
       permission: 'yq:eventManage:add',
-    },
-    {
-      default: '刷新缓存',
-      onClick: async () => {
-        await alovaInst.Delete('system/dict/type/refreshCache', undefined, {
-          meta: {
-            useSuccessMsg: true,
-          },
-        })
-        pageListRef.value!.query()
-      },
-      permission: 'yq:eventManage:remove',
     },
   ],
 }
