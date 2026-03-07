@@ -64,16 +64,18 @@ const config: PageListProps = {
         buttons: [
           ({ row }) => ({
             default: '取消授权',
-            onClick: async () => {
-              await $confirm(`确认要取消用户${row.userName}授权的当前角色？`)
-              await alovaInst.Put('system/role/authUser/cancel', {
-                roleId: props.roleId,
-                userId: row.userId,
-              })
-              $msg.success('取消授权成功')
-              pageListRef.value!.query()
-            },
             permission: 'system:role:remove',
+            popconfirm: {
+              content: `确认要取消用户${row.userName}授权的当前角色？`,
+              onConfirm: async () => {
+                await alovaInst.Put('system/role/authUser/cancel', {
+                  roleId: props.roleId,
+                  userId: row.userId,
+                })
+                $msg.success('取消授权成功')
+                pageListRef.value!.query()
+              },
+            },
           }),
         ],
       },

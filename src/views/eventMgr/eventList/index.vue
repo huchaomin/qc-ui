@@ -256,24 +256,29 @@ const config: PageListProps = {
           ({ row }) => ({
             default: '重跑',
             disabled: row.executionStatus === 0,
-            onClick: async () => {
-              await $confirm(`确认要重跑【${row.eventName}】事件吗?`)
-              await alovaInst.Put(`yq/eventManage/reRunEvent/${row.id}`)
-              $msg('重跑成功')
-              pageListRef.value!.query()
-            },
             permission: 'yq:eventRule:reRunEvent',
+            popconfirm: {
+              content: `确认要重跑【${row.eventName}】事件吗?`,
+              onConfirm: async () => {
+                await alovaInst.Put(`yq/eventManage/reRunEvent/${row.id}`)
+                $msg('重跑成功')
+                pageListRef.value!.query()
+              },
+            },
           }),
           ({ row }) => ({
             default: '更新评论',
-            onClick: async () => {
-              await handPullComments({
-                funcId: row.id,
-                funcName: row.eventName,
-                funcType: 3,
-              })
-            },
             permission: 'data:commentInfo:handPullComments',
+            popconfirm: {
+              content: '确认要更新评论吗？',
+              onConfirm: async () => {
+                await handPullComments({
+                  funcId: row.id,
+                  funcName: row.eventName,
+                  funcType: 3,
+                })
+              },
+            },
           }),
         ],
       },

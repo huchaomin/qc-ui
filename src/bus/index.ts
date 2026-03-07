@@ -42,7 +42,6 @@ export function addFollow(arr: Array<Record<string, any>>): void {
   })
 }
 export async function handPullComments(data: Record<string, any>): Promise<void> {
-  await $confirm(`确定要更新评论吗？`)
   await alovaInst.Post('data/commentInfo/handPullComments', data)
   void $confirm({
     body: '请到【数据中心-评论手动拉取记录】查看更新结果',
