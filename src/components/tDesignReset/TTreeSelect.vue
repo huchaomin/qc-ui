@@ -50,7 +50,8 @@ const otherProps = computed(() => {
   }
   obj.treeProps = {
     ...treePropsInit,
-    expandOnClickNode: false,
+    checkable: !!props.multiple,
+    expandOnClickNode: !!props.multiple,
     icon: treePropsInit.icon(),
     ...(obj.treeProps ?? {}),
   }

@@ -1,7 +1,6 @@
-<script setup lang="ts">
+<script lang="ts">
 import EventCondition from './modules/EventCondition.vue'
 
-const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   event_condition: {
     _class: 'col-span-full',
@@ -39,6 +38,47 @@ const formItemMap = {
     model: 'status',
   },
 } satisfies Record<string, FormItem>
+
+export function addEventStrategy(): Promise<void> {
+  return new Promise((resolve) => {
+    const formRef = ref<FormInstance | null>(null)
+
+    $confirm({
+      body: () =>
+        h(
+          resolveComponent('TForm') as Component<FormProps>,
+          {
+            data: reactive({
+              status: '0',
+            }),
+            items: [
+              formItemMap.ruleName,
+              formItemMap.ruleType,
+              formItemMap.status,
+              formItemMap.ruleDesc,
+              formItemMap.event_condition,
+            ],
+            ref: formRef,
+          },
+          {
+            event_condition: () => h(EventCondition),
+          },
+        ),
+      header: '添加事件策略',
+      onConfirmCallback: async () => {
+        await alovaInst.Post('yq/eventRule', await formRef.value!.validate())
+        useListRefresh('eventRule')
+        $msg.success('事件策略添加成功')
+        resolve()
+      },
+      width: 1200,
+    })
+  })
+}
+</script>
+
+<script setup lang="ts">
+const pageListRef = useTemplateRef('pageListRef')
 const config: PageListProps = {
   apis: {
     delete: {
@@ -172,36 +212,8 @@ const config: PageListProps = {
     {
       default: '新增',
       onClick: () => {
-        const formRef = ref<FormInstance | null>(null)
-
-        $confirm({
-          body: () =>
-            h(
-              resolveComponent('TForm') as Component<FormProps>,
-              {
-                data: reactive({
-                  status: '0',
-                }),
-                items: [
-                  formItemMap.ruleName,
-                  formItemMap.ruleType,
-                  formItemMap.status,
-                  formItemMap.ruleDesc,
-                  formItemMap.event_condition,
-                ],
-                ref: formRef,
-              },
-              {
-                event_condition: () => h(EventCondition),
-              },
-            ),
-          header: '添加事件策略',
-          onConfirmCallback: async () => {
-            await alovaInst.Post('yq/eventRule', await formRef.value!.validate())
-            $msg.success('事件策略添加成功')
-            pageListRef.value!.query()
-          },
-          width: 1200,
+        addEventStrategy().then(() => {
+          pageListRef.value!.query()
         })
       },
       permission: 'yq:eventRule:add',

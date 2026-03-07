@@ -32,6 +32,15 @@ const promiseMap = {
       }))
     },
   }),
+  eventRule: alovaInst.Get<ListItem[]>('yq/eventRule/getList', {
+    transform: (res) => {
+      return (res as Record<string, any>[]).map((item) => ({
+        label: item.ruleName as string,
+        value: item.id as string,
+        ...item,
+      }))
+    },
+  }),
   follow: alovaInst.Get<ListItem[]>('yq/followManage/getList', {
     transform: (res) => {
       return (res as Record<string, any>[]).map((item) => ({

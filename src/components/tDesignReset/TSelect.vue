@@ -91,8 +91,6 @@ const innerModelValue = computed(() => {
             isFalsy(v) || Number.isNaN(Number(v)) ? v : Number(v),
           )
         }
-      } else {
-        $notify.error('TSelect: modelValue must be an array, when multiple is true')
       }
     } else {
       if (isString) {

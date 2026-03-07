@@ -1,89 +1,21 @@
 <script setup lang="ts">
+import ClusterTags from './modules/ClusterTags.vue'
 import EventRule from './modules/EventRule.vue'
+import RelatedTask from './modules/RelatedTask.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
-// return [
-//     {
-//       model: 'eventName',
-//       props: {
-//         label: '事件名称',
-//       },
-//     },
-//     {
-//       props: {
-//         label: '数据来源',
-//       },
-//       slot: 'source',
-//     },
-//     {
-//       model: 'eventDesc',
-//       props: {
-//         label: '事件描述',
-//         class: 'span_full',
-//       },
-//     },
-//     {
-//       model: 'relatedTask',
-//       props: {
-//         label: '关联数据',
-//         class: 'span_full',
-//       },
-//       slot: 'relatedTask',
-//     },
-//     {
-//       model: 'clusterTags',
-//       props: {
-//         class: 'span_full',
-//         label: '聚类标签',
-//         showCheckbox: true,
-//         filterable: false,
-//         multiple: true,
-//         data: clusterTagsOptions.value,
-//       },
-//       component: 'CTreeSelect',
-//     },
-//     {
-//       model: 'dataScope',
-//       props: {
-//         label: '内容发布时间',
-//         type: 'daterange',
-//       },
-//       component: 'CDate',
-//     },
-//     {
-//       model: 'effectiveTime',
-//       props: {
-//         label: '生效时间',
-//         type: 'daterange',
-//         rules: [{ required: String(formData.createTask) === '1', message: '必填' }],
-//       },
-//       component: 'CDate',
-//     },
-//     {
-//       props: {
-//         label: '选择策略',
-//       },
-//       slot: 'eventRule',
-//     },
-//     {
-//       model: 'createTask',
-//       props: {
-//         label: '是否新建专项任务',
-//         dicCode: 'yes_no',
-//         disabled: type.value === 'edit',
-//       },
-//       component: 'CRadio',
-//     },
-//   ]
+const slotsMap = {
+  cluster_tags: () => h(ClusterTags),
+  event_rule: () => h(EventRule),
+  related_task: () => h(RelatedTask),
+}
 const formItemMap = {
-  clusterTags: {
+  cluster_tags: reactive({
     _class: 'col-span-full',
     _label: '聚类标签',
-    component: 'TTreeSelect',
-    // data: clusterTagsOptions.value,
-    filterable: false,
-    multiple: true,
-  },
+    model: 'clusterTags',
+    slot: 'cluster_tags',
+  }),
   createTask: {
     _label: '是否新建专项任务',
     component: 'TRadioGroup',
@@ -109,6 +41,7 @@ const formItemMap = {
   event_rule: {
     _label: '选择策略',
     _required: true,
+    model: 'eventRule',
     slot: 'event_rule',
   },
   eventDesc: {
@@ -121,17 +54,52 @@ const formItemMap = {
     _required: true,
     model: 'eventName',
   },
-  relatedTask: {
+  related_task: {
     _class: 'col-span-full',
     _label: '关联数据',
     _required: true,
-    slot: 'relatedTask',
+    model: 'relatedTask',
+    slot: 'related_task',
   },
   source: {
     _label: '数据来源',
-    slot: 'source',
+    component: 'TRadioGroup',
+    model: 'source',
+    options: [
+      {
+        label: '系统数据',
+        value: '1',
+      },
+      {
+        label: '导入Excel',
+        value: '2',
+      },
+    ],
+    readonly: true,
   },
 } satisfies Record<string, FormItem>
+
+function getSaveData(formData: Record<string, any>) {
+  const obj: Record<string, any> = {
+    ...formData,
+    clusterTags: formData.clusterTags.join(','),
+    dataScope: formData.dataScope.join(','),
+    effectiveEndTime: formData.effectiveTime?.[1] ?? '',
+    effectiveStartTime: formData.effectiveTime?.[0] ?? '',
+    relatedFollow: formData.relatedTask
+      .filter((value: string) => value.endsWith('_follow'))
+      .map((value: string) => value.slice(0, -7))
+      .join(','),
+    relatedTask: formData.relatedTask
+      .filter((value: string) => !value.endsWith('_follow'))
+      .join(','),
+  }
+
+  delete obj.effectiveTime
+  delete obj.source
+  return obj
+}
+
 const config: PageListProps = {
   apis: {
     delete: {
@@ -229,7 +197,20 @@ const config: PageListProps = {
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row)
+                  formRef.value!.setFormData(row, {
+                    override: {
+                      effectiveTime: [row.effectiveStartTime, row.effectiveEndTime],
+                      relatedTask: [
+                        ...(row.relatedTask ?? '').split(',').filter(Boolean),
+                        ...(row.relatedFollow ?? '')
+                          .split(',')
+                          .filter(Boolean)
+                          .map((id: string) => `${id}_follow`),
+                      ],
+                      source: '1',
+                    },
+                    splitToArrKeys: ['clusterTags', 'dataScope'],
+                  })
                 },
                 {
                   once: true,
@@ -237,30 +218,37 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
-                    items: [
-                      formItemMap.dictName,
-                      formItemMap.dictType,
-                      {
-                        ...formItemMap.status,
-                        component: 'TRadioGroup',
-                      },
-                      formItemMap.remark,
-                    ],
-                    labelAlign: 'right',
-                    layout: 'vertical',
-                    ref: formRef,
-                  }),
-                header: '修改字典类型',
+                  h(
+                    resolveComponent('TForm') as Component<FormProps>,
+                    {
+                      items: [
+                        formItemMap.eventName,
+                        formItemMap.source,
+                        formItemMap.eventDesc,
+                        formItemMap.related_task,
+                        formItemMap.cluster_tags,
+                        formItemMap.dataScope,
+                        formItemMap.effectiveTime,
+                        formItemMap.event_rule,
+                        {
+                          ...formItemMap.createTask,
+                          disabled: true,
+                        },
+                      ],
+                      ref: formRef,
+                    },
+                    slotsMap,
+                  ),
+                header: '修改事件',
                 onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/type', {
-                    ...(await formRef.value!.validate()),
-                    dictId: row.dictId,
+                  await alovaInst.Put('yq/eventManage', {
+                    ...getSaveData(await formRef.value!.validate()),
+                    id: row.id,
                   })
-                  $msg.success('字典类型修改成功')
+                  $msg.success('事件修改成功')
                   pageListRef.value!.query()
                 },
-                width: 430,
+                width: 730,
               })
             },
           }),
@@ -291,30 +279,43 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
-              data: reactive({
-                status: '0',
-              }),
-              items: [
-                formItemMap.dictName,
-                formItemMap.dictType,
-                {
-                  ...formItemMap.status,
-                  component: 'TRadioGroup',
-                },
-                formItemMap.remark,
-              ],
-              labelAlign: 'right',
-              layout: 'vertical',
-              ref: formRef,
-            }),
-          header: '添加字典类型',
+            h(
+              resolveComponent('TForm') as Component<FormProps>,
+              {
+                data: reactive({
+                  clusterTags: [],
+                  createTask: '0',
+                  relatedTask: [],
+                  source: '1',
+                }),
+                items: [
+                  formItemMap.eventName,
+                  formItemMap.source,
+                  formItemMap.eventDesc,
+                  formItemMap.related_task,
+                  formItemMap.cluster_tags,
+                  formItemMap.dataScope,
+                  formItemMap.effectiveTime,
+                  formItemMap.event_rule,
+                  formItemMap.createTask,
+                ],
+                ref: formRef,
+              },
+              {
+                ...slotsMap,
+                related_task: () =>
+                  h(RelatedTask, {
+                    fillAll: true,
+                  }),
+              },
+            ),
+          header: '添加事件',
           onConfirmCallback: async () => {
-            await alovaInst.Post('system/dict/type', await formRef.value!.validate())
-            $msg.success('字典添加成功')
+            await alovaInst.Post('yq/eventManage', getSaveData(await formRef.value!.validate()))
+            $msg.success('事件添加成功')
             pageListRef.value!.query()
           },
-          width: 430,
+          width: 730,
         })
       },
       permission: 'yq:eventManage:add',
