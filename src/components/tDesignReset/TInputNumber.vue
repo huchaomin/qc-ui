@@ -10,7 +10,9 @@ defineOptions({
 const props = withDefaults(defineProps<InputNumberProps>(), {
   autoWidth: undefined,
   decimalPlaces: 2,
+  disabled: undefined,
   min: 0,
+  readonly: undefined,
   theme: 'normal',
   useGrouping: true,
 })

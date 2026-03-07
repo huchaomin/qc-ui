@@ -96,7 +96,6 @@ export function viewEventStrategy(id: string): void {
         h(
           resolveComponent('TForm') as Component<FormProps>,
           {
-            disabled: true,
             items: [
               formItemMap.ruleName,
               formItemMap.ruleType,
@@ -104,6 +103,7 @@ export function viewEventStrategy(id: string): void {
               formItemMap.ruleDesc,
               formItemMap.event_condition,
             ],
+            readonly: true,
             ref: formRef,
           },
           {

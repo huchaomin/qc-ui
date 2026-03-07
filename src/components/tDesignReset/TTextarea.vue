@@ -16,8 +16,10 @@ const props = withDefaults(defineProps<TextareaProps>(), {
     maxRows: Infinity,
     minRows: 2,
   }),
+  disabled: undefined,
   maxlength: 280,
   placeholder: '请输入',
+  readonly: undefined,
 })
 const emit = defineEmits<{
   'update:modelValue': [value: TextareaValue]

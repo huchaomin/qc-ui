@@ -12,6 +12,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<DateRangePickerProps>(), {
   clearable: true,
+  disabled: undefined,
   firstDayOfWeek: 7,
   needConfirm: false,
   panelPreselection: true,
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<DateRangePickerProps>(), {
       最近三个月: [dayjs().subtract(3, 'month').toDate(), dayjs().toDate()],
       本月: [dayjs().startOf('month').toDate(), dayjs().endOf('month').toDate()],
     }) as PresetRange,
+  readonly: undefined,
 })
 const emit = defineEmits<{
   'update:modelValue': [value: DateRangeValue]

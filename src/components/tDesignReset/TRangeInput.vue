@@ -7,7 +7,9 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<RangeInputProps>(), {
+  disabled: undefined,
   isNumberRange: true,
+  readonly: undefined,
 })
 
 function formatNumberValue(value: RangeInputValue) {

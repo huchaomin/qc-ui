@@ -14,7 +14,10 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<RadioGroupProps>(), {})
+const props = withDefaults(defineProps<RadioGroupProps>(), {
+  disabled: undefined,
+  readonly: undefined,
+})
 const emit = defineEmits<{
   'update:modelValue': [value: RadioValue]
 }>()

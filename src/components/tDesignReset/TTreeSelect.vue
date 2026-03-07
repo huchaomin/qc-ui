@@ -14,7 +14,9 @@ defineOptions({
 
 const props = withDefaults(defineProps<TreeSelectProps>(), {
   clearable: true,
+  disabled: undefined,
   filterable: true,
+  readonly: undefined,
 })
 const emit = defineEmits<{
   'update:modelValue': [value: TreeSelectValue]

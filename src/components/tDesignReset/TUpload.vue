@@ -16,7 +16,9 @@ const DEFAULT_ACCEPT = '.xlsx,.xls'
 // eslint-disable-next-line vue/define-macros-order
 const props = withDefaults(defineProps<UploadProps>(), {
   accept: DEFAULT_ACCEPT,
+  disabled: undefined,
   multiple: false,
+  readonly: undefined,
   theme: 'file',
   /**
    * @description: 怎么展示文件名:前面8位，后面6位，中间省略号

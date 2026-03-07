@@ -7,6 +7,8 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<CheckboxProps>(), {
+  disabled: undefined,
+  readonly: undefined,
   value: undefined, // 多选框的值
 })
 const emit = defineEmits<{

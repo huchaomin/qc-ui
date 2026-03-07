@@ -19,6 +19,8 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<CheckboxGroupProps>(), {
+  disabled: undefined,
+  readonly: undefined,
   showCheckAll: false,
 })
 const emit = defineEmits<{

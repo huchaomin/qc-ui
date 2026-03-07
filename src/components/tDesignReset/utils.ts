@@ -54,10 +54,13 @@ export const cardPropsInit = {
   shadow: true,
 } as const
 export const switchPropsInit = {
+  disabled: undefined,
+  readonly: undefined,
   size: 'large',
 } as const
 export const treePropsInit = {
   checkable: false,
+  disabled: undefined,
   expandOnClickNode: undefined,
   hover: true,
   icon: () => (h: typeof import('vue').h, node: TreeNodeModel<TreeOptionData>) => {
@@ -96,16 +99,20 @@ export const treePropsInit = {
   label: true,
   lazy: true,
   line: true,
+  readonly: undefined,
   transition: true,
   valueMode: 'all',
 } as const
 export const inputPropsInit = {
   autocomplete: 'off',
   clearable: true,
+  disabled: undefined,
   placeholder: '请输入',
+  readonly: undefined,
 } as const
 export const selectPropsInit = {
   clearable: true,
+  disabled: undefined,
   filterable: true,
   inputValue: undefined,
   keys: () => ({
@@ -123,6 +130,7 @@ export const selectPropsInit = {
    * @description: 是否显示下拉框
    */
   popupVisible: undefined,
+  readonly: undefined,
   /**
    * @description: 阈值 大于等于 150 时，启用虚拟滚动
    */
