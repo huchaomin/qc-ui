@@ -110,6 +110,7 @@ export function viewEventStrategy(id: string): void {
             event_condition: () =>
               h(EventCondition, {
                 initialData,
+                type: 'view',
               }),
           },
         ),

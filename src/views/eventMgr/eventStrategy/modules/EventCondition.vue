@@ -2,10 +2,10 @@
 const props = withDefaults(
   defineProps<{
     initialData?: Array<Record<string, any>>
-    type?: 'add' | 'edit' | 'view'
+    type?: 'update' | 'view'
   }>(),
   {
-    type: 'add',
+    type: 'update',
   },
 )
 const formData = inject<Record<string, any>>('formData')!
@@ -124,20 +124,19 @@ const columns: TableCol[] = [
     colKey: 'logicSymbol',
     title: '和下一条的且或关系',
   },
-  {
+  reactive({
     cell: {
       _component: 'Buttons',
       buttons: [
         ({ rowIndex }) => ({
           default: '删除',
-          disabled: tableData.value.length === 1 || props.type === 'view',
+          disabled: tableData.value.length === 1,
           onClick: () => {
             tableData.value.splice(rowIndex, 1)
           },
         }),
         ({ rowIndex }) => ({
           default: '添加行',
-          disabled: props.type === 'view',
           onClick: () => {
             tableData.value.splice(rowIndex + 1, 0, {
               ...tableData.value[rowIndex],
@@ -149,7 +148,8 @@ const columns: TableCol[] = [
     },
     colKey: '_operation',
     title: '操作',
-  },
+    visible: computed(() => props.type === 'update').value,
+  }),
 ]
 </script>
 
