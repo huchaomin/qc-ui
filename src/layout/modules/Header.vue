@@ -48,7 +48,7 @@ onMounted(() => {
     <TTabs
       ref="tabsRef"
       :value="route.name as string"
-      class="mx-2! flex-1"
+      class="flex-1"
       @remove="handleRemove"
       @change="handleChange"
     >
@@ -76,9 +76,9 @@ onMounted(() => {
       trigger="click"
       @click="handleDropdownClick"
     >
-      <TButton variant="text">
+      <TButton variant="text" class="ml-2!">
         <template #icon>
-          <Icon icon="material-symbols:account-circle" class="mr-2" />
+          <Icon icon="material-symbols:account-circle" class="mr-2!" />
         </template>
         {{ userStore.userInfo.userName }}
         <template #suffix>

@@ -63,3 +63,16 @@ function compoRef(instance: any) {
   >
   </component>
 </template>
+
+<style scoped>
+:deep() {
+  .t-textarea__info_wrapper {
+    &:has(> .t-textarea__limit:only-child) {
+      position: absolute;
+      right: 4px;
+      bottom: 2px;
+      pointer-events: none;
+    }
+  }
+}
+</style>

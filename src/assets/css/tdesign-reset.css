@@ -104,7 +104,8 @@ body {
   }
 
   .t-tabs {
-    overflow: initial;
+    padding: 0 12px;
+    margin: 0 -12px;
 
     .t-tabs__nav-item {
       /* stylelint-disable-next-line selector-class-pattern */
@@ -147,7 +148,8 @@ body {
   }
 
   .t-tabs__content {
-    overflow: initial;
+    padding: 0 12px;
+    margin: 0 -12px;
   }
 
   .t-dialog__ctx {

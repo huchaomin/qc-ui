@@ -39,6 +39,7 @@ const otherProps = computed(() => {
   delete obj.permission
   delete obj.popconfirm
   delete obj.show
+  delete obj.autoIcon
   return obj
 })
 const compo = _Button
