@@ -1,25 +1,20 @@
 <script setup lang="ts">
 import { addFollow, updateDealMark, warnByHand } from '@/bus'
-import AddVideoManual from './AddVideoManual.vue'
 
 const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const id = inject<string>('id')!
 const formItemMap = {
-  analysisStatus: {
-    _label: '分析状态',
-    component: 'TSelect',
-    dicCode: 'analysis_status',
-    model: 'analysisStatus',
-  },
   authorName: {
     _label: '发布账号',
     model: 'authorName',
   },
-  brandProduct: {
-    _label: '内容品牌',
-    model: 'brandProduct',
+  contentEmotion: {
+    _label: '内容情绪',
+    component: 'TSelect',
+    dicCode: 'mood_level',
+    model: 'contentEmotion',
   },
   contentType: {
     _label: '内容类型',
@@ -27,32 +22,23 @@ const formItemMap = {
     dicCode: 'data_type',
     model: 'contentType',
   },
-  coreViewpoints: {
-    _label: '核心观点',
-    model: 'coreViewpoints',
-  },
-  dealMark: {
-    _label: '处理状态',
-    component: 'TSelect',
-    dicCode: 'deal_mark',
-    model: 'dealMark',
-  },
-  downloadStatus: {
-    _label: '下载状态',
-    component: 'TSelect',
-    dicCode: 'download_status',
-    model: 'downloadStatus',
-  },
-  moodLevel: {
-    _label: '内容情绪',
-    component: 'TSelect',
-    dicCode: 'mood_level',
-    model: 'moodLevel',
-  },
-  negativeCommentNum: {
-    _label: '评论负面数',
+  eventHitCount: {
+    _label: '事件命中次数',
     component: 'TRangeInput',
-    model: 'negativeCommentNum',
+    model: 'eventHitCount',
+  },
+  eventHitField: {
+    _label: '事件命中字段',
+    model: 'eventHitField',
+  },
+  eventHitReason: {
+    _label: '事件命中原因',
+    model: 'eventHitReason',
+  },
+  negativeCommentCount: {
+    _label: '负面评论数',
+    component: 'TRangeInput',
+    model: 'negativeCommentCount',
   },
   platform: {
     _label: '来源',
@@ -68,33 +54,30 @@ const formItemMap = {
     _label: '标题',
     model: 'title',
   },
-  transWordStatus: {
-    _label: '转换状态',
-    component: 'TSelect',
-    dicCode: 'trans_word_status',
-    model: 'transWordStatus',
-  },
 } satisfies Record<string, FormItem>
 const config: PageListProps = {
   apis: {
     list: {
       method: (o: Record<string, any>) => {
-        return alovaInst.Get('task/taskContent/taskContentPage', {
+        return alovaInst.Get('yq/eventDetail/list', {
           params: {
             ...o,
-            endTime:
+            eventHitCount: undefined,
+            eventHitCountMax: o.eventHitCount?.[1],
+            eventHitCountMin: o.eventHitCount?.[0],
+            eventId: id,
+            negativeCommentCount: undefined,
+            negativeCommentCountMax: o.negativeCommentCount?.[1],
+            negativeCommentCountMin: o.negativeCommentCount?.[0],
+            publishTime: undefined,
+            publishTimeEnd:
               o.publishTime?.[1] !== undefined
                 ? dayjs(o.publishTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
-            negativeCommentNum: undefined,
-            negativeCommentNumGe: o.negativeCommentNum?.[0],
-            negativeCommentNumLe: o.negativeCommentNum?.[1],
-            publishTime: undefined,
-            startTime:
+            publishTimeStart:
               o.publishTime?.[0] !== undefined
                 ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
-            taskId: id,
           },
         })
       },
@@ -115,14 +98,6 @@ const config: PageListProps = {
       title: '内容类型',
     },
     {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'deal_mark',
-      },
-      colKey: 'dealMark',
-      title: '处理状态',
-    },
-    {
       colKey: 'platform',
       title: '来源',
     },
@@ -132,12 +107,8 @@ const config: PageListProps = {
         _component: 'DicLabel',
         dicCode: 'mood_level',
       },
-      colKey: 'moodLevel',
+      colKey: 'contentEmotion', // TODO
       title: '内容情绪',
-    },
-    {
-      colKey: 'moodScore',
-      title: '情绪级别',
     },
     {
       colKey: 'coreViewpoints',
@@ -155,15 +126,8 @@ const config: PageListProps = {
       title: '发布时间',
     },
     {
-      colKey: 'searchWords',
-      resize: {
-        maxWidth: 300,
-      },
-      title: '搜索词',
-    },
-    {
-      colKey: 'brandProduct',
-      title: '内容品牌',
+      colKey: 'playCount',
+      title: '播放量',
     },
     {
       align: 'right',
@@ -185,57 +149,45 @@ const config: PageListProps = {
       colKey: 'hotCountNew',
       title: '今日热度',
     },
-
     {
       align: 'right',
-      colKey: 'negativeCommentNum',
+      colKey: 'negativeCommentCount',
       title: '负面评论数',
     },
-
     {
-      colKey: 'coreWord',
-      title: '内容关键词',
-    },
-
-    {
-      cell: {
-        _component: 'FormatDate',
-        format: 'YYYY-MM-DD HH:mm:ss',
+      colKey: 'videoContent',
+      resize: {
+        maxWidth: 300,
       },
+      title: '视频内容',
+    },
+    {
+      colKey: 'eventHitField',
+      title: '事件命中字段',
+    },
+    {
+      colKey: 'eventHitReason',
+      title: '事件命中原因',
+    },
+    {
+      colKey: 'eventHitCount',
+      title: '事件命中次数',
+    },
+    {
+      colKey: 'createBy',
+      title: '创建人',
+    },
+    {
+      colKey: 'createTime',
+      title: '创建时间',
+    },
+    {
+      colKey: 'updateBy',
+      title: '更新人',
+    },
+    {
       colKey: 'updateTime',
       title: '更新时间',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'download_status',
-      },
-      colKey: 'downloadStatus',
-      title: '下载状态',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'trans_word_status',
-      },
-      colKey: 'transWordStatus',
-      title: '转换状态',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'analysis_status',
-      },
-      colKey: 'analysisStatus',
-      title: '分析状态',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'author_type',
-      },
-      colKey: 'authorType',
-      title: '作者标签',
     },
     {
       cell: {
@@ -279,41 +231,31 @@ const config: PageListProps = {
   ],
   formItems: [
     formItemMap.contentType,
+    formItemMap.platform,
     formItemMap.publishTime,
     formItemMap.authorName,
-    formItemMap.platform,
     formItemMap.title,
-    formItemMap.moodLevel,
-    formItemMap.negativeCommentNum,
-    formItemMap.downloadStatus,
-    formItemMap.transWordStatus,
-    formItemMap.analysisStatus,
-    formItemMap.dealMark,
-    formItemMap.coreViewpoints,
-    formItemMap.brandProduct,
+    formItemMap.contentEmotion,
+    formItemMap.negativeCommentCount,
+    formItemMap.eventHitField,
+    formItemMap.eventHitReason,
+    formItemMap.eventHitCount,
   ],
   operations: [
     {
-      default: '手动添加视频',
-      onClick: () => {
-        const addVideoManualRef = ref<InstanceType<typeof AddVideoManual> | null>(null)
-
-        void $confirm({
-          body: () =>
-            h(AddVideoManual, {
-              ref: addVideoManualRef,
-              taskId: id,
-            }),
-          confirmBtn: checkPermissions('task:taskContent:handSearchSave') ? undefined : null,
-          header: '手动添加视频',
-          onConfirmCallback: async () => {
-            await addVideoManualRef.value!.handleSubmit()
-            pageListRef.value!.query()
-          },
-          width: 1200, // 730
-        })
+      default: '导出内容(旧)',
+      permission: 'yq:eventDetail:export',
+      popconfirm: {
+        content: '确认要导出视频吗?',
+        onConfirm: async () => {
+          await alovaInst.Post('yq/eventDetail/export', pageListRef.value!.queryParams, {
+            meta: {
+              useDownload: `事件视频详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+              useEmptyData: true,
+            },
+          })
+        },
       },
-      permission: 'task:taskContent:handSearch',
     },
     reactive({
       default: '加入关注',

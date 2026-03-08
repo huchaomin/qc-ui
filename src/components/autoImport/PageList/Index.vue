@@ -87,6 +87,7 @@ function doReset() {
 
 const selectedRows = computed(() => pageTableRef.value?.selectedRows ?? [])
 const selectedRowKeys = computed(() => pageTableRef.value?.selectedRowKeys ?? [])
+const finallyQueryParams = computed(() => pageTableRef.value?.finallyQueryParams)
 const batchDeleteProps = computed(() => {
   const config = props.apis.delete
 
@@ -115,7 +116,6 @@ const exportProps = computed(() => {
     return {}
   }
 
-  const finallyQueryParams = pageTableRef.value?.finallyQueryParams
   const postConfig = {
     meta: {
       useDownload: `${config.exportFileName ?? route.meta.title}_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
@@ -126,12 +126,12 @@ const exportProps = computed(() => {
 
   return {
     default: '导出',
-    disabled: finallyQueryParams === undefined,
+    disabled: finallyQueryParams.value === undefined,
     onClick: async () => {
       await $confirm('确定导出吗?')
       await (typeof config.method === 'string'
-        ? alovaInst.Post(config.method, finallyQueryParams, postConfig)
-        : config.method(finallyQueryParams!))
+        ? alovaInst.Post(config.method, finallyQueryParams.value, postConfig)
+        : config.method(finallyQueryParams.value!))
     },
     permission: config.permission,
   }
@@ -204,6 +204,7 @@ const finallyFormItems = computed(() => {
 })
 
 defineExpose({
+  finallyQueryParams,
   query: doQuery,
   reset: doReset,
   selectedRowKeys,

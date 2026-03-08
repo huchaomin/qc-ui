@@ -55,7 +55,6 @@ export const cardPropsInit = {
 } as const
 export const switchPropsInit = {
   disabled: undefined,
-  readonly: undefined,
   size: 'large',
 } as const
 export const treePropsInit = {
@@ -99,7 +98,6 @@ export const treePropsInit = {
   label: true,
   lazy: true,
   line: true,
-  readonly: undefined,
   transition: true,
   valueMode: 'all',
 } as const
