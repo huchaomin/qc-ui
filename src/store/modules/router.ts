@@ -1,4 +1,4 @@
-import type { Component } from 'vue'
+import type { Component, Ref } from 'vue'
 import type { RouteRecordRaw as _RouteRecordRaw } from 'vue-router'
 import { getTopRoute } from '@/router/index'
 
@@ -80,7 +80,7 @@ function preprocess(arr: ResRouterItem[]): ResRouterItem[] {
   arr.forEach((item) => {
     if (item.path === '/') {
       tmp.push({
-        ...item.children![0]!,
+        ...item.children![0],
         hidden: item.hidden,
       })
     } else {
@@ -150,7 +150,7 @@ function raiseHiddenRoutes(routers: RouteRecordRaw[]): RouteRecordRaw[] {
     const length = arr.length
 
     for (let i = length - 1; i >= 0; i--) {
-      const current = arr[i]!
+      const current = arr[i]
 
       if (current.children !== undefined) {
         // 说明current是一个菜单，而不是一个目录，里面所有的隐藏菜单都必须与父菜单平级

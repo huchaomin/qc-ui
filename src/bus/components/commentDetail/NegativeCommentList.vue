@@ -59,6 +59,7 @@ const scrollHandler: TdListProps['onScroll'] = (e) => {
 <template>
   <TCard title="负面评论" :shadow="false" :header-bordered="false" class="bg-[#fafafa]!">
     <TList
+      v-if="list.length > 0"
       :async-loading="isLastPage ? '没有更多数据了' : loading ? '正在加载中，请稍等...' : ''"
       split
       style="max-height: 520px"
@@ -66,5 +67,6 @@ const scrollHandler: TdListProps['onScroll'] = (e) => {
     >
       <CommentList :list="list"></CommentList>
     </TList>
+    <TEmpty v-else></TEmpty>
   </TCard>
 </template>

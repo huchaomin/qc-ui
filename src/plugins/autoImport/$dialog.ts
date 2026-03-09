@@ -1,5 +1,5 @@
 import type { DialogInstance, DialogOptions } from 'tdesign-vue-next'
-import type { AppContext } from 'vue'
+import type { AppContext, Ref } from 'vue'
 
 enum DialogCreateType {
   alert = 'alert',

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import CommentList from './CommentList.vue'
 
 const analysisResult = inject<Ref<Record<string, any>>>('analysisResult')!
@@ -28,8 +29,9 @@ const list = computed(() => {
 
 <template>
   <TCard title="热度Top5评论" :shadow="false" :header-bordered="false" class="bg-[#fafafa]!">
-    <TList split style="max-height: 520px">
+    <TList v-if="list.length > 0" split style="max-height: 520px">
       <CommentList :list="list"></CommentList>
     </TList>
+    <TEmpty v-else></TEmpty>
   </TCard>
 </template>

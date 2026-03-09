@@ -1,4 +1,5 @@
 import type { LoadingInstance } from 'tdesign-vue-next'
+import type { Ref } from 'vue'
 import type { CreateMessageFnType } from './$msg'
 import { useNProgress } from '@vueuse/integrations/useNProgress'
 import 'nprogress/nprogress.css'
