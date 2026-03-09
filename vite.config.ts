@@ -14,6 +14,7 @@ import { defineConfig, loadEnv } from 'vite'
 import { parseLoadedEnv } from 'vite-plugin-env-parse'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import tailwindAutoReference from 'vite-plugin-vue-tailwind-auto-reference'
+import VueRouter from 'vue-router/vite'
 import autoImportStoreList from './build/autoImportStores.ts'
 import tDesignAutoImport from './build/tDesignAutoImport.ts'
 import {
@@ -161,6 +162,9 @@ export default defineConfig(({ command, mode }) => {
       tailwindAutoReference(resolvePath('src/assets/css/tailwindcss-entry.css')) as Plugin,
       tailwindcss(),
       vue(),
+      VueRouter({
+        dts: resolvePath('types/typed-router.d.ts'),
+      }),
       vueJsx(),
       AutoImport({
         // 用于自动导入 函数/工具库 的 API
