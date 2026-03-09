@@ -78,6 +78,63 @@ export async function handPullComments(data: Record<string, any>): Promise<void>
     body: '请到【数据中心-评论手动拉取记录】查看更新结果',
   })
 }
+export function showAiHandlingSuggestions(props: Record<string, any>): void {
+  const genId = ref('')
+  const { data, send } = useRequest(
+    alovaInst.Get<null | Record<string, any>>('yq/aiSuggestion/getSuggestion', {
+      params: {
+        brandId: props.brandId,
+        contentId: props.contentId,
+      },
+    }),
+    {
+      immediate: false,
+      initialData: {},
+    },
+  )
+  const { send: generateSend } = useRequest(
+    (id: string) =>
+      alovaInst.Post('yq/aiSuggestion/genSuggestion', {
+        brandId: props.brandId,
+        contentId: props.contentId,
+        id,
+        reqContent: `标题：${props.title ?? ''}
+内容核心观点：${props.coreViewpoints ?? ''}
+内容情绪：${useDicLabel('mood_level', props.moodLevel).value}`,
+      }),
+    {
+      immediate: false,
+    },
+  )
+
+  function getSend() {
+    void send().then(() => {
+      if (data.value === null) {
+        void genSend()
+      } else {
+        genId.value = data.value.id
+        void $confirm({
+          body: () => h(Component),
+          cancelBtn: '关闭',
+          confirmBtn: '重新生成',
+          header: 'AI处理建议生成',
+          onConfirmCallback: () => {
+            genSend()
+          },
+          width: 900, // 730
+        })
+      }
+    })
+  }
+
+  getSend()
+
+  function genSend() {
+    void generateSend(genId.value).then(() => {
+      getSend()
+    })
+  }
+}
 export function showCommentDetail(data: Record<string, any>): void {
   $dialog({
     body: () => h(CommentDetail, { data }),

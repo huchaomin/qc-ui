@@ -67,12 +67,3 @@ const scrollHandler: TdListProps['onScroll'] = (e) => {
     </TList>
   </TCard>
 </template>
-
-<style scoped>
-.no_more {
-  padding: 4px 0;
-  font-size: 0.9em;
-  text-align: center;
-  opacity: 0.8;
-}
-</style>

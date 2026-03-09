@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import { showCommentDetail as _showCommentDetail } from '@/bus'
+import {
+  showAiHandlingSuggestions as _showAiHandlingSuggestions,
+  showCommentDetail as _showCommentDetail,
+} from '@/bus'
 import { formatSecondsToChinese } from '@/utils'
 // import TaskDetail from './modules/TaskDetail.vue'
 // import ViewAnalysis from './modules/viewAnalysis/Index.vue'
 
 const route = useRoute()
 const id = route.query.id as string
-const { data, send } = useRequest(
+const { data } = useRequest(
   alovaInst.Get<Record<string, any> | undefined>(`data/brandContentInfo/${id}`),
   {
     initialData: undefined,
@@ -29,6 +32,10 @@ const tab = ref(tabs[0]!.value)
 provide('id', id)
 provide('data', data)
 provide('dataType', 1)
+
+function showAiHandlingSuggestions(): void {
+  _showAiHandlingSuggestions(data.value!)
+}
 
 function showCommentDetail(): void {
   _showCommentDetail(data.value!)
