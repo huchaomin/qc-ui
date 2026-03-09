@@ -2,6 +2,8 @@
 /* eslint-disable ts/no-unsafe-call */
 /* eslint-disable ts/no-unsafe-argument */
 /* eslint-disable ts/no-unsafe-assignment */
+import type { DialogInstance } from 'tdesign-vue-next'
+import { ChatMarkdown } from '@tdesign-vue-next/chat'
 import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 
@@ -94,18 +96,27 @@ export function showAiHandlingSuggestions(props: Record<string, any>): void {
   )
   const { send: generateSend } = useRequest(
     (id: string) =>
-      alovaInst.Post('yq/aiSuggestion/genSuggestion', {
-        brandId: props.brandId,
-        contentId: props.contentId,
-        id,
-        reqContent: `标题：${props.title ?? ''}
+      alovaInst.Post(
+        'yq/aiSuggestion/genSuggestion',
+        {
+          brandId: props.brandId,
+          contentId: props.contentId,
+          id,
+          reqContent: `标题：${props.title ?? ''}
 内容核心观点：${props.coreViewpoints ?? ''}
-内容情绪：${useDicLabel('mood_level', props.moodLevel).value}`,
-      }),
+内容情绪：${useDicLabel('mood_level', props.moodLevel).value}`, // mood_level 在外面已经请求出来了
+        },
+        {
+          meta: {
+            useLoading: '处理建议生成中...',
+          },
+        },
+      ),
     {
       immediate: false,
     },
   )
+  let dialogInstance: DialogInstance | null = null
 
   function getSend() {
     void send().then(() => {
@@ -113,16 +124,21 @@ export function showAiHandlingSuggestions(props: Record<string, any>): void {
         void genSend()
       } else {
         genId.value = data.value.id
-        void $confirm({
-          body: () => h(Component),
-          cancelBtn: '关闭',
-          confirmBtn: '重新生成',
-          header: 'AI处理建议生成',
-          onConfirmCallback: () => {
-            genSend()
-          },
-          width: 900, // 730
-        })
+
+        if (dialogInstance === null) {
+          dialogInstance = $dialog({
+            body: () => h(ChatMarkdown, { content: data.value!.aiSuggestion }),
+            cancelBtn: '关闭',
+            confirmBtn: {
+              default: '重新生成',
+              onClick: () => {
+                genSend()
+              },
+            },
+            header: 'AI处理建议生成',
+            width: 900, // 730
+          })
+        }
       }
     })
   }

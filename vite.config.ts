@@ -141,6 +141,7 @@ export default defineConfig(({ command, mode }) => {
         'echarts/core',
         'echarts/renderers',
         'vue-echarts',
+        '@tdesign-vue-next/chat',
       ],
     },
     plugins: [
@@ -251,7 +252,7 @@ export default defineConfig(({ command, mode }) => {
       },
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
       // 不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
-      extensions: ['.ts'],
+      extensions: ['.ts', '.mjs'],
     },
     server: {
       // vite preview 也会走该代理

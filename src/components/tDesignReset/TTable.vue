@@ -543,10 +543,10 @@ watch(
 )
 defineExpose(
   {} as {
-    rowKey: ComputedRef<string>
+    rowKey: string
     // 如果初始化提供的 selectedRowKeys 在 data 中找不到，或者 checkSelectedOnDataChange 为 false, selectedRowKeys 会比 selectedRows 选的多
-    selectedRowKeys: Ref<SelectedRowKeys>
-    selectedRows: ComputedRef<TableRowData[]>
+    selectedRowKeys: SelectedRowKeys
+    selectedRows: TableRowData[]
   } & EnhancedTableInstanceFunctions,
 )
 </script>
