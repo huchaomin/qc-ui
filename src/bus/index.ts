@@ -2,6 +2,7 @@
 /* eslint-disable ts/no-unsafe-call */
 /* eslint-disable ts/no-unsafe-argument */
 /* eslint-disable ts/no-unsafe-assignment */
+import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 
 export function addFollow(arr: Array<Record<string, any>>): void {
@@ -75,6 +76,15 @@ export async function handPullComments(data: Record<string, any>): Promise<void>
   await alovaInst.Post('data/commentInfo/handPullComments', data)
   void $confirm({
     body: '请到【数据中心-评论手动拉取记录】查看更新结果',
+  })
+}
+export function showCommentDetail(data: Record<string, any>): void {
+  $dialog({
+    body: () => h(CommentDetail, { data }),
+    cancelBtn: null,
+    confirmBtn: null,
+    header: '评论详情',
+    width: 1280,
   })
 }
 export async function updateDealMark(arr: Array<Record<string, any>>): Promise<void> {

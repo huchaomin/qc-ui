@@ -79,6 +79,34 @@ function flatArrToTree(
 }
 
 /**
+ * @description: 将秒数转换为中文
+ * @param {number} seconds
+ * @return {string}
+ */
+function formatSecondsToChinese(seconds: number): string {
+  let result = ''
+  const hours = Math.floor(seconds / 3600)
+
+  if (hours > 0) {
+    result += `${hours}时`
+  }
+
+  const minutes = Math.floor((seconds % 3600) / 60)
+
+  if (minutes > 0) {
+    result += `${minutes}分`
+  }
+
+  const remainingSeconds = seconds % 60
+
+  if (remainingSeconds > 0) {
+    result += `${remainingSeconds}秒`
+  }
+
+  return result
+}
+
+/**
  * @description: 从 url 中获取文件名
  * @param {string} url
  * @param {boolean} withExt 是否包含扩展名
@@ -97,4 +125,4 @@ function getFilenameFromUrl(url: string, withExt = false): string {
   }
 }
 
-export { flatArrToTree, getFilenameFromUrl }
+export { flatArrToTree, formatSecondsToChinese, getFilenameFromUrl }

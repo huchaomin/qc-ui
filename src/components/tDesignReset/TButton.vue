@@ -85,6 +85,8 @@ const autoIcon = computed(() => {
     'line-md:alert-circle': ['预警'],
     'line-md:document-report': ['报告'],
     'subway:mark-1': ['标记'],
+    'ph:open-ai-logo': ['AI'],
+    'material-symbols:comment-outline': ['评论'],
     'majesticons:checkbox-list-detail-line': ['详情'],
     'line-md:account': ['角色', '用户'],
     'line-md:file-document': ['文件'],
