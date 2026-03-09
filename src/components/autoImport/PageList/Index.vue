@@ -127,13 +127,15 @@ const exportProps = computed(() => {
   return {
     default: '导出',
     disabled: finallyQueryParams.value === undefined,
-    onClick: async () => {
-      await $confirm('确定导出吗?')
-      await (typeof config.method === 'string'
-        ? alovaInst.Post(config.method, finallyQueryParams.value, postConfig)
-        : config.method(finallyQueryParams.value!))
-    },
     permission: config.permission,
+    popconfirm: {
+      content: '确定导出吗?',
+      onConfirm: async () => {
+        await (typeof config.method === 'string'
+          ? alovaInst.Post(config.method, finallyQueryParams.value, postConfig)
+          : config.method(finallyQueryParams.value!))
+      },
+    },
   }
 })
 const finallyColumns = computed(() => {

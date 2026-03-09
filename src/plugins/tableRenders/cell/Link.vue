@@ -26,9 +26,11 @@ const attrs = useAttrs() as unknown as CellRenderContext
 .t-table {
   .t-tooltip {
     .t-link {
-      --td-brand-color: var(--td-font-white-1);
-
       color: var(--td-font-white-1);
+
+      &::after {
+        display: none;
+      }
     }
   }
 }
