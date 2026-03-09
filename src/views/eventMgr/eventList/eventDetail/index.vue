@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import ViewAnalysis from '@/views/taskMgr/taskList/taskDetail/modules/viewAnalysis/Index.vue'
 import EventDetail from './modules/EventDetail.vue'
-// import ViewAnalysis from './modules/viewAnalysis/Index.vue'
 
 const route = useRoute()
 const id = route.query.id as string
@@ -24,7 +24,7 @@ const tabs = [
     value: 'taskDetail',
   },
   {
-    // component: markRaw(ViewAnalysis),
+    component: markRaw(ViewAnalysis),
     label: '事件视图分析',
     value: 'viewAnalysis',
   },
