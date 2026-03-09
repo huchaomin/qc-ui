@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { addFollow, updateDealMark, warnByHand } from '@/bus'
+import { fillOriginalUrl, handPullComments } from '@/bus'
 
-const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
+const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
 const id = inject<string>('id')!
+const data = inject<ComputedRef<Record<string, any> | undefined>>('data')!
 const formItemMap = {
   authorName: {
     _label: '发布账号',
@@ -107,7 +108,7 @@ const config: PageListProps = {
         _component: 'DicLabel',
         dicCode: 'mood_level',
       },
-      colKey: 'contentEmotion', // TODO
+      colKey: 'contentEmotion',
       title: '内容情绪',
     },
     {
@@ -189,45 +190,6 @@ const config: PageListProps = {
       colKey: 'updateTime',
       title: '更新时间',
     },
-    {
-      cell: {
-        _component: 'Buttons',
-        buttons: [
-          ({ row }) => ({
-            default: '详情',
-            onClick: () => {
-              const url = router.resolve({
-                name: 'VideoDetail',
-                query: {
-                  id: row.bciId,
-                },
-              })
-
-              window.open(url.href, '_blank')
-            },
-            show: router.hasRoute('VideoDetail'),
-          }),
-          ({ row }) => ({
-            default: '手工预警',
-            onClick: () => {
-              warnByHand(row)
-            },
-            permission: 'data:brandContentInfo:warnByHand',
-          }),
-          ({ row }) => ({
-            default: '标记',
-            onClick: () => {
-              updateDealMark([row]).then(() => {
-                pageListRef.value!.query()
-              })
-            },
-            permission: 'task:taskContent:updateDealMark',
-          }),
-        ],
-      },
-      colKey: '_operation',
-      title: '操作',
-    },
   ],
   formItems: [
     formItemMap.contentType,
@@ -242,38 +204,87 @@ const config: PageListProps = {
     formItemMap.eventHitCount,
   ],
   operations: [
-    {
+    reactive({
       default: '导出内容(旧)',
+      disabled: computed(() => finallyQueryParams.value === undefined),
       permission: 'yq:eventDetail:export',
       popconfirm: {
         content: '确认要导出视频吗?',
         onConfirm: async () => {
-          await alovaInst.Post('yq/eventDetail/export', pageListRef.value!.queryParams, {
+          await alovaInst.Post('yq/eventDetail/export', finallyQueryParams.value!, {
             meta: {
               useDownload: `事件视频详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
-              useEmptyData: true,
+              useFormData: true,
+              useResponseBlob: true,
             },
           })
         },
       },
-    },
-    reactive({
-      default: '加入关注',
-      disabled: computed(() => selectedRows.value.length === 0),
-      onClick: () => {
-        addFollow(selectedRows.value)
-      },
-      permission: 'yq:followDetail:add',
     }),
     reactive({
-      default: '批量标记',
+      default: '导出内容(旧)',
+      disabled: computed(() => finallyQueryParams.value === undefined),
+      permission: 'yq:eventDetail:export',
+      popconfirm: {
+        content: '确认要导出视频吗?',
+        onConfirm: async () => {
+          await alovaInst.Post('yq/eventDetail/exportNewReport', finallyQueryParams.value!, {
+            meta: {
+              useDownload: `事件视频详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+              useFormData: true,
+              useResponseBlob: true,
+            },
+          })
+        },
+      },
+    }),
+    reactive({
+      default: '更新评论',
+      disabled: computed(() => selectedRows.value.length === 0),
+      permission: 'data:commentInfo:handPullComments',
+      popconfirm: {
+        content: '确认要更新评论吗？',
+        onConfirm: async () => {
+          await handPullComments({
+            contentIds: selectedRows.value.map((item) => item.contentId),
+            funcId: id,
+            funcName: data.value!.name,
+            funcType: 3,
+          })
+        },
+      },
+    }),
+    reactive({
+      default: '导出评论',
+      permission: 'yq:eventDetail:exportEventComment',
+      popconfirm: {
+        content: '确认要导出评论吗?',
+        onConfirm: async () => {
+          const obj: Record<string, any> = {
+            ...finallyQueryParams.value!,
+            id,
+          }
+
+          delete obj.eventId
+          await alovaInst.Post('yq/eventManage/exportEventComment', obj, {
+            meta: {
+              useDownload: `事件评论详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+              useFormData: true,
+              useResponseBlob: true,
+            },
+          })
+        },
+      },
+    }),
+    reactive({
+      default: '添加原链接',
       disabled: computed(() => selectedRows.value.length === 0),
       onClick: () => {
-        updateDealMark(selectedRows.value).then(() => {
+        fillOriginalUrl(selectedRows.value).then(() => {
           pageListRef.value!.query()
         })
       },
-      permission: 'task:taskContent:updateDealMark',
+      permission: 'data:contentInfo:fillOriginalUrl',
     }),
   ],
   tableOtherProps: {

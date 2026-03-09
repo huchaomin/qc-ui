@@ -2,6 +2,8 @@
 /* eslint-disable ts/no-unsafe-call */
 /* eslint-disable ts/no-unsafe-argument */
 /* eslint-disable ts/no-unsafe-assignment */
+import FillOriginalUrl from './components/FillOriginalUrl.vue'
+
 export function addFollow(arr: Array<Record<string, any>>): void {
   const hasTwoBrand = arr.some((item) => item.brandId !== arr[0]!.brandId)
 
@@ -39,6 +41,34 @@ export function addFollow(arr: Array<Record<string, any>>): void {
       void $msg('添加关注成功')
     },
     width: 430, // 730
+  })
+}
+export function fillOriginalUrl(arr: Array<Record<string, any>>): Promise<void> {
+  return new Promise((resolve) => {
+    const hasOriginalUrlArr = arr.filter((item) => !isFalsy(item.originalUrl))
+    const noneOriginalUrlArr = arr.filter((item) => isFalsy(item.originalUrl))
+
+    if (noneOriginalUrlArr.length === 0) {
+      void $msg.warning('所选项已全部添加原链接')
+      return
+    }
+
+    const compoRef = ref<InstanceType<typeof FillOriginalUrl> | null>(null)
+
+    void $confirm({
+      body: () =>
+        h(FillOriginalUrl, {
+          hasOriginalUrlArr,
+          noneOriginalUrlArr,
+          ref: compoRef,
+        }),
+      header: '添加原链接',
+      onConfirmCallback: async () => {
+        await compoRef.value!.handleSubmit()
+        resolve()
+      },
+      width: 1000, // 730
+    })
   })
 }
 export async function handPullComments(data: Record<string, any>): Promise<void> {

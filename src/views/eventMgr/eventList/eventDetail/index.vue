@@ -20,12 +20,12 @@ const { data, send } = useRequest(
 const tabs = [
   {
     component: markRaw(EventDetail),
-    label: '任务详情',
+    label: '事件详情列表',
     value: 'taskDetail',
   },
   {
     // component: markRaw(ViewAnalysis),
-    label: '任务视图分析',
+    label: '事件视图分析',
     value: 'viewAnalysis',
   },
 ]
