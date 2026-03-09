@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TdListProps } from 'tdesign-vue-next'
+import type { Ref } from 'vue'
 import CommentList from './CommentList.vue'
 
 const analysisResult = inject<Ref<Record<string, any>>>('analysisResult')!

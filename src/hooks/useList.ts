@@ -1,4 +1,4 @@
-import type { ComputedRef } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 import { flatArrToTree } from '@/utils'
 
 export type UseListAllKey = keyof typeof promiseMap

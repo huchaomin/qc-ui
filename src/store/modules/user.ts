@@ -1,3 +1,4 @@
+import type { Ref } from 'vue'
 import ResetPwd from '@/layout/profile/ResetPwd.vue'
 
 interface UserInfo {

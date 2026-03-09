@@ -178,7 +178,7 @@ importers:
         specifier: ^6.0.2
         version: 6.0.2(stylelint@17.4.0(typescript@5.9.3))
       typescript:
-        specifier: ~5.9.3
+        specifier: ^5.9.3
         version: 5.9.3
       unplugin-auto-import:
         specifier: ^21.0.0
