@@ -6,7 +6,7 @@ import EventRule from './modules/EventRule.vue'
 import RelatedTask from './modules/RelatedTask.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
-const slotsMap = {
+const slotMap = {
   cluster_tags: () => h(ClusterTags),
   event_rule: () => h(EventRule),
   related_task: () => h(RelatedTask),
@@ -235,7 +235,7 @@ const config: PageListProps = {
                       ],
                       ref: formRef,
                     },
-                    slotsMap,
+                    slotMap,
                   ),
                 header: '修改事件',
                 onConfirmCallback: async () => {
@@ -327,7 +327,7 @@ const config: PageListProps = {
                 ref: formRef,
               },
               {
-                ...slotsMap,
+                ...slotMap,
                 related_task: () =>
                   h(RelatedTask, {
                     fillAll: true,

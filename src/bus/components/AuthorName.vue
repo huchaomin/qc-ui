@@ -5,8 +5,16 @@ defineOptions({
   inheritAttrs: false,
 })
 
+const props = withDefaults(
+  defineProps<{
+    defaultInputValue?: string
+  }>(),
+  {
+    defaultInputValue: '',
+  },
+)
 const emit = defineEmits<{
-  change: [value: ListItem, formData: Record<string, any>]
+  change: [value: ListItem | null, formData: Record<string, any>]
 }>()
 
 interface ListItem {
@@ -16,7 +24,7 @@ interface ListItem {
 }
 
 const formData = inject<Record<string, any>>('formData')!
-const inputValue = ref('')
+const inputValue = ref(props.defaultInputValue)
 const selectValue = ref<ListItem | undefined>()
 const popupVisible = ref(false)
 const options = ref<ListItem[]>([])
@@ -85,6 +93,7 @@ const onInputChange: SelectInputProps['onInputChange'] = (val) => {
   selectValue.value = undefined
   popupVisible.value = false
   options.value = []
+  emit('change', null, formData)
 }
 </script>
 

@@ -92,7 +92,6 @@ function handleSelectSearchType(): void {
                 return {
                   onChange: () => {
                     formData.keyword = ''
-                    formRef.value!.clearValidate(['keyword'])
                   },
                 }
               },
@@ -138,7 +137,13 @@ function handleSelectSearchType(): void {
             {
               __others: (formData: Record<string, any>) => {
                 return {
-                  _required: ['1', '3'].includes(formData.type),
+                  _rules: [
+                    {
+                      message: '请输入搜索词',
+                      required: ['1', '3'].includes(formData.type),
+                      trigger: 'blur' as const,
+                    },
+                  ],
                   disabled: formData.type === '3',
                 }
               },
@@ -169,10 +174,10 @@ function handleSelectSearchType(): void {
         {
           author_name: () =>
             h(AuthorName, {
-              onChange: (value: { label: string; value: string }) => {
+              onChange: (value: null | { label: string; value: string }) => {
                 formRef.value!.setFormData({
-                  keyword: value.label,
-                  keywordValue: value.value,
+                  keyword: value?.label ?? '',
+                  keywordValue: value?.value ?? '',
                 })
               },
             }),

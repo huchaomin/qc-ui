@@ -62,6 +62,8 @@ export const columns: TableCol[] = [
 <script setup lang="ts">
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
+const monitorWordReg =
+  /^(?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\))(?:[+|](?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\)))*$/
 const formItemMap = {
   author_name: {
     __others: (formData: Record<string, any>) => {
@@ -92,8 +94,7 @@ const formItemMap = {
             ? [
                 {
                   message: '请输入正确的高级监控词',
-                  pattern:
-                    /^(?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\))(?:[+|](?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\)))*$/,
+                  pattern: monitorWordReg,
                 },
               ]
             : [],
@@ -148,9 +149,13 @@ const slotMap = {
   author_name: () =>
     h(AuthorName, {
       onChange: async (
-        data: { id: null | string; label: string; value: string },
+        data: null | { id: null | string; label: string; value: string },
         formData: Record<string, any>,
       ) => {
+        if (data === null) {
+          return
+        }
+
         if (
           !isFalsy(formData.monitorWord) &&
           formData.monitorWord.split(',').includes(data.label)
