@@ -276,13 +276,6 @@ const columns = computed<FinallyTableCol[]>(() => {
     )
     .map((column) => {
       const resize = getResize(column)
-      const oCell =
-        column.cell === undefined && column.colKey.endsWith('Time')
-          ? {
-              _component: 'FormatDate' as const,
-              format: 'YYYY-MM-DD',
-            }
-          : column.cell
 
       return {
         ellipsis: true,
@@ -296,7 +289,7 @@ const columns = computed<FinallyTableCol[]>(() => {
             'data-col-key': column.colKey,
           }
         },
-        cell: getCellRender(oCell),
+        cell: getCellRender(column.cell),
         resize,
         width: (column.width ?? columnWidths.value[column.colKey])!,
       }

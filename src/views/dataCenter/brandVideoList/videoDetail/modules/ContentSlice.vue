@@ -15,7 +15,7 @@ const sliceData = computed(() => {
   let arr
 
   try {
-    arr = JSON.parse(props.data.aiText || props.data.contentText)
+    arr = JSON.parse(props.data.aiText || props.data.contentTextWithTime)
   } catch (error) {
     console.log(error)
     arr = []
@@ -25,6 +25,7 @@ const sliceData = computed(() => {
 })
 const tableData = computed(() => {
   return sliceData.value.map((item: any) => {
+    console.log(item)
     return {
       ...item,
       duration: `${dayjs(item.end_time, 'HH:mm:ss').diff(dayjs(item.start_time, 'HH:mm:ss'), 'seconds')}s`,
@@ -32,57 +33,6 @@ const tableData = computed(() => {
     }
   })
 })
-const videoRef = ref<InstanceType<typeof CVideo> | null>(null)
-
-function currentChange({ row }: { row: TableRowData }): void {
-  const startTime = dayjs(row.start_time, 'HH:mm:ss').diff(dayjs('00:00:00', 'HH:mm:ss'), 'seconds')
-
-  videoRef.value?.player!.currentTime(startTime)
-}
-
-watchEffect(() => {
-  const arr = sliceData.value.map((item: any) => {
-    return {
-      overlayText: item.short_content,
-      text: item.short_content,
-      time: dayjs(item.start_time, 'HH:mm:ss').diff(dayjs('00:00:00', 'HH:mm:ss'), 'seconds'),
-    }
-  })
-
-  // @ts-expect-error markers
-  videoRef.value?.player!.markers({
-    breakOverlay: {
-      display: false,
-      displayTime: 3,
-      style: {
-        'background-color': 'rgba(0,0,0,0.7)',
-        color: 'white',
-        'font-size': '17px',
-        height: '20%',
-        width: '100%',
-      },
-      text(marker: any) {
-        return marker.overlayText
-      },
-    },
-    markers: arr,
-    markerStyle: {
-      'background-color': 'red',
-      'border-radius': '50%',
-      width: '4px',
-    },
-    markerTip: {
-      display: true,
-      text(marker: any) {
-        return marker.text
-      },
-      time(marker: any) {
-        return marker.time
-      },
-    },
-  })
-})
-
 const getByIdOriginalUrl = ref<null | string>(null)
 
 async function fillOriginalUrl(): Promise<void> {

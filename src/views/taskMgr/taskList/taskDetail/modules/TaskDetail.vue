@@ -147,10 +147,6 @@ const config: PageListProps = {
       title: '核心观点',
     },
     {
-      cell: {
-        _component: 'FormatDate',
-        format: 'YYYY-MM-DD HH:mm:ss',
-      },
       colKey: 'publishTime',
       title: '发布时间',
     },
@@ -198,10 +194,6 @@ const config: PageListProps = {
     },
 
     {
-      cell: {
-        _component: 'FormatDate',
-        format: 'YYYY-MM-DD HH:mm:ss',
-      },
       colKey: 'updateTime',
       title: '更新时间',
     },

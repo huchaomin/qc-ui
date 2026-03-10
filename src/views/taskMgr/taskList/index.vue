@@ -211,18 +211,10 @@ const config: PageListProps = {
       title: '目标描述',
     },
     {
-      cell: {
-        _component: 'FormatDate',
-        format: 'YYYY-MM-DD HH:mm:ss',
-      },
       colKey: 'lastRunStartTime',
       title: '最近执行开始时间',
     },
     {
-      cell: {
-        _component: 'FormatDate',
-        format: 'YYYY-MM-DD HH:mm:ss',
-      },
       colKey: 'lastRunEndTime',
       title: '最近执行完成时间',
     },
