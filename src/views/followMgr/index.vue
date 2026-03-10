@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { handPullComments } from '@/bus'
 
+const router = useRouter()
 const formItemMap = {
   brandId: {
     _label: '品牌',
@@ -47,6 +48,15 @@ async function handleDelete(item: Record<string, any>): Promise<void> {
   await alovaInst.Delete(`yq/followManage/${item.id}`)
   $msg('删除成功')
   send()
+}
+
+function handleDetail(item: Record<string, any>): void {
+  router.push({
+    name: 'FollowDetail',
+    query: {
+      id: item.id,
+    },
+  })
 }
 
 function handleEdit(row: Record<string, any>): void {
@@ -107,7 +117,6 @@ function handleEdit(row: Record<string, any>): void {
             <template #actions>
               <TButton
                 permission="data:commentInfo:handPullComments"
-                class="ml-auto"
                 theme="default"
                 size="small"
                 :popconfirm="{
@@ -162,6 +171,15 @@ function handleEdit(row: Record<string, any>): void {
                 {{ `${item.createBy}(${dayjs(item.createTime).format('YYYY-MM-DD')})` }}
               </span>
             </div>
+            <TButton
+              v-if="router.hasRoute('FollowDetail')"
+              class="absolute! right-3 bottom-3"
+              variant="text"
+              theme="primary"
+              @click="handleDetail(item)"
+            >
+              查看详情
+            </TButton>
           </TCard>
         </template>
       </TListItem>
