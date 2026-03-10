@@ -36,7 +36,7 @@ withDefaults(
       </div>
     </div>
   </TCard>
-  <TCard v-if="analysisResult !== undefined" title="内容总结" class="mt-4!">
+  <TCard v-if="analysisResult !== undefined" title="内容总结">
     <div>
       <label>内容核心观点：</label>
       {{ analysisResult.coreViewpoints }}
