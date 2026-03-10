@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// import ContentSlice from './videoDetail/modules/ContentSlice.vue'
+import ContentSlice from './textImagesDetail/modules/ContentSlice.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const brandOptions = useList('brand')
@@ -164,7 +164,7 @@ const config: PageListProps = {
                   title: undefined,
                 }),
               header: '内容切片总结',
-              width: 1400,
+              width: 650,
             })
           },
         }

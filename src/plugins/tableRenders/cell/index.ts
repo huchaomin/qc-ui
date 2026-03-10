@@ -1,3 +1,4 @@
+import type { AvatarProps } from './Avatar.vue'
 import type { ButtonsProps } from './Buttons.vue'
 import type { DefaultProps } from './Default.vue'
 import type { DicLabelProps } from './DicLabel.vue'
@@ -32,6 +33,7 @@ type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] &
   _component: T
 }
 interface ComponentPropsMap {
+  Avatar: AvatarProps
   Buttons: ButtonsProps
   Default: DefaultProps
   DicLabel: DicLabelProps
@@ -61,7 +63,7 @@ export function getCellRender(config: TableCol['cell']): CellRenderFn | undefine
     const { _component, ...restConfig } = config
 
     return (h: typeof import('vue').h, context: Parameters<CellRenderFn>[1]) => {
-      return h(compos[`./${_component}.vue`]!, {
+      return h(compos[`./${_component}.vue`], {
         ...restConfig,
         ...context,
       })
@@ -76,7 +78,7 @@ export function getCellRender(config: TableCol['cell']): CellRenderFn | undefine
       // eslint-disable-next-line ts/no-unsafe-assignment
       const { _component, ...restConfig } = result
 
-      return h(compos[`./${_component}.vue`]!, {
+      return h(compos[`./${_component}.vue`], {
         ...restConfig,
         ...context,
       })
