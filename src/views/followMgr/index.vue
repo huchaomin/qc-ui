@@ -1,12 +1,92 @@
 <script setup lang="ts">
 import { handPullComments } from '@/bus'
 
+const formItemMap = {
+  brandId: {
+    _label: '品牌',
+    _required: true,
+    component: 'TSelect',
+    model: 'brandId',
+    options: 'brand',
+  },
+  name: {
+    _label: '组名称',
+    _required: true,
+    model: 'name',
+  },
+} satisfies Record<string, FormItem>
 const { data, send } = useRequest(
   alovaInst.Get<Array<Record<string, any>>>('yq/followManage/getList'),
   {
     initialData: [],
   },
 )
+
+function handleAdd(): void {
+  const formRef = ref<FormInstance | null>(null)
+
+  $confirm({
+    body: () =>
+      h(resolveComponent('TForm') as Component<FormProps>, {
+        items: [formItemMap.name, formItemMap.brandId],
+        labelAlign: 'right',
+        layout: 'vertical',
+        ref: formRef,
+      }),
+    header: '新增组',
+    onConfirmCallback: async () => {
+      await alovaInst.Post('yq/followManage', await formRef.value!.validate())
+      $msg('组新增成功')
+      send()
+    },
+    width: 430, // 730
+  })
+}
+
+async function handleDelete(item: Record<string, any>): Promise<void> {
+  await alovaInst.Delete(`yq/followManage/${item.id}`)
+  $msg('删除成功')
+  send()
+}
+
+function handleEdit(row: Record<string, any>): void {
+  const formRef = ref<FormInstance | null>(null)
+
+  watch(
+    formRef,
+    () => {
+      formRef.value!.setFormData(row)
+    },
+    {
+      once: true,
+    },
+  )
+  $confirm({
+    body: () =>
+      h(resolveComponent('TForm') as Component<FormProps>, {
+        items: [
+          formItemMap.name,
+          {
+            ...formItemMap.brandId,
+            disabled: true,
+          },
+        ],
+        labelAlign: 'right',
+        layout: 'vertical',
+        ref: formRef,
+      }),
+    header: '修改组',
+    onConfirmCallback: async () => {
+      await alovaInst.Put('yq/followManage', {
+        ...(await formRef.value!.validate()),
+        id: row.id,
+      })
+      $msg('组修改成功')
+      send()
+    },
+    width: 430, // 730
+  })
+}
 </script>
 
 <template>
@@ -30,13 +110,16 @@ const { data, send } = useRequest(
                 class="ml-auto"
                 theme="default"
                 size="small"
-                @click="
-                  handPullComments({
-                    funcType: 2,
-                    funcName: item.name,
-                    funcId: item.id,
-                  })
-                "
+                :popconfirm="{
+                  content: '确认更新评论吗？',
+                  onConfirm: async () => {
+                    handPullComments({
+                      funcType: 2,
+                      funcName: item.name,
+                      funcId: item.id,
+                    })
+                  },
+                }"
               >
                 更新评论
               </TButton>
@@ -52,7 +135,12 @@ const { data, send } = useRequest(
                 permission="yq:followManage:remove"
                 theme="default"
                 size="small"
-                @click="handleDelete(item)"
+                :popconfirm="{
+                  content: '确认删除吗',
+                  onConfirm: async () => {
+                    handleDelete(item)
+                  },
+                }"
               >
                 删除
               </TButton>
