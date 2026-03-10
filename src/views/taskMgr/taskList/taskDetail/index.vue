@@ -4,7 +4,7 @@ import ViewAnalysis from './modules/viewAnalysis/Index.vue'
 
 const route = useRoute()
 const id = route.query.id as string
-const { data, send } = useRequest(alovaInst.Get<Record<string, any> | undefined>(`yq/task/${id}`), {
+const { data } = useRequest(alovaInst.Get<Record<string, any> | undefined>(`yq/task/${id}`), {
   initialData: undefined,
 })
 const monitorPhraseLabels = computed(() => {
@@ -122,7 +122,7 @@ provide('dataType', 1)
     <TCard class="mt-4!">
       <TTabs v-model="tab" size="large" class="-mt-4!">
         <TTabPanel v-for="item in tabs" :key="item.value" :value="item.value" :label="item.label">
-          <Component :is="item.component" class="mt-4!" @update="send"></Component>
+          <Component :is="item.component" class="mt-4!"></Component>
         </TTabPanel>
       </TTabs>
     </TCard>

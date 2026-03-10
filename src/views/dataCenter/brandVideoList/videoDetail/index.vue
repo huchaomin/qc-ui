@@ -4,22 +4,22 @@ import {
   showCommentDetail as _showCommentDetail,
 } from '@/bus'
 import { formatSecondsToChinese } from '@/utils'
-// import TaskDetail from './modules/TaskDetail.vue'
+import AnalysisResults from './modules/AnalysisResults.vue'
 // import ViewAnalysis from './modules/viewAnalysis/Index.vue'
 
 const route = useRoute()
 const id = route.query.id as string
 const { data } = useRequest(
-  alovaInst.Get<Record<string, any> | undefined>(`data/brandContentInfo/${id}`),
+  () => alovaInst.Get<Record<string, any> | undefined>(`data/brandContentInfo/${id}`),
   {
     initialData: undefined,
   },
 )
 const tabs = [
   {
-    // component: markRaw(TaskDetail),
+    component: markRaw(AnalysisResults),
     label: '分析结果',
-    value: 'taskDetail',
+    value: 'analysisResults',
   },
   {
     // component: markRaw(ViewAnalysis),
@@ -29,9 +29,7 @@ const tabs = [
 ]
 const tab = ref(tabs[0]!.value)
 
-provide('id', id)
 provide('data', data)
-provide('dataType', 1)
 
 function showAiHandlingSuggestions(): void {
   _showAiHandlingSuggestions(data.value!)
@@ -101,13 +99,13 @@ function showCommentDetail(): void {
         </span>
       </div>
     </TCard>
-    <!-- <TCard class="mt-4!">
+    <TCard class="mt-4!">
       <TTabs v-model="tab" size="large" class="-mt-4!">
         <TTabPanel v-for="item in tabs" :key="item.value" :value="item.value" :label="item.label">
-          <Component :is="item.component" class="mt-4!" @update="send"></Component>
+          <Component :is="item.component" class="mt-4!"></Component>
         </TTabPanel>
       </TTabs>
-    </TCard> -->
+    </TCard>
   </div>
 </template>
 
