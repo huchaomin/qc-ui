@@ -348,9 +348,6 @@ const config: PageListProps = {
     publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
   }),
   isFirstQueryByParent: true,
-  tableOtherProps: {
-    rowKey: 'id',
-  },
 }
 </script>
 
