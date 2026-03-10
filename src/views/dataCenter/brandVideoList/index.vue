@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { addFollow, fillOriginalUrl, updateDealMark, warnByHand } from '@/bus'
+import ContentSlice from './videoDetail/modules/ContentSlice.vue'
 
 const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
@@ -139,12 +140,32 @@ const config: PageListProps = {
       title: '发布时间',
     },
     {
-      cell: {
-        _component: 'Link',
-        default: '点击查看',
-        onClick: () => {
-          console.log('点击查看')
-        },
+      cell: (_, { row }) => {
+        return {
+          _component: 'Link',
+          default: '点击查看',
+          onClick: async () => {
+            const data = await alovaInst.Get<Record<string, any>>(
+              `data/contentInfo/${row.contentId}`,
+            )
+
+            void $confirm({
+              body: () =>
+                h(ContentSlice, {
+                  bodyClassName: 'p-0!',
+                  data,
+                  headerBordered: false,
+                  'onUpdate:originalUrl': () => {
+                    pageListRef.value!.query()
+                  },
+                  shadow: false,
+                  title: undefined,
+                }),
+              header: '内容切片总结',
+              width: 1400,
+            })
+          },
+        }
       },
       colKey: 'aiContent',
       title: '内容切片',

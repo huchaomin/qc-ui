@@ -47,6 +47,9 @@ async function fillOriginalUrl(): Promise<void> {
       detailFill: true, // 详情添加时，后端查找的页数多一点
     },
     {
+      meta: {
+        useLoading: '正在添加原链接...',
+      },
       timeout: 0,
     },
   )
@@ -64,7 +67,7 @@ const finallyOriginalUrl = computed(() => {
 </script>
 
 <template>
-  <TCard title="内容切片总结" class="mt-4!">
+  <TCard title="内容切片总结">
     <template #actions>
       <TLink v-if="finallyOriginalUrl" v-copy="finallyOriginalUrl" class="mr-4!">
         复制原链接
