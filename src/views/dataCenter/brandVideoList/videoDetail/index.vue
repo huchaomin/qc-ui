@@ -5,7 +5,7 @@ import {
 } from '@/bus'
 import { formatSecondsToChinese } from '@/utils'
 import AnalysisResults from './modules/AnalysisResults.vue'
-// import ViewAnalysis from './modules/viewAnalysis/Index.vue'
+import HotTrends from './modules/HotTrends.vue'
 
 const route = useRoute()
 const id = route.query.id as string
@@ -22,9 +22,9 @@ const tabs = [
     value: 'analysisResults',
   },
   {
-    // component: markRaw(ViewAnalysis),
+    component: markRaw(HotTrends),
     label: '热度趋势',
-    value: 'viewAnalysis',
+    value: 'hotTrends',
   },
 ]
 const tab = ref(tabs[0]!.value)

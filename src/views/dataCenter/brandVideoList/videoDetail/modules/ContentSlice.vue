@@ -25,7 +25,6 @@ const sliceData = computed(() => {
 })
 const tableData = computed(() => {
   return sliceData.value.map((item: any) => {
-    console.log(item)
     return {
       ...item,
       duration: `${dayjs(item.end_time, 'HH:mm:ss').diff(dayjs(item.start_time, 'HH:mm:ss'), 'seconds')}s`,
