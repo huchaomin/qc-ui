@@ -6,6 +6,8 @@ const data = inject<Ref<Record<string, any> | undefined>>('data')!
 </script>
 
 <template>
-  <MoodAnalysisAndContentSummarize :analysis-result="data"></MoodAnalysisAndContentSummarize>
-  <ContentSlice v-if="data !== undefined" :data="data"></ContentSlice>
+  <div>
+    <MoodAnalysisAndContentSummarize :analysis-result="data"></MoodAnalysisAndContentSummarize>
+    <ContentSlice v-if="data !== undefined" :data="data"></ContentSlice>
+  </div>
 </template>

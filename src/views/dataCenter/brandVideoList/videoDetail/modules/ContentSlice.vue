@@ -15,7 +15,7 @@ const sliceData = computed(() => {
   let arr
 
   try {
-    arr = JSON.parse(props.data.aiText || props.data.contentTextWithTime)
+    arr = JSON.parse(props.data.aiText || props.data.contentText)
   } catch (error) {
     console.log(error)
     arr = []
@@ -37,16 +37,25 @@ const getByIdOriginalUrl = ref<null | string>(null)
 
 async function fillOriginalUrl(): Promise<void> {
   await $confirm('确定要添加原链接吗？')
-  await fillOriginalUrlApi({
-    contentIdList: [props.data.contentId ?? props.data.id],
-    detailFill: true, // 详情添加时，后端查找的页数多一点
-  })
+
+  const contentId = props.data.contentId ?? props.data.id
+
+  await alovaInst.Post(
+    'data/contentInfo/fillOriginalUrl',
+    {
+      contentIdList: [contentId],
+      detailFill: true, // 详情添加时，后端查找的页数多一点
+    },
+    {
+      timeout: 0,
+    },
+  )
   emit('update:originalUrl')
 
-  const res = await getContentInfoById(props.data.contentId ?? props.data.id)
+  const res = await alovaInst.Get<Record<string, any>>(`data/contentInfo/${contentId}`)
 
   getByIdOriginalUrl.value = res.originalUrl
-  $notify('添加原链接成功')
+  $msg('添加原链接成功')
 }
 
 const finallyOriginalUrl = computed(() => {
@@ -80,17 +89,15 @@ const finallyOriginalUrl = computed(() => {
         :data="tableData"
         flex-height
       ></TTable>
-      <CVideo
+      <video
         v-if="data.url"
-        ref="videoRef"
-        :sources="[
-          {
-            src: data.url,
-            type: 'video/mp4',
-          },
-        ]"
-        height="360"
-      ></CVideo>
+        class="mx-auto"
+        controls
+        preload="metadata"
+        style="height: 360px; object-fit: contain"
+      >
+        <source :src="data.url" type="video/mp4" />
+      </video>
     </div>
   </TCard>
 </template>
