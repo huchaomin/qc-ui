@@ -52,6 +52,7 @@ export const cardPropsInit = {
   bodyFullHeight: false,
   headerBordered: true,
   shadow: true,
+  titleEllipsis: false,
 } as const
 export const switchPropsInit = {
   disabled: undefined,

@@ -98,15 +98,17 @@ const batchDeleteProps = computed(() => {
   return {
     default: '批量删除',
     disabled: selectedRowKeys.value.length === 0,
-    onClick: async () => {
-      await $confirm('确认删除所选项吗?')
-      await (typeof config.method === 'string'
-        ? alovaInst.Delete(`${config.method}/${selectedRowKeys.value.join(',')}`)
-        : config.method(selectedRows.value))
-      $msg.success('删除成功')
-      doQuery()
-    },
     permission: config.permission,
+    popconfirm: {
+      content: '确认删除所选项吗?',
+      onConfirm: async () => {
+        await (typeof config.method === 'string'
+          ? alovaInst.Delete(`${config.method}/${selectedRowKeys.value.join(',')}`)
+          : config.method(selectedRows.value))
+        $msg.success('删除成功')
+        doQuery()
+      },
+    },
   }
 })
 const exportProps = computed(() => {
