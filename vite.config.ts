@@ -143,6 +143,7 @@ export default defineConfig(({ command, mode }) => {
         'echarts/renderers',
         'vue-echarts',
         '@tdesign-vue-next/chat',
+        'dompurify',
       ],
     },
     plugins: [

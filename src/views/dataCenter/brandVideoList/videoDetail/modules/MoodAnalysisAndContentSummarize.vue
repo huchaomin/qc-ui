@@ -9,7 +9,9 @@ withDefaults(
 
 <template>
   <TCard v-if="analysisResult !== undefined" title="情绪分析">
-    <template #actions> 更新时间：{{ analysisResult.updateTime }} </template>
+    <template v-if="analysisResult.updateTime" #actions>
+      更新时间：{{ analysisResult.updateTime }}
+    </template>
     <div class="mood">
       <div>
         <label>内容情绪：</label>

@@ -78,7 +78,8 @@
 - 添加视频插件
 - [Violation] Forced reflow while executing JavaScript 用时 <N> 毫秒
 - rowKey: 'id',
-
+- v-memo
+- 右键菜单
 
 
 ## todo 项目对比
@@ -92,7 +93,7 @@
 - 删除 用户管理-分配角色 这个菜单
 - 删除 角色管理-分配用户 这个菜单
 - 添加 角色权限范围 role_data_scope 这个字典
-- 菜单表 图标字段
+- 菜单表 图标字段 视频内容详情 图文内容详情
 
 ### 分析包大小
 

@@ -93,20 +93,32 @@ export function useVideoTitleColumn({
 
   return {
     cell: (_, { row }) => {
-      if (useLink && router.hasRoute('VideoDetail')) {
-        return {
-          _component: 'Link',
-          default: isFalsy(_get(row, colKey)) ? '无标题' : (_get(row, colKey) as string),
-          onClick: () => {
-            const url = router.resolve({
-              name: 'VideoDetail',
-              query: {
-                id: _get(row, bciIdKey) as string,
-              },
-            })
+      const contentType = _get(row, 'contentType') as number
 
-            window.open(url.href, '_blank')
-          },
+      if (useLink && !isFalsy(contentType)) {
+        let routeName = ''
+
+        if (contentType === 1 && router.hasRoute('VideoDetail')) {
+          routeName = 'VideoDetail'
+        } else if (contentType === 2 && router.hasRoute('TextImagesDetail')) {
+          routeName = 'TextImagesDetail'
+        }
+
+        if (routeName !== '') {
+          return {
+            _component: 'Link',
+            default: isFalsy(_get(row, colKey)) ? '无标题' : (_get(row, colKey) as string),
+            onClick: () => {
+              const url = router.resolve({
+                name: routeName,
+                query: {
+                  id: _get(row, bciIdKey) as string,
+                },
+              })
+
+              window.open(url.href, '_blank')
+            },
+          }
         }
       }
 
