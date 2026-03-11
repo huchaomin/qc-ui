@@ -12,6 +12,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<TextareaProps>(), {
+  // false 好像不是那么回事
   autosize: () => ({
     maxRows: Infinity,
     minRows: 2,

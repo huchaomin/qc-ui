@@ -78,4 +78,12 @@ function compoRef(instance: any) {
     }
   }
 }
+
+:deep() {
+  .t-card__body {
+    &:has(> .t-form:is(:last-child)) {
+      padding-bottom: 0;
+    }
+  }
+}
 </style>

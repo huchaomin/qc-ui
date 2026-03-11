@@ -80,6 +80,10 @@ export type FormItem = XOR<
   >
 >
 export type FormProps = {
+  /**
+   * @description: 是否自动计算 label 宽度，默认 true
+   */
+  autoLabelWidth?: boolean
   data?: FormPropsData
   items: FormItem[]
   labelAlign?: 'right' | 'top'
@@ -174,7 +178,7 @@ const formItemsConfig = computed(() => {
 
 function setInitFormDataValues() {
   formItemsConfig.value.forEach((item) => {
-    if (item.model !== undefined && !Object.prototype.hasOwnProperty.call(props.data, item.model)) {
+    if (item.model !== undefined && !Object.hasOwn(props.data, item.model)) {
       const isArr =
         ['TCheckboxGroup', 'TDateRangePicker', 'TRangeInput', 'TUpload'].includes(
           item.component as string,
@@ -265,7 +269,7 @@ function getFormItemProps(item: _FormItem): FormItemProps {
     }
 
     if (
-      obj.rules.find((rule: any) => rule.required === true) === undefined &&
+      !obj.rules.some((rule: any) => rule.required === true) &&
       props.rules?.[item.model ?? ''] === undefined
     ) {
       obj.rules.unshift(
@@ -291,7 +295,7 @@ function getFormItemProps(item: _FormItem): FormItemProps {
 
   if (
     obj.rules?.find((rule: any) => rule.required === true) !== undefined &&
-    obj.rules.find((rule: any) => rule.whitespace === true) === undefined
+    !obj.rules.some((rule: any) => rule.whitespace === true)
   ) {
     obj.rules.unshift({
       message: obj.rules.find((rule: any) => rule.required === true).message ?? message,
@@ -321,10 +325,7 @@ const otherProps = computed(() => {
       rules!.forEach((rule: any) => {
         r[key].push(rule)
 
-        if (
-          rule.required === true &&
-          rules!.find((r: any) => r.whitespace === true) === undefined
-        ) {
+        if (rule.required === true && !rules!.some((r: any) => r.whitespace === true)) {
           r[key].push({
             message: rule.message,
             whitespace: true,
@@ -337,6 +338,7 @@ const otherProps = computed(() => {
 
   delete obj.items
   delete obj.msgErrorWhenValidate
+  delete obj.autoLabelWidth
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]
@@ -502,7 +504,7 @@ function calcLabelWidth() {
     el.style.minWidth = 'auto'
   })
 
-  if (props.labelAlign === 'top') {
+  if (props.labelAlign === 'top' || !props.autoLabelWidth) {
     return
   }
 
@@ -599,6 +601,12 @@ defineExpose({} as FormInstance)
           opacity: 0;
         }
       }
+    }
+  }
+
+  &.no_item_mb {
+    .t-form__item {
+      margin-bottom: 0 !important;
     }
   }
 }

@@ -14,7 +14,7 @@ const formItemMap = {
     _class: 'col-span-full',
     _label: '联系邮箱',
     component: 'TTextarea',
-    maxlength: Infinity,
+    maxlength: '',
     model: 'contactsEmail',
   },
   contactsPhone: {

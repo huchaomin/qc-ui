@@ -36,8 +36,9 @@
 - 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
 - vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
 - @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
-- useWatcher sendable(middleware)
-- method localCache(cacheFor) transformData(transform, middleware)
+- useWatcher sendable、transform(middleware)
+- use*** transform(middleware)
+- method localCache(cacheFor) transformData(transform)
 
 ## todo
 
@@ -97,6 +98,7 @@
 - 删除 角色管理-分配用户 这个菜单
 - 添加 角色权限范围 role_data_scope 这个字典
 - 菜单表 图标字段 视频内容详情 图文内容详情 关注管理（可以缓存）
+- 菜单表 查看、新增、编辑智能体 agentMgr/agentDetail/index
 
 ### 分析包大小
 

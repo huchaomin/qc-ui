@@ -38,6 +38,7 @@ export const buttonPropsInit = {
   show: true,
 } as const
 export const formPropsInit = {
+  autoLabelWidth: true,
   colon: true,
   data: () => reactive({}),
   labelAlign: 'top',
