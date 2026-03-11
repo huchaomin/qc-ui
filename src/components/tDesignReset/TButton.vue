@@ -87,6 +87,7 @@ const autoIcon = computed(() => {
     'subway:mark-1': ['标记'],
     'ph:open-ai-logo': ['AI'],
     'material-symbols:comment-outline': ['评论'],
+    'hugeicons:view': ['预览', '查看'],
     'majesticons:checkbox-list-detail-line': ['详情'],
     'line-md:account': ['角色', '用户'],
     'line-md:file-document': ['文件'],

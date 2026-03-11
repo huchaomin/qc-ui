@@ -8,7 +8,7 @@ import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 
 export function addFollow(arr: Array<Record<string, any>>): void {
-  const hasTwoBrand = arr.some((item) => item.brandId !== arr[0]!.brandId)
+  const hasTwoBrand = arr.some((item) => item.brandId !== arr[0].brandId)
 
   if (hasTwoBrand) {
     void $msg.error('只能添加同的品牌')
@@ -27,7 +27,7 @@ export function addFollow(arr: Array<Record<string, any>>): void {
             component: 'TSelect' as const,
             model: 'followId',
             options: computed(() =>
-              useList('follow').value.filter((item) => item.brandId === arr[0]!.brandId),
+              useList('follow').value.filter((item) => item.brandId === arr[0].brandId),
             ),
           }),
         ],

@@ -36,6 +36,8 @@
 - 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
 - vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
 - @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
+- useWatcher sendable(middleware)
+- method localCache(cacheFor) transformData(transform, middleware)
 
 ## todo
 
@@ -80,6 +82,7 @@
 - rowKey: 'id',
 - v-memo
 - 右键菜单
+- import { ChatMarkdown } from '@tdesign-vue-next/chat' 影响了打包大小
 
 
 ## todo 项目对比
