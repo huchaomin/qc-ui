@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import FollowTrends from '@/views/taskMgr/taskList/taskDetail/modules/viewAnalysis/Index.vue'
 import FollowDetail from './modules/FollowDetail.vue'
 
 const route = useRoute()
@@ -15,11 +16,11 @@ const tabs = [
     label: '关注详情列表',
     value: 'followDetail',
   },
-  // {
-  //   component: markRaw(FollowTrends),
-  //   label: '关注视图分析',
-  //   value: 'followTrends',
-  // },
+  {
+    component: markRaw(FollowTrends),
+    label: '关注视图分析',
+    value: 'followTrends',
+  },
 ]
 const tab = ref(tabs[0]!.value)
 
