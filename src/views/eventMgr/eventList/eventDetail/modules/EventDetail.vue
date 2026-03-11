@@ -218,7 +218,7 @@ const config: PageListProps = {
       },
     }),
     reactive({
-      default: '导出内容(旧)',
+      default: '导出内容(新)',
       disabled: computed(() => finallyQueryParams.value === undefined),
       permission: 'yq:eventDetail:export',
       popconfirm: {

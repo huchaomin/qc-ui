@@ -30,3 +30,13 @@ const attrs = useAttrs() as unknown as CellRenderContext
     {{ _get(attrs.row, attrs.col.colKey) }}
   </TTypographyText>
 </template>
+
+<style>
+.t-table {
+  .t-tooltip {
+    .t-typography {
+      color: var(--td-font-white-1);
+    }
+  }
+}
+</style>
