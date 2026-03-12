@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { PresetRange } from 'tdesign-vue-next'
+import type { Ref } from 'vue'
 import SelectCanvas from './SelectCanvas.vue'
 
 withDefaults(
@@ -88,7 +89,7 @@ async function handleDataDownload(): Promise<void> {
     },
     {
       meta: {
-        useDownload: `任务视图分析数据_${new Date().getTime()}.xlsx`,
+        useDownload: `任务视图分析数据_${Date.now()}.xlsx`,
         useResponseBlob: true,
       },
     },

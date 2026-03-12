@@ -56,7 +56,7 @@ const label = computed(() => {
 
   return cellValue.value
     .map(
-      (item) => options.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? item,
+      (item) => options.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? '',
     )
     .filter(Boolean)
     .join(props.splitSymbol)
