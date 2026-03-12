@@ -35,7 +35,7 @@ declare module 'vue' {
     TComment: typeof import('tdesign-vue-next')['Comment'];
     TConfigProvider: typeof import('tdesign-vue-next')['ConfigProvider'];
     TContent: typeof import('tdesign-vue-next')['Content'];
-    TDatePicker: typeof import('tdesign-vue-next')['DatePicker'];
+    // TDatePicker: typeof import('tdesign-vue-next')['DatePicker'];
     TDatePickerPanel: typeof import('tdesign-vue-next')['DatePickerPanel'];
     // TDateRangePicker: typeof import('tdesign-vue-next')['DateRangePicker'];
     TDateRangePickerPanel: typeof import('tdesign-vue-next')['DateRangePickerPanel'];
@@ -152,6 +152,7 @@ declare module 'vue' {
     TTree: (typeof import('@/components/tDesignReset/TTree.vue'))['default']
     TRangeInput: (typeof import('@/components/tDesignReset/TRangeInput.vue'))['default']
     TPopup: (typeof import('@/components/tDesignReset/TPopup.vue'))['default']
+    TDatePicker: (typeof import('@/components/tDesignReset/TDatePicker.vue'))['default']
   }
 }
 

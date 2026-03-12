@@ -12,6 +12,7 @@ import type {
 import type { AllowedComponentProps, ComponentInternalInstance, ComputedRef } from 'vue'
 import type { CheckboxProps } from './TCheckbox.vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
+import type { DatePickerProps } from './TDatePicker.vue'
 import type { DateRangePickerProps } from './TDateRangePicker.vue'
 import type { InputProps } from './TInput.vue'
 import type { InputNumberProps } from './TInputNumber.vue'
@@ -31,6 +32,7 @@ export interface ComponentPropsMap {
   Cron: Omit<CronProps, 'modelValue'>
   TCheckbox: Omit<CheckboxProps, 'modelValue'>
   TCheckboxGroup: Omit<CheckboxGroupProps, 'modelValue'>
+  TDatePicker: Omit<DatePickerProps, 'modelValue'>
   TDateRangePicker: Omit<DateRangePickerProps, 'modelValue'>
   TInput: Omit<InputProps, 'modelValue'>
   TInputNumber: Omit<InputNumberProps, 'modelValue'>

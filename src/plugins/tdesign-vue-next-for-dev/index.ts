@@ -6,6 +6,7 @@ import _TDesign, {
   Card as _Card,
   Checkbox as _Checkbox,
   CheckboxGroup as _CheckboxGroup,
+  DatePicker as _DatePicker,
   DateRangePicker as _DateRangePicker,
   DialogPlugin as _DialogPlugin,
   EnhancedTable as _EnhancedTable,
@@ -62,6 +63,7 @@ const Upload = _Upload as (typeof import('tdesign-vue-next'))['Upload']
 const Tree = _Tree as (typeof import('tdesign-vue-next'))['Tree']
 const RangeInput = _RangeInput as (typeof import('tdesign-vue-next'))['RangeInput']
 const Popup = _Popup as (typeof import('tdesign-vue-next'))['Popup']
+const DatePicker = _DatePicker as (typeof import('tdesign-vue-next'))['DatePicker']
 
 // 这里导出的名称必须和 tDesignReset 组件的名称一致
 export {
@@ -69,6 +71,7 @@ export {
   Card,
   Checkbox,
   CheckboxGroup,
+  DatePicker,
   DateRangePicker,
   DialogPlugin,
   Form,
