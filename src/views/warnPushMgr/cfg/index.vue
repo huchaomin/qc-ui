@@ -84,7 +84,6 @@ function getSlotMap({
   pushTarget,
   warnRule,
 }: { pushTarget?: Array<Record<string, any>>; warnRule?: Array<Record<string, any>> } = {}) {
-  console.log(pushTarget, warnRule)
   return {
     push_target: () => h(PushTarget, { initData: pushTarget }),
     warn_rule: () => h(WarnRule, { initData: warnRule }),

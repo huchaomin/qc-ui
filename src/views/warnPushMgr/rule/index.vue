@@ -1,57 +1,38 @@
 <script setup lang="ts">
-// import PushTarget from './modules/PushTarget.vue'
-// import WarnRule from './modules/WarnRule.vue'
+import FieldConfig from './modules/FieldConfig.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   brandId: {
-    __others: (formData: Record<string, any>) => {
-      return {
-        show: formData.range === '1',
-      }
-    },
     _label: '品牌',
     _required: true,
     component: 'TSelect',
     model: 'brandId',
     options: 'brand',
   },
-  name: {
-    _label: '预警推送名称',
-    _required: true,
-    model: 'name',
-  },
-  push_target: {
+  field_config: {
     _class: 'col-span-full',
-    _label: '推送目标',
+    _label: '预警条件',
     _required: true,
-    model: 'pushTarget',
-    slot: 'push_target',
+    model: 'fieldConfig',
+    slot: 'field_config',
   },
-  pushFrequency: {
-    __others: (formData: Record<string, any>) => {
-      return {
-        show: formData.pushType === '2',
-      }
-    },
-    _label: '推送频率',
+  ruleDesc: {
+    _class: 'col-span-full',
+    _label: '描述',
+    model: 'ruleDesc',
+  },
+  ruleName: {
+    _label: '规则名称',
     _required: true,
-    component: 'Cron',
-    model: 'pushFrequency',
+    model: 'ruleName',
   },
-  pushType: {
-    _label: '推送类型',
+  ruleType: {
+    _label: '规则类型',
     _required: true,
     component: 'TSelect',
-    dicCode: 'push_type',
-    model: 'pushType',
-  },
-  range: {
-    _label: '预警范围',
-    _required: true,
-    component: 'TSelect',
-    dicCode: 'warn_range',
-    model: 'range',
+    dicCode: 'event_strategy_type',
+    model: 'ruleType',
   },
   status: {
     _label: '状态',
@@ -59,72 +40,36 @@ const formItemMap = {
     dicCode: 'status',
     model: 'status',
   },
-  taskId: {
-    __others: (formData: Record<string, any>) => {
-      return {
-        show: formData.range === '2',
-      }
-    },
-    _label: '任务',
-    _required: true,
-    component: 'TSelect',
-    model: 'taskId',
-    options: 'task',
-  },
-  warn_rule: {
-    _class: 'col-span-full',
-    _label: '预警推送规则',
-    _required: true,
-    model: 'warnRule',
-    slot: 'warn_rule',
-  },
 } satisfies Record<string, FormItem>
 
-function getSlotMap({
-  pushTarget,
-  warnRule,
-}: { pushTarget?: Array<Record<string, any>>; warnRule?: Array<Record<string, any>> } = {}) {
-  console.log(pushTarget, warnRule)
+function getSlotMap({ fieldConfig }: { fieldConfig?: Array<Record<string, any>> } = {}) {
   return {
-    push_target: () => h(PushTarget, { initData: pushTarget }),
-    warn_rule: () => h(WarnRule, { initData: warnRule }),
+    field_config: () => h(FieldConfig, { initData: fieldConfig }),
   }
 }
 
 const config: PageListProps = {
   apis: {
     delete: {
-      method: 'yq/warnPushCfg',
-      permission: 'yq:warnPushCfg:remove',
+      method: 'yq/warnPushRule',
+      permission: 'yq:warnPushRule:remove',
     },
     list: {
-      method: 'yq/warnPushCfg/list',
+      method: 'yq/warnPushRule/list',
     },
   },
   columns: [
     {
-      colKey: 'name',
-      title: '预警推送名称',
+      colKey: 'ruleName',
+      title: '规则名称',
     },
     {
       cell: {
         _component: 'DicLabel',
-        dicCode: 'warn_range',
+        dicCode: 'event_strategy_type',
       },
-      colKey: 'range',
-      title: '预警范围',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'push_type',
-      },
-      colKey: 'pushType',
-      title: '推送类型',
-    },
-    {
-      colKey: 'pushFrequency',
-      title: '推送频率',
+      colKey: 'ruleType',
+      title: '规则类型',
     },
     {
       cell: {
@@ -133,6 +78,21 @@ const config: PageListProps = {
       },
       colKey: 'status',
       title: '状态',
+    },
+    {
+      cell: {
+        _component: 'OptionLabel',
+        options: 'brand',
+      },
+      colKey: 'brandId',
+      title: '品牌id',
+    },
+    {
+      colKey: 'ruleDesc',
+      resize: {
+        maxWidth: 300,
+      },
+      title: '描述',
     },
     {
       colKey: 'createTime',
@@ -163,7 +123,7 @@ const config: PageListProps = {
                 formRef,
                 () => {
                   formRef.value!.setFormData(row, {
-                    numberToStringKeys: ['status', 'pushType', 'range'],
+                    numberToStringKeys: ['status', 'ruleType'],
                   })
                 },
                 {
@@ -176,41 +136,32 @@ const config: PageListProps = {
                     resolveComponent('TForm') as Component<FormProps>,
                     {
                       items: [
-                        formItemMap.name,
-                        formItemMap.range,
+                        formItemMap.ruleName,
+                        formItemMap.ruleType,
                         formItemMap.brandId,
-                        formItemMap.taskId,
-                        formItemMap.pushType,
-                        formItemMap.pushFrequency,
                         formItemMap.status,
-                        formItemMap.warn_rule,
-                        formItemMap.push_target,
+                        formItemMap.ruleDesc,
+                        formItemMap.field_config,
                       ],
                       ref: formRef,
                     },
-                    getSlotMap({ pushTarget: row.pushTarget, warnRule: row.warnRule }),
+                    getSlotMap({ fieldConfig: row.fieldConfig }),
                   ),
-                header: '修改预警推送配置',
+                header: '修改预警推送规则',
                 onConfirmCallback: async () => {
                   const obj = await formRef.value!.validate()
 
-                  if (obj.range === '2') {
-                    obj.brandId = useList('task').value.find(
-                      (item) => item.value === obj.taskId,
-                    )!.brandId
-                  }
-
-                  await alovaInst.Put('yq/warnPushCfg', {
+                  await alovaInst.Put('yq/warnPushRule', {
                     ...obj,
                     id: row.id,
                   })
-                  $msg.success('预警推送配置修改成功')
+                  $msg.success('预警推送规则修改成功')
                   pageListRef.value!.query()
                 },
                 width: 1050,
               })
             },
-            permission: 'yq:warnPushCfg:edit',
+            permission: 'yq:warnPushRule:edit',
           }),
         ],
       },
@@ -219,13 +170,13 @@ const config: PageListProps = {
     },
   ],
   formItems: [
-    formItemMap.name,
-    formItemMap.range,
-    formItemMap.pushType,
+    formItemMap.ruleName,
+    formItemMap.ruleType,
     {
       ...formItemMap.status,
       component: 'TSelect',
     },
+    formItemMap.brandId,
   ],
   operations: [
     {
@@ -242,36 +193,29 @@ const config: PageListProps = {
                   status: '0',
                 }),
                 items: [
-                  formItemMap.name,
-                  formItemMap.range,
+                  formItemMap.ruleName,
+                  formItemMap.ruleType,
                   formItemMap.brandId,
-                  formItemMap.taskId,
-                  formItemMap.pushType,
-                  formItemMap.pushFrequency,
                   formItemMap.status,
-                  formItemMap.warn_rule,
-                  formItemMap.push_target,
+                  formItemMap.ruleDesc,
+                  formItemMap.field_config,
                 ],
                 ref: formRef,
               },
               getSlotMap(),
             ),
-          header: '新增预警推送配置',
+          header: '新增预警推送规则',
           onConfirmCallback: async () => {
             const obj = await formRef.value!.validate()
 
-            if (obj.range === '2') {
-              obj.brandId = useList('task').value.find((item) => item.value === obj.taskId)!.brandId
-            }
-
-            await alovaInst.Post('yq/warnPushCfg', obj)
-            $msg.success('预警推送配置新增成功')
+            await alovaInst.Post('yq/warnPushRule', obj)
+            $msg.success('预警推送规则新增成功')
             pageListRef.value!.query()
           },
           width: 1050,
         })
       },
-      permission: 'yq:warnPushCfg:add',
+      permission: 'yq:warnPushRule:add',
     },
   ],
 }
