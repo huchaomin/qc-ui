@@ -169,6 +169,11 @@ const config: PageListProps = {
       title: '数据ticket',
     },
     {
+      cell: {
+        _component: 'OptionLabel',
+        multiple: true,
+        options: 'brand',
+      },
       colKey: 'brandId',
       title: '品牌id',
     },
