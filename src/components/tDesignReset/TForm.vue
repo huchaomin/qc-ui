@@ -587,6 +587,7 @@ defineExpose({} as FormInstance)
     }
   }
 
+  .t-date-picker,
   .t-date-range-picker {
     width: 100%;
   }

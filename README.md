@@ -84,6 +84,7 @@
 - v-memo
 - 右键菜单
 - import { ChatMarkdown } from '@tdesign-vue-next/chat' 影响了打包大小
+- 左侧菜单 active 展开
 
 
 ## todo 项目对比
