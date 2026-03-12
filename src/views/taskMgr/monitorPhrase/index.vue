@@ -240,6 +240,7 @@ const config: PageListProps = {
                 width: 730,
               })
             },
+            permission: 'yq:monitorPhrase:edit',
           }),
         ],
       },

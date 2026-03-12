@@ -249,6 +249,7 @@ const config: PageListProps = {
                 width: 730,
               })
             },
+            permission: 'yq:eventManage:edit',
           }),
           ({ row }) => ({
             default: '重跑',

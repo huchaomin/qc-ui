@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import PushTarget from './modules/PushTarget.vue'
-import WarnRule from './modules/WarnRule.vue'
+// import PushTarget from './modules/PushTarget.vue'
+// import WarnRule from './modules/WarnRule.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {

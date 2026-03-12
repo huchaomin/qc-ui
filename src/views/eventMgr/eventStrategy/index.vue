@@ -242,6 +242,7 @@ const config: PageListProps = {
                 width: 1200,
               })
             },
+            permission: 'yq:eventRule:edit',
           }),
         ],
       },

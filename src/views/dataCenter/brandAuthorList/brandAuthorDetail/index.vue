@@ -242,6 +242,7 @@ const config: PageListProps = {
                 width: 730,
               })
             },
+            permission: 'yq:nameListDetail:edit',
           }),
         ],
       },
