@@ -132,7 +132,7 @@ export default antfu(
   },
   {
     rules: {
-      // 'antfu/consistent-list-newline': 'off',
+      'e18e/prefer-static-regex': 'off',
       'no-console': 'off',
     },
   },

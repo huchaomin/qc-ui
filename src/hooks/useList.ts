@@ -130,6 +130,15 @@ const promiseMap = {
       }))
     },
   }),
+  warnPushRule: alovaInst.Get<ListItem[]>('yq/warnPushRule/getList', {
+    transform: (res) => {
+      return (res as Record<string, any>[]).map((item) => ({
+        label: item.ruleName as string,
+        value: item.id as string,
+        ...item,
+      }))
+    },
+  }),
 }
 
 export function useList(key: UseListAllKey) {

@@ -2,20 +2,13 @@
 <script setup lang="ts">
 import type { InputNumberProps as _InputNumberProps, InputNumberValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
+import { inputNumberPropsInit } from './utils'
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<InputNumberProps>(), {
-  autoWidth: undefined,
-  decimalPlaces: 2,
-  disabled: undefined,
-  min: 0,
-  readonly: undefined,
-  theme: 'normal',
-  useGrouping: true,
-})
+const props = withDefaults(defineProps<InputNumberProps>(), inputNumberPropsInit)
 const emit = defineEmits<{
   'update:modelValue': [value: InputNumberValue]
 }>()

@@ -89,10 +89,7 @@ const config: PageListProps = {
       cell: (_, { row }) => {
         return {
           _component: 'Switch',
-          customValue: ['0', '1'],
-          disabled: row.roleId === '1',
-          modelValue: row.status as string,
-          onChange: async (value) => {
+          beforeChange: async () => {
             const text = row.status === '1' ? '启用' : '停用'
 
             await $confirm(`确认${text}${row.roleName}角色吗？`)
@@ -100,7 +97,7 @@ const config: PageListProps = {
               'system/role/changeStatus',
               {
                 roleId: row.roleId,
-                status: value,
+                status: row.status === '1' ? '0' : '1',
               },
               {
                 meta: {
@@ -109,7 +106,10 @@ const config: PageListProps = {
               },
             )
             pageListRef.value!.query()
+            return true
           },
+          customValue: ['0', '1'],
+          disabled: row.roleId === '1',
         }
       },
       colKey: 'status',

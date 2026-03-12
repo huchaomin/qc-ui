@@ -147,3 +147,12 @@ export const selectPropsInit = {
    */
   showCheckAll: false,
 } as const
+export const inputNumberPropsInit = {
+  autoWidth: undefined,
+  decimalPlaces: 2,
+  disabled: undefined,
+  min: 0,
+  readonly: undefined,
+  theme: 'normal',
+  useGrouping: true,
+} as const

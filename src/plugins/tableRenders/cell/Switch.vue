@@ -10,44 +10,15 @@ defineOptions({
 
 const props = withDefaults(defineProps<SwitchProps>(), switchPropsInit)
 
-export type SwitchProps = Omit<_SwitchProps, 'modelValue'> & {
-  modelValue?: SwitchValue
-}
+export type SwitchProps = Omit<_SwitchProps, 'modelValue'>
 
-type OnChangeParams = Parameters<NonNullable<_SwitchProps['onChange']>>
-
-const otherProps = computed(() => {
-  const obj: Partial<SwitchProps> = {
-    ...props,
-  }
-
-  delete obj.modelValue
-  return obj
-})
 const attrs = useAttrs() as unknown as CellRenderContext
-const cellValue = computed<SwitchValue>(() => _get(attrs.row, attrs.col.colKey))
 const innerModelValue = defineModel<SwitchValue>('modelValue', {
-  default: false,
-})
-
-watchEffect(() => {
-  innerModelValue.value = cellValue.value
+  get: () => _get(attrs.row, attrs.col.colKey),
+  set: (value: SwitchValue) => _set(attrs.row, attrs.col.colKey, value),
 })
 </script>
 
 <template>
-  <TSwitch
-    v-bind="{
-      modelValue: innerModelValue,
-      onChange: (...args: OnChangeParams) => {
-        if (props.beforeChange !== undefined) {
-          props.onChange!(...args)
-        } else {
-          _set(attrs.row, attrs.col.colKey, args[0])
-        }
-      },
-      ...otherProps,
-    }"
-  >
-  </TSwitch>
+  <TSwitch v-bind="props" v-model="innerModelValue!"></TSwitch>
 </template>

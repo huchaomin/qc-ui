@@ -25,7 +25,7 @@ const innerModelValue = defineModel<InputValue>('modelValue', {
 
 <style>
 .t-table {
-  .t-input__wrap:not(.t-select__wrap .t-input__wrap) {
+  .t-input__wrap:not(.t-input-number .t-input__wrap, .t-select__wrap .t-input__wrap) {
     position: absolute;
     top: 6px;
     right: 12px;
