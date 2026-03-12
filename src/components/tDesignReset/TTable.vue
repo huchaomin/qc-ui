@@ -871,12 +871,16 @@ defineExpose(
 
 <style>
 .t-table {
-  .t-cascader,
-  .t-input,
-  .t-radio-button,
-  .t-range-input,
+  /* .t-cascader, */
+
+  /* .t-radio-button, */
+
+  /* .t-range-input, */
+
   /* .t-select, */
-  .t-textarea__inner {
+
+  /* .t-textarea__inner,  */
+  .t-input {
     border-color: var(--td-border-level-2-color) !important;
 
     &:hover {
@@ -900,12 +904,16 @@ defineExpose(
 
 .t-is-error {
   .t-table {
-    .t-cascader,
-    .t-input,
-    .t-radio-button,
-    .t-range-input,
+    /* .t-cascader, */
+
+    /* .t-radio-button, */
+
+    /* .t-range-input, */
+
     /* .t-select, */
-    .t-textarea__inner {
+
+    /* .t-textarea__inner, */
+    .t-input {
       &.t-is-error {
         border-color: var(--td-error-color) !important;
 

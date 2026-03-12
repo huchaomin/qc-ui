@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import PushTarget from './modules/PushTarget.vue'
+import WarnRule from './modules/WarnRule.vue'
+
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   brandId: {
@@ -21,6 +24,8 @@ const formItemMap = {
   push_target: {
     _class: 'col-span-full',
     _label: '推送目标',
+    _required: true,
+    model: 'pushTarget',
     slot: 'push_target',
   },
   pushFrequency: {
@@ -69,13 +74,27 @@ const formItemMap = {
   warn_rule: {
     _class: 'col-span-full',
     _label: '预警推送规则',
+    _required: true,
+    model: 'warnRule',
     slot: 'warn_rule',
   },
 } satisfies Record<string, FormItem>
+
+function getSlotMap({
+  pushTarget,
+  warnRule,
+}: { pushTarget?: Array<Record<string, any>>; warnRule?: Array<Record<string, any>> } = {}) {
+  console.log(pushTarget, warnRule)
+  return {
+    push_target: () => h(PushTarget, { initData: pushTarget }),
+    warn_rule: () => h(WarnRule, { initData: warnRule }),
+  }
+}
+
 const config: PageListProps = {
   apis: {
     delete: {
-      method: 'system/dict/type',
+      method: 'yq/warnPushCfg',
       permission: 'yq:warnPushCfg:remove',
     },
     list: {
@@ -143,7 +162,9 @@ const config: PageListProps = {
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row)
+                  formRef.value!.setFormData(row, {
+                    numberToStringKeys: ['status', 'pushType', 'range'],
+                  })
                 },
                 {
                   once: true,
@@ -151,30 +172,42 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
-                    items: [
-                      formItemMap.dictName,
-                      formItemMap.dictType,
-                      {
-                        ...formItemMap.status,
-                        component: 'TRadioGroup',
-                      },
-                      formItemMap.remark,
-                    ],
-                    labelAlign: 'right',
-                    layout: 'vertical',
-                    ref: formRef,
-                  }),
-                header: '修改字典类型',
+                  h(
+                    resolveComponent('TForm') as Component<FormProps>,
+                    {
+                      items: [
+                        formItemMap.name,
+                        formItemMap.range,
+                        formItemMap.brandId,
+                        formItemMap.taskId,
+                        formItemMap.pushType,
+                        formItemMap.pushFrequency,
+                        formItemMap.status,
+                        formItemMap.warn_rule,
+                        formItemMap.push_target,
+                      ],
+                      ref: formRef,
+                    },
+                    getSlotMap({ pushTarget: row.pushTarget, warnRule: row.warnRule }),
+                  ),
+                header: '修改预警推送配置',
                 onConfirmCallback: async () => {
-                  await alovaInst.Put('system/dict/type', {
-                    ...(await formRef.value!.validate()),
-                    dictId: row.dictId,
+                  const obj = await formRef.value!.validate()
+
+                  if (obj.range === '2') {
+                    obj.brandId = useList('task').value.find(
+                      (item) => item.value === obj.taskId,
+                    )!.brandId
+                  }
+
+                  await alovaInst.Put('yq/warnPushCfg', {
+                    ...obj,
+                    id: row.id,
                   })
-                  $msg.success('字典类型修改成功')
+                  $msg.success('预警推送配置修改成功')
                   pageListRef.value!.query()
                 },
-                width: 430,
+                width: 1050,
               })
             },
           }),
@@ -201,30 +234,40 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
-              data: reactive({
-                status: '0',
-              }),
-              items: [
-                formItemMap.name,
-                formItemMap.range,
-                formItemMap.brandId,
-                formItemMap.taskId,
-                formItemMap.pushType,
-                formItemMap.pushFrequency,
-                formItemMap.status,
-                formItemMap.warn_rule,
-                formItemMap.push_target,
-              ],
-              ref: formRef,
-            }),
-          header: '添加字典类型',
+            h(
+              resolveComponent('TForm') as Component<FormProps>,
+              {
+                data: reactive({
+                  status: '0',
+                }),
+                items: [
+                  formItemMap.name,
+                  formItemMap.range,
+                  formItemMap.brandId,
+                  formItemMap.taskId,
+                  formItemMap.pushType,
+                  formItemMap.pushFrequency,
+                  formItemMap.status,
+                  formItemMap.warn_rule,
+                  formItemMap.push_target,
+                ],
+                ref: formRef,
+              },
+              getSlotMap(),
+            ),
+          header: '新增预警推送配置',
           onConfirmCallback: async () => {
-            await alovaInst.Post('system/dict/type', await formRef.value!.validate())
-            $msg.success('字典添加成功')
+            const obj = await formRef.value!.validate()
+
+            if (obj.range === '2') {
+              obj.brandId = useList('task').value.find((item) => item.value === obj.taskId)!.brandId
+            }
+
+            await alovaInst.Post('yq/warnPushCfg', obj)
+            $msg.success('预警推送配置新增成功')
             pageListRef.value!.query()
           },
-          width: 1030,
+          width: 1050,
         })
       },
       permission: 'yq:warnPushCfg:add',

@@ -9,26 +9,17 @@ const props = withDefaults(
   },
 )
 const formData = inject<Record<string, any>>('formData')!
-const tableData = ref<Array<Record<string, any>>>([
-  {
-    filed: [],
-    filterType: '1',
-    keyWord: '',
-    logicSymbol: '+',
-  },
-])
-
-watch(
-  () => props.initialData,
-  () => {
-    if (props.initialData) {
-      tableData.value = props.initialData
-    }
-  },
-  {
-    immediate: true,
-  },
+const tableData = ref<Array<Record<string, any>>>(
+  props.initialData ?? [
+    {
+      filed: [],
+      filterType: '1',
+      keyWord: '',
+      logicSymbol: '+',
+    },
+  ],
 )
+
 watch(
   tableData,
   () => {
