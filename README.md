@@ -86,6 +86,7 @@
 - import { ChatMarkdown } from '@tdesign-vue-next/chat' 影响了打包大小
 - 左侧菜单 active 展开
 - 字体还是有问题
+- [升级 vite 8](https://cn.vite.dev/guide/migration) [resolve.tsconfigPaths 、devtool]
 
 
 ## todo 项目对比

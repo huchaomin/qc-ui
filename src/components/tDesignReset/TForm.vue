@@ -437,9 +437,7 @@ function compoRef(instance: any) {
           // eslint-disable-next-line vue/no-mutating-props
           props.data[key] =
             typeof data[key] === 'string' ? data[key].split(',').filter(Boolean) : []
-        }
-
-        if (isNotFalsy) {
+        } else if (isNotFalsy) {
           if (!isFalsy(data[key])) {
             // eslint-disable-next-line vue/no-mutating-props
             props.data[key] = data[key]
