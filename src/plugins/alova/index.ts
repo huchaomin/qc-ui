@@ -43,7 +43,7 @@ export default createAlova({
         sysPath.join('/', method.url).startsWith(sysPath.join('/', prefix, '/')),
       )
     ) {
-      method.url = sysPath.join(VITE_API_PREFIX_ARRAY_FIRST!, method.url)
+      method.url = sysPath.join(VITE_API_PREFIX_ARRAY_FIRST, method.url)
     }
 
     method.meta = {
@@ -303,7 +303,6 @@ export default createAlova({
         }
       }
 
-      console.log('resData', resData)
       // eslint-disable-next-line ts/no-unsafe-return
       return resData
     },

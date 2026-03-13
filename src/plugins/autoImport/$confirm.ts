@@ -37,15 +37,14 @@ export default (
         : $dialog(
             {
               ...obj,
-              // eslint-disable-next-line ts/no-misused-promises
-              onCancel: async () => {
+              onCancel: void (async () => {
                 await arg1.onCancelCallback?.()
                 dialogInstance.hide()
 
                 if (arg1.useReject === true) {
                   reject(new Error('confirm_cancel'))
                 }
-              },
+              }),
               onConfirm: async () => {
                 await arg1.onConfirmCallback?.()
                 dialogInstance.hide()
