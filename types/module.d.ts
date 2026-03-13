@@ -44,7 +44,7 @@ declare module 'alova' {
        */
       useDataResult?: boolean
       /**
-       * 如果为false 则不下载，自己处理返回的 blob, 默认
+       * 如果为false 则不下载，自己处理返回值 默认false
        * 如果为true 则从响应头获取文件名,并下载
        * 如果为string 则使用string作为文件名,并下载
        */

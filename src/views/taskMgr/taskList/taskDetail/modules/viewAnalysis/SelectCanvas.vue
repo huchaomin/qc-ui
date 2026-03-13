@@ -37,6 +37,10 @@ const formItems: FormItem[] = [
         label: '页面快照报告',
         value: '2',
       },
+      {
+        label: '评论分析简报',
+        value: '3',
+      },
     ],
   },
 ]
@@ -74,6 +78,30 @@ function handleSelect(index: number): void {
 
 function handleSubmit(): Promise<void> {
   return new Promise((resolve) => {
+    if (formData.reportType === '3') {
+      alovaInst
+        .Post(
+          'yq/aiSuggestion/aiReport',
+          {
+            agentType: 9,
+            brandId: props.data.brandId,
+            contentId: props.id,
+          },
+          {
+            meta: {
+              useDownload: `${props.data.name}_评论分析简报_${new Date().valueOf()}.pdf`,
+              useLoading: '评论分析简报生成中...',
+              useResponseBlob: true,
+            },
+            timeout: 0,
+          },
+        )
+        .then(() => {
+          resolve()
+        })
+      return
+    }
+
     if (formData.imgIndexList.length === 0) {
       $msg.error('请选择报告的图片')
       return
@@ -116,7 +144,9 @@ function handleSubmit(): Promise<void> {
                   meta: {
                     useDownload: `${props.data.name}_舆情分析报告_${new Date().valueOf()}.pdf`,
                     useLoading: '生成报告中...',
+                    useResponseBlob: true,
                   },
+                  timeout: 0,
                 },
               )
               .then(() => {

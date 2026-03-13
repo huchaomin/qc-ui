@@ -19,6 +19,7 @@ const dataType = inject<number>('dataType')!
 // 只有事件详情才有时间范围限制
 const limitTimeRange = inject<Ref<[] | [string, string]>>('limitTimeRange', ref([]))
 const dateTimeRange = ref<[] | [string, string]>([])
+const showCommentProportion = inject<Ref<boolean>>('showCommentProportion')!
 
 watch(
   limitTimeRange,
@@ -125,7 +126,8 @@ function handleReportGenerate(): void {
   <div ref="headerCardRef" class="mb-4">
     <div class="mb-4 flex items-center">
       <div style="font-size: 16px; font-weight: bold">分析总览</div>
-      <span class="ml-auto">分析时间：</span>
+      <TCheckbox v-model="showCommentProportion" class="ml-auto!" label="显示评论占比"></TCheckbox>
+      <span class="ml-3">分析时间：</span>
       <TDateRangePicker
         v-model="dateTimeRange"
         :presets="limitTimeRange[0] !== undefined ? {} : presets"

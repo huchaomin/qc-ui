@@ -9,6 +9,9 @@ const chartRef = ref<InstanceType<typeof VChart> | null>(null)
 const bgColor = inject<string>('bgColor')!
 const parentData = inject<Ref<null | Record<string, any>>>('data')!
 const padding = inject<number>('padding')!
+const id = inject<string>('id')!
+const startEndTimeRange = inject<Ref<[] | [string, string]>>('startEndTimeRange')!
+const dataType = inject<number>('dataType')!
 
 function handleDownloadImage(): void {
   const url = chartRef.value!.getDataURL({
@@ -20,15 +23,35 @@ function handleDownloadImage(): void {
 
 const aspectRatioX = inject<number>('aspectRatioX')!
 const moodLevelOptions = useDicOptions('mood_level')
-const taskViewData = inject<Ref<Record<string, any>>>('taskViewData')!
+const { data: commentCountMap } = useWatcher(
+  () =>
+    alovaInst.Get<Record<string, any>>('yq/taskView/commentCount', {
+      cacheFor: 60 * 1000,
+      params: {
+        dataId: id,
+        dataType,
+        endTime: startEndTimeRange.value[1],
+        startTime: startEndTimeRange.value[0],
+      },
+      timeout: 0,
+    }),
+  [startEndTimeRange],
+  {
+    immediate: true,
+    initialData: {},
+    sendable: () => {
+      return !!startEndTimeRange.value.length
+    },
+  },
+)
 const chartData = computed(() => {
-  const moodRateTrend = taskViewData.value.moodRateTrend
+  const moodMap = commentCountMap.value.moodMap
 
-  if (!moodRateTrend) {
+  if (!moodMap) {
     return []
   }
 
-  return Object.keys(moodRateTrend)
+  return Object.keys(moodMap)
     .sort((a: string, b: string) => {
       return Number(b) - Number(a)
     })
@@ -37,7 +60,7 @@ const chartData = computed(() => {
         name:
           moodLevelOptions.value.find((item: Record<string, any>) => item.value === moodLevel)
             ?.label ?? '',
-        value: moodRateTrend[moodLevel].moodNum,
+        value: moodMap[moodLevel],
       }
     })
 })
@@ -78,7 +101,7 @@ const chartOption = computed<OptionType>(() => {
     ],
     title: {
       left: padding,
-      text: '情感占比',
+      text: '评论占比',
       textStyle: {
         color: '#727476',
         fontFamily: 'Roboto, sans-serif',
@@ -91,46 +114,49 @@ const chartOption = computed<OptionType>(() => {
 })
 const moodType = ref('')
 
-watch(
-  taskViewData,
-  (val) => {
-    moodType.value = ''
+watch(commentCountMap, (val) => {
+  moodType.value = ''
 
-    const moodRateTrend = val.moodRateTrend
+  const moodMap = val.moodMap
 
-    if (!moodRateTrend) {
-      return
+  if (!moodMap) {
+    return
+  }
+
+  for (const moodLevel of ['1', '0', '-1']) {
+    if (moodMap[moodLevel]) {
+      moodType.value = moodLevel
+      break
     }
-
-    for (const moodLevel of ['1', '0', '-1']) {
-      if (moodRateTrend[moodLevel]) {
-        moodType.value = moodLevel
-        break
-      }
-    }
-  },
-  {
-    immediate: true,
-  },
-)
+  }
+})
 
 const tableData = computed(() => {
   if (moodType.value === '') {
     return []
   }
 
-  return taskViewData.value.moodRateTrend[moodType.value]?.videoAnalysisDtoList ?? []
+  const obj = commentCountMap.value.moodCommentGroupNum[moodType.value] ?? {}
+
+  return Object.keys(obj)
+    .map((keyWord: string) => {
+      return {
+        count: obj[keyWord],
+        keyWord,
+      }
+    })
+    .sort((a: Record<string, any>, b: Record<string, any>) => {
+      return b.count - a.count
+    })
 })
 const columns: TableCol[] = [
   {
-    ...useVideoTitleColumn(),
-    resize: {
-      maxWidth: 430,
-    },
+    colKey: 'keyWord',
+    title: '关键词',
   },
   {
-    colKey: 'publishTime',
-    title: '发布时间',
+    colKey: 'count',
+    title: '出现次数',
   },
 ]
 </script>
@@ -168,7 +194,12 @@ const columns: TableCol[] = [
         ></TSelect>
       </div>
       <div class="flex flex-1 flex-col" style="overflow: hidden">
-        <TTable :data="tableData" :columns="columns" flex-height></TTable>
+        <TTable
+          :show-serial-number="false"
+          :data="tableData"
+          :columns="columns"
+          flex-height
+        ></TTable>
       </div>
     </div>
   </div>

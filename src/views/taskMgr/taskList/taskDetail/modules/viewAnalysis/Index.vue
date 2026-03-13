@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ActiveAuthors from './ActiveAuthors.vue'
+import CommentProportion from './CommentProportion.vue'
 import EmotionalProportion from './EmotionalProportion.vue'
 import HeaderCard from './HeaderCard.vue'
 import InformationSourceProportion from './InformationSourceProportion.vue'
@@ -13,6 +14,7 @@ import SentimentTrend from './SentimentTrend.vue'
 const id = inject<string>('id')!
 const dataType = inject<number>('dataType')!
 const startEndTimeRange = ref<[] | [string, string]>([])
+const showCommentProportion = ref(false)
 const { data: taskViewData } = useWatcher(
   () =>
     alovaInst.Get<Record<string, any>>('yq/taskView/getTaskView', {
@@ -50,6 +52,7 @@ provide('colorArr', [
   '#FFCD33',
   '#60C4E2',
 ])
+provide('showCommentProportion', showCommentProportion)
 </script>
 
 <template>
@@ -58,6 +61,7 @@ provide('colorArr', [
     <InfoSourceTrend></InfoSourceTrend>
     <SentimentTrend></SentimentTrend>
     <EmotionalProportion></EmotionalProportion>
+    <CommentProportion v-if="showCommentProportion"></CommentProportion>
     <InformationSourceProportion></InformationSourceProportion>
     <KeywordCloud></KeywordCloud>
     <MediaActivity></MediaActivity>
