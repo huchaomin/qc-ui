@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { fillOriginalUrl, handPullComments } from '@/bus'
+import { addFollow, fillOriginalUrl, handPullComments } from '@/bus'
 
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
@@ -281,6 +281,14 @@ const config: PageListProps = {
         })
       },
       permission: 'data:contentInfo:fillOriginalUrl',
+    }),
+    reactive({
+      default: '加入关注',
+      disabled: computed(() => selectedRows.value.length === 0),
+      onClick: () => {
+        addFollow(selectedRows.value)
+      },
+      permission: 'yq:followDetail:add',
     }),
   ],
   tableOtherProps: {
