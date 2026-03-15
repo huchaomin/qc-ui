@@ -33,10 +33,6 @@ export const tablePropsInit = {
 export const linkPropsInit = {
   theme: 'primary',
 } as const
-export const buttonPropsInit = {
-  autoIcon: true,
-  show: true,
-} as const
 export const formPropsInit = {
   autoLabelWidth: true,
   colon: true,
@@ -109,43 +105,6 @@ export const inputPropsInit = {
   disabled: undefined,
   placeholder: '请输入',
   readonly: undefined,
-} as const
-export const selectPropsInit = {
-  clearable: true,
-  disabled: undefined,
-  filterable: true,
-  inputValue: undefined,
-  keys: () => ({
-    disabled: 'disabled',
-    label: 'label',
-    value: 'value',
-  }),
-  minCollapsedNum: 1,
-  /**
-   * @description: 是否多选
-   */
-  multiple: false,
-  placeholder: '请选择',
-  /**
-   * @description: 是否显示下拉框
-   */
-  popupVisible: undefined,
-  readonly: undefined,
-  /**
-   * @description: 阈值 大于等于 150 时，启用虚拟滚动
-   */
-  scroll: () => ({
-    threshold: 150,
-    type: 'virtual' as const,
-  }),
-  /**
-   * @description: 是否显示右侧箭头
-   */
-  showArrow: true,
-  /**
-   * @description: 是否显示全选
-   */
-  showCheckAll: false,
 } as const
 export const inputNumberPropsInit = {
   autoWidth: undefined,

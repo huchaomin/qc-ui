@@ -39,6 +39,7 @@
 - useWatcher sendable、transform(middleware)
 - use*** transform(middleware)
 - method localCache(cacheFor) transformData(transform)
+- 不要手动导入非类型  from 'tdesign-vue-next' 会引入额外的重复文件
 
 ## todo
 
@@ -87,6 +88,7 @@
 - 左侧菜单 active 展开
 - 字体还是有问题
 - [升级 vite 8](https://cn.vite.dev/guide/migration) [resolve.tsconfigPaths 、devtool]
+- 去掉 export const formPropsInit
 
 
 ## todo 项目对比

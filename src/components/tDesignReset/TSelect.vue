@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import type {
   SelectProps as _SelectProps,
   InputAdornmentProps,
@@ -8,8 +8,44 @@ import type {
 } from 'tdesign-vue-next'
 import type { UseListKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
-import { selectPropsInit } from './utils'
 
+export const selectPropsInit = {
+  clearable: true,
+  disabled: undefined,
+  filterable: true,
+  inputValue: undefined,
+  keys: () => ({
+    disabled: 'disabled',
+    label: 'label',
+    value: 'value',
+  }),
+  minCollapsedNum: 1,
+  /**
+   * @description: 是否多选
+   */
+  multiple: false,
+  placeholder: '请选择',
+  /**
+   * @description: 是否显示下拉框
+   */
+  popupVisible: undefined,
+  readonly: undefined,
+  /**
+   * @description: 阈值 大于等于 150 时，启用虚拟滚动
+   */
+  scroll: () => ({
+    threshold: 150,
+    type: 'virtual' as const,
+  }),
+  /**
+   * @description: 是否显示右侧箭头
+   */
+  showArrow: true,
+  /**
+   * @description: 是否显示全选
+   */
+  showCheckAll: false,
+} as const
 export type SelectProps = Omit<
   _SelectProps,
   'defaultInputValue' | 'defaultPopupVisible' | 'defaultValue' | 'options' | 'value'
@@ -20,7 +56,9 @@ export type SelectProps = Omit<
   options?: SelectOption[] | UseListKey
   showCheckAll?: boolean
 }
+</script>
 
+<script setup lang="ts">
 type OnChangeParams = Parameters<NonNullable<_SelectProps['onChange']>>
 type OnInputChangeParams = Parameters<NonNullable<_SelectProps['onInputChange']>>
 type OnPopupVisibleChangeParams = Parameters<NonNullable<_SelectProps['onPopupVisibleChange']>>

@@ -227,7 +227,22 @@ export default defineConfig(({ command, mode }) => {
           },
           autoImportStoreList,
         ],
-        resolvers: [...(isProduction ? [TDesignResolver(TDesignResolverConfig)] : [])],
+        resolvers: [
+          ...(isProduction
+            ? [
+                TDesignResolver(TDesignResolverConfig),
+
+                (componentName: string) => {
+                  if (tDesignResetComponentsName.includes(componentName)) {
+                    return {
+                      from: `@/components/tDesignReset/${componentName}.vue`,
+                      name: 'default',
+                    }
+                  }
+                },
+              ]
+            : []),
+        ],
         vueTemplate: true,
       }),
       Components({
@@ -236,7 +251,27 @@ export default defineConfig(({ command, mode }) => {
         dirs: [resolvePath('src/components/autoImport')],
         dts: resolvePath('types/components.d.ts'),
         resolvers: [
-          ...(isProduction ? [TDesignResolver(TDesignResolverConfig)] : []),
+          ...(isProduction
+            ? [
+                TDesignResolver(TDesignResolverConfig),
+
+                (componentName: string) => {
+                  if (tDesignResetComponentsName.includes(componentName)) {
+                    return {
+                      from: `@/components/tDesignReset/${componentName}.vue`,
+                      name: 'default',
+                    }
+                  }
+
+                  if (componentName === 'TChatMarkdown') {
+                    return {
+                      from: '@tdesign-vue-next/chat',
+                      name: componentName,
+                    }
+                  }
+                },
+              ]
+            : []),
           (componentName) => {
             if (autoImportComponentsSubFolderEntryName.includes(componentName)) {
               return {
@@ -257,7 +292,7 @@ export default defineConfig(({ command, mode }) => {
       },
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
       // 不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。
-      extensions: ['.ts', '.mjs'],
+      extensions: ['.ts', '.mjs', '.js'], // js 和 mjs 打包chat包时需要
     },
     server: {
       // vite preview 也会走该代理

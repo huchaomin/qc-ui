@@ -1,15 +1,12 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { ButtonProps as _ButtonProps } from 'tdesign-vue-next'
 import type { PopconfirmProps } from '@/components/tDesignReset/TPopconfirm.vue'
 import { mergeProps } from 'vue'
-import { buttonPropsInit } from '@/components/tDesignReset/utils'
 
-defineOptions({
-  inheritAttrs: false,
-})
-
-const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
-
+export const buttonPropsInit = {
+  autoIcon: true,
+  show: true,
+} as const
 export type ButtonProps = {
   /**
    * @description: 是否自动添加icon, 默认 true
@@ -25,7 +22,14 @@ export type ButtonProps = {
    */
   show?: boolean
 } & Omit<_ButtonProps, 'content'>
+</script>
 
+<script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<ButtonProps>(), buttonPropsInit)
 const otherProps = computed(() => {
   const obj: Partial<ButtonProps> = {
     ...props,

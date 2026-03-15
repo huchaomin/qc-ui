@@ -214,6 +214,22 @@ watch(
 )
 
 const asyncComponentCache = new Map<string, Component>()
+const componentMapInReset = {
+  TCheckbox: resolveComponent('TCheckbox'),
+  TCheckboxGroup: resolveComponent('TCheckboxGroup'),
+  TDatePicker: resolveComponent('TDatePicker'),
+  TDateRangePicker: resolveComponent('TDateRangePicker'),
+  TInput: resolveComponent('TInput'),
+  TInputNumber: resolveComponent('TInputNumber'),
+  TRadioGroup: resolveComponent('TRadioGroup'),
+  TRangeInput: resolveComponent('TRangeInput'),
+  TSelect: resolveComponent('TSelect'),
+  TSwitch: resolveComponent('TSwitch'),
+  TTextarea: resolveComponent('TTextarea'),
+  TTree: resolveComponent('TTree'),
+  TTreeSelect: resolveComponent('TTreeSelect'),
+  TUpload: resolveComponent('TUpload'),
+}
 
 function getComponent(compo: string | undefined): Component {
   if (typeof compo === 'string') {
@@ -228,7 +244,7 @@ function getComponent(compo: string | undefined): Component {
       return asyncComponentCache.get(compo)!
     }
 
-    return resolveComponent(compo) as Component
+    return componentMapInReset[compo as keyof typeof componentMapInReset] as Component
   }
 
   return resolveComponent('TInput') as Component

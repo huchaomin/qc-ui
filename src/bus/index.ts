@@ -3,7 +3,6 @@
 /* eslint-disable ts/no-unsafe-argument */
 /* eslint-disable ts/no-unsafe-assignment */
 import type { DialogInstance } from 'tdesign-vue-next'
-import { ChatMarkdown } from '@tdesign-vue-next/chat'
 import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 
@@ -127,7 +126,7 @@ export function showAiHandlingSuggestions(props: Record<string, any>): void {
 
         if (dialogInstance === null) {
           dialogInstance = $dialog({
-            body: () => h(ChatMarkdown, { content: data.value!.aiSuggestion }),
+            body: () => h(resolveComponent('TChatMarkdown'), { content: data.value!.aiSuggestion }),
             cancelBtn: '关闭',
             confirmBtn: {
               default: '重新生成',
