@@ -42,16 +42,37 @@ function bypass(
   }
 }
 
-const TDesignResolverConfig: TDesignResolverOptions = {
-  exclude: [
-    ...tDesignResetComponentsName,
-    'TIcon',
-    'TPrimaryTable',
-    'TEnhancedTable',
-    'TBaseTable',
-  ],
-  library: 'vue-next',
-  resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
+function tDesignResolver() {
+  return {
+    resolve: (name: string) => {
+      if (
+        [
+          ...tDesignResetComponentsName,
+          'TBaseTable',
+          'TEnhancedTable',
+          'TIcon',
+          'TPrimaryTable',
+        ].includes(name)
+      ) {
+        return
+      }
+
+      return (
+        TDesignResolver({
+          library: 'vue-next',
+          resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
+        }) as {
+          resolve: (name: string) =>
+            | undefined
+            | {
+                from: string
+                name: string
+              }
+        }
+      ).resolve(name)
+    },
+    type: 'component' as const,
+  }
 }
 
 // https://vite.dev/config/
@@ -230,7 +251,7 @@ export default defineConfig(({ command, mode }) => {
         resolvers: [
           ...(isProduction
             ? [
-                TDesignResolver(TDesignResolverConfig),
+                tDesignResolver(),
 
                 (componentName: string) => {
                   if (tDesignResetComponentsName.includes(componentName)) {
@@ -253,20 +274,13 @@ export default defineConfig(({ command, mode }) => {
         resolvers: [
           ...(isProduction
             ? [
-                TDesignResolver(TDesignResolverConfig),
+                tDesignResolver(),
 
                 (componentName: string) => {
                   if (tDesignResetComponentsName.includes(componentName)) {
                     return {
                       from: `@/components/tDesignReset/${componentName}.vue`,
                       name: 'default',
-                    }
-                  }
-
-                  if (componentName === 'TChatMarkdown') {
-                    return {
-                      from: '@tdesign-vue-next/chat',
-                      name: componentName,
                     }
                   }
                 },
