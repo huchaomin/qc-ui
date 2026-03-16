@@ -26,7 +26,7 @@ const logoUrl = Object.values(
         <slot></slot>
       </TCard>
     </div>
-    <TImage :src="logoUrl" class="logo"></TImage>
+    <TImage v-if="logoUrl" :src="logoUrl" class="logo"></TImage>
   </div>
 </template>
 
