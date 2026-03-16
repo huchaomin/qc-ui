@@ -499,7 +499,6 @@ const config: PageListProps = {
     }),
   ],
   tableOtherProps: {
-    rowKey: 'id',
     showRowSelect: 'multiple',
   },
 }
