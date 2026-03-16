@@ -3,7 +3,7 @@
 /* eslint-disable ts/no-unsafe-argument */
 /* eslint-disable ts/no-unsafe-assignment */
 import type { DialogInstance } from 'tdesign-vue-next'
-import { ChatMarkdown } from '@tdesign-vue-next/chat/es/chat-markdown'
+import { ChatMarkdown } from '@tdesign-vue-next/chat'
 import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 

@@ -40,7 +40,6 @@
 - use*** transform(middleware)
 - method localCache(cacheFor) transformData(transform)
 - 不要手动导入非类型  from 'tdesign-vue-next' 会引入额外的重复文件
-- chat 包引入的方式如下 import { ChatMarkdown } from '@tdesign-vue-next/chat/es/chat-markdown'
 
 ## todo
 

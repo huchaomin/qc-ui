@@ -1,7 +1,8 @@
 import { TDesign } from '@/plugins/tdesign-vue-next-for-dev'
 import app from './main'
 import { getFilenameFromUrl } from './utils'
-import 'tdesign-vue-next/dist/tdesign.min.css' // 工程里面使用了chat包，自动帮我们一个个引入了样式文件
+import '@tdesign-vue-next/chat' // todo
+// import 'tdesign-vue-next/dist/tdesign.min.css' // 工程里面使用了chat包，自动帮我们一个个引入了样式文件
 import '@/assets/css/main.css'
 
 const compos = import.meta.glob('./components/tDesignReset/*.vue', {
