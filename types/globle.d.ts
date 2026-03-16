@@ -30,20 +30,7 @@ type UnionToFnReturnIntersection<T> = (T extends any ? (fn: () => T) => void : n
   ? R
   : never
 type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
-declare const RefSymbol: unique symbol
 declare global {
-  // https://github.com/Tencent/tdesign-vue-next/issues/6476 啥时候解决了这个issue，这里就可以删除了
-  export interface Ref<T = any, S = T> {
-    /**
-     * Type differentiator only.
-     * We need this to be in public d.ts but don't want it to show up in IDE
-     * autocomplete, so we use a private Symbol instead.
-     */
-    [RefSymbol]: true
-    get value(): T
-    set value(_: S)
-  }
-
   type ExcludeFunction<T> = T extends (...args: any[]) => any ? never : T
   type NoExtraProperties<T, U> = T extends U ? (keyof T extends keyof U ? T : never) : never
   /**

@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import type { TdChatbotApi } from '@tdesign-vue-next/chat'
+import type {
+  ChatMessagesData,
+  ChatServiceConfig,
+  TdChatbotApi,
+  TdChatMessageConfig,
+} from '@tdesign-vue-next/chat'
 import { getMessageContentForCopy, Chatbot as TChatbot } from '@tdesign-vue-next/chat'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
 
 const chatRef = ref<null | TdChatbotApi>(null)
 // 默认初始化消息
-const defaultMessages: any[] = markRaw([
+const defaultMessages: ChatMessagesData[] = markRaw([
   {
     content: [
       {
@@ -32,15 +37,15 @@ const defaultMessages: any[] = markRaw([
     role: 'assistant',
   },
 ])
-const mockMessage = ref<any[]>(defaultMessages)
+const mockMessage = ref<ChatMessagesData[]>(defaultMessages)
 
 // 消息变更处理
-function handleMessageChange(e: CustomEvent<any[]>): void {
+function handleMessageChange(e: CustomEvent<ChatMessagesData[]>): void {
   mockMessage.value = e.detail
 }
 
 // 消息属性配置
-const messageProps = ref<any>({
+const messageProps: TdChatMessageConfig = reactive({
   assistant: {
     avatar: robotOutlineUrl,
     handleActions: {
@@ -61,7 +66,7 @@ const senderProps = computed(() => ({
   placeholder: '输入你需要咨询的问题',
 }))
 // 聊天服务配置
-const chatServiceConfig = ref<any>({
+const chatServiceConfig: ChatServiceConfig = {
   // 对话服务地址
   endpoint: `${location.origin}/yq-ai/agent/call`,
   // 流式对话过程中用户主动结束对话业务自定义行为
@@ -84,7 +89,6 @@ const chatServiceConfig = ref<any>({
         return {
           data: '',
           status: 'complete',
-          type: 'markdown',
         }
       // 正文
       case 'message':
@@ -92,6 +96,8 @@ const chatServiceConfig = ref<any>({
           data: data || '',
           type: 'markdown',
         }
+      case 'session_created':
+        return
       default:
         return { data: data || '', type: 'text' }
     }
@@ -112,7 +118,7 @@ const chatServiceConfig = ref<any>({
     }
   },
   stream: true,
-})
+}
 
 function handleRegenerate(): void {
   chatRef.value?.regenerate()
