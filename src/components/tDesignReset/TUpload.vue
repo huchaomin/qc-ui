@@ -54,7 +54,11 @@ export type UploadProps = Omit<
     }
   >
   requestMethod?:
-    | ((file: UploadFile | UploadFile[]) => Method)
+    | ((file: UploadFile | UploadFile[]) => Method<
+        Omit<AlovaGenerics, 'Responded'> & {
+          Responded: RequestMethodResponse['response']
+        }
+      >)
     | {
         biz: string
         ossUrl?: string
@@ -72,10 +76,10 @@ const finallyRequestMethod = computed(() => {
     new Promise<RequestMethodResponse>((resolve) => {
       if (typeof props.requestMethod === 'function') {
         props.requestMethod!(file)
-          .then((res) => {
+          .then((response) => {
             resolve({
+              response,
               status: 'success',
-              ...res,
             })
           })
           .catch((err) => {

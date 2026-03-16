@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Method } from 'alova'
-import type { TableProps } from '@/components/tDesignReset/TTable.vue'
+import type { AlovaGenerics, Method } from 'alova'
+import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
 import { tablePropsInit } from '@/components/tDesignReset/TTable.vue'
 import { getFilterEmptyParamsObj, getParamsString } from '@/plugins/alova/index'
 
@@ -9,7 +9,16 @@ export type PageTableProps = {
    * @description: 是否立即查询, 默认 true
    */
   initialQuery?: boolean
-  method: ((params: Record<string, any>) => Method) | string
+  method:
+    | ((params: Record<string, any>) => Method<
+        Omit<AlovaGenerics, 'Responded'> & {
+          Responded: {
+            rows: TableRowData[]
+            total: number
+          }
+        }
+      >)
+    | string
   /**
    * @description: 传给分页接口的参数, 默认 {}
    */
@@ -40,7 +49,10 @@ const otherProps = computed(() => {
 const listMethod = computed(() => {
   if (typeof props.method === 'string') {
     return (params: Record<string, any>) =>
-      alovaInst.Get(props.method as string, {
+      alovaInst.Get<{
+        rows: TableRowData[]
+        total: number
+      }>(props.method as string, {
         params,
       })
   }
