@@ -1,10 +1,13 @@
+/* stylelint-disable @stylistic/declaration-colon-space-after */
 /* stylelint-disable custom-property-pattern */
 
 :root {
   --td-radius-default: 4px;
   --td-radius-large: 8px;
-  --td-font-family: roboto, sans-serif, arial regular;
-  --td-font-family-medium: roboto, sans-serif, arial medium;
+  --td-font-family:
+    blinkmacsystemfont, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif;
+  --td-font-family-medium:
+    blinkmacsystemfont, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif;
 }
 
 :root,

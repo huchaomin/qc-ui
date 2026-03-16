@@ -163,7 +163,7 @@ export default defineConfig(({ command, mode }) => {
         'echarts/core',
         'echarts/renderers',
         'vue-echarts',
-        '@tdesign-vue-next/chat',
+        '@tdesign-vue-next/chat/es/chat-markdown',
         'dompurify',
       ],
     },
