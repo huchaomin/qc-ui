@@ -1,8 +1,14 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { LinkProps as _LinkProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { linkPropsInit } from '@/components/tDesignReset/utils'
 
+export const linkPropsInit = {
+  theme: 'primary',
+} as const
+export type LinkProps = Omit<_LinkProps, 'content'>
+</script>
+
+<script setup lang="ts">
 defineOptions({
   inheritAttrs: false,
 })
@@ -10,9 +16,6 @@ defineOptions({
 const props = withDefaults(defineProps<LinkProps>(), {
   ...linkPropsInit,
 })
-
-export type LinkProps = Omit<_LinkProps, 'content'>
-
 const otherProps = computed(() => {
   const obj: Partial<LinkProps> = {
     ...props,

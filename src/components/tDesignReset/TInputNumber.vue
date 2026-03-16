@@ -1,18 +1,16 @@
-<!-- 当什么都不填，返回 undefined, 已处理 -->
-<script setup lang="ts">
+<script lang="ts">
 import type { InputNumberProps as _InputNumberProps, InputNumberValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { inputNumberPropsInit } from './utils'
 
-defineOptions({
-  inheritAttrs: false,
-})
-
-const props = withDefaults(defineProps<InputNumberProps>(), inputNumberPropsInit)
-const emit = defineEmits<{
-  'update:modelValue': [value: InputNumberValue]
-}>()
-
+export const inputNumberPropsInit = {
+  autoWidth: undefined,
+  decimalPlaces: 2,
+  disabled: undefined,
+  min: 0,
+  readonly: undefined,
+  theme: 'normal',
+  useGrouping: true,
+} as const
 export type InputNumberProps = {
   modelValue: InputNumberValue
   theme?: 'normal' | 'row'
@@ -22,6 +20,17 @@ export type InputNumberProps = {
    */
   useGrouping?: boolean
 } & Omit<_InputNumberProps, 'defaultValue' | 'modelValue' | 'theme' | 'value'>
+</script>
+
+<script setup lang="ts">
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<InputNumberProps>(), inputNumberPropsInit)
+const emit = defineEmits<{
+  'update:modelValue': [value: InputNumberValue]
+}>()
 
 type OnChangeParams = Parameters<NonNullable<_InputNumberProps['onChange']>>
 

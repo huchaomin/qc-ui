@@ -87,7 +87,6 @@
 - 右键菜单
 - 左侧菜单 active 展开
 - [升级 vite 8](https://cn.vite.dev/guide/migration) [resolve.tsconfigPaths 、devtool]
-- 去掉 export const formPropsInit
 
 
 ## todo 项目对比

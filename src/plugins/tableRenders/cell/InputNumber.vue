@@ -2,7 +2,7 @@
 import type { InputNumberValue } from 'tdesign-vue-next'
 import type { InputNumberProps as _InputNumberProps } from '@/components/tDesignReset/TInputNumber.vue'
 import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
-import { inputNumberPropsInit } from '@/components/tDesignReset/utils'
+import { inputNumberPropsInit } from '@/components/tDesignReset/TInputNumber.vue'
 
 defineOptions({
   inheritAttrs: false,

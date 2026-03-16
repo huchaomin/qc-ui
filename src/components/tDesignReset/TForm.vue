@@ -1,6 +1,6 @@
 <script lang="ts">
 /**
- * @description: form reset 时， show 为 false 的不会一起reset
+ * @description: form 自带 reset 时， show 为 false 的不会一起reset
  * @description: 要监听 formItem 的值变化时，可用onChange事件, 暂时没考虑 onUpdate:modelValue 事件
  */
 import type {
@@ -26,8 +26,19 @@ import type { TreeSelectProps } from './TTreeSelect.vue'
 import type { UploadProps } from './TUpload.vue'
 import type { CronProps } from '@/components/autoImport/Cron.vue'
 import { mergeProps } from 'vue'
-import { formPropsInit } from './utils'
 
+export const formPropsInit = {
+  autoLabelWidth: true,
+  colon: true,
+  data: () => reactive({}),
+  labelAlign: 'top',
+  layout: 'inline',
+  msgErrorWhenValidate: true,
+  preventSubmitDefault: true,
+  requiredMark: undefined,
+  resetType: 'initial',
+  showErrorMessage: true,
+} as const
 export interface ComponentPropsMap {
   Cron: Omit<CronProps, 'modelValue'>
   TCheckbox: Omit<CheckboxProps, 'modelValue'>

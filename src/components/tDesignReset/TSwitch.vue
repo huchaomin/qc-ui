@@ -1,8 +1,17 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { SwitchProps as _SwitchProps, SwitchValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { switchPropsInit } from './utils'
 
+export const switchPropsInit = {
+  disabled: undefined,
+  size: 'large',
+} as const
+export type SwitchProps = Omit<_SwitchProps, 'defaultValue' | 'value'> & {
+  modelValue: SwitchValue
+}
+</script>
+
+<script setup lang="ts">
 defineOptions({
   inheritAttrs: false,
 })
@@ -11,10 +20,6 @@ const props = withDefaults(defineProps<SwitchProps>(), switchPropsInit)
 const emit = defineEmits<{
   'update:modelValue': [value: SwitchValue]
 }>()
-
-export type SwitchProps = Omit<_SwitchProps, 'defaultValue' | 'value'> & {
-  modelValue: SwitchValue
-}
 
 type OnChangeParams = Parameters<NonNullable<_SwitchProps['onChange']>>
 

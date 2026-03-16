@@ -1,19 +1,68 @@
-<script setup lang="ts">
+<script lang="ts">
 import type {
   TreeProps as _TreeProps,
   TreeInstanceFunctions,
+  TreeNodeModel,
   TreeNodeValue,
+  TreeOptionData,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { treePropsInit } from './utils'
+import Icon from '../autoImport/Icon.vue'
+import Button from './TButton.vue'
 
+export const treePropsInit = {
+  checkable: false,
+  disabled: undefined,
+  expandOnClickNode: undefined,
+  hover: true,
+  icon: () => (h: typeof import('vue').h, node: TreeNodeModel<TreeOptionData>) => {
+    let iconName = ''
+
+    // node.children is undefined on some cases
+
+    if (node.getChildren && node.getChildren(false)) {
+      if (node.expanded) {
+        iconName = 'line-md:chevron-down-circle'
+
+        if (node.loading) {
+          iconName = 'line-md:loading-twotone-loop'
+        }
+      } else {
+        iconName = 'line-md:chevron-right-circle'
+      }
+    }
+
+    if (iconName === '') {
+      return null
+    }
+
+    return h(
+      Button,
+      {
+        shape: 'circle',
+        style: 'font-size: 20px;',
+        variant: 'text',
+      },
+      {
+        icon: () => h(Icon, { icon: iconName }),
+      },
+    )
+  },
+  label: true,
+  lazy: true,
+  line: true,
+  transition: true,
+  valueMode: 'all',
+} as const
+export type TreeProps = Omit<_TreeProps, 'defaultValue' | 'value'>
+</script>
+
+<script setup lang="ts">
 defineOptions({
   inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<TreeProps>(), treePropsInit)
-
-export type TreeProps = Omit<_TreeProps, 'defaultValue' | 'value'>
 
 type OnActiveParams = Parameters<NonNullable<_TreeProps['onActive']>>
 type OnChangeParams = Parameters<NonNullable<_TreeProps['onChange']>>

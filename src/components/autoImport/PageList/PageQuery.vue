@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import { mergeProps } from 'vue'
-import { formPropsInit } from '@/components/tDesignReset/utils'
+import { formPropsInit } from '@/components/tDesignReset/TForm.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -58,9 +58,9 @@ function calcFormItemToggle(): void {
       return
     }
 
-    const formItemsDomList: HTMLDivElement[] = Array.from(
-      formDom.querySelectorAll('.t-form__item') as NodeListOf<HTMLDivElement>, // display: none 的 offsetTop 为 0
-    )
+    const formItemsDomList: HTMLDivElement[] = [
+      ...(formDom.querySelectorAll('.t-form__item') as NodeListOf<HTMLDivElement>),
+    ]
 
     formItemsDomList.forEach((item) => {
       item.style.display = getComputedStyle(formItemsDomList[0]!).display
@@ -74,8 +74,7 @@ function calcFormItemToggle(): void {
     showToggleBtn.value =
       keys.length > 3 ||
       (keys.length === 3 &&
-        Number(keys[keys.length - 1]) - Number(keys[keys.length - 2]) >
-          Number(keys[1]) - Number(keys[0]))
+        Number(keys.at(-1)) - Number(keys[keys.length - 2]) > Number(keys[1]) - Number(keys[0]))
 
     if (!showExtraFormItems.value) {
       keys.slice(2, -1).forEach((key) => {
@@ -87,7 +86,7 @@ function calcFormItemToggle(): void {
       })
 
       if (keys.length > 2 && showToggleBtn.value) {
-        co[keys[1]!]![co[keys[1]!]!.length - 1]!.style.display = 'none'
+        co[keys[1]!]!.at(-1)!.style.display = 'none'
       }
     }
   })

@@ -1,13 +1,21 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { InputProps as _InputProps, InputAdornmentProps, InputValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
-import { inputPropsInit } from './utils'
 
+export const inputPropsInit = {
+  autocomplete: 'off',
+  clearable: true,
+  disabled: undefined,
+  placeholder: '请输入',
+  readonly: undefined,
+} as const
 export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'> & {
   adornment?: InputAdornmentProps
   modelValue: InputValue
 }
+</script>
 
+<script setup lang="ts">
 type OnChangeParams = Parameters<NonNullable<_InputProps['onChange']>>
 defineOptions({
   inheritAttrs: false,

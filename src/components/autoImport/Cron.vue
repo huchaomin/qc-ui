@@ -2,7 +2,7 @@
 import type { InputValue } from 'tdesign-vue-next'
 import type { InputProps } from '@/components/tDesignReset/TInput.vue'
 import { mergeProps } from 'vue'
-import { inputPropsInit } from '@/components/tDesignReset/utils'
+import { inputPropsInit } from '@/components/tDesignReset/TInput.vue'
 
 defineOptions({
   inheritAttrs: false,

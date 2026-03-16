@@ -6,7 +6,7 @@ import type {
 } from 'tdesign-vue-next'
 import type { UseListTreeKey } from '@/hooks/useList'
 import { mergeProps } from 'vue'
-import { treePropsInit } from './utils'
+import { treePropsInit } from './TTree.vue'
 
 defineOptions({
   inheritAttrs: false,

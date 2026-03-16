@@ -2,7 +2,7 @@
 import type { TdTextProps as _TdTextProps } from 'tdesign-vue-next'
 import type { LinkProps as _LinkProps } from '@/components/tDesignReset/TLink.vue'
 import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
-import { linkPropsInit } from '@/components/tDesignReset/utils'
+import { linkPropsInit } from '@/components/tDesignReset/TLink.vue'
 
 defineOptions({
   inheritAttrs: false,

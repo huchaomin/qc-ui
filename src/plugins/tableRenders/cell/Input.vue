@@ -2,7 +2,7 @@
 import type { InputValue } from 'tdesign-vue-next'
 import type { InputProps as _InputProps } from '@/components/tDesignReset/TInput.vue'
 import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
-import { inputPropsInit } from '@/components/tDesignReset/utils'
+import { inputPropsInit } from '@/components/tDesignReset/TInput.vue'
 
 defineOptions({
   inheritAttrs: false,

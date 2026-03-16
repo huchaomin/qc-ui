@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts">
 import type {
   TableCol as _TableCol,
   TableRowData as _TableRowData,
@@ -7,13 +7,39 @@ import type {
   EnhancedTableProps,
   TNode,
 } from 'tdesign-vue-next'
-import type { UnwrapRef } from 'vue'
 import type { CellObjConfig, CellObjConfigFn } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
-import { tablePropsInit } from '@/components/tDesignReset/utils'
 import { getCellRender } from '@/plugins/tableRenders/cell'
 
+export const tablePropsInit = {
+  bordered: true,
+  checkSelectedOnDataChange: true,
+  disableDataPage: true,
+  disableSpaceInactiveRow: true,
+  flexHeight: false,
+  hover: true,
+  lazyLoad: true, // 开启整个表格的懒加载
+  maxHeight: 507,
+  resizable: true,
+  rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
+  scroll: () => ({
+    isFixedRowHeight: true,
+    rowHeight: 45,
+    threshold: 500,
+    type: 'virtual' as const,
+  }),
+  selectOnRowClick: true,
+  showHeader: true,
+  showSerialNumber: true,
+  showToggleFullscreenBtn: false,
+  stripe: true,
+  tableLayout: 'fixed',
+  tree: () => ({
+    indent: 41,
+    treeNodeColumnIndex: 0,
+  }), // 解决表格报错问题
+} as const
 export interface CellRenderContext {
   col: FinallyTableCol
   colIndex: number
@@ -21,6 +47,17 @@ export interface CellRenderContext {
   rowIndex: number
 }
 export type CellRenderFn = TNode<CellRenderContext>
+export type FinallyTableCol = Omit<TableCol, 'attrs' | 'cell' | 'resize' | 'visible' | 'width'> & {
+  attrs: (context: CellData<TableRowData>) => {
+    [key: string]: any
+  }
+  cell?: CellRenderFn
+  resize: {
+    maxWidth: number
+    minWidth: number
+  }
+  width: number
+}
 export type TableCol = {
   /**
    * @description: 单元格渲染
@@ -111,21 +148,9 @@ export type TableProps = {
   | 'treeExpandAndFoldIcon' // 全局中定义
 >
 export type TableRowData = _TableRowData
+</script>
 
-type FinallyTableCol = Omit<
-  UnwrapRef<typeof _columns>[number],
-  'attrs' | 'cell' | 'resize' | 'width'
-> & {
-  attrs: (context: CellData<TableRowData>) => {
-    [key: string]: any
-  }
-  cell?: CellRenderFn
-  resize: {
-    maxWidth: number
-    minWidth: number
-  }
-  width: number
-}
+<script setup lang="ts">
 type OnSelectChangeParams = Parameters<NonNullable<EnhancedTableProps['onSelectChange']>>
 type SelectedRowKeys = Array<number | string>
 defineOptions({
