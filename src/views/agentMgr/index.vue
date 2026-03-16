@@ -105,7 +105,7 @@ function handleView(id: string): void {
           </TButton>
           <TCard
             v-else
-            class="w-full"
+            class="flex h-full w-full flex-col justify-between"
             :title="item.agentName"
             :subtitle="item.agentDesc"
             title-ellipsis
@@ -133,6 +133,14 @@ function handleView(id: string): void {
 
 <style scoped>
 :deep() {
+  .t-card__header {
+    align-items: flex-start;
+  }
+
+  .t-list-item-main {
+    height: 100%;
+  }
+
   .t-list-item {
     padding: 0;
   }

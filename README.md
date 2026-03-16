@@ -71,7 +71,6 @@
 - TDESIGN 错误邮箱提示语
 - useList 没有刷新
 - FormItem 类型问题
-- 查看邮箱 这个功能抽成一个通用的
 - hooks 一部分清理到 bus, bus 的eslint 有问题
 - $fileView
 - 进入登陆页面，关闭所有弹窗

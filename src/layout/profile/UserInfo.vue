@@ -31,7 +31,6 @@ const formItems: FormItem[] = reactive([
     _required: true,
     _rules: [
       {
-        message: '请填写正确的手机号码',
         telnumber: true,
       },
     ],
@@ -44,7 +43,6 @@ const formItems: FormItem[] = reactive([
     _rules: [
       {
         email: true,
-        message: '请填写正确的邮箱',
       },
     ],
     maxlength: 50,
