@@ -1,4 +1,3 @@
-import type { TDesignResolverOptions } from '@tdesign-vue-next/auto-import-resolver'
 import type * as http from 'node:http'
 import type { Plugin, ProxyOptions } from 'vite'
 import path from 'node:path'

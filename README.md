@@ -77,7 +77,6 @@
 - 进入登陆页面，关闭所有弹窗
 - 头部菜单导航
 - cron 表达式
-- 解决eslint 错误
 - 添加视频插件
 - [Violation] Forced reflow while executing JavaScript 用时 <N> 毫秒
 - v-memo
