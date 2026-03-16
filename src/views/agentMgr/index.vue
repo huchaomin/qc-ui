@@ -133,10 +133,6 @@ function handleView(id: string): void {
 
 <style scoped>
 :deep() {
-  .t-card__header {
-    align-items: flex-start;
-  }
-
   .t-list-item-main {
     height: 100%;
   }
