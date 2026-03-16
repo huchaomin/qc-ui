@@ -96,13 +96,22 @@ watch([showExtraFormItems, () => formItems.value.length], calcFormItemToggle)
 // 计算哪些表单项需要展开/折叠 ------- end -------
 
 async function handleQuery() {
-  await formRef.value!.validate()
   emit('query', formData.value)
 }
 
 async function handleReset() {
-  formRef.value!.emptyFormData(props.data)
-  await formRef.value!.validate()
+  Object.keys(formData.value).forEach((key) => {
+    if (Object.hasOwn(props.data, key)) {
+      formData.value[key] = props.data[key]
+      return
+    }
+
+    if (Array.isArray(formData.value[key])) {
+      formData.value[key] = []
+    } else {
+      formData.value[key] = ''
+    }
+  })
   emit('reset', formData.value)
 }
 

@@ -57,7 +57,6 @@ export interface ComponentPropsMap {
   TUpload: Omit<UploadProps, 'modelValue'>
 }
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
-  emptyFormData: EmptyFormData
   getFormData: GetFormData
   setFormData: SetFormData
   validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormPropsData>
@@ -127,7 +126,6 @@ type ComponentItemType = UnionToNestedXOR<
       : never
     : never
 >
-type EmptyFormData = (initData?: FormPropsData) => FormPropsData
 type FormExposed = (ComponentInternalInstance['exposed'] & FormInstance) | null
 type FormItemBase = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
@@ -198,7 +196,6 @@ function setInitFormDataValues() {
         ) ||
         (item.multiple === true && item.component === 'TSelect')
 
-      // 这里类型有增多的话 inst.emptyFormData 也要处理一下
       // eslint-disable-next-line vue/no-mutating-props
       props.data[item.model] = isArr
         ? []
@@ -392,7 +389,6 @@ const getFormData: GetFormData = () => {
 function compoRef(instance: any) {
   if (instance !== null) {
     const inst = instance as _FormInstanceFunctions & {
-      emptyFormData: EmptyFormData
       getFormData: GetFormData
       setFormData: SetFormData
     }
@@ -481,20 +477,6 @@ function compoRef(instance: any) {
       })
       // eslint-disable-next-line vue/no-mutating-props
       Object.assign(props.data, override)
-    }
-
-    inst.emptyFormData = (initData) => {
-      const obj: FormPropsData = {}
-
-      Object.keys(props.data).forEach((key) => {
-        if (Array.isArray(props.data[key])) {
-          obj[key] = []
-        } else {
-          obj[key] = ''
-        }
-      })
-      // eslint-disable-next-line vue/no-mutating-props
-      return Object.assign(props.data, obj, _cloneDeep(initData ?? {}))
     }
   }
 
