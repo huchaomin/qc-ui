@@ -1,8 +1,11 @@
+/* stylelint-disable custom-property-pattern */
 .chatbot_wrapper {
   --td-chat-item-gap: 12px;
   --td-chat-item-left-avatar-margin: 0 8px 0 4px;
   --td-chat-item-right-avatar-margin: 0 4px 0 8px;
   --td-chat-item-content-padding: 6px 0 0;
+  --td-chat-font-size: var(--td-font-size-body-medium);
+  --td-chat-item-text-padding: var(--td-comp-paddingTB-s) var(--td-comp-paddingLR-s);
 
   ::part(t-chat__input__content) {
     border-radius: var(--td-radius-default);
@@ -10,5 +13,9 @@
     &:focus-within {
       box-shadow: 0 0 0 1px var(--td-brand-color) inset;
     }
+  }
+
+  ::part(t-chat__text--user) {
+    background-color: var(--td-bg-color-container-active);
   }
 }
