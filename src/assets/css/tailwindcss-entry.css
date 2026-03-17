@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
+  --font-sans: blinkmacsystemfont, -apple-system, 'Segoe UI', roboto, helvetica, arial, sans-serif;
+
   /* stylelint-disable-next-line custom-property-pattern */
   --color-*: initial;
 

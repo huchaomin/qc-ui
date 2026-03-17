@@ -34,17 +34,22 @@ export default {
         el.__copyHandler = (e: Event) => {
           e.stopPropagation()
 
-          const { copy, isSupported } = useClipboard({
+          if (isFalsy(el.__copyText)) {
+            void $msg.error('复制失败')
+            return
+          }
+
+          const { copy } = useClipboard({
             legacy: true,
           })
 
-          void copy(el.__copyText!).then(() => {
-            if (isSupported.value && el.__copyText !== '') {
+          void copy(el.__copyText!)
+            .then(() => {
               void $msg('复制成功')
-            } else {
+            })
+            .catch(() => {
               void $msg.error('复制失败')
-            }
-          })
+            })
         }
 
         el.addEventListener('click', el.__copyHandler)

@@ -47,7 +47,7 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
     </TButton>
     <TTabs
       :value="route.name as string"
-      class="flex-1"
+      class="mx-0! flex-1 px-0!"
       @remove="handleRemove"
       @change="handleChange"
     >
