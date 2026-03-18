@@ -252,11 +252,12 @@ body {
 
   .t-list__load {
     font-size: var(--td-font-size-body-small);
+    line-height: var(--td-line-height-body-small);
     color: var(--td-text-color-placeholder);
     background: transparent;
 
     &:not(:empty) {
-      padding: 0;
+      padding: var(--td-comp-paddingTB-s) var(--td-comp-paddingLR-l);
     }
   }
 

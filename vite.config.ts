@@ -161,6 +161,7 @@ export default defineConfig(({ command, mode }) => {
         'echarts/components',
         'echarts/core',
         'echarts/renderers',
+        '@tdesign-vue-next/chat',
         'vue-echarts',
         'dompurify',
       ],
@@ -301,6 +302,10 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         '@': resolvePath('src'),
         img: resolvePath('src/assets/images'),
+        // TDropdown 样式被影响了
+        'tdesign-web-components/lib/style/index.css': resolvePath(
+          'src/plugins/tdesign-vue-next-for-dev/tdesign-web-components-index.css',
+        ),
       },
       // https://cn.vitejs.dev/guide/performance.html#reduce-resolve-operations
       // 不建议忽略自定义导入类型的扩展名（例如：.vue），因为它会影响 IDE 和类型支持。

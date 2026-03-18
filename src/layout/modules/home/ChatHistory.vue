@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { TdListProps } from 'tdesign-vue-next'
+import type { DropdownOption, TdListProps } from 'tdesign-vue-next'
+import autoAnimate from '@formkit/auto-animate'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
 
 const {
@@ -7,6 +8,7 @@ const {
   isLastPage, // 是否最后一页 初始值为 true, 数据还没加载过来它就已经变为true了
   loading, // 是否正在加载数据 初始值为 true
   page: pageNum,
+  refresh,
 } = usePagination(
   (pageNum, pageSize) => {
     return alovaInst.Post<{
@@ -32,9 +34,8 @@ const {
       data: [],
       total: 0,
     },
-
     initialPage: 1, // 初始页码，默认为1
-    initialPageSize: 20, // 初始每页数据条数，默认为10
+    initialPageSize: 10, // 初始每页数据条数，默认为10
   },
 )
 const disabled = computed(() => {
@@ -68,7 +69,7 @@ const data = computed(() => {
       return '过去30天'
     }
 
-    return '很久之前'
+    return '更久之前'
   })
 
   Object.values(co).forEach((arr) => {
@@ -86,6 +87,26 @@ const data = computed(() => {
     arr.push(...co[key])
   })
   return arr
+})
+
+async function clickHandler(e: DropdownOption, item: Record<string, any>) {
+  if (e.value === 'delete') {
+    await $confirm('确定删除对话记录吗？')
+    await alovaInst.Delete(`chatHistory/session/${item.sessionId}`)
+    void $msg('删除成功')
+
+    for (let index = 1; index <= pageNum.value; index++) {
+      await refresh(index)
+    }
+  }
+}
+
+const listRef = useTemplateRef('listRef')
+
+watch(listRef, (val) => {
+  if (val) {
+    autoAnimate(listRef.value!.$el.querySelector('.t-list__inner'))
+  }
 })
 </script>
 
@@ -109,6 +130,7 @@ const data = computed(() => {
     <div class="flex flex-1 flex-col justify-center overflow-y-auto">
       <TList
         v-if="_data.length > 0"
+        ref="listRef"
         :async-loading="asyncLoading"
         class="mb-2! flex flex-1 flex-col bg-transparent!"
         size="small"
@@ -121,14 +143,31 @@ const data = computed(() => {
           >
             {{ i.sessionTitle }}
           </div>
-          <TListItem v-else>
+          <TListItem
+            v-else
+            tabindex="0"
+            :class="{
+              active: i.active,
+            }"
+          >
             <TTypographyText ellipsis class="my-0!">
               {{ i.sessionTitle }}
             </TTypographyText>
             <template #action>
-              <TButton shape="circle" variant="text">
-                <Icon icon="tabler:dots-filled"></Icon>
-              </TButton>
+              <TDropdown
+                trigger="click"
+                :options="[{ content: '删除', value: 'delete' }]"
+                :popup-props="{
+                  onVisibleChange: (visible) => {
+                    i.active = visible
+                  },
+                }"
+                @click="(e) => clickHandler(e, i)"
+              >
+                <TButton shape="circle" variant="text">
+                  <Icon icon="tabler:dots-filled"></Icon>
+                </TButton>
+              </TDropdown>
             </template>
           </TListItem>
         </template>
@@ -166,7 +205,8 @@ const data = computed(() => {
     }
   }
 
-  &:hover {
+  &:hover,
+  &.active {
     background-color: var(--td-gray-color-4);
 
     :deep() {
