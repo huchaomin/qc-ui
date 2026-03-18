@@ -249,4 +249,20 @@ body {
   .t-input-adornment__prepend {
     @apply flex items-center;
   }
+
+  .t-list__load {
+    font-size: var(--td-font-size-body-small);
+    color: var(--td-text-color-placeholder);
+    background: transparent;
+
+    &:not(:empty) {
+      padding: 0;
+    }
+  }
+
+  .t-list__header,
+  .t-list__footer {
+    padding: 0;
+    background: transparent;
+  }
 }

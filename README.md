@@ -81,6 +81,8 @@
 - 右键菜单
 - 左侧菜单 active 展开
 - [升级 vite 8](https://cn.vite.dev/guide/migration) [resolve.tsconfigPaths 、devtool]
+- 组件提示消失
+- svg 文件格式化
 
 
 ## todo 项目对比

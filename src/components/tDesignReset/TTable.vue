@@ -640,7 +640,7 @@ defineExpose(
           <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
             <slot :name="k" v-bind="slotScope"></slot>
           </template>
-          <template #empty>
+          <template v-if="!Object.hasOwn($slots, 'empty')" #empty>
             <TEmpty></TEmpty>
           </template>
           <!-- <template #ellipsis="{ row, col }">

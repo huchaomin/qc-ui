@@ -71,10 +71,11 @@ const autoIcon = computed(() => {
     'line-md:plus': ['新增', '添加', '加入'],
     'line-md:cancel': ['取消'],
     'line-md:remove': ['清除'],
-    'material-symbols:restart-alt': ['开启'],
+    'ep:open': ['开启'],
     'material-symbols:pause': ['暂停'],
     'line-md:edit': ['编辑'],
     'uil:edit': ['修改'],
+    'boxicons:send': ['发送'],
     'line-md:clipboard-check': ['保存', '提交'],
     'line-md:chevron-down': ['展开'],
     'line-md:chevron-up': ['收起'],
@@ -89,6 +90,7 @@ const autoIcon = computed(() => {
     'line-md:alert-circle': ['预警'],
     'line-md:document-report': ['报告'],
     'subway:mark-1': ['标记'],
+    'tdesign:summary': ['汇总'],
     'ph:open-ai-logo': ['AI'],
     'material-symbols:comment-outline': ['评论'],
     'hugeicons:view': ['预览', '查看'],
@@ -150,7 +152,7 @@ const buttonBindProps = computed(() => {
         <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
           <slot :name="k" v-bind="slotScope"></slot>
         </template>
-        <template v-if="autoIcon" #icon>
+        <template v-if="autoIcon && !Object.hasOwn($slots, 'icon')" #icon>
           <Icon :icon="autoIcon"></Icon>
         </template>
       </component>
@@ -164,7 +166,7 @@ const buttonBindProps = computed(() => {
       <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
         <slot :name="k" v-bind="slotScope"></slot>
       </template>
-      <template v-if="autoIcon" #icon>
+      <template v-if="autoIcon && !Object.hasOwn($slots, 'icon')" #icon>
         <Icon :icon="autoIcon"></Icon>
       </template>
     </component>
@@ -175,10 +177,30 @@ const buttonBindProps = computed(() => {
 :deep() {
   .iconify {
     flex-shrink: 0;
-    font-size: calc(1em + 2px) !important;
+    font-size: calc(1em + 4px) !important;
 
     &:has(+ .t-button__text) {
       @apply mr-1;
+    }
+  }
+}
+
+.t-size-l {
+  :deep() {
+    .iconify {
+      &:has(+ .t-button__text) {
+        @apply mr-2;
+      }
+    }
+  }
+
+  &.t-size-full-width {
+    :deep() {
+      .iconify {
+        &:has(+ .t-button__text) {
+          @apply mr-3;
+        }
+      }
     }
   }
 }

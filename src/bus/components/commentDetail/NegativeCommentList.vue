@@ -26,16 +26,11 @@ const {
         pageNum,
         pageSize,
       },
-      transform: (data: any) => {
-        return {
-          data: data.rows,
-          total: data.total,
-        }
-      },
     })
   },
   {
     append: true, // 是否追加数据，默认为false
+    data: (data: any) => data.rows,
     initialData: {
       data: [],
       total: 0,
@@ -60,7 +55,7 @@ const scrollHandler: TdListProps['onScroll'] = (e) => {
   <TCard title="负面评论" :shadow="false" :header-bordered="false" class="bg-[#fafafa]!">
     <TList
       v-if="list.length > 0"
-      :async-loading="isLastPage ? '没有更多数据了' : loading ? '正在加载中，请稍等...' : ''"
+      :async-loading="loading ? '正在加载中，请稍等...' : isLastPage ? '没有更多数据了' : ''"
       split
       style="max-height: 520px"
       @scroll="scrollHandler"

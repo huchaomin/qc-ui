@@ -182,7 +182,10 @@ defineExpose({} as UploadInstanceFunctions)
     <template v-for="k in Object.keys($slots)" :key="k" #[k]="slotScope">
       <slot :name="k" v-bind="slotScope"></slot>
     </template>
-    <template v-if="otherProps.theme === 'file'" #trigger="{ files }">
+    <template
+      v-if="otherProps.theme === 'file' && !Object.hasOwn($slots, 'trigger')"
+      #trigger="{ files }"
+    >
       <div class="flex items-center">
         <TButton theme="primary">
           {{ files.length > 0 ? (otherProps.multiple ? '继续上传' : '重新上传') : '选择文件' }}
