@@ -55,10 +55,11 @@ const scrollHandler: TdListProps['onScroll'] = (e) => {
   <TCard title="负面评论" :shadow="false" :header-bordered="false" class="bg-[#fafafa]!">
     <TList
       v-if="list.length > 0"
-      :async-loading="loading ? '正在加载中，请稍等...' : isLastPage ? '没有更多数据了' : ''"
+      :async-loading="loading ? 'loading' : isLastPage ? '没有更多数据了' : 'load-more'"
       split
       style="max-height: 520px"
       @scroll="scrollHandler"
+      @load-more="pageNum++"
     >
       <CommentList :list="list"></CommentList>
     </TList>

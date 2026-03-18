@@ -42,7 +42,7 @@ const disabled = computed(() => {
   return loading.value || isLastPage.value
 })
 const asyncLoading = computed(() => {
-  return loading.value ? '正在加载中，请稍等...' : isLastPage.value ? '没有更多数据了' : ''
+  return loading.value ? 'loading' : isLastPage.value ? '没有更多数据了' : 'load-more'
 })
 const scrollHandler: TdListProps['onScroll'] = (e) => {
   const { scrollBottom } = e
@@ -135,6 +135,7 @@ watch(listRef, (val) => {
         class="mb-2! flex flex-1 flex-col bg-transparent!"
         size="small"
         @scroll="scrollHandler"
+        @load-more="pageNum++"
       >
         <template v-for="i in data" :key="i.id">
           <div
@@ -170,19 +171,6 @@ watch(listRef, (val) => {
               </TDropdown>
             </template>
           </TListItem>
-        </template>
-        <template v-if="asyncLoading === ''" #footer>
-          <div class="flex justify-center py-2">
-            <TLink
-              hover="color"
-              size="small"
-              theme="default"
-              class="text-(--td-text-color-placeholder)!"
-              @click="pageNum++"
-            >
-              点击加载更多
-            </TLink>
-          </div>
         </template>
       </TList>
       <TEmpty v-else title="暂无对话记录"></TEmpty>

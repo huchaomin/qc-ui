@@ -259,6 +259,10 @@ body {
     &:not(:empty) {
       padding: var(--td-comp-paddingTB-s) var(--td-comp-paddingLR-l);
     }
+
+    &.t-list__load--load-more {
+      cursor: pointer;
+    }
   }
 
   .t-list__header,
