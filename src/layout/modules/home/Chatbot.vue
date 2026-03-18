@@ -14,7 +14,7 @@ const defaultMessages: ChatMessagesData[] = markRaw([
   {
     content: [
       {
-        data: '欢迎使用炽瞳助手，你可以这样问我：',
+        data: '我是炽瞳品牌助手Agent集群，帮您获取公司品牌/产品的最新讯息，帮您分析、洞察品牌动态，规避品牌风险、助力商业决策\n 您可以试着问我：',
         status: 'complete',
         type: 'text',
       },
@@ -33,15 +33,23 @@ const defaultMessages: ChatMessagesData[] = markRaw([
         type: 'suggestion',
       },
     ],
-    id: '123',
+    id: '0',
     role: 'assistant',
   },
 ])
-const mockMessage = ref<ChatMessagesData[]>(defaultMessages)
+const messageList = ref<ChatMessagesData[]>(defaultMessages)
 
 // 消息变更处理
 function handleMessageChange(e: CustomEvent<ChatMessagesData[]>): void {
-  mockMessage.value = e.detail
+  messageList.value = e.detail
+}
+
+function setMessageList(list: ChatMessagesData[]): void {
+  chatRef.value?.setMessages(list, 'replace')
+  chatRef.value?.scrollList({
+    behavior: 'smooth',
+    to: 'bottom',
+  })
 }
 
 // 消息属性配置
@@ -50,7 +58,6 @@ const messageProps: TdChatMessageConfig = reactive({
     avatar: robotOutlineUrl,
     handleActions: {
       suggestion: ({ content }: any) => {
-        console.log('点击建议问题', content)
         chatRef.value?.addPrompt(content.prompt)
       },
     },
@@ -63,7 +70,7 @@ const messageProps: TdChatMessageConfig = reactive({
   },
 })
 const senderProps = computed(() => ({
-  placeholder: '输入你需要咨询的问题',
+  placeholder: '请输入内容，如:分析塞力斯公司、产品的现状',
 }))
 // 聊天服务配置
 const chatServiceConfig: ChatServiceConfig = {
@@ -127,6 +134,10 @@ async function handleCopy(data: any): Promise<void> {
   await copy(getMessageContentForCopy(data))
   $msg('复制成功')
 }
+
+defineExpose({
+  setMessageList,
+})
 </script>
 
 <template>
@@ -140,14 +151,14 @@ async function handleCopy(data: any): Promise<void> {
       @message-change="handleMessageChange"
     >
       <!-- 自定义消息操作区 -->
-      <template v-for="(data, index) in mockMessage" :key="`${data.id}-actionbar`">
+      <template v-for="(data, index) in messageList" :key="`${data.id}-actionbar`">
         <template v-if="data.role === 'assistant'">
           <!-- eslint-disable-next-line vue/no-deprecated-slot-attribute -->
           <div :slot="`${data.id}-actionbar`">
             <div v-if="data.status === 'complete'">
               <TSpace size="small">
                 <TButton
-                  v-if="index === mockMessage.length - 1"
+                  v-if="index === messageList.length - 1"
                   shape="square"
                   theme="default"
                   variant="base"

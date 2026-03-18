@@ -3,6 +3,9 @@ import type { DropdownOption, TdListProps } from 'tdesign-vue-next'
 import autoAnimate from '@formkit/auto-animate'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
 
+const emit = defineEmits<{
+  change: [id: null | string]
+}>()
 const {
   data: _data,
   isLastPage, // 是否最后一页 初始值为 true, 数据还没加载过来它就已经变为true了
@@ -35,7 +38,7 @@ const {
       total: 0,
     },
     initialPage: 1, // 初始页码，默认为1
-    initialPageSize: 10, // 初始每页数据条数，默认为10
+    initialPageSize: 20, // 初始每页数据条数，默认为10
   },
 )
 const disabled = computed(() => {
@@ -89,11 +92,11 @@ const data = computed(() => {
   return arr
 })
 
-async function clickHandler(e: DropdownOption, item: Record<string, any>) {
+async function handleActions(e: DropdownOption, item: Record<string, any>) {
   if (e.value === 'delete') {
     await $confirm('确定删除对话记录吗？')
     await alovaInst.Delete(`chatHistory/session/${item.sessionId}`)
-    void $msg('删除成功')
+    void $msg('删除对话成功')
 
     for (let index = 1; index <= pageNum.value; index++) {
       await refresh(index)
@@ -108,6 +111,10 @@ watch(listRef, (val) => {
     autoAnimate(listRef.value!.$el.querySelector('.t-list__inner'))
   }
 })
+
+function handleClick(item: Record<string, any>) {
+  emit('change', item.sessionId)
+}
 </script>
 
 <template>
@@ -150,6 +157,7 @@ watch(listRef, (val) => {
             :class="{
               active: i.active,
             }"
+            @click="handleClick(i)"
           >
             <TTypographyText ellipsis class="my-0!">
               {{ i.sessionTitle }}
@@ -163,9 +171,9 @@ watch(listRef, (val) => {
                     i.active = visible
                   },
                 }"
-                @click="(e) => clickHandler(e, i)"
+                @click="(e) => handleActions(e, i)"
               >
-                <TButton shape="circle" variant="text">
+                <TButton shape="circle" variant="text" @click.stop>
                   <Icon icon="tabler:dots-filled"></Icon>
                 </TButton>
               </TDropdown>
