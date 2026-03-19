@@ -8,6 +8,9 @@ import type {
 import { getMessageContentForCopy, Chatbot as TChatbot } from '@tdesign-vue-next/chat'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
 
+const sessionId = defineModel<string>('sessionId', {
+  required: true,
+})
 const chatRef = ref<null | TdChatbotApi>(null)
 // 默认初始化消息
 const defaultMessages: ChatMessagesData[] = markRaw([
@@ -46,11 +49,71 @@ function handleMessageChange(e: CustomEvent<ChatMessagesData[]>): void {
 
 function setMessageList(list: ChatMessagesData[]): void {
   chatRef.value?.setMessages(list, 'replace')
-  chatRef.value?.scrollList({
-    behavior: 'smooth',
-    to: 'bottom',
-  })
 }
+
+const { loading, send } = useRequest(
+  (id: string) =>
+    alovaInst.Get<Array<Record<string, any>>>(`chatHistory/history/${id}`, {
+      meta: {
+        useLoading: false,
+      },
+    }),
+  {
+    immediate: false,
+    initialData: [],
+  },
+)
+let currentGeneratedSessionId = ''
+
+watch(
+  sessionId,
+  async (id) => {
+    if (id === '') {
+      setMessageList(defaultMessages)
+    } else {
+      if (id === currentGeneratedSessionId) {
+        return
+      }
+
+      currentGeneratedSessionId = ''
+
+      const result = await send(id)
+
+      setMessageList(
+        result.map((item) => {
+          if (item.messageType === 'assistant') {
+            return {
+              content: [
+                {
+                  data: item.content,
+                  type: 'markdown',
+                },
+              ],
+              id: item.id,
+              role: 'assistant',
+              status: 'complete',
+            }
+          } else {
+            return {
+              content: [
+                {
+                  data: item.content,
+                  type: 'text',
+                },
+              ],
+              id: item.id,
+              role: 'user',
+              status: 'complete',
+            }
+          }
+        }),
+      )
+    }
+  },
+  {
+    immediate: true,
+  },
+)
 
 // 消息属性配置
 const messageProps: TdChatMessageConfig = reactive({
@@ -104,6 +167,8 @@ const chatServiceConfig: ChatServiceConfig = {
           type: 'markdown',
         }
       case 'session_created':
+        currentGeneratedSessionId = data
+        sessionId.value = data
         return
       default:
         return { data: data || '', type: 'text' }
@@ -116,6 +181,7 @@ const chatServiceConfig: ChatServiceConfig = {
     return {
       body: JSON.stringify({
         question: prompt,
+        sessionId: sessionId.value,
       }),
     }
   },
@@ -141,7 +207,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="chatbot_wrapper h-full bg-[#fff] p-4">
+  <div v-loading="loading" class="chatbot_wrapper h-full overflow-y-auto bg-[#fff] p-4">
     <TChatbot
       ref="chatRef"
       :default-messages="defaultMessages"

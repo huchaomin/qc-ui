@@ -3,9 +3,9 @@ import type { DropdownOption, TdListProps } from 'tdesign-vue-next'
 import autoAnimate from '@formkit/auto-animate'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
 
-const emit = defineEmits<{
-  change: [id: null | string]
-}>()
+const sessionId = defineModel<string>('sessionId', {
+  required: true,
+})
 const {
   data: _data,
   isLastPage, // 是否最后一页 初始值为 true, 数据还没加载过来它就已经变为true了
@@ -98,9 +98,17 @@ async function handleActions(e: DropdownOption, item: Record<string, any>) {
     await alovaInst.Delete(`chatHistory/session/${item.sessionId}`)
     void $msg('删除对话成功')
 
-    for (let index = 1; index <= pageNum.value; index++) {
-      await refresh(index)
+    if (item.sessionId === sessionId.value) {
+      sessionId.value = ''
     }
+
+    refreshData()
+  }
+}
+
+async function refreshData() {
+  for (let index = 1; index <= pageNum.value; index++) {
+    await refresh(index)
   }
 }
 
@@ -111,9 +119,18 @@ watch(listRef, (val) => {
     autoAnimate(listRef.value!.$el.querySelector('.t-list__inner'))
   }
 })
+watch(sessionId, (val) => {
+  if (val !== '' && !_data.value.some((item: Record<string, any>) => item.sessionId === val)) {
+    refreshData()
+  }
+})
 
 function handleClick(item: Record<string, any>) {
-  emit('change', item.sessionId)
+  sessionId.value = item.sessionId
+}
+
+function handleNewConversation() {
+  sessionId.value = ''
 }
 </script>
 
@@ -127,7 +144,14 @@ function handleClick(item: Record<string, any>) {
       <TTypographyTitle level="h6" class="mb-4! text-center text-(--td-text-color-placeholder)!"
         >这里暂时留出来，需要一句产品的Slogan</TTypographyTitle
       >
-      <TButton block variant="outline" shape="round" theme="primary" size="large">
+      <TButton
+        block
+        variant="outline"
+        shape="round"
+        theme="primary"
+        size="large"
+        @click="handleNewConversation"
+      >
         <template #icon>
           <Icon icon="line-md:plus"></Icon>
         </template>
@@ -155,7 +179,7 @@ function handleClick(item: Record<string, any>) {
             v-else
             tabindex="0"
             :class="{
-              active: i.active,
+              active: i.active || i.sessionId === sessionId,
             }"
             @click="handleClick(i)"
           >
@@ -203,13 +227,19 @@ function handleClick(item: Record<string, any>) {
 
   &:hover,
   &.active {
-    background-color: var(--td-gray-color-4);
-
     :deep() {
       .t-list-item__action {
         display: list-item;
       }
     }
+  }
+
+  &:hover {
+    background-color: var(--td-gray-color-2);
+  }
+
+  &.active {
+    background-color: var(--td-gray-color-4);
   }
 }
 </style>
