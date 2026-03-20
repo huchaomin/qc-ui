@@ -89,8 +89,14 @@ body {
 
   .t-is-error {
     .t-form__controls-content {
+      .t-range-input {
+        .t-input--focused {
+          box-shadow: none;
+        }
+      }
+
       .t-cascader--focused,
-      .t-input--focused,
+      .t-input--focused:not(.t-range-input .t-input),
       .t-radio-button--focused,
       .t-range-input--focused,
       .t-select--focused,

@@ -36,7 +36,18 @@ provide('data', data)
 provide('dataType', 3)
 provide(
   'limitTimeRange',
-  computed(() => data.value?.dataScope?.split(',') ?? []),
+  computed(() => {
+    if (isFalsy(data.value?.publishTimeStart)) {
+      return []
+    }
+
+    return [
+      data.value!.publishTimeStart,
+      data.value!.dataScope === '0'
+        ? data.value!.publishTimeEnd
+        : dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    ]
+  }),
 )
 </script>
 

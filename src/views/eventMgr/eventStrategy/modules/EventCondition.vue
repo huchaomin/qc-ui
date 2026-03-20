@@ -31,9 +31,10 @@ watch(
       return
     }
 
-    formData.fieldConfig = tableData.value.map((item) => ({
+    formData.fieldConfig = tableData.value.map((item, index) => ({
       filed: item.filed.join(','),
       filterType: item.filterType,
+      id: index,
       keyWord: item.keyWord,
       logicSymbol: item.logicSymbol,
     }))

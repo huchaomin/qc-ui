@@ -158,7 +158,7 @@ const config: PageListProps = {
                   $msg.success('预警推送规则修改成功')
                   pageListRef.value!.query()
                 },
-                width: 1050,
+                width: 1180,
               })
             },
             permission: 'yq:warnPushRule:edit',
@@ -212,7 +212,7 @@ const config: PageListProps = {
             $msg.success('预警推送规则新增成功')
             pageListRef.value!.query()
           },
-          width: 1050,
+          width: 1180,
         })
       },
       permission: 'yq:warnPushRule:add',

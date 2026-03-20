@@ -900,18 +900,18 @@ defineExpose(
 
   /* .t-radio-button, */
 
-  /* .t-range-input, */
-
   /* .t-select, */
 
   /* .t-textarea__inner,  */
-  .t-input {
+  .t-range-input,
+  .t-input:not(.t-range-input .t-input) {
     border-color: var(--td-border-level-2-color) !important;
 
     &:hover {
       border-color: var(--td-brand-color) !important;
     }
 
+    &.t-is-focused,
     &.t-input--focused {
       border-color: var(--td-brand-color) !important;
       box-shadow: 0 0 0 1px var(--td-brand-color) inset !important;
@@ -933,15 +933,15 @@ defineExpose(
 
     /* .t-radio-button, */
 
-    /* .t-range-input, */
-
     /* .t-select, */
 
     /* .t-textarea__inner, */
-    .t-input {
+    .t-range-input,
+    .t-input:not(.t-range-input .t-input) {
       &.t-is-error {
         border-color: var(--td-error-color) !important;
 
+        &.t-is-focused,
         &.t-input--focused {
           border-color: var(--td-error-color) !important;
           box-shadow: 0 0 0 1px var(--td-error-color) inset !important;

@@ -25,7 +25,7 @@ const innerModelValue = defineModel<SelectValue>('modelValue', {
 
 <style>
 .t-table {
-  .t-select__wrap {
+  .t-select__wrap:not(.static_form_item *) {
     position: absolute;
     top: 6px;
     right: 12px;

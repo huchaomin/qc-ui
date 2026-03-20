@@ -25,7 +25,7 @@ const innerModelValue = defineModel<InputNumberValue>('modelValue', {
 
 <style>
 .t-table {
-  .t-input-number {
+  .t-input-number:not(.static_form_item *) {
     position: absolute;
     top: 6px;
     right: 12px;

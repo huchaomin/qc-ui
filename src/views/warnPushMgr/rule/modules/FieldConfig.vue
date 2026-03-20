@@ -13,6 +13,7 @@ const tableData = ref<Array<Record<string, any>>>(
           filed: item.filed.split(','),
           filterType: String(item.filterType),
           keyWord: item.keyWord,
+          logicSymbol: item.logicSymbol,
         }
       })
     : [
@@ -20,6 +21,7 @@ const tableData = ref<Array<Record<string, any>>>(
           filed: [],
           filterType: '1',
           keyWord: '',
+          logicSymbol: '+',
         },
       ],
 )
@@ -69,6 +71,32 @@ const columns: TableCol[] = [
     width: 300,
   },
   {
+    cell: (_, { row, rowIndex }) => {
+      if (rowIndex === tableData.value.length - 1) {
+        return undefined
+      }
+
+      return {
+        _component: 'Select',
+        clearable: false,
+        filterable: false,
+        options: [
+          {
+            label: '+',
+            value: '+',
+          },
+          {
+            label: '|',
+            value: '|',
+          },
+        ],
+        status: isFalsy(row.logicSymbol) ? 'error' : 'default',
+      }
+    },
+    colKey: 'logicSymbol',
+    title: '和下一条的且或关系',
+  },
+  {
     cell: {
       _component: 'Buttons',
       buttons: [
@@ -112,6 +140,7 @@ watch(
       filed: item.filed.join(','),
       filterType: item.filterType,
       keyWord: item.keyWord,
+      logicSymbol: item.logicSymbol,
     }))
   },
   {

@@ -1,15 +1,16 @@
 <script setup lang="ts">
+import type { DateValue } from 'tdesign-vue-next'
 import { handPullComments } from '@/bus'
 import { viewEventStrategy } from '../eventStrategy/index.vue'
 import ClusterTags from './modules/ClusterTags.vue'
 import EventRule from './modules/EventRule.vue'
-import RelatedTask from './modules/RelatedTask.vue'
+// import RelatedTask from './modules/RelatedTask.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const slotMap = {
   cluster_tags: () => h(ClusterTags),
   event_rule: () => h(EventRule),
-  related_task: () => h(RelatedTask),
+  // related_task: () => h(RelatedTask),
 }
 const formItemMap = {
   cluster_tags: reactive({
@@ -18,27 +19,20 @@ const formItemMap = {
     model: 'clusterTags',
     slot: 'cluster_tags',
   }),
-  createTask: {
-    _label: '是否新建专项任务',
-    component: 'TRadioGroup',
-    dicCode: 'yes_no',
-    model: 'createTask',
-  },
   dataScope: {
-    _label: '内容发布时间',
-    _required: true,
-    component: 'TDateRangePicker',
+    _label: '内容发布结束时间类型',
+    component: 'TRadioGroup',
     model: 'dataScope',
-  },
-  effectiveTime: {
-    __others: (formData) => {
-      return {
-        _required: formData.createTask === '1',
-      }
-    },
-    _label: '生效时间',
-    component: 'TDateRangePicker',
-    model: 'effectiveTime',
+    options: [
+      {
+        label: '选择时间',
+        value: '0',
+      },
+      {
+        label: '最新时间',
+        value: '1',
+      },
+    ],
   },
   event_rule: {
     _label: '选择策略',
@@ -56,12 +50,50 @@ const formItemMap = {
     _required: true,
     model: 'eventName',
   },
-  related_task: {
-    _class: 'col-span-full',
-    _label: '关联数据',
+  publishTimeEnd: {
+    __others: (formData) => {
+      const dataMonth = useList('brand').value[0]?.dataMonth ?? 0
+
+      return {
+        disableDate: (date: DateValue) => {
+          const start = isFalsy(formData.publishTimeStart)
+            ? dayjs().subtract(dataMonth, 'month').startOf('day')
+            : dayjs(formData.publishTimeStart)
+          const end = dayjs().endOf('day')
+
+          return dayjs(date).isBefore(start) || dayjs(date).isAfter(end)
+        },
+        show: formData.dataScope === '0',
+      }
+    },
+    _label: '内容发布结束时间',
     _required: true,
-    model: 'relatedTask',
-    slot: 'related_task',
+    component: 'TDatePicker',
+    defaultTime: dayjs().endOf('day').format('HH:mm:ss'),
+    enableTimePicker: true,
+    model: 'publishTimeEnd',
+  },
+  publishTimeStart: {
+    __others: (formData) => {
+      const dataMonth = useList('brand').value[0]?.dataMonth ?? 0
+
+      return {
+        disableDate: (date: DateValue) => {
+          const start = dayjs().subtract(dataMonth, 'month').startOf('day')
+          const end =
+            isFalsy(formData.publishTimeEnd) || formData.dataScope === '1'
+              ? dayjs().endOf('day')
+              : dayjs(formData.publishTimeEnd)
+
+          return dayjs(date).isBefore(start) || dayjs(date).isAfter(end)
+        },
+      }
+    },
+    _label: '内容发布开始时间',
+    _required: true,
+    component: 'TDatePicker',
+    enableTimePicker: true,
+    model: 'publishTimeStart',
   },
   source: {
     _label: '数据来源',
@@ -85,19 +117,8 @@ function getSaveData(formData: Record<string, any>) {
   const obj: Record<string, any> = {
     ...formData,
     clusterTags: formData.clusterTags.join(','),
-    dataScope: formData.dataScope.join(','),
-    effectiveEndTime: formData.effectiveTime?.[1] ?? '',
-    effectiveStartTime: formData.effectiveTime?.[0] ?? '',
-    relatedFollow: formData.relatedTask
-      .filter((value: string) => value.endsWith('_follow'))
-      .map((value: string) => value.slice(0, -7))
-      .join(','),
-    relatedTask: formData.relatedTask
-      .filter((value: string) => !value.endsWith('_follow'))
-      .join(','),
   }
 
-  delete obj.effectiveTime
   delete obj.source
   return obj
 }
@@ -132,20 +153,15 @@ const config: PageListProps = {
       title: '事件策略',
     },
     {
-      cell: {
-        _component: 'OptionLabel',
-        multiple: true,
-        options: 'task',
-      },
-      colKey: 'relatedTask',
-      resize: {
-        maxWidth: 300,
-      },
-      title: '关联数据',
+      colKey: 'publishTimeStart',
+      title: '发布开始时间',
     },
     {
-      colKey: 'dataScope',
-      title: '发布时间',
+      cell: (_, { row }) => {
+        return row.dataScope === '0' ? row.publishTimeEnd : '当天'
+      },
+      colKey: 'publishTimeEnd',
+      title: '发布结束时间',
     },
     {
       colKey: 'totalCount',
@@ -197,17 +213,9 @@ const config: PageListProps = {
                 () => {
                   formRef.value!.setFormData(row, {
                     override: {
-                      effectiveTime: [row.effectiveStartTime, row.effectiveEndTime],
-                      relatedTask: [
-                        ...(row.relatedTask ?? '').split(',').filter(Boolean),
-                        ...(row.relatedFollow ?? '')
-                          .split(',')
-                          .filter(Boolean)
-                          .map((id: string) => `${id}_follow`),
-                      ],
                       source: '1',
                     },
-                    splitToArrKeys: ['clusterTags', 'dataScope'],
+                    splitToArrKeys: ['clusterTags'],
                   })
                 },
                 {
@@ -223,15 +231,11 @@ const config: PageListProps = {
                         formItemMap.eventName,
                         formItemMap.source,
                         formItemMap.eventDesc,
-                        formItemMap.related_task,
                         formItemMap.cluster_tags,
+                        formItemMap.publishTimeStart,
                         formItemMap.dataScope,
-                        formItemMap.effectiveTime,
+                        formItemMap.publishTimeEnd,
                         formItemMap.event_rule,
-                        {
-                          ...formItemMap.createTask,
-                          disabled: true,
-                        },
                       ],
                       ref: formRef,
                     },
@@ -310,30 +314,22 @@ const config: PageListProps = {
               {
                 data: reactive({
                   clusterTags: [],
-                  createTask: '0',
-                  relatedTask: [],
+                  dataScope: '0',
                   source: '1',
                 }),
                 items: [
                   formItemMap.eventName,
                   formItemMap.source,
                   formItemMap.eventDesc,
-                  formItemMap.related_task,
                   formItemMap.cluster_tags,
+                  formItemMap.publishTimeStart,
                   formItemMap.dataScope,
-                  formItemMap.effectiveTime,
+                  formItemMap.publishTimeEnd,
                   formItemMap.event_rule,
-                  formItemMap.createTask,
                 ],
                 ref: formRef,
               },
-              {
-                ...slotMap,
-                related_task: () =>
-                  h(RelatedTask, {
-                    fillAll: true,
-                  }),
-              },
+              slotMap,
             ),
           header: '添加事件',
           onConfirmCallback: async () => {

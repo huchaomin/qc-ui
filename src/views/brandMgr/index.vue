@@ -26,6 +26,22 @@ const formItemMap = {
     ],
     model: 'contactsPhone',
   },
+  dataMonth: {
+    _label: '数据限制月数',
+    _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
+    min: 1,
+    model: 'dataMonth',
+  },
+  eventNum: {
+    _label: '品牌事件数',
+    _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
+    min: 1,
+    model: 'eventNum',
+  },
   remark: {
     _class: 'col-span-full',
     _label: '品牌备注',
@@ -62,6 +78,14 @@ const config: PageListProps = {
     {
       colKey: 'brandName',
       title: '品牌名称',
+    },
+    {
+      colKey: 'eventNum',
+      title: '品牌事件数',
+    },
+    {
+      colKey: 'dataMonth',
+      title: '数据限制月数',
     },
     {
       colKey: 'remark',
@@ -168,6 +192,8 @@ const config: PageListProps = {
                       },
                       formItemMap.screenData,
                       formItemMap.contactsEmail,
+                      formItemMap.eventNum,
+                      formItemMap.dataMonth,
                       formItemMap.remark,
                     ],
                     ref: formRef,
@@ -222,6 +248,8 @@ const config: PageListProps = {
                 },
                 formItemMap.screenData,
                 formItemMap.contactsEmail,
+                formItemMap.eventNum,
+                formItemMap.dataMonth,
                 formItemMap.remark,
               ],
               ref: formRef,

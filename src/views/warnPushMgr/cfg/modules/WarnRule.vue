@@ -39,7 +39,11 @@ const columns: TableCol[] = [
         _component: 'Select',
         clearable: false,
         onChange: () => {
-          row.ruleContent = ['2', '3'].includes(row.ruleType) ? [] : ''
+          row.ruleContent = ['3'].includes(row.ruleType)
+            ? []
+            : ['2'].includes(row.ruleType)
+              ? ['', '', '', '']
+              : ''
         },
         options: warnRuleTypeOptions.value,
       }
@@ -59,13 +63,62 @@ const columns: TableCol[] = [
       }
 
       if (row.ruleType === '2') {
-        return {
-          _component: 'Select',
-          dicCode: 'mood_level',
-          minCollapsedNum: 0,
-          multiple: true,
-          status: row.ruleContent.length === 0 ? 'error' : 'default',
-        }
+        return h(
+          'div',
+          {
+            class: 'static_form_item grid grid-cols-3 gap-2',
+          },
+          [
+            h(resolveComponent('TSelect'), {
+              clearable: false,
+              filterable: false,
+              modelValue: row.ruleContent[0],
+              onChange: (value: string) => {
+                row.ruleContent[0] = value
+              },
+              options: [
+                {
+                  label: '[',
+                  value: '[',
+                },
+                {
+                  label: '(',
+                  value: '(',
+                },
+              ],
+              status: isFalsy(row.ruleContent[0]) ? 'error' : 'default',
+            }),
+            h(resolveComponent('TRangeInput'), {
+              max: 10,
+              modelValue: [row.ruleContent[1], row.ruleContent[2]],
+              'onUpdate:modelValue': (value: [number | string, number | string]) => {
+                row.ruleContent[1] = value[0]
+                row.ruleContent[2] = value[1]
+              },
+              status:
+                isFalsy(row.ruleContent[1]) || isFalsy(row.ruleContent[2]) ? 'error' : 'default',
+            }),
+            h(resolveComponent('TSelect'), {
+              clearable: false,
+              filterable: false,
+              modelValue: row.ruleContent[3],
+              onChange: (value: string) => {
+                row.ruleContent[3] = value
+              },
+              options: [
+                {
+                  label: ']',
+                  value: ']',
+                },
+                {
+                  label: ')',
+                  value: ')',
+                },
+              ],
+              status: isFalsy(row.ruleContent[3]) ? 'error' : 'default',
+            }),
+          ],
+        )
       }
 
       if (row.ruleType === '3') {
@@ -116,7 +169,7 @@ const columns: TableCol[] = [
             }
 
             if (newRow.ruleType === '2') {
-              newRow.ruleContent = ['-1']
+              newRow.ruleContent = ['', '', '', '']
             } else if (newRow.ruleType === '3') {
               newRow.ruleContent = ['1']
             }
@@ -136,7 +189,10 @@ watch(
   () => {
     if (
       tableData.value.some((item) =>
-        Array.isArray(item.ruleContent) ? item.ruleContent.length === 0 : isFalsy(item.ruleContent),
+        Array.isArray(item.ruleContent)
+          ? item.ruleContent.length === 0 ||
+            item.ruleContent.filter((i: any) => isFalsy(i)).length !== 0
+          : isFalsy(item.ruleContent),
       )
     ) {
       if (formData.warnRule.length > 0) {
