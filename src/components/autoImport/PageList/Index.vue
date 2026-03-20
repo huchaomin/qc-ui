@@ -5,6 +5,7 @@ import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
 import type { CardProps } from '@/components/tDesignReset/TCard.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
+import type { UseListAllKey } from '@/hooks/useList'
 import type { CellObjConfig } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import PageQuery from './PageQuery.vue'
@@ -15,6 +16,7 @@ export interface PageListProps {
       method: ((rows: TableRowData[]) => Method) | string
       permission?: string
       showBatch?: boolean
+      useListRefreshKey?: UseListAllKey
     }
     export?: {
       exportFileName?: string
@@ -105,6 +107,11 @@ const batchDeleteProps = computed(() => {
         await (typeof config.method === 'string'
           ? alovaInst.Delete(`${config.method}/${selectedRowKeys.value.join(',')}`)
           : config.method(selectedRows.value))
+
+        if (config.useListRefreshKey) {
+          useListRefresh(config.useListRefreshKey)
+        }
+
         $msg.success('删除成功')
         doQuery()
       },
@@ -155,6 +162,11 @@ const finallyColumns = computed(() => {
           await (typeof deleteConfig.method === 'string'
             ? alovaInst.Delete(`${deleteConfig.method}/${row[pageTableRef.value?.rowKey ?? '']}`)
             : deleteConfig.method([row]))
+
+          if (deleteConfig.useListRefreshKey) {
+            useListRefresh(deleteConfig.useListRefreshKey)
+          }
+
           $msg.success('删除成功')
           doQuery()
         },

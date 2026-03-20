@@ -148,6 +148,7 @@ const config: PageListProps = {
     delete: {
       method: 'system/menu',
       permission: 'system:menu:remove',
+      useListRefreshKey: 'systemMenuTree',
     },
     list: {
       method: (o: Record<string, any>) => {
@@ -267,6 +268,7 @@ const config: PageListProps = {
                     menuId: row.menuId,
                     parentId: isFalsy(formData.parentId) ? '0' : formData.parentId,
                   })
+                  useListRefresh('systemMenuTree')
                   $msg.success('菜单修改成功')
                   pageListRef.value!.query()
                 },
@@ -311,6 +313,7 @@ const config: PageListProps = {
                 header: '新增菜单',
                 onConfirmCallback: async () => {
                   await alovaInst.Post('system/menu', await formRef.value!.validate())
+                  useListRefresh('systemMenuTree')
                   $msg.success('菜单修改成功')
                   pageListRef.value!.query()
                 },
@@ -370,6 +373,7 @@ const config: PageListProps = {
               ...formData,
               parentId: isFalsy(formData.parentId) ? '0' : formData.parentId,
             })
+            useListRefresh('systemMenuTree')
             $msg.success('菜单添加成功')
             pageListRef.value!.query()
           },

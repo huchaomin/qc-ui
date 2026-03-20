@@ -164,6 +164,7 @@ const config: PageListProps = {
     delete: {
       method: 'yq/task',
       permission: 'yq:task:remove',
+      useListRefreshKey: 'task',
     },
     export: {
       method: 'yq/task/export',
@@ -352,6 +353,7 @@ const config: PageListProps = {
                     ...formData,
                     id: row.id,
                   })
+                  useListRefresh('task')
                   $msg.success('任务修改成功')
                   pageListRef.value!.query()
                 },
@@ -537,6 +539,7 @@ const config: PageListProps = {
 
             delete formData.startEndTime
             await alovaInst.Post('yq/task', formData)
+            useListRefresh('task')
             $msg.success('任务新增成功')
             pageListRef.value!.query()
           },

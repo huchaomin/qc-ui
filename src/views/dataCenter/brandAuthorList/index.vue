@@ -122,6 +122,7 @@ const config: PageListProps = {
                     ...(await formRef.value!.validate()),
                     id: row.id,
                   })
+                  useListRefresh('name')
                   $msg.success('名单修改成功')
                   pageListRef.value!.query()
                 },
@@ -137,6 +138,7 @@ const config: PageListProps = {
               content: '确认删除吗',
               onConfirm: async () => {
                 await alovaInst.Delete(`yq/nameList/${row.id}`)
+                useListRefresh('name')
                 $msg('删除成功')
                 pageListRef.value!.query()
               },
@@ -167,6 +169,7 @@ const config: PageListProps = {
           header: '添加名单',
           onConfirmCallback: async () => {
             await alovaInst.Post('yq/nameList', await formRef.value!.validate())
+            useListRefresh('name')
             $msg.success('名单添加成功')
             pageListRef.value!.query()
           },

@@ -65,6 +65,7 @@ const config: PageListProps = {
     delete: {
       method: 'yq/brand',
       permission: 'yq:brand:remove',
+      useListRefreshKey: 'brand',
     },
     export: {
       method: 'yq/brand/export',
@@ -204,6 +205,7 @@ const config: PageListProps = {
                     ...(await formRef.value!.validate()),
                     id: row.id,
                   })
+                  useListRefresh('brand')
                   $msg.success('品牌修改成功')
                   pageListRef.value!.query()
                 },
@@ -257,6 +259,7 @@ const config: PageListProps = {
           header: '新增品牌',
           onConfirmCallback: async () => {
             await alovaInst.Post('yq/brand', await formRef.value!.validate())
+            useListRefresh('brand')
             $msg.success('品牌新增成功')
             pageListRef.value!.query()
           },

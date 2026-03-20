@@ -140,6 +140,7 @@ const config: PageListProps = {
     delete: {
       method: 'yq/eventRule',
       permission: 'yq:eventRule:remove',
+      useListRefreshKey: 'eventRule',
     },
     list: {
       method: 'yq/eventRule/list',
@@ -236,6 +237,7 @@ const config: PageListProps = {
                     ...(await formRef.value!.validate()),
                     id: row.id,
                   })
+                  useListRefresh('eventRule')
                   $msg.success('事件策略修改成功')
                   pageListRef.value!.query()
                 },

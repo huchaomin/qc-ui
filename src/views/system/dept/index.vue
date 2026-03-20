@@ -175,6 +175,7 @@ const config: PageListProps = {
                     ...formData,
                     deptId: row.deptId,
                   })
+                  useListRefresh('systemDeptTree')
                   $msg.success('部门修改成功')
                   pageListRef.value!.query()
                 },
@@ -212,6 +213,7 @@ const config: PageListProps = {
                 header: '新增部门',
                 onConfirmCallback: async () => {
                   await alovaInst.Post('system/dept', await formRef.value!.validate())
+                  useListRefresh('systemDeptTree')
                   $msg.success('部门添加成功')
                   pageListRef.value!.query()
                 },
@@ -227,6 +229,7 @@ const config: PageListProps = {
               content: '确认删除吗',
               onConfirm: async () => {
                 await alovaInst.Delete(`system/dept/${row.deptId}`)
+                useListRefresh('systemDeptTree')
                 $msg('删除成功')
                 pageListRef.value!.query()
               },
@@ -272,6 +275,7 @@ const config: PageListProps = {
           header: '添加部门',
           onConfirmCallback: async () => {
             await alovaInst.Post('system/dept', await formRef.value!.validate())
+            useListRefresh('systemDeptTree')
             $msg.success('部门添加成功')
             pageListRef.value!.query()
           },

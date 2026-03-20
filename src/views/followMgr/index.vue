@@ -37,6 +37,7 @@ function handleAdd(): void {
     header: '新增组',
     onConfirmCallback: async () => {
       await alovaInst.Post('yq/followManage', await formRef.value!.validate())
+      useListRefresh('follow')
       $msg('组新增成功')
       send()
     },
@@ -46,6 +47,7 @@ function handleAdd(): void {
 
 async function handleDelete(item: Record<string, any>): Promise<void> {
   await alovaInst.Delete(`yq/followManage/${item.id}`)
+  useListRefresh('follow')
   $msg('删除成功')
   send()
 }
@@ -91,6 +93,7 @@ function handleEdit(row: Record<string, any>): void {
         ...(await formRef.value!.validate()),
         id: row.id,
       })
+      useListRefresh('follow')
       $msg('组修改成功')
       send()
     },

@@ -180,6 +180,7 @@ const config: PageListProps = {
     delete: {
       method: 'yq/monitorPhrase',
       permission: 'yq:monitorPhrase:remove',
+      useListRefreshKey: 'monitorPhrase',
     },
     export: {
       method: 'yq/monitorPhrase/export',
@@ -234,6 +235,7 @@ const config: PageListProps = {
                     ...(await formRef.value!.validate()),
                     id: row.id,
                   })
+                  useListRefresh('monitorPhrase')
                   $msg.success('搜索词组修改成功')
                   pageListRef.value!.query()
                 },
@@ -298,6 +300,7 @@ const config: PageListProps = {
           header: '添加搜索词组',
           onConfirmCallback: async () => {
             await alovaInst.Post('yq/monitorPhrase', await formRef.value!.validate())
+            useListRefresh('monitorPhrase')
             $msg.success('搜索词组添加成功')
             pageListRef.value!.query()
           },

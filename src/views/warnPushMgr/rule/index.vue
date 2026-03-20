@@ -53,6 +53,7 @@ const config: PageListProps = {
     delete: {
       method: 'yq/warnPushRule',
       permission: 'yq:warnPushRule:remove',
+      useListRefreshKey: 'warnPushRule',
     },
     list: {
       method: 'yq/warnPushRule/list',
@@ -155,6 +156,7 @@ const config: PageListProps = {
                     ...obj,
                     id: row.id,
                   })
+                  useListRefresh('warnPushRule')
                   $msg.success('预警推送规则修改成功')
                   pageListRef.value!.query()
                 },
@@ -209,6 +211,7 @@ const config: PageListProps = {
             const obj = await formRef.value!.validate()
 
             await alovaInst.Post('yq/warnPushRule', obj)
+            useListRefresh('warnPushRule')
             $msg.success('预警推送规则新增成功')
             pageListRef.value!.query()
           },
