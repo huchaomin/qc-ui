@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type {
+  AIMessageContent,
   ChatMessagesData,
   ChatServiceConfig,
+  SSEChunkData,
   TdChatbotApi,
   TdChatMessageConfig,
 } from '@tdesign-vue-next/chat'
@@ -48,7 +50,7 @@ function handleMessageChange(e: CustomEvent<ChatMessagesData[]>): void {
 }
 
 function setMessageList(list: ChatMessagesData[]): void {
-  chatRef.value?.setMessages(list, 'replace')
+  chatRef.value!.setMessages(list, 'replace')
 }
 
 const { loading, send } = useRequest(
@@ -65,59 +67,54 @@ const { loading, send } = useRequest(
 )
 let currentGeneratedSessionId = ''
 
-watch(
-  sessionId,
-  async (id) => {
-    if (id === '') {
-      setMessageList(defaultMessages)
-    } else {
-      if (id === currentGeneratedSessionId) {
-        return
-      }
-
-      currentGeneratedSessionId = ''
-
-      const result = await send(id)
-
-      setMessageList(
-        result.map((item) => {
-          if (item.messageType === 'assistant') {
-            return {
-              content: [
-                {
-                  data: item.content,
-                  type: 'markdown',
-                },
-              ],
-              id: item.id,
-              role: 'assistant',
-              status: 'complete',
-            }
-          } else {
-            return {
-              content: [
-                {
-                  data: item.content,
-                  type: 'text',
-                },
-              ],
-              id: item.id,
-              role: 'user',
-              status: 'complete',
-            }
-          }
-        }),
-      )
+watch(sessionId, async (id) => {
+  if (id === '') {
+    setMessageList(defaultMessages)
+  } else {
+    if (id === currentGeneratedSessionId) {
+      return
     }
-  },
-  {
-    immediate: true,
-  },
-)
+
+    currentGeneratedSessionId = ''
+
+    const result = await send(id)
+
+    setMessageList(
+      result.map((item) => {
+        if (item.messageType === 'assistant') {
+          return {
+            content: [
+              {
+                data: item.content,
+                type: 'markdown',
+              },
+            ],
+            id: item.id,
+            role: 'assistant',
+            status: 'complete',
+          }
+        } else {
+          return {
+            content: [
+              {
+                data: item.content,
+                type: 'text',
+              },
+            ],
+            id: item.id,
+            role: 'user',
+            status: 'complete',
+          }
+        }
+      }),
+    )
+  }
+})
 
 // 消息属性配置
 const messageProps: TdChatMessageConfig = reactive({
   assistant: {
+    animation: 'dots',
     avatar: robotOutlineUrl,
     handleActions: {
       suggestion: ({ content }: any) => {
@@ -125,6 +122,7 @@ const messageProps: TdChatMessageConfig = reactive({
       },
     },
     placement: 'left',
+    variant: 'outline',
   },
   user: {
     avatar: 'https://tdesign.gtimg.com/site/avatar.jpg',
@@ -135,12 +133,18 @@ const messageProps: TdChatMessageConfig = reactive({
 const senderProps = computed(() => ({
   placeholder: '请输入内容，如:分析塞力斯公司、产品的现状',
 }))
+const reportMsg = ref('')
+const reportTheme = ref<'error' | 'loading' | 'success'>('loading')
 // 聊天服务配置
 const chatServiceConfig: ChatServiceConfig = {
   // 对话服务地址
   endpoint: `${location.origin}/yq-ai/agent/call`,
   // 流式对话过程中用户主动结束对话业务自定义行为
   onAbort: async () => {},
+  onComplete: () => {
+    reportMsg.value = ''
+    reportTheme.value = 'loading'
+  },
   // 流式对话结束（aborted为true时，表示用户主动结束对话，params为请求参数）
   // onComplete: (aborted, params) => {
   //   console.log('onComplete', aborted, params)
@@ -150,30 +154,38 @@ const chatServiceConfig: ChatServiceConfig = {
     $notify.error(err.message ?? 'ai对话返回错误')
   },
   // 自定义流式数据结构解析
-  onMessage: (chunk: any): any => {
+  onMessage: (chunk: SSEChunkData): AIMessageContent | AIMessageContent[] | null => {
     const { data, event } = chunk
 
     switch (event) {
-      // 完成
-      case 'complete':
-        return {
-          data: '',
-          status: 'complete',
-        }
       // 正文
+      case '':
       case 'message':
         return {
-          data: data || '',
+          data,
           type: 'markdown',
         }
+      case 'report_complete':
+        reportMsg.value = '报告生成完成'
+        reportTheme.value = 'success'
+        return null
+      case 'report_error':
+        reportMsg.value = '报告生成失败'
+        reportTheme.value = 'error'
+        return null
+      case 'report_step':
+        reportMsg.value = data.message
+        reportTheme.value = 'loading'
+        return null
       case 'session_created':
         currentGeneratedSessionId = data
         sessionId.value = data
-        return
+        return null
       default:
-        return { data: data || '', type: 'text' }
+        return { data, type: 'text' }
     }
   },
+
   // 自定义请求参数
   onRequest: (innerParams: any) => {
     const { prompt } = innerParams
@@ -208,6 +220,14 @@ defineExpose({
 
 <template>
   <div v-loading="loading" class="chatbot_wrapper h-full overflow-y-auto bg-[#fff] p-4">
+    <Teleport v-if="reportMsg !== ''" to="#app">
+      <TMessage
+        class="absolute! top-[50%] left-[50%] z-[calc(Infinity)] translate-x-[-50%] translate-y-[-50%]"
+        :theme="reportTheme"
+        :duration="0"
+        >{{ reportMsg }}</TMessage
+      >
+    </Teleport>
     <TChatbot
       ref="chatRef"
       :default-messages="defaultMessages"
