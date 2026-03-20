@@ -1,3 +1,4 @@
+import type { SlotReturnValue } from 'tdesign-vue-next'
 import type { AvatarProps } from './Avatar.vue'
 import type { ButtonsProps } from './Buttons.vue'
 import type { DefaultProps } from './Default.vue'
@@ -28,7 +29,7 @@ export type CellObjConfig = UnionToNestedXOR<
 export type CellObjConfigFn = (
   h: typeof import('vue').h,
   context: CellRenderContext,
-) => CellObjConfig | undefined
+) => CellObjConfig | SlotReturnValue | undefined
 
 type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] & {
   _component: T

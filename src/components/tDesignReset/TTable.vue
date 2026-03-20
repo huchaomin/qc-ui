@@ -61,9 +61,9 @@ export type FinallyTableCol = Omit<TableCol, 'attrs' | 'cell' | 'resize' | 'visi
 export type TableCol = {
   /**
    * @description: 单元格渲染
-   * @description: 渲染方式1(tsx): (h, { col, colIndex, row, rowIndex }) => <div>{row[col.colKey]}</div>
-   * @description: 渲染方式2(vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
-   * @description: 渲染方式3(vue组件，需要行列信息作为参数的):  (h, { col, colIndex, row, rowIndex }) => {
+   * @description: 渲染方式1(CellObjConfigFn 函数): (h, { col, colIndex, row, rowIndex }) => <div>{row[col.colKey]}</div>
+   * @description: 渲染方式2(CellObjConfig vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
+   * @description: 渲染方式3(CellObjConfigFn vue组件，需要行列信息作为参数的):  (h, { col, colIndex, row, rowIndex }) => {
                                                             return {
                                                               _component: 'Link',
                                                               onClick: () => {
@@ -71,7 +71,7 @@ export type TableCol = {
                                                               },
                                                             }
                                                           }
-   * @description: 渲染方式4(vue组件，需要行列信息作为参数的, 且渲染多个的): {
+   * @description: 渲染方式4(vue组件，需要行列信息作为参数的, 且渲染多个的，暂时只有 Buttons): {
                                                                               _component: 'Buttons',
                                                                               buttons: [
                                                                                 ({ row }) => ({
@@ -83,7 +83,7 @@ export type TableCol = {
                                                                             },
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
-  cell?: CellObjConfig | CellObjConfigFn | CellRenderFn
+  cell?: CellObjConfig | CellObjConfigFn | CellRenderFn // todo 重新命名
   /**
    * @description: 列的key，必须要存在，且唯一
    */
