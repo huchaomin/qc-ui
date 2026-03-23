@@ -15,7 +15,7 @@ export default (isProduction: boolean): ArrayItem<Parameters<typeof AutoImport>[
       ...tDesignResetComponentsName.map((name) => {
         const compo = name.slice(1)
 
-        return [compo, `_${compo}`] as [string, string]
+        return [compo === 'Table' ? 'EnhancedTable' : compo, `_${compo}`] as [string, string]
       }),
     ],
   }
