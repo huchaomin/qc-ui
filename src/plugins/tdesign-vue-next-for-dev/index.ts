@@ -48,7 +48,7 @@ const RadioGroup = _RadioGroup as (typeof import('tdesign-vue-next'))['RadioGrou
 const CheckboxGroup = _CheckboxGroup as (typeof import('tdesign-vue-next'))['CheckboxGroup']
 const TabPanel = _TabPanel as (typeof import('tdesign-vue-next'))['TabPanel']
 const Select = _Select as (typeof import('tdesign-vue-next'))['Select']
-const Table = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTable']
+const EnhancedTable = _EnhancedTable as (typeof import('tdesign-vue-next'))['EnhancedTable']
 const Button = _Button as (typeof import('tdesign-vue-next'))['Button']
 const DateRangePicker = _DateRangePicker as (typeof import('tdesign-vue-next'))['DateRangePicker']
 const Pagination = _Pagination as (typeof import('tdesign-vue-next'))['Pagination']
@@ -74,6 +74,7 @@ export {
   DatePicker,
   DateRangePicker,
   DialogPlugin,
+  EnhancedTable,
   Form,
   Image,
   Input,
@@ -90,7 +91,6 @@ export {
   RangeInput,
   Select,
   Switch,
-  Table,
   TabPanel,
   TDesign,
   Textarea,
