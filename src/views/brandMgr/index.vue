@@ -121,7 +121,7 @@ const config: PageListProps = {
                     .split(',')
                     .filter(Boolean)
                     .map((email: string) =>
-                      h(resolveComponent('TTypographyText'), {
+                      h(TTypographyText, {
                         class: 'my-0!',
                         content: email,
                         copyable: true,

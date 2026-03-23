@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import RangeInput from '@/components/tDesignReset/TRangeInput.vue'
-import Select from '@/components/tDesignReset/TSelect.vue'
+import TRangeInput from '@/components/tDesignReset/TRangeInput.vue'
+import TSelect from '@/components/tDesignReset/TSelect.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -72,7 +72,7 @@ const columns: TableCol[] = [
             class: 'static_form_item grid grid-cols-3 gap-2',
           },
           [
-            h(Select, {
+            h(TSelect, {
               clearable: false,
               filterable: false,
               modelValue: row.ruleContent[0],
@@ -91,7 +91,7 @@ const columns: TableCol[] = [
               ],
               status: isFalsy(row.ruleContent[0]) ? 'error' : 'default',
             }),
-            h(RangeInput, {
+            h(TRangeInput, {
               max: 10,
               modelValue: [row.ruleContent[1], row.ruleContent[2]],
               'onUpdate:modelValue': (value) => {
@@ -101,7 +101,7 @@ const columns: TableCol[] = [
               status:
                 isFalsy(row.ruleContent[1]) || isFalsy(row.ruleContent[2]) ? 'error' : 'default',
             }),
-            h(Select, {
+            h(TSelect, {
               clearable: false,
               filterable: false,
               modelValue: row.ruleContent[3],

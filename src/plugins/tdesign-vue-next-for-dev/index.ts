@@ -13,6 +13,7 @@ import _TDesign, {
   Form as _Form,
   Image as _Image,
   Input as _Input,
+  InputAdornment as _InputAdornment,
   InputNumber as _InputNumber,
   Link as _Link,
   LoadingPlugin as _LoadingPlugin,
@@ -30,6 +31,7 @@ import _TDesign, {
   Textarea as _Textarea,
   Tree as _Tree,
   TreeSelect as _TreeSelect,
+  TypographyText as _TypographyText,
   Upload as _Upload,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
@@ -64,6 +66,8 @@ const Tree = _Tree as (typeof import('tdesign-vue-next'))['Tree']
 const RangeInput = _RangeInput as (typeof import('tdesign-vue-next'))['RangeInput']
 const Popup = _Popup as (typeof import('tdesign-vue-next'))['Popup']
 const DatePicker = _DatePicker as (typeof import('tdesign-vue-next'))['DatePicker']
+const InputAdornment = _InputAdornment as (typeof import('tdesign-vue-next'))['InputAdornment']
+const TypographyText = _TypographyText as (typeof import('tdesign-vue-next'))['Text']
 
 export {
   Button,
@@ -77,6 +81,7 @@ export {
   Form,
   Image,
   Input,
+  InputAdornment,
   InputNumber,
   Link,
   LoadingPlugin,
@@ -95,5 +100,6 @@ export {
   Textarea,
   Tree,
   TreeSelect,
+  TypographyText,
   Upload,
 }

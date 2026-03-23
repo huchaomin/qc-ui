@@ -76,6 +76,7 @@
 - [升级 vite 8](https://cn.vite.dev/guide/migration) [resolve.tsconfigPaths 、devtool]
 - 组件提示消失
 - svg 文件格式化
+- 注册FormItems
 - 开发 （使用adornment）numberRange 小数
 - [Violation] Forced reflow while executing JavaScript 用时 <N> 毫秒
 - hooks 一部分清理到 bus, bus 的eslint 有问题

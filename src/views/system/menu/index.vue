@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Icon from '@/components/autoImport/Icon.vue'
-import Button from '@/components/tDesignReset/TButton.vue'
+import TButton from '@/components/tDesignReset/TButton.vue'
 import { flatArrToTree } from '@/utils'
 
 const pageListRef = useTemplateRef('pageListRef')
@@ -23,7 +23,7 @@ const formItemMap = {
         adornment: {
           append: () =>
             h(
-              Button,
+              TButton,
               {
                 default: '去选择',
                 onClick: () => {

@@ -64,7 +64,7 @@ const inputBindProps = computed(() => {
   <component
     :is="
       h(
-        resolveComponent('TInputAdornment'),
+        TInputAdornment,
         {},
         {
           ...adornment,

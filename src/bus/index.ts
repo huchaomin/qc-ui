@@ -4,7 +4,6 @@
 /* eslint-disable ts/no-unsafe-assignment */
 import type { DialogInstance } from 'tdesign-vue-next'
 import { ChatMarkdown } from '@tdesign-vue-next/chat'
-import TForm from '../components/tDesignReset/TForm.vue'
 import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 
