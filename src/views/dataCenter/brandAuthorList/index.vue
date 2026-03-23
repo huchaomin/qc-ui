@@ -110,7 +110,7 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     items: [formItemMap.brandId, formItemMap.type, formItemMap.listName],
                     labelAlign: 'right',
                     layout: 'vertical',
@@ -160,7 +160,7 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
+            h(TForm, {
               items: [formItemMap.brandId, formItemMap.type, formItemMap.listName],
               labelAlign: 'right',
               layout: 'vertical',

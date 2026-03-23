@@ -172,7 +172,7 @@ const config: PageListProps = {
               $confirm({
                 body: () =>
                   h(
-                    resolveComponent('TForm') as Component<FormProps>,
+                    TForm,
                     {
                       items: [
                         formItemMap.name,
@@ -235,7 +235,7 @@ const config: PageListProps = {
         $confirm({
           body: () =>
             h(
-              resolveComponent('TForm') as Component<FormProps>,
+              TForm,
               {
                 data: reactive({
                   status: '0',

@@ -118,7 +118,7 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     items: [
                       formItemMap.contentId,
                       formItemMap.pushCfgId,

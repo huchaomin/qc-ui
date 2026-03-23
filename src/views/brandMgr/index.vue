@@ -182,7 +182,7 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     items: [
                       formItemMap.brandName,
                       formItemMap.contacts,
@@ -235,7 +235,7 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
+            h(TForm, {
               data: reactive({
                 screenData: 'N',
                 status: '0',
@@ -275,7 +275,7 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
+            h(TForm, {
               data: reactive({
                 brandIds: [],
                 days: 1,

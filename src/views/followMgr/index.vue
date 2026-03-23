@@ -28,7 +28,7 @@ function handleAdd(): void {
 
   $confirm({
     body: () =>
-      h(resolveComponent('TForm') as Component<FormProps>, {
+      h(TForm, {
         items: [formItemMap.name, formItemMap.brandId],
         labelAlign: 'right',
         layout: 'vertical',
@@ -75,7 +75,7 @@ function handleEdit(row: Record<string, any>): void {
   )
   $confirm({
     body: () =>
-      h(resolveComponent('TForm') as Component<FormProps>, {
+      h(TForm, {
         items: [
           formItemMap.name,
           {

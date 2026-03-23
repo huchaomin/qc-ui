@@ -205,7 +205,7 @@ export default defineConfig(({ command, mode }) => {
           'vue-router',
           'pinia',
           '@vueuse/core',
-          tDesignAutoImport(isProduction), // const xxx = _${compo} 自动导入
+          ...tDesignAutoImport(isProduction), // const xxx = _${compo} 自动导入
           {
             from: 'alova/client',
             imports: ['useRequest', 'useWatcher', 'usePagination'],

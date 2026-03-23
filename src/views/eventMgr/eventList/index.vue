@@ -225,7 +225,7 @@ const config: PageListProps = {
               $confirm({
                 body: () =>
                   h(
-                    resolveComponent('TForm') as Component<FormProps>,
+                    TForm,
                     {
                       items: [
                         formItemMap.eventName,
@@ -310,7 +310,7 @@ const config: PageListProps = {
         $confirm({
           body: () =>
             h(
-              resolveComponent('TForm') as Component<FormProps>,
+              TForm,
               {
                 data: reactive({
                   clusterTags: [],

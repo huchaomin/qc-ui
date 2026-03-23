@@ -428,7 +428,7 @@ const tfootTransformY = refDebounced(_tfootTransformY, 100)
 const selectedRowKeys = defineModel<SelectedRowKeys>('selectedRowKeys', {
   default: () => [],
 })
-const compo = _Table
+const compo = _EnhancedTable
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {

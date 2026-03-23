@@ -187,7 +187,7 @@ const config: PageListProps = {
               $confirm({
                 body: () => {
                   return h(
-                    resolveComponent('TForm') as Component<FormProps>,
+                    TForm,
                     {
                       data: reactive({
                         menuIds: checkedKeys,
@@ -271,7 +271,7 @@ const config: PageListProps = {
               $confirm({
                 body: () =>
                   h(
-                    resolveComponent('TForm') as Component<FormProps>,
+                    TForm,
                     {
                       data: reactive({
                         deptIds: checkedKeys,
@@ -390,7 +390,7 @@ const config: PageListProps = {
         $confirm({
           body: () =>
             h(
-              resolveComponent('TForm') as Component<FormProps>,
+              TForm,
               {
                 data: reactive({
                   menuIds: [],

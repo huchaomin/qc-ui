@@ -64,7 +64,7 @@
       ")",
       "\\$confirm({",
       "  body: () =>",
-      "    h(resolveComponent('TForm') as Component<FormProps>, {",
+      "    h(TForm, {",
       "      items: [formItemMap.menuName],",
       "      labelAlign: 'right',",
       "      layout: 'vertical',",

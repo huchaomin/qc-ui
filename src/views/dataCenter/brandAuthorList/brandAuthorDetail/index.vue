@@ -215,7 +215,7 @@ const config: PageListProps = {
               $confirm({
                 body: () =>
                   h(
-                    resolveComponent('TForm') as Component<FormProps>,
+                    TForm,
                     {
                       data: reactive({
                         accName: row.accName,
@@ -271,7 +271,7 @@ const config: PageListProps = {
         $confirm({
           body: () =>
             h(
-              resolveComponent('TForm') as Component<FormProps>,
+              TForm,
               {
                 items: [
                   formItemMap.listId,

@@ -46,7 +46,7 @@ export function addEventStrategy(): Promise<void> {
     $confirm({
       body: () =>
         h(
-          resolveComponent('TForm') as Component<FormProps>,
+          TForm,
           {
             data: reactive({
               status: '0',
@@ -94,7 +94,7 @@ export function viewEventStrategy(id: string): void {
     $confirm({
       body: () =>
         h(
-          resolveComponent('TForm') as Component<FormProps>,
+          TForm,
           {
             items: [
               formItemMap.ruleName,
@@ -212,7 +212,7 @@ const config: PageListProps = {
               $confirm({
                 body: () =>
                   h(
-                    resolveComponent('TForm') as Component<FormProps>,
+                    TForm,
                     {
                       items: [
                         formItemMap.ruleName,

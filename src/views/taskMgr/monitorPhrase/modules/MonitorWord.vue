@@ -73,7 +73,7 @@ function handleGenerateMonitorWord(): void {
 
     $confirm({
       body: () =>
-        h(resolveComponent('TForm') as Component<FormProps>, {
+        h(TForm, {
           data: reactive({
             brandId: brandOptions.value[0]!.value,
           }),

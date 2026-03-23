@@ -243,7 +243,7 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     items: [
                       formItemMap.parentId,
                       formItemMap.menuType,
@@ -284,7 +284,7 @@ const config: PageListProps = {
 
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     data: reactive({
                       isCache: '0',
                       menuType: 'M',
@@ -343,7 +343,7 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
+            h(TForm, {
               data: reactive({
                 isCache: '0',
                 menuType: 'M',

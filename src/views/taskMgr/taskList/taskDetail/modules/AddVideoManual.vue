@@ -80,7 +80,7 @@ function handleSelectSearchType(): void {
   $confirm({
     body: () =>
       h(
-        resolveComponent('TForm') as Component<FormProps>,
+        TForm,
         {
           data: reactive({
             toolType: '1',

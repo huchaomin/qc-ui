@@ -235,7 +235,7 @@ const config: PageListProps = {
 
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     data: reactive({
                       deptId: data.deptId,
                       email: data.email,
@@ -302,7 +302,7 @@ const config: PageListProps = {
 
               $confirm({
                 body: () =>
-                  h(resolveComponent('TForm') as Component<FormProps>, {
+                  h(TForm, {
                     items: [
                       {
                         _required: true,
@@ -440,7 +440,7 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
+            h(TForm, {
               data: reactive({
                 status: '0',
               }),
@@ -497,7 +497,7 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(resolveComponent('TForm') as Component<FormProps>, {
+            h(TForm, {
               items: [
                 {
                   _required: true,
