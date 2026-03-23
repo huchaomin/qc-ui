@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Icon from '@/components/autoImport/Icon.vue'
+import Button from '@/components/tDesignReset/TButton.vue'
 import { flatArrToTree } from '@/utils'
 
 const pageListRef = useTemplateRef('pageListRef')
@@ -21,7 +23,7 @@ const formItemMap = {
         adornment: {
           append: () =>
             h(
-              resolveComponent('TButton'),
+              Button,
               {
                 default: '去选择',
                 onClick: () => {
@@ -30,10 +32,10 @@ const formItemMap = {
                 variant: 'text',
               },
               {
-                icon: () => h(resolveComponent('Icon'), { icon: 'line-md:link' }),
+                icon: () => h(Icon, { icon: 'line-md:link' }),
               },
             ),
-          prepend: () => h(resolveComponent('Icon'), { class: 'mx-1', icon: formData.icon }),
+          prepend: () => h(Icon, { class: 'mx-1', icon: formData.icon }),
         },
         show: formData.menuType !== 'F' && isFalsy(formData.parentId),
       }

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import RangeInput from '@/components/tDesignReset/TRangeInput.vue'
+import Select from '@/components/tDesignReset/TSelect.vue'
+
 const props = withDefaults(
   defineProps<{
     initData?: Array<Record<string, any>>
@@ -69,11 +72,11 @@ const columns: TableCol[] = [
             class: 'static_form_item grid grid-cols-3 gap-2',
           },
           [
-            h(resolveComponent('TSelect'), {
+            h(Select, {
               clearable: false,
               filterable: false,
               modelValue: row.ruleContent[0],
-              onChange: (value: string) => {
+              onChange: (value) => {
                 row.ruleContent[0] = value
               },
               options: [
@@ -88,21 +91,21 @@ const columns: TableCol[] = [
               ],
               status: isFalsy(row.ruleContent[0]) ? 'error' : 'default',
             }),
-            h(resolveComponent('TRangeInput'), {
+            h(RangeInput, {
               max: 10,
               modelValue: [row.ruleContent[1], row.ruleContent[2]],
-              'onUpdate:modelValue': (value: [number | string, number | string]) => {
+              'onUpdate:modelValue': (value) => {
                 row.ruleContent[1] = value[0]
                 row.ruleContent[2] = value[1]
               },
               status:
                 isFalsy(row.ruleContent[1]) || isFalsy(row.ruleContent[2]) ? 'error' : 'default',
             }),
-            h(resolveComponent('TSelect'), {
+            h(Select, {
               clearable: false,
               filterable: false,
               modelValue: row.ruleContent[3],
-              onChange: (value: string) => {
+              onChange: (value) => {
                 row.ruleContent[3] = value
               },
               options: [

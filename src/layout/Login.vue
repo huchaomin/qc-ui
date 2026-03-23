@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LoginData } from '@/store/modules/login'
+import Icon from '@/components/autoImport/Icon.vue'
 import captcha from '@/plugins/captcha'
 import LoginBg from './modules/LoginBg.vue'
 
@@ -42,7 +43,7 @@ const formItems: FormItem[] = [
     model: 'username',
     placeholder: '账号',
     prefixIcon(h) {
-      return h(resolveComponent('icon'), {
+      return h(Icon, {
         icon: 'mdi:shield-account-outline',
       })
     },
@@ -54,7 +55,7 @@ const formItems: FormItem[] = [
     model: 'password',
     placeholder: '密码',
     prefixIcon(h) {
-      return h(resolveComponent('icon'), {
+      return h(Icon, {
         icon: 'mdi:password-outline',
       })
     },

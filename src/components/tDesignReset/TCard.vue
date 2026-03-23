@@ -86,6 +86,10 @@ function compoRef(instance: any) {
 }
 
 :deep() {
+  .t-card__title {
+    line-height: 32px;
+  }
+
   .t-card__header {
     align-items: flex-start;
   }
