@@ -4,6 +4,7 @@
 /* eslint-disable ts/no-unsafe-assignment */
 import type { DialogInstance } from 'tdesign-vue-next'
 import { ChatMarkdown } from '@tdesign-vue-next/chat'
+import TForm from '../components/tDesignReset/TForm.vue'
 import CommentDetail from './components/commentDetail/Index.vue'
 import FillOriginalUrl from './components/FillOriginalUrl.vue'
 
@@ -19,7 +20,7 @@ export function addFollow(arr: Array<Record<string, any>>): void {
 
   void $confirm({
     body: () =>
-      h(resolveComponent('TForm') as Component<FormProps>, {
+      h(TForm, {
         items: [
           reactive({
             _label: '关注组',
@@ -167,7 +168,7 @@ export async function updateDealMark(arr: Array<Record<string, any>>): Promise<v
   return new Promise((resolve) => {
     void $confirm({
       body: () =>
-        h(resolveComponent('TForm') as Component<FormProps>, {
+        h(TForm, {
           data: reactive({
             dealMark: dealMarkArr.length === 1 ? dealMarkArr[0] : '',
           }),

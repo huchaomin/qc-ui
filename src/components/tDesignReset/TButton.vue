@@ -133,7 +133,7 @@ const buttonBindProps = computed(() => {
 //   return {
 //     ...(autoIcon.value
 //       ? {
-//           icon: () => h(resolveComponent('Icon'), { icon: autoIcon.value }),
+//           icon: () => h(Icon, { icon: autoIcon.value }),
 //         }
 //       : {}),
 //     ...slots,

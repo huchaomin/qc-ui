@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import type { GlobalConfigProvider } from 'tdesign-vue-next'
+import Icon from './components/autoImport/Icon.vue'
+import TButton from './components/tDesignReset/TButton.vue'
 
 const globalConfig: GlobalConfigProvider = {
   table: {
     treeExpandAndFoldIcon: (h, { type }) => {
-      const button = resolveComponent('TButton')
-      const icon = resolveComponent('Icon')
-
       return h(
-        button,
+        TButton,
         {
           shape: 'circle',
           variant: 'text',
         },
         {
           icon: () =>
-            h(icon, {
+            h(Icon, {
               icon: `line-md:chevron-${type === 'expand' ? 'right' : 'down'}`,
             }),
         },
