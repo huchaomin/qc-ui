@@ -1,61 +1,4 @@
 <script setup lang="ts">
-const pageListRef = useTemplateRef('pageListRef')
-// return [
-//     {
-//       model: 'data',
-//       props: {
-//         label: '记录数据',
-//       },
-//     },
-//     {
-//       model: 'ticket',
-//       props: {
-//         label: '微博拉取ticket',
-//       },
-//     },
-//     {
-//       model: 'contentId',
-//       props: {
-//         label: '内容id',
-//       },
-//     },
-//     {
-//       model: 'status',
-//       props: {
-//         label: '状态',
-//         options: $dicStore('wb_status').value,
-//       },
-//       component: 'CRadio',
-//     },
-//     {
-//       model: 'errorMsg',
-//       props: {
-//         label: '错误信息',
-//       },
-//     },
-//     {
-//       model: 'ticketType',
-//       props: {
-//         label: '标识类型',
-//         options: $dicStore('data_type').value,
-//       },
-//       component: 'CSelect',
-//     },
-//     {
-//       model: 'dataTicket',
-//       props: {
-//         label: '数据ticket',
-//       },
-//     },
-//     {
-//       model: 'brandId',
-//       props: {
-//         label: '品牌',
-//         options: brandOptions.value,
-//       },
-//       component: 'CSelect',
-//     },
-//   ]
 const formItemMap = {
   brandId: {
     _label: '品牌id',
@@ -112,8 +55,12 @@ const config: PageListProps = {
           params: {
             ...o,
             createTime: undefined,
-            createTimeEnd: o.createTime[1] ?? '',
-            createTimeStart: o.createTime[0] ?? '',
+            createTimeEnd: o.createTime[1]
+              ? dayjs(o.createTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
+              : '',
+            createTimeStart: o.createTime[0]
+              ? dayjs(o.createTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
+              : '',
           },
         })
       },
@@ -198,5 +145,5 @@ const config: PageListProps = {
 </script>
 
 <template>
-  <PageList ref="pageListRef" v-bind="config"></PageList>
+  <PageList v-bind="config"></PageList>
 </template>
