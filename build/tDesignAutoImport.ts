@@ -25,8 +25,9 @@ export default (
         }),
         ...otherNeedAutoImportNames.map((name) => {
           const sliceName = name.slice(1)
+          const realName = sliceName === 'TypographyText' ? 'Text' : sliceName
 
-          return [sliceName, name] as [string, string]
+          return [realName, name] as [string, string]
         }),
       ],
     },

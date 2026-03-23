@@ -28,10 +28,10 @@ import _TDesign, {
   Select as _Select,
   Switch as _Switch,
   TabPanel as _TabPanel,
+  Text as _Text,
   Textarea as _Textarea,
   Tree as _Tree,
   TreeSelect as _TreeSelect,
-  TypographyText as _TypographyText,
   Upload as _Upload,
   // @ts-expect-error 开发环境使用
 } from 'tdesign-vue-next/dist/tdesign.min.js'
@@ -67,7 +67,7 @@ const RangeInput = _RangeInput as (typeof import('tdesign-vue-next'))['RangeInpu
 const Popup = _Popup as (typeof import('tdesign-vue-next'))['Popup']
 const DatePicker = _DatePicker as (typeof import('tdesign-vue-next'))['DatePicker']
 const InputAdornment = _InputAdornment as (typeof import('tdesign-vue-next'))['InputAdornment']
-const TypographyText = _TypographyText as (typeof import('tdesign-vue-next'))['Text']
+const Text = _Text as (typeof import('tdesign-vue-next'))['Text']
 
 export {
   Button,
@@ -97,9 +97,9 @@ export {
   Switch,
   TabPanel,
   TDesign,
+  Text,
   Textarea,
   Tree,
   TreeSelect,
-  TypographyText,
   Upload,
 }
