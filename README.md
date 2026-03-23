@@ -51,9 +51,8 @@
 - 404 页面搞好看一点
 - [封装右键菜单](https://github.com/CyberNika/v-contextmenu/blob/main/src/directive.ts)
 - 怎么给 page 添加 lazy-view loading
-- 定义refresh page store
-- 上传用户图片
 - 引入自定义字体
+- 上传用户图片
 - 600 现在是不管成功和失败，都弹窗，需要优化
 - admin 用户登录 判断哪些菜单生成了却没有被用到
 - z-vue-scan
@@ -66,17 +65,11 @@
 - vue-skills
 - [https://juejin.cn/post/7263810695459438653]
 - (泛型的联合类型分发)[https://juejin.cn/post/7228833037743915067#heading-18]
-- useList 去除缓存 拆开
 - TDESIGN 错误邮箱提示语
-- useList 没有刷新
 - FormItem 类型问题
-- hooks 一部分清理到 bus, bus 的eslint 有问题
 - $fileView
-- 进入登陆页面，关闭所有弹窗
 - 头部菜单导航
-- cron 表达式
 - 添加视频插件
-- [Violation] Forced reflow while executing JavaScript 用时 <N> 毫秒
 - v-memo
 - 右键菜单
 - 左侧菜单 active 展开
@@ -84,7 +77,14 @@
 - 组件提示消失
 - svg 文件格式化
 - 开发 （使用adornment）numberRange 小数
+- [Violation] Forced reflow while executing JavaScript 用时 <N> 毫秒
+- hooks 一部分清理到 bus, bus 的eslint 有问题
+- cron 表达式
+- useList 去除缓存 拆开
+- 进入登陆页面，关闭所有弹窗
 - systemUserDeptTree 从 useList中去掉
+- tdatePicker 没有改变值也触发了 change 事件
+- markdown 渲染字体文件
 
 
 ## todo 项目对比
@@ -97,8 +97,7 @@
 - 删除 字典数据 这个菜单
 - 删除 用户管理-分配角色 这个菜单
 - 删除 角色管理-分配用户 这个菜单
-- 添加 角色权限范围 role_data_scope 这个字典
-- 菜单表 图标字段 视频内容详情 图文内容详情 关注管理（可以缓存）
+- 菜单表 图标字段
 - 菜单表 查看、新增、编辑智能体 agentMgr/agentDetail/index
 
 ### 分析包大小

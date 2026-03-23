@@ -195,6 +195,9 @@ const chatServiceConfig: ChatServiceConfig = {
         question: prompt,
         sessionId: sessionId.value,
       }),
+      headers: {
+        Authorization: useLoginStore().token,
+      },
     }
   },
   stream: true,
