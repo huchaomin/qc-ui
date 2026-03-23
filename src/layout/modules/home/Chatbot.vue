@@ -133,18 +133,13 @@ const messageProps: TdChatMessageConfig = reactive({
 const senderProps = computed(() => ({
   placeholder: '请输入内容，如:分析塞力斯公司、产品的现状',
 }))
-const reportMsg = ref('')
-const reportTheme = ref<'error' | 'loading' | 'success'>('loading')
 // 聊天服务配置
 const chatServiceConfig: ChatServiceConfig = {
   // 对话服务地址
   endpoint: `${location.origin}/yq-ai/agent/call`,
   // 流式对话过程中用户主动结束对话业务自定义行为
   onAbort: async () => {},
-  onComplete: () => {
-    reportMsg.value = ''
-    reportTheme.value = 'loading'
-  },
+  onComplete: () => {},
   // 流式对话结束（aborted为true时，表示用户主动结束对话，params为请求参数）
   // onComplete: (aborted, params) => {
   //   console.log('onComplete', aborted, params)
@@ -166,17 +161,32 @@ const chatServiceConfig: ChatServiceConfig = {
           type: 'markdown',
         }
       case 'report_complete':
-        reportMsg.value = '报告生成完成'
-        reportTheme.value = 'success'
-        return null
+        return {
+          data: {
+            text: data.message,
+            title: '报告生成完成',
+          },
+          status: 'complete',
+          type: 'thinking',
+        }
       case 'report_error':
-        reportMsg.value = '报告生成失败'
-        reportTheme.value = 'error'
-        return null
+        return {
+          data: {
+            text: data.message,
+            title: '报告生成失败',
+          },
+          status: 'error',
+          type: 'thinking',
+        }
       case 'report_step':
-        reportMsg.value = data.message
-        reportTheme.value = 'loading'
-        return null
+        return {
+          data: {
+            text: data.message,
+            title: '正在生成报告...',
+          },
+          status: 'streaming',
+          type: 'thinking',
+        }
       case 'session_created':
         currentGeneratedSessionId = data
         sessionId.value = data
@@ -204,7 +214,7 @@ const chatServiceConfig: ChatServiceConfig = {
 }
 
 function handleRegenerate(): void {
-  chatRef.value?.regenerate()
+  chatRef.value!.regenerate()
 }
 
 const { copy } = useClipboard({
@@ -216,6 +226,11 @@ async function handleCopy(data: any): Promise<void> {
   $msg('复制成功')
 }
 
+onMounted(() => {
+  chatRef.value!.registerMergeStrategy('thinking', (chunk: AIMessageContent) => {
+    return chunk
+  })
+})
 defineExpose({
   setMessageList,
 })
@@ -223,14 +238,6 @@ defineExpose({
 
 <template>
   <div v-loading="loading" class="chatbot_wrapper h-full overflow-y-auto bg-[#fff] p-4">
-    <Teleport v-if="reportMsg !== ''" to="#app">
-      <TMessage
-        class="absolute! top-[50%] left-[50%] z-[calc(Infinity)] translate-x-[-50%] translate-y-[-50%]"
-        :theme="reportTheme"
-        :duration="0"
-        >{{ reportMsg }}</TMessage
-      >
-    </Teleport>
     <TChatbot
       ref="chatRef"
       :default-messages="defaultMessages"

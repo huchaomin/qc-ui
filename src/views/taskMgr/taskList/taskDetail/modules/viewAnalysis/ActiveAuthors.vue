@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import type { OptionType } from '@/plugins/echarts'
 import VChart from '@/plugins/echarts'
 import { saveAs } from '@/utils/tool'

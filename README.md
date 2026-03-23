@@ -84,7 +84,7 @@
 - 进入登陆页面，关闭所有弹窗
 - systemUserDeptTree 从 useList中去掉
 - tdatePicker 没有改变值也触发了 change 事件
-- markdown 渲染字体文件
+- markdown 渲染字体文件 regenerrarter 按钮
 
 
 ## todo 项目对比
