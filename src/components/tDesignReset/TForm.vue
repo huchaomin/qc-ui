@@ -26,6 +26,20 @@ import type { TreeSelectProps } from './TTreeSelect.vue'
 import type { UploadProps } from './TUpload.vue'
 import type { CronProps } from '@/components/autoImport/Cron.vue'
 import { mergeProps } from 'vue'
+import TCheckbox from './TCheckbox.vue'
+import TCheckboxGroup from './TCheckboxGroup.vue'
+import TDatePicker from './TDatePicker.vue'
+import TDateRangePicker from './TDateRangePicker.vue'
+import TInput from './TInput.vue'
+import TInputNumber from './TInputNumber.vue'
+import TRadioGroup from './TRadioGroup.vue'
+import TRangeInput from './TRangeInput.vue'
+import TSelect from './TSelect.vue'
+import TSwitch from './TSwitch.vue'
+import TTextarea from './TTextarea.vue'
+import TTree from './TTree.vue'
+import TTreeSelect from './TTreeSelect.vue'
+import TUpload from './TUpload.vue'
 
 export const formPropsInit = {
   autoLabelWidth: true,
@@ -223,20 +237,20 @@ watch(
 
 const asyncComponentCache = new Map<string, Component>()
 const componentMapInReset = {
-  TCheckbox: resolveComponent('TCheckbox'),
-  TCheckboxGroup: resolveComponent('TCheckboxGroup'),
-  TDatePicker: resolveComponent('TDatePicker'),
-  TDateRangePicker: resolveComponent('TDateRangePicker'),
-  TInput: resolveComponent('TInput'),
-  TInputNumber: resolveComponent('TInputNumber'),
-  TRadioGroup: resolveComponent('TRadioGroup'),
-  TRangeInput: resolveComponent('TRangeInput'),
-  TSelect: resolveComponent('TSelect'),
-  TSwitch: resolveComponent('TSwitch'),
-  TTextarea: resolveComponent('TTextarea'),
-  TTree: resolveComponent('TTree'),
-  TTreeSelect: resolveComponent('TTreeSelect'),
-  TUpload: resolveComponent('TUpload'),
+  TCheckbox,
+  TCheckboxGroup,
+  TDatePicker,
+  TDateRangePicker,
+  TInput,
+  TInputNumber,
+  TRadioGroup,
+  TRangeInput,
+  TSelect,
+  TSwitch,
+  TTextarea,
+  TTree,
+  TTreeSelect,
+  TUpload,
 }
 
 function getComponent(compo: string | undefined): Component {
@@ -252,10 +266,10 @@ function getComponent(compo: string | undefined): Component {
       return asyncComponentCache.get(compo)!
     }
 
-    return componentMapInReset[compo as keyof typeof componentMapInReset] as Component
+    return componentMapInReset[compo as keyof typeof componentMapInReset]
   }
 
-  return resolveComponent('TInput') as Component
+  return TInput
 }
 
 function getComponentProps(item: _FormItem): Record<string, any> {
