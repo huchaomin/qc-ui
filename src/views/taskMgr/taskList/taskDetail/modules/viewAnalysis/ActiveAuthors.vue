@@ -258,12 +258,7 @@ const platformOptions = computed(() => {
       label: '所有',
       value: 'all',
     },
-    ...useDicOptions('platform').value.map((item) => {
-      return {
-        label: item.label,
-        value: item.label,
-      }
-    }),
+    ...useDicOptions('platform').value,
   ]
 })
 </script>
