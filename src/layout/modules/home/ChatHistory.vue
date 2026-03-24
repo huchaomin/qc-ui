@@ -139,7 +139,7 @@ function handleNewConversation() {
     <div class="px-4">
       <div class="mt-8 mb-4 flex items-center justify-center">
         <TAvatar :image="robotOutlineUrl"></TAvatar>
-        <TTypographyTitle level="h4" class="my-0! ml-3!">炽瞳品牌助手Agent</TTypographyTitle>
+        <TTypographyTitle level="h4" class="my-0! ml-3!">环智品牌助手Agent</TTypographyTitle>
       </div>
       <TTypographyTitle level="h6" class="mb-4! text-center text-(--td-text-color-placeholder)!"
         >数据驱动，品牌赋能</TTypographyTitle
