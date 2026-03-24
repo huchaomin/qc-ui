@@ -79,9 +79,17 @@ export function useDicLabel(
     }
 
     if (Array.isArray(value)) {
+      if (arr.value.length === 0) {
+        return []
+      }
+
       return value.map(
         (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? '',
       )
+    }
+
+    if (arr.value.length === 0) {
+      return ''
     }
 
     if (typeof value === 'string') {
@@ -89,13 +97,13 @@ export function useDicLabel(
 
       if (splitArr.length > 0) {
         return splitArr
-          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? '')
+          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? value)
           .filter(Boolean)
           .join(',')
       }
     }
 
-    return arr.value.find((item) => String(item.value) === String(value))?.label ?? ''
+    return arr.value.find((item) => String(item.value) === String(value))?.label ?? value
   })
 }
 export function useDicOptions(code: string, includeArr?: string[]) {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import type { OptionType } from '@/plugins/echarts'
 import slider from 'img/slider.png?url'
 import VChart from '@/plugins/echarts'
@@ -69,15 +70,15 @@ const chartData = computed(() => {
   } as const
 
   while (
-    dayjs(timeArr[timeArr.length - 1])
+    dayjs(timeArr.at(-1))
       .add(
         addMap[chartDataType.value as keyof typeof addMap][0],
         addMap[chartDataType.value as keyof typeof addMap][1],
       )
-      .isSameOrBefore(dayjs(sortAll[sortAll.length - 1].dateTime))
+      .isSameOrBefore(dayjs(sortAll.at(-1).dateTime))
   ) {
     timeArr.push(
-      dayjs(timeArr[timeArr.length - 1])
+      dayjs(timeArr.at(-1))
         .add(
           addMap[chartDataType.value as keyof typeof addMap][0],
           addMap[chartDataType.value as keyof typeof addMap][1],
@@ -115,7 +116,7 @@ const chartData = computed(() => {
           data,
           index: -1,
           name: '所有平台',
-          symbol: symbolArr[symbolArr.length - 1],
+          symbol: symbolArr.at(-1),
         })
       } else {
         obj.series.push({

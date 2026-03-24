@@ -54,9 +54,13 @@ const cellValue = computed(() => {
 const label = computed(() => {
   const options = typeof props.options === 'string' ? useList(props.options).value : props.options
 
+  if (options.length === 0) {
+    return ''
+  }
+
   return cellValue.value
     .map(
-      (item) => options.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? '',
+      (item) => options.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? item,
     )
     .filter(Boolean)
     .join(props.splitSymbol)

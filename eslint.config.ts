@@ -132,6 +132,12 @@ export default antfu(
   },
   {
     rules: {
+      'e18e/ban-dependencies': [
+        'error',
+        {
+          allowed: ['crypto-js'],
+        },
+      ],
       'e18e/prefer-static-regex': 'off',
       'no-console': 'off',
     },
