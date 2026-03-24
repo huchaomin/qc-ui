@@ -9,4 +9,9 @@ function resolvePath(p: string): string {
   return path.resolve(process.cwd(), p)
 }
 
-export { needPort, resolvePath }
+// https://you-dont-need.github.io/You-Dont-Need-Lodash-Underscore/#/?id=_upperfirst
+function upperFirst(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+export { needPort, resolvePath, upperFirst }

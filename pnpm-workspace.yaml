@@ -1,0 +1,21 @@
+shellEmulator: true
+
+# eslint-disable-next-line pnpm/yaml-enforce-settings
+trustPolicy: audit
+
+packages:
+  - 'projects/*'
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - cwebp-bin
+  - esbuild
+  - gifsicle
+  - jpegtran-bin
+  - mozjpeg
+  - optipng-bin
+  - pngquant-bin
+  - unrs-resolver
+  - vite-plugin-vue-tailwind-auto-reference
+peerDependencyRules:
+  ignoreMissing:
+    - '@typescript-eslint/rule-tester'

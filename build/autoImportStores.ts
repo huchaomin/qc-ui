@@ -1,6 +1,6 @@
 import path from 'node:path'
-import fg from 'fast-glob'
-import _ from 'lodash'
+import { globSync } from 'tinyglobby'
+import { upperFirst } from './utils/index.ts'
 
 const piniaStoreKeys: string[] = []
 // function fileRecursion(filePath :string) :void {
@@ -19,7 +19,7 @@ const piniaStoreKeys: string[] = []
 //   });
 // }
 // fileRecursion(resolvePath(__dirname, '../src/store/modules'));
-const files = fg.globSync('src/store/modules/*.ts') // 当前工作目录为根目录
+const files = globSync('src/store/modules/*.ts') // 当前工作目录为根目录
 
 files.forEach((p) => {
   piniaStoreKeys.push(path.basename(p, '.ts'))
@@ -28,7 +28,7 @@ files.forEach((p) => {
 const customerImport: Record<string, [string, string][]> = {}
 
 piniaStoreKeys.forEach((key) => {
-  customerImport[`@/store/modules/${key}`] = [['default', `use${_.upperFirst(key)}Store`]]
+  customerImport[`@/store/modules/${key}`] = [['default', `use${upperFirst(key)}Store`]]
 })
 
 export default customerImport
