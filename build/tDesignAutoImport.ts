@@ -16,7 +16,6 @@ export default (
         'LoadingPlugin',
         'MessagePlugin',
         'NotifyPlugin',
-        'Message',
         ...tDesignResetComponentsName.map((name) => {
           const sliceName = name.slice(1)
           const realName = sliceName === 'Table' ? 'EnhancedTable' : sliceName

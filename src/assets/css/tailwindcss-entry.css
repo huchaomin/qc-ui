@@ -9,4 +9,12 @@
   /* 自定义变量 */
 
   /* --color-primary: var(--td-brand-color-active); */
+
+  /* 同tdesign 保持一致 */
+  --breakpoint-xs: 20rem;
+  --breakpoint-sm: 48rem;
+  --breakpoint-md: 62rem;
+  --breakpoint-lg: 75rem;
+  --breakpoint-xl: 87.5rem;
+  --breakpoint-2xl: 117.5rem;
 }

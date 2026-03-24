@@ -284,6 +284,7 @@ watch(
   },
 )
 
+const isMdScreen = useMQ().isMd
 /**
  * @description: ellipsis width ellipsisTitle fixed
  * @description: className 添加 class
@@ -305,7 +306,9 @@ const columns = computed<FinallyTableCol[]>(() => {
       return {
         ellipsis: true,
         ellipsisTitle: true,
-        fixed: column.fixed ?? (column.colKey === '_operation' ? ('right' as const) : undefined),
+        fixed: isMdScreen.value
+          ? undefined
+          : (column.fixed ?? (column.colKey === '_operation' ? ('right' as const) : undefined)),
         stopPropagation: true,
         ...column,
         attrs: (context: CellData<TableRowData>) => {

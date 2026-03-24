@@ -99,5 +99,11 @@ function compoRef(instance: any) {
       padding-bottom: 0;
     }
   }
+
+  .t-card__actions {
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+  }
 }
 </style>

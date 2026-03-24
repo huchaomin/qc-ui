@@ -30,7 +30,7 @@ class LoadingService {
               return null
             }
 
-            return h(Message, {
+            return h(TMessage, {
               content: this.loadingText.value,
               duration: 0,
               theme: 'loading',
@@ -54,8 +54,10 @@ class LoadingService {
   }
 
   hide() {
-    this.loadingCount--
-    this.changeView()
+    setTimeout(() => {
+      this.loadingCount--
+      this.changeView()
+    }, 80)
   }
 
   show(text?: LoadingText) {
