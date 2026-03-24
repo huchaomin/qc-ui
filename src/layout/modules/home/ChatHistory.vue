@@ -142,7 +142,7 @@ function handleNewConversation() {
         <TTypographyTitle level="h4" class="my-0! ml-3!">炽瞳品牌助手Agent</TTypographyTitle>
       </div>
       <TTypographyTitle level="h6" class="mb-4! text-center text-(--td-text-color-placeholder)!"
-        >这里暂时留出来，需要一句产品的Slogan</TTypographyTitle
+        >数据驱动，品牌赋能</TTypographyTitle
       >
       <TButton
         block

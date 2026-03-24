@@ -131,7 +131,7 @@ const messageProps: TdChatMessageConfig = reactive({
   },
 })
 const senderProps = computed(() => ({
-  placeholder: '请输入内容，如:分析塞力斯公司、产品的现状',
+  placeholder: '请输入内容，如:分析赛力斯公司、产品的现状',
 }))
 // 聊天服务配置
 const chatServiceConfig: ChatServiceConfig = {
