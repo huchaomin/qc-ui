@@ -41,39 +41,6 @@ function bypass(
   }
 }
 
-function tDesignResolver() {
-  return {
-    resolve: (name: string) => {
-      if (
-        [
-          ...tDesignResetComponentsName,
-          'TBaseTable',
-          'TEnhancedTable',
-          'TIcon',
-          'TPrimaryTable',
-        ].includes(name)
-      ) {
-        return
-      }
-
-      return (
-        TDesignResolver({
-          library: 'vue-next',
-          resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
-        }) as {
-          resolve: (name: string) =>
-            | undefined
-            | {
-                from: string
-                name: string
-              }
-        }
-      ).resolve(name)
-    },
-    type: 'component' as const,
-  }
-}
-
 // https://vite.dev/config/
 export default defineConfig(({ command, mode }) => {
   const envDir = resolvePath('build/env')
@@ -247,23 +214,7 @@ export default defineConfig(({ command, mode }) => {
           },
           autoImportStoreList,
         ],
-        resolvers: [
-          ...(isProduction
-            ? [
-                tDesignResolver(),
-
-                (componentName: string) => {
-                  if (tDesignResetComponentsName.includes(componentName)) {
-                    return {
-                      from: `@/components/tDesignReset/${componentName}.vue`,
-                      name: 'default',
-                    }
-                  }
-                },
-              ]
-            : []),
-        ],
-        vueTemplate: true,
+        vueTemplate: true, // 允许插件扫描 Vue 文件的 <template> 部分，并自动导入在模板表达式中使用的 API
       }),
       Components({
         deep: false,
@@ -273,7 +224,36 @@ export default defineConfig(({ command, mode }) => {
         resolvers: [
           ...(isProduction
             ? [
-                tDesignResolver(),
+                {
+                  resolve: (name: string) => {
+                    if (
+                      [
+                        ...tDesignResetComponentsName,
+                        'TBaseTable',
+                        'TEnhancedTable',
+                        'TIcon',
+                        'TPrimaryTable',
+                      ].includes(name)
+                    ) {
+                      return
+                    }
+
+                    return (
+                      TDesignResolver({
+                        library: 'vue-next',
+                        resolveIcons: false, // 禁用 https://tdesign.tencent.com/icons  TDesign 图标独立站点 的图标
+                      }) as {
+                        resolve: (name: string) =>
+                          | undefined
+                          | {
+                              from: string
+                              name: string
+                            }
+                      }
+                    ).resolve(name)
+                  },
+                  type: 'component' as const,
+                },
 
                 (componentName: string) => {
                   if (tDesignResetComponentsName.includes(componentName)) {

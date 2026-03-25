@@ -60,7 +60,7 @@ export default defineStore(
         if (pre !== undefined) {
           void router.push(pre)
         } else {
-          void router.push(recentRouters.value[currentIndex + 1]!)
+          void router.push(recentRouters.value[currentIndex + 1])
         }
       }
 

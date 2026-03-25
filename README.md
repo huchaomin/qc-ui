@@ -70,6 +70,8 @@
 - $fileView
 - 头部菜单导航
 - 添加视频插件
+- markdown 渲染字体文件 regenerrarter 按钮
+- Cannot read properties of undefined (reading 'messageIds')
 - v-memo
 - 右键菜单
 - 左侧菜单 active 展开
@@ -85,7 +87,7 @@
 - 进入登陆页面，关闭所有弹窗
 - systemUserDeptTree 从 useList中去掉
 - tdatePicker 没有改变值也触发了 change 事件
-- markdown 渲染字体文件 regenerrarter 按钮
+- 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
 
 
 ## todo 项目对比
@@ -99,6 +101,7 @@
 - 删除 用户管理-分配角色 这个菜单
 - 删除 角色管理-分配用户 这个菜单
 - 菜单表 图标字段
+- 添加 角色权限范围 role_data_scope 这个字典
 - 菜单表 查看、新增、编辑智能体 agentMgr/agentDetail/index
 
 ### 分析包大小
