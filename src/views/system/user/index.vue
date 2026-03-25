@@ -528,7 +528,7 @@ const config: PageListProps = {
             const formData = await formRef.value!.validate()
 
             await alovaInst.Post(
-              'system/user/importTemplate',
+              'system/user/importData',
               {
                 file: formData.file[0].raw,
               },
