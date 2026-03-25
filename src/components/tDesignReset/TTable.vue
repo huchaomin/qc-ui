@@ -13,6 +13,7 @@ import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
 import { getCellRender } from '@/plugins/tableRenders/cell'
 
 export const tablePropsInit = {
+  attach: 'body',
   bordered: true,
   checkSelectedOnDataChange: true,
   disableDataPage: true,
@@ -26,7 +27,7 @@ export const tablePropsInit = {
   scroll: () => ({
     isFixedRowHeight: true,
     rowHeight: 45,
-    threshold: 500,
+    threshold: 90,
     type: 'virtual' as const,
   }),
   selectOnRowClick: true,
@@ -104,7 +105,10 @@ export type TableCol = {
    * @description: 列的宽度，宽度充裕时实际渲染的将比这个值大，可以看作列的最小宽度
    */
   width?: number
-} & Omit<_TableCol<TableRowData>, 'cell' | 'colKey' | 'render' | 'resize' | 'width'>
+} & Omit<
+  _TableCol<TableRowData>,
+  'cell' | 'colKey' | 'ellipsis' | 'ellipsisTitle' | 'render' | 'resize' | 'width'
+>
 export type TableProps = {
   /**
    * @description: 数据变化时是否检查选中状态，默认 true
@@ -239,8 +243,8 @@ const finallyData = computed<TableRowData[]>(() => {
 })
 const _columnWidths = ref<Record<string, number>>({})
 const columnWidths = refDebounced(_columnWidths, 600)
-const columnMinWidths = reactive<Record<string, number>>({})
-const columnMaxWidths = reactive<Record<string, number>>({})
+const columnMinWidths: Record<string, number> = {}
+const columnMaxWidths: Record<string, number> = {}
 const columnConfigShows = ref<string[]>([])
 const columnConfigOptions = computed(() => {
   return _columns.value
@@ -286,7 +290,6 @@ watch(
 
 const isMdScreen = useMQ().isMd
 /**
- * @description: ellipsis width ellipsisTitle fixed
  * @description: className 添加 class
  * @description: attrs 添加 style
  * @description: cell 添加 自定义渲染， 函数参数为：{col, colIndex, row, rowIndex} https://tdesign.tencent.com/vue-next/components/table?tab=demo#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%85%83%E6%A0%BC%E7%9A%84%E8%A1%A8%E6%A0%BC
@@ -304,8 +307,14 @@ const columns = computed<FinallyTableCol[]>(() => {
       const resize = getResize(column)
 
       return {
-        ellipsis: true,
-        ellipsisTitle: true,
+        ellipsis: {
+          attach: 'body',
+          theme: 'light',
+        },
+        ellipsisTitle: {
+          attach: 'body',
+          theme: 'light',
+        },
         fixed: isMdScreen.value
           ? undefined
           : (column.fixed ?? (column.colKey === '_operation' ? ('right' as const) : undefined)),
@@ -476,34 +485,42 @@ onMounted(() => {
     tableParentRef,
     (mutations) => {
       mutations.forEach((item) => {
-        const parent =
-          item.target instanceof HTMLElement
-            ? (item.target.closest('td') ?? item.target.closest('th'))
-            : (item.target.parentElement?.closest('td') ?? item.target.parentElement?.closest('th'))
+        const target = item.target
+        let parent: HTMLElement | null = null
 
-        if (parent !== null && parent !== undefined) {
-          const ellipsis = parent.querySelector('.t-table__ellipsis') as HTMLElement | null
+        if (target instanceof HTMLElement) {
+          parent = target.closest('td') ?? target.closest('th')
+        } else if (target.parentElement instanceof HTMLElement) {
+          parent = target.parentElement.closest('td') ?? target.parentElement.closest('th')
+        }
 
-          if (ellipsis !== null) {
-            const key = parent.getAttribute('data-col-key')
+        if (parent === null) {
+          return
+        }
 
-            if (key !== null) {
-              const insertWidth = Math.ceil(
-                Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1,
-              )
-              const finallyInsertWidth = Math.max(
-                Math.min(insertWidth, columnMaxWidths[key]!),
-                columnMinWidths[key]!,
-              )
+        const ellipsis = parent.querySelector('.t-table__ellipsis') as HTMLElement | null
 
-              if (finallyInsertWidth > _columnWidths.value[key]!) {
-                if (finallyInsertWidth <= parent.offsetWidth) {
-                  columnMinWidths[key] = finallyInsertWidth
-                } else {
-                  _columnWidths.value[key] = finallyInsertWidth
-                }
-              }
-            }
+        if (ellipsis === null) {
+          return
+        }
+
+        const key = parent.getAttribute('data-col-key')
+
+        if (key === null) {
+          return
+        }
+
+        const insertWidth = Math.ceil(Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1)
+        const finallyInsertWidth = Math.max(
+          Math.min(insertWidth, columnMaxWidths[key]!),
+          columnMinWidths[key]!,
+        )
+
+        if (finallyInsertWidth > _columnWidths.value[key]!) {
+          if (finallyInsertWidth <= parent.offsetWidth) {
+            columnMinWidths[key] = finallyInsertWidth
+          } else {
+            _columnWidths.value[key] = finallyInsertWidth
           }
         }
       })
@@ -700,6 +717,14 @@ defineExpose(
     right: 10px !important;
   }
 
+  .t-table__affixed-header-elm-wrap {
+    width: calc(100% - 10px) !important;
+
+    > .t-table__affixed-header-elm {
+      width: calc(100% - 1px) !important;
+    }
+  }
+
   /* 调整css,以便计算宽度 */
   .t-table__ellipsis {
     display: inline-block;
@@ -742,35 +767,6 @@ defineExpose(
   }
 
   :deep() {
-    *:has(> * > .t-button > .t-icon-copy),
-    *:has(> * > .t-button > .t-icon-check) {
-      position: relative;
-      padding-right: 26px;
-
-      .t-button {
-        --td-comp-size-m: 22px;
-
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-    }
-
-    .t-tooltip {
-      .t-typography {
-        .t-button {
-          &:has(> .t-icon-copy, > .t-icon-check) {
-            display: none;
-          }
-        }
-      }
-    }
-
-    .t-popup__content:has(> .t-typography) {
-      /* stylelint-disable-next-line custom-property-pattern */
-      padding-right: var(--td-comp-paddingLR-s);
-    }
-
     .t-table__empty {
       position: absolute;
       /* stylelint-disable-next-line value-keyword-case */

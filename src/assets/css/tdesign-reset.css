@@ -276,4 +276,10 @@ body {
     padding: 0;
     background: transparent;
   }
+
+  .t-tooltip {
+    .t-popup__content:has(.no_mw_in_tooltip) {
+      max-width: none;
+    }
+  }
 }
