@@ -131,8 +131,12 @@ const config: PageListProps = {
       title: '品牌',
     },
     {
+      cell: {
+        _component: 'DicLabel',
+        dicCode: 'wx_platform',
+      },
       colKey: 'platform',
-      title: '来源',
+      title: '平台',
     },
     useAuthorNameColumn(),
     {

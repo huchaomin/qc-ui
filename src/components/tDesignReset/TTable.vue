@@ -485,12 +485,12 @@ onMounted(() => {
           const ellipsis = parent.querySelector('.t-table__ellipsis') as HTMLElement | null
 
           if (ellipsis !== null) {
-            const insertWidth = Math.ceil(
-              Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1,
-            )
             const key = parent.getAttribute('data-col-key')
 
             if (key !== null) {
+              const insertWidth = Math.ceil(
+                Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1,
+              )
               const finallyInsertWidth = Math.max(
                 Math.min(insertWidth, columnMaxWidths[key]!),
                 columnMinWidths[key]!,

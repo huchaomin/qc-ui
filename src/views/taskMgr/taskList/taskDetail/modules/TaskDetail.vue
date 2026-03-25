@@ -123,8 +123,12 @@ const config: PageListProps = {
       title: '处理状态',
     },
     {
+      cell: {
+        _component: 'DicLabel',
+        dicCode: 'wx_platform',
+      },
       colKey: 'platform',
-      title: '来源',
+      title: '平台',
     },
     useAuthorNameColumn(),
     {

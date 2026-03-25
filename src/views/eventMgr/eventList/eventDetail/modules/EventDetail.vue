@@ -99,8 +99,12 @@ const config: PageListProps = {
       title: '内容类型',
     },
     {
+      cell: {
+        _component: 'DicLabel',
+        dicCode: 'wx_platform',
+      },
       colKey: 'platform',
-      title: '来源',
+      title: '平台',
     },
     useAuthorNameColumn(),
     {
