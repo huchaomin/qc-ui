@@ -88,6 +88,7 @@
 - systemUserDeptTree 从 useList中去掉
 - tdatePicker 没有改变值也触发了 change 事件
 - 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
+- table tooltip overflow 问题
 
 
 ## todo 项目对比

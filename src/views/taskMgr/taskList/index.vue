@@ -311,7 +311,7 @@ const config: PageListProps = {
                   formRef.value!.setFormData(row, {
                     numberToStringKeys: ['taskType'],
                     override: {
-                      startEndTime: row.taskType === '1' ? [row.startTime, row.endTime] : [],
+                      startEndTime: row.taskType === 1 ? [row.startTime, row.endTime] : [],
                     },
                     splitToArrKeys: ['monitorPhraseIds'],
                   })
