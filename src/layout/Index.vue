@@ -45,6 +45,17 @@ const [contentRef] = useAutoAnimate((el, action) => {
 
   return new KeyframeEffect(el, keyframes, { duration: 400, easing: 'ease-in-out' })
 })
+const contentPadding = computed(() => {
+  if (useMQ().isMd.value) {
+    return {
+      'p-2!': !noMainPadding.value,
+    }
+  }
+
+  return {
+    'p-4!': !noMainPadding.value,
+  }
+})
 </script>
 
 <template>
@@ -54,7 +65,7 @@ const [contentRef] = useAutoAnimate((el, action) => {
       <Header></Header>
       <TContent
         ref="contentRef"
-        :class="{ 'p-4!': !noMainPadding, 'pt-8!': hasBreadcrumb }"
+        :class="{ ...contentPadding, 'pt-8!': hasBreadcrumb }"
         class="relative overflow-x-auto"
       >
         <Breadcrumb ref="breadcrumb"></Breadcrumb>

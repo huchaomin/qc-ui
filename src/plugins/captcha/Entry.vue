@@ -78,7 +78,7 @@ function start(e: MouseEvent | TouchEvent): void {
   const x = getEx(e)
 
   startLeft.value = x - getBarAreaLeft()
-  startMoveTime.value = +new Date() // 开始滑动的时间
+  startMoveTime.value = Date.now() // 开始滑动的时间
   checkState.value = 'doing'
   e.stopPropagation()
 }
@@ -90,7 +90,7 @@ const { send: checkCaptchaSend } = useRequest(checkCaptcha, {
 async function end() {
   if (checkState.value === 'doing') {
     const moveLeftDistance = moveBlockLeft.value
-    const endMoveTime = +new Date()
+    const endMoveTime = Date.now()
     const res = await checkCaptchaSend({
       pointJson: await aesEncrypt(JSON.stringify({ x: moveLeftDistance, y: 5.0 }), secretKey.value),
       token: backToken.value,
@@ -231,7 +231,7 @@ function refresh() {
             'background-color': styleByState.bgColor,
             left: `${moveBlockLeft}px`,
           }"
-          @touchstart="start"
+          @touchstart.prevent="start"
           @mousedown="start"
         >
           <Icon

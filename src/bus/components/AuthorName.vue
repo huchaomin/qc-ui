@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import type { SelectInputProps } from 'tdesign-vue-next'
+import Icon from '@/components/autoImport/Icon.vue'
+import TButton from '@/components/tDesignReset/TButton.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -55,19 +57,16 @@ onSuccess(({ data }) => {
   })
 })
 
-function onOptionClick(item: ListItem) {
-  selectValue.value = item
-  inputValue.value = item.label
-  popupVisible.value = false
-  emit('change', item, formData)
-}
-
 // const onClear: SelectInputProps['onClear'] = () => {
 //   selectValue.value = undefined
 //   inputValue.value = ''
 //   options.value = []
 // }
-const onEnter: SelectInputProps['onEnter'] = () => {
+function onEnter() {
+  if (loading.value) {
+    return
+  }
+
   if (inputValue.value.trim() === '') {
     $msg.error('请输入作者名称')
     return
@@ -78,6 +77,14 @@ const onEnter: SelectInputProps['onEnter'] = () => {
     authorName: inputValue.value,
   })
 }
+
+function onOptionClick(item: ListItem) {
+  selectValue.value = item
+  inputValue.value = item.label
+  popupVisible.value = false
+  emit('change', item, formData)
+}
+
 const onPopupVisibleChange: SelectInputProps['onPopupVisibleChange'] = (val, context) => {
   if (context.trigger === 'trigger-element-click' && options.value.length === 0) {
     return
@@ -95,44 +102,65 @@ const onInputChange: SelectInputProps['onInputChange'] = (val) => {
   options.value = []
   emit('change', null, formData)
 }
+
+function append() {
+  return h(
+    TButton,
+    {
+      class: 'ml-1!',
+      onClick: () => {
+        onEnter()
+      },
+      shape: 'square',
+    },
+    {
+      default: () =>
+        h(Icon, {
+          icon: 'line-md:search',
+        }),
+    },
+  )
+}
 </script>
 
 <template>
-  <TSelectInput
-    :value="inputValue"
-    :input-value="inputValue"
-    :popup-visible="popupVisible && !loading && options.length > 0"
-    :popup-props="{
-      overlayClassName: 't-select__dropdown',
-    }"
-    allow-input
-    placeholder="请输入作者名称按回车键搜索"
-    @enter="onEnter"
-    @popup-visible-change="onPopupVisibleChange"
-    @input-change="onInputChange"
-  >
-    <template #panel>
-      <div class="t-select__dropdown-inner t-select__dropdown-inner--size-m">
-        <ul class="t-select__list">
-          <li
-            v-for="item in options"
-            :key="item.value"
-            class="t-select-option t-size-m"
-            @click="() => onOptionClick(item)"
-          >
-            <span>
-              {{ item.label }}
-            </span>
-          </li>
-        </ul>
-      </div>
-    </template>
-    <template #suffixIcon>
-      <Icon
-        :icon="loading ? 'line-md:loading-twotone-loop' : 'tdesign:chevron-down'"
-        size="16"
-        class="text-(--td-text-color-placeholder)"
-      />
-    </template>
-  </TSelectInput>
+  <TInputAdornment :append="append">
+    <TSelectInput
+      :value="inputValue"
+      :input-value="inputValue"
+      :popup-visible="popupVisible && !loading && options.length > 0"
+      :popup-props="{
+        overlayClassName: 't-select__dropdown',
+      }"
+      allow-input
+      placeholder="按搜索按钮或回车键完成搜索"
+      @enter="onEnter"
+      @popup-visible-change="onPopupVisibleChange"
+      @input-change="onInputChange"
+    >
+      <template #panel>
+        <div class="t-select__dropdown-inner t-select__dropdown-inner--size-m">
+          <ul class="t-select__list">
+            <li
+              v-for="item in options"
+              :key="item.value"
+              class="t-select-option t-size-m"
+              @click="() => onOptionClick(item)"
+            >
+              <span>
+                {{ item.label }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </template>
+      <template #suffixIcon>
+        <Icon
+          :icon="loading ? 'line-md:loading-twotone-loop' : 'tdesign:chevron-down'"
+          size="16"
+          class="text-(--td-text-color-placeholder)"
+        />
+      </template>
+    </TSelectInput>
+  </TInputAdornment>
 </template>

@@ -41,11 +41,13 @@ const logoUrl = Object.values(
 
 .bg_inner {
   width: calc(12% + 860px);
+  max-width: 96%;
   height: 450px;
 }
 
 .login_form_wrapper {
   width: 430px;
+  max-width: 100%;
 }
 
 @media screen and (width <= 1100px) {
