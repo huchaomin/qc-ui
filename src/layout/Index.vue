@@ -50,17 +50,17 @@ const [contentRef] = useAutoAnimate((el, action) => {
 <template>
   <TLayout class="h-full">
     <Aside>Aside</Aside>
-    <TLayout class="!flex-1 overflow-x-auto">
+    <TLayout class="flex-1! overflow-x-auto">
       <Header></Header>
       <TContent
         ref="contentRef"
-        :class="{ '!p-4': !noMainPadding, '!pt-8': hasBreadcrumb }"
-        class="relative"
+        :class="{ 'p-4!': !noMainPadding, 'pt-8!': hasBreadcrumb }"
+        class="relative overflow-x-auto"
       >
         <Breadcrumb ref="breadcrumb"></Breadcrumb>
         <RouterView v-slot="{ Component }">
           <KeepAlive :include="recentRoutersNames" :exclude="excludeKPnameStore.excludeKPname">
-            <Component :is="Component" class="min-h-full"></Component>
+            <Component :is="Component" class="min-h-full" style="min-width: 1200px"></Component>
           </KeepAlive>
         </RouterView>
       </TContent>

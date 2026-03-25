@@ -25,14 +25,14 @@ const value = computed(() => {
 
   return route.name as string
 })
+const width = computed(() => {
+  return commonStore.drawerOpen ? (useMQ().isMd.value ? '175px' : undefined) : '0px'
+})
 </script>
 
 <template>
-  <TAside
-    :width="commonStore.drawerOpen ? undefined : '0px'"
-    class="overflow-hidden border-r border-r-(--td-border-level-2-color)"
-  >
-    <TMenu :value="value" :default-expanded="defaultExpanded">
+  <TAside :width="width" class="overflow-hidden border-r border-r-(--td-border-level-2-color)">
+    <TMenu :value="value" :default-expanded="defaultExpanded" class="w-full!">
       <template #logo>
         <div class="ml-2! flex items-center">
           <TImage :src="logoUrl" class="logo" style="width: 28px; height: 28px"></TImage>
