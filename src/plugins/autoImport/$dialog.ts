@@ -3,6 +3,7 @@ import type { AppContext, Ref } from 'vue'
 
 enum DialogCreateType {
   alert = 'alert',
+  closeAll = 'closeAll',
   confirm = 'confirm',
 }
 
@@ -15,17 +16,24 @@ export type CreateDialogFnType = (
   context?: AppContext,
 ) => DialogInstance
 
-type CreateDialogType = CreateDialogFnType & {
-  [value in DialogCreateType]: CreateDialogFnType
-}
+type CreateDialogType = CreateDialogFnType &
+  Omit<
+    {
+      [value in DialogCreateType]: CreateDialogFnType
+    },
+    'closeAll'
+  > & {
+    closeAll: () => void
+  }
 
 const index = ref(0)
+const dialogs = new Set<DialogInstance>()
 
 /**
  * @description: cancel、escKeydown、closeBtnClick、overlayClick 如果允许弹窗关闭的话，最后都会触发 close 事件
  */
 function create(
-  type: `${DialogCreateType}` | undefined,
+  type: `${Exclude<DialogCreateType, 'closeAll'>}` | undefined,
   _options: Parameters<CreateDialogFnType>[0],
   context: Parameters<CreateDialogFnType>[1],
 ) {
@@ -47,12 +55,14 @@ function create(
   }
   const isCustomDragEnabled = options.draggable === true && options.mode === 'modal'
   const id = `${isCustomDragEnabled ? 'drag' : 'normal'}-dialog-${++index.value}`
+  let instance: DialogInstance | undefined
   const obj = {
     ...options,
     id,
     onClosed: () => {
       options.onClosed?.()
       el.value = null
+      dialogs.delete(instance!)
     },
     onOpened: () => {
       options.onOpened?.()
@@ -114,11 +124,9 @@ function create(
     },
   }
 
-  if (type === undefined) {
-    return DialogPlugin(obj, context)
-  }
-
-  return DialogPlugin[type](obj, context)
+  instance = type === undefined ? DialogPlugin(obj, context) : DialogPlugin[type](obj, context)
+  dialogs.add(instance)
+  return instance
 }
 
 const createDialog: CreateDialogType = function (...arg) {
@@ -126,8 +134,16 @@ const createDialog: CreateDialogType = function (...arg) {
 } as CreateDialogType
 
 Object.values(DialogCreateType).forEach((type) => {
-  createDialog[type] = (...arg) => {
-    return create(type, ...arg)
+  if (type === 'closeAll') {
+    createDialog[type] = () => {
+      dialogs.forEach((dialog) => {
+        dialog.hide()
+      })
+    }
+  } else {
+    createDialog[type] = (...arg) => {
+      return create(type, ...arg)
+    }
   }
 })
 
