@@ -8,11 +8,16 @@ enum DialogCreateType {
 }
 
 export type CreateDialogFnType = (
-  options: Omit<DialogOptions, 'default' | 'onConfirm'> & {
-    onConfirm?:
-      | ((...args: Parameters<NonNullable<DialogOptions['onConfirm']>>) => Promise<void>)
-      | DialogOptions['onConfirm']
-  },
+  options: {
+    /**
+     * @description: 关闭所有的时候是不是也关闭这个弹窗
+     */
+    closeWhenCloseAll?: boolean
+  } & Omit<DialogOptions, 'default' | 'onConfirm'> & {
+      onConfirm?:
+        | ((...args: Parameters<NonNullable<DialogOptions['onConfirm']>>) => Promise<void>)
+        | DialogOptions['onConfirm']
+    },
   context?: AppContext,
 ) => DialogInstance
 
@@ -44,6 +49,7 @@ function create(
   const options = {
     closeOnEscKeydown: false,
     closeOnOverlayClick: false,
+    closeWhenCloseAll: true,
     destroyOnClose: true,
     draggable: true,
     header: '提示',
@@ -125,7 +131,11 @@ function create(
   }
 
   instance = type === undefined ? DialogPlugin(obj, context) : DialogPlugin[type](obj, context)
-  dialogs.add(instance)
+
+  if (options.closeWhenCloseAll) {
+    dialogs.add(instance)
+  }
+
   return instance
 }
 

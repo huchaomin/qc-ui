@@ -85,6 +85,8 @@ export default defineStore(
                   showFooter: false,
                 }),
               cancelBtn: null,
+              closeBtn: false,
+              closeWhenCloseAll: false,
               header: '请修改密码',
               onConfirmCallback: async () => {
                 await resetPwdRef.value!.handleSubmit()
