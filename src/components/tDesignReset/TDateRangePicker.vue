@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import type {
   DateRangePickerProps as _DateRangePickerProps,
+  DateRangePickerPartial,
   DateRangeValue,
+  PopupProps,
   PresetRange,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
@@ -14,8 +16,7 @@ const props = withDefaults(defineProps<DateRangePickerProps>(), {
   clearable: true,
   disabled: undefined,
   firstDayOfWeek: 7,
-  needConfirm: false,
-  panelPreselection: true,
+  needConfirm: true,
   presets: () =>
     ({
       上一个月: [
@@ -41,6 +42,8 @@ export type DateRangePickerProps = Omit<
 }
 
 type OnChangeParams = Parameters<NonNullable<_DateRangePickerProps['onChange']>>
+type OnConfirmParams = Parameters<NonNullable<_DateRangePickerProps['onConfirm']>>
+type OnPopupVisibleChangeParams = Parameters<NonNullable<PopupProps['onVisibleChange']>>
 
 const otherProps = computed(() => {
   const obj: Partial<DateRangePickerProps> = {
@@ -62,6 +65,9 @@ function compoRef(instance: any) {
 
   vm.exposed = exposed
 }
+
+const hasConfirm = ref(false)
+const partialArr = ref<DateRangePickerPartial[]>([])
 </script>
 
 <template>
@@ -72,8 +78,28 @@ function compoRef(instance: any) {
         mergeProps($attrs, {
           ...otherProps,
           onChange: (...args: OnChangeParams) => {
-            emit('update:modelValue', args[0])
-            props.onChange?.(...args)
+            if ((partialArr.length === 2 && hasConfirm) || !hasConfirm) {
+              emit('update:modelValue', args[0])
+              otherProps.onChange?.(...args)
+            }
+          },
+          onConfirm: (...args: OnConfirmParams) => {
+            hasConfirm = true
+            const partial = args[0].partial
+            if (!partialArr.includes(partial)) {
+              partialArr.push(partial)
+            }
+            otherProps.onConfirm?.(...args)
+          },
+          popupProps: {
+            ...(otherProps.popupProps ?? {}),
+            onVisibleChange: (...args: OnPopupVisibleChangeParams) => {
+              if (args[0]) {
+                hasConfirm = false
+                partialArr = []
+              }
+              otherProps.popupProps?.onVisibleChange?.(...args)
+            },
           },
           ref: compoRef,
         }),

@@ -80,15 +80,14 @@
 - svg 文件格式化
 - 注册FormItems
 - 开发 （使用adornment）numberRange 小数
-- [Violation] Forced reflow while executing JavaScript 用时 <N> 毫秒
 - hooks 一部分清理到 bus, bus 的eslint 有问题
 - cron 表达式
 - useList 去除缓存 拆开
 - 进入登陆页面，关闭所有弹窗
-- systemUserDeptTree 从 useList中去掉
 - tdatePicker 没有改变值也触发了 change 事件
+- TDateRangePicker popupProps?.onVisibleChange 关闭时没有触发
 - 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
-- table tooltip overflow 问题
+- systemUserDeptTree 从 useList中去掉
 
 
 ## todo 项目对比
