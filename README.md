@@ -87,7 +87,6 @@
 - tdatePicker 没有改变值也触发了 change 事件
 - TDateRangePicker popupProps?.onVisibleChange 关闭时没有触发
 - 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
-- systemUserDeptTree 从 useList中去掉
 
 
 ## todo 项目对比
@@ -103,6 +102,7 @@
 - 菜单表 图标字段
 - 添加 角色权限范围 role_data_scope 这个字典
 - 菜单表 查看、新增、编辑智能体 agentMgr/agentDetail/index
+- 删除 system/user/deptTree 接口
 
 ### 分析包大小
 

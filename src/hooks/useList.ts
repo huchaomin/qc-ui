@@ -100,27 +100,6 @@ const promiseMap = {
       ) as TreeListItem[]
     },
   }),
-  systemUserDeptTree: alovaInst.Get<TreeListItem[]>('system/user/deptTree', {
-    transform: (res) => {
-      const fn = (item: Record<string, any>[]): TreeListItem[] => {
-        return item.map((i) => {
-          const obj: TreeListItem = {
-            ...i,
-            label: i.label as string,
-            value: i.id as string,
-          }
-
-          if (Array.isArray(i.children)) {
-            obj.children = fn(i.children as Record<string, any>[])
-          }
-
-          return obj
-        })
-      }
-
-      return fn(res as Record<string, any>[])
-    },
-  }),
   task: alovaInst.Get<ListItem[]>('yq/task/getList', {
     transform: (res) => {
       return (res as Record<string, any>[]).map((item) => ({
