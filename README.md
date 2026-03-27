@@ -83,7 +83,7 @@
 - hooks 一部分清理到 bus, bus 的eslint 有问题
 - cron 表达式
 - useList 去除缓存 拆开
-- tdatePicker 没有改变值也触发了 change 事件
+- TDateRangePicker 没有改变值也触发了 change 事件 issue
 - TDateRangePicker popupProps?.onVisibleChange 关闭时没有触发
 - TDateRangePicker 选择时间时没有触发 pick 事件
 - 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
@@ -96,7 +96,7 @@
 
 ## todo 后端
 
-- 删除 字典数据 这个菜单
+- 删除 字典管理-字典数据 这个菜单
 - 删除 用户管理-分配角色 这个菜单
 - 删除 角色管理-分配用户 这个菜单
 - 删除 系统工具-定时任务-调度日志 这个菜单
