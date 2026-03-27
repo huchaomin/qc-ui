@@ -42,7 +42,8 @@ export type DateRangePickerProps = Omit<
 }
 
 type OnChangeParams = Parameters<NonNullable<_DateRangePickerProps['onChange']>>
-type OnConfirmParams = Parameters<NonNullable<_DateRangePickerProps['onConfirm']>>
+type OnConfirmParams = Parameters<NonNullable<DateRangePickerProps['onConfirm']>>
+type OnPickParams = Parameters<NonNullable<DateRangePickerProps['onPick']>>
 type OnPopupVisibleChangeParams = Parameters<NonNullable<PopupProps['onVisibleChange']>>
 
 const otherProps = computed(() => {
@@ -66,6 +67,7 @@ function compoRef(instance: any) {
   vm.exposed = exposed
 }
 
+const hasPick = ref(false)
 const hasConfirm = ref(false)
 const partialArr = ref<DateRangePickerPartial[]>([])
 </script>
@@ -78,10 +80,28 @@ const partialArr = ref<DateRangePickerPartial[]>([])
         mergeProps($attrs, {
           ...otherProps,
           onChange: (...args: OnChangeParams) => {
-            if ((partialArr.length === 2 && hasConfirm) || !hasConfirm) {
-              emit('update:modelValue', args[0])
-              otherProps.onChange?.(...args)
+            const trigger = args[1].trigger
+            if (
+              (hasPick || hasConfirm) &&
+              partialArr.length < 2 &&
+              ['confirm', 'pick'].includes(trigger as string)
+            ) {
+              return
             }
+            const value = args[0]
+            if (value[0] === otherProps.modelValue![0] && value[1] === otherProps.modelValue![1]) {
+              return
+            }
+            emit('update:modelValue', value)
+            otherProps.onChange?.(...args)
+          },
+          onPick: (...args: OnPickParams) => {
+            hasPick = true
+            const partial = args[1].partial
+            if (!partialArr.includes(partial)) {
+              partialArr.push(partial)
+            }
+            otherProps.onPick?.(...args)
           },
           onConfirm: (...args: OnConfirmParams) => {
             hasConfirm = true
@@ -95,6 +115,7 @@ const partialArr = ref<DateRangePickerPartial[]>([])
             ...(otherProps.popupProps ?? {}),
             onVisibleChange: (...args: OnPopupVisibleChangeParams) => {
               if (args[0]) {
+                hasPick = false
                 hasConfirm = false
                 partialArr = []
               }

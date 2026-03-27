@@ -85,6 +85,7 @@
 - useList 去除缓存 拆开
 - tdatePicker 没有改变值也触发了 change 事件
 - TDateRangePicker popupProps?.onVisibleChange 关闭时没有触发
+- TDateRangePicker 选择时间时没有触发 pick 事件
 - 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
 
 
