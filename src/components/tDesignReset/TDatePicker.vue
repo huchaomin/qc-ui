@@ -14,7 +14,7 @@ defineOptions({
 const props = withDefaults(defineProps<DatePickerProps>(), {
   clearable: true,
   disabled: undefined,
-  needConfirm: false,
+  needConfirm: true,
   presets: () =>
     ({
       一周前: dayjs().subtract(1, 'week').toDate(),
@@ -63,8 +63,18 @@ function compoRef(instance: any) {
         mergeProps($attrs, {
           ...otherProps,
           onChange: (...args: OnChangeParams) => {
-            emit('update:modelValue', args[0])
-            props.onChange?.(...args)
+            const value = args[0]
+            if (Array.isArray(value) && Array.isArray(otherProps.modelValue)) {
+              const mv = otherProps.modelValue as DateMultipleValue
+              if (value.every((item, index) => item === mv[index]) && mv.length === value.length) {
+                return
+              }
+            }
+            if (value === otherProps.modelValue) {
+              return
+            }
+            emit('update:modelValue', value)
+            otherProps.onChange?.(...args)
           },
           ref: compoRef,
         }),
