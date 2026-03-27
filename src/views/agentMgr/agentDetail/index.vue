@@ -256,7 +256,7 @@ onGetAgentByIdSuccess(() => {
 <template>
   <div class="flex flex-col gap-4!">
     <TCard :title="`品牌：${useListLabel('brand', brandId).value}`">
-      <TForm ref="form1Ref" :data="data1" :items="formItems" :disabled="type === 'view'"></TForm>
+      <TForm ref="form1Ref" :data="data1" :items="formItems" :readonly="type === 'view'"></TForm>
     </TCard>
     <TCard
       ref="cardRef"
@@ -273,7 +273,7 @@ onGetAgentByIdSuccess(() => {
           class="no_item_mb flex!"
           :data="data2"
           :items="formItems2"
-          :disabled="type === 'view'"
+          :readonly="type === 'view'"
         ></TForm>
       </template>
       <TForm
@@ -284,7 +284,7 @@ onGetAgentByIdSuccess(() => {
         layout="vertical"
         :data="data3"
         :items="formItems3"
-        :disabled="type === 'view'"
+        :readonly="type === 'view'"
       ></TForm>
       <TButton v-if="type !== 'view'" block @click="handleSave"> 保存 </TButton>
     </TCard>

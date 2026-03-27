@@ -304,7 +304,7 @@ const config: PageListProps = {
             onClick: () => {
               const formRef = ref<FormInstance | null>(null)
 
-              taskTypeChange(row.taskType)
+              taskTypeChange(String(row.taskType))
               watch(
                 formRef,
                 () => {
