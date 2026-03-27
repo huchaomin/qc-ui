@@ -98,6 +98,7 @@ const autoIcon = computed(() => {
     'majesticons:checkbox-list-detail-line': ['详情', '详细'],
     'line-md:account': ['角色', '用户'],
     'line-md:file-document': ['文件'],
+    'bi:journal-text': ['日志'],
     'line-md:security': ['权限'],
     /* eslint-enable perfectionist/sort-objects */
   }

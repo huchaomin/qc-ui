@@ -1,87 +1,7 @@
 <script setup lang="ts">
+import Log from './modules/Log.vue'
+
 const pageListRef = useTemplateRef('pageListRef')
-// return [
-//     {
-//       model: 'jobName',
-//       props: {
-//         label: '任务名称',
-//         rules: [{ required: true, message: '必填' }],
-//       },
-//     },
-//     {
-//       model: 'jobGroup',
-//       props: {
-//         label: '任务分组',
-//         options: $dicStore('sys_job_group').value,
-//       },
-//       component: 'CSelect',
-//     },
-//     {
-//       model: 'invokeTarget',
-//       props: {
-//         label: '调用方法',
-//         type: 'textarea',
-//         placeholder: `Bean调用示例：ryTask.ryParams('ry')
-// Class类调用示例：com.ruoyi.quartz.task.RyTask.ryParams('ry')
-// 参数说明：支持字符串，布尔类型，长整型，浮点型，整型`,
-//         rules: [{ required: true, message: '必填' }],
-//       },
-//     },
-//     {
-//       model: 'cronExpression',
-//       props: {
-//         label: 'cron表达式',
-//         rules: [{ required: true, message: '必填' }],
-//       },
-//     },
-//     {
-//       model: 'status',
-//       show: formData.jobId !== '',
-//       props: {
-//         label: '状态',
-//         options: $dicStore('sys_job_status').value,
-//       },
-//       component: 'CRadio',
-//     },
-//     {
-//       model: 'misfirePolicy',
-//       props: {
-//         label: '执行策略',
-//         options: [
-//           {
-//             label: '立即执行',
-//             value: '1',
-//           },
-//           {
-//             label: '执行一次',
-//             value: '2',
-//           },
-//           {
-//             label: '放弃执行',
-//             value: '3',
-//           },
-//         ],
-//       },
-//       component: 'CRadio',
-//     },
-//     {
-//       model: 'concurrent',
-//       props: {
-//         label: '是否并发',
-//         options: [
-//           {
-//             label: '允许',
-//             value: '0',
-//           },
-//           {
-//             label: '禁止',
-//             value: '1',
-//           },
-//         ],
-//       },
-//       component: 'CRadio',
-//     },
-//   ]
 const formItemMap = {
   concurrent: {
     _label: '是否并发',
@@ -329,9 +249,24 @@ const config: PageListProps = {
                     readonly: true,
                     ref: formRef,
                   }),
-                confirmBtn: null,
+                footer: false,
                 header: '任务详细',
                 width: 730,
+              })
+            },
+            permission: 'monitor:job:query',
+          }),
+          ({ row }) => ({
+            default: '调度日志',
+            onClick: () => {
+              $dialog({
+                body: () =>
+                  h(Log, {
+                    id: row.jobId,
+                  }),
+                footer: false,
+                header: '查看调度日志',
+                width: 1500,
               })
             },
             permission: 'monitor:job:query',
@@ -384,6 +319,18 @@ const config: PageListProps = {
         })
       },
       permission: 'monitor:job:add',
+    },
+    {
+      default: '日志',
+      onClick: () => {
+        $dialog({
+          body: () => h(Log),
+          footer: false,
+          header: '查看调度日志',
+          width: 1500,
+        })
+      },
+      permission: 'monitor:job:query',
     },
   ],
   tableOtherProps: {

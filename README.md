@@ -98,11 +98,12 @@
 - 删除 字典数据 这个菜单
 - 删除 用户管理-分配角色 这个菜单
 - 删除 角色管理-分配用户 这个菜单
+- 删除 系统工具-定时任务-调度日志 这个菜单
 - 菜单表 图标字段
 - 添加 角色权限范围 role_data_scope 这个字典
 - 菜单表 查看、新增、编辑智能体 agentMgr/agentDetail/index
 - 删除 system/user/deptTree 接口
-- tool/job/index
+- monitor/job/index --> tool/job/index
 
 ### 分析包大小
 

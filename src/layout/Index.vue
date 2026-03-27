@@ -53,7 +53,7 @@ const contentPadding = computed(() => {
   }
 
   return {
-    'p-4!': !noMainPadding.value,
+    'p-3!': !noMainPadding.value,
   }
 })
 </script>
