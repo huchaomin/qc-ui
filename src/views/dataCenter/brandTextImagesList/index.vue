@@ -13,6 +13,9 @@ watch(
       })
     }
   },
+  {
+    immediate: true,
+  },
 )
 
 const formItemMap = {
