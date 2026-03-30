@@ -6,7 +6,7 @@ import type { CardProps } from '@/components/tDesignReset/TCard.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.vue'
 import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
 import type { UseListAllKey } from '@/hooks/useList'
-import type { CellObjConfig } from '@/plugins/tableRenders/cell'
+import type { CellConfigObj } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import PageQuery from './PageQuery.vue'
 
@@ -186,7 +186,7 @@ const finallyColumns = computed(() => {
       return copyColumns
     }
 
-    const buttonsArr = (props.columns[_operationColumnIndex]?.cell as CellObjConfig)?.buttons
+    const buttonsArr = (props.columns[_operationColumnIndex]?.cell as CellConfigObj)?.buttons
 
     if (Array.isArray(buttonsArr)) {
       copyColumns[_operationColumnIndex] = {

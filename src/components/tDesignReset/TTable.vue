@@ -2,12 +2,11 @@
 import type {
   TableCol as _TableCol,
   TableRowData as _TableRowData,
-  CellData,
   EnhancedTableInstanceFunctions,
   EnhancedTableProps,
   TNode,
 } from 'tdesign-vue-next'
-import type { CellObjConfig, CellObjConfigFn } from '@/plugins/tableRenders/cell'
+import type { CellConfigFn, CellConfigObj } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
 import { getCellRender } from '@/plugins/tableRenders/cell'
@@ -27,7 +26,7 @@ export const tablePropsInit = {
   scroll: () => ({
     isFixedRowHeight: true,
     rowHeight: 45,
-    threshold: 90,
+    threshold: 500,
     type: 'virtual' as const,
   }),
   selectOnRowClick: true,
@@ -47,12 +46,8 @@ export interface CellRenderContext {
   row: TableRowData
   rowIndex: number
 }
-export type CellRenderFn = TNode<CellRenderContext>
-export type FinallyTableCol = Omit<TableCol, 'attrs' | 'cell' | 'resize' | 'visible' | 'width'> & {
-  attrs: (context: CellData<TableRowData>) => {
-    [key: string]: any
-  }
-  cell?: CellRenderFn
+export type FinallyTableCol = Omit<TableCol, 'cell' | 'resize' | 'visible' | 'width'> & {
+  cell?: string | TNodeFn
   resize: {
     maxWidth: number
     minWidth: number
@@ -62,9 +57,9 @@ export type FinallyTableCol = Omit<TableCol, 'attrs' | 'cell' | 'resize' | 'visi
 export type TableCol = {
   /**
    * @description: 单元格渲染
-   * @description: 渲染方式1(CellObjConfigFn 函数): (h, { col, colIndex, row, rowIndex }) => <div>{row[col.colKey]}</div>
-   * @description: 渲染方式2(CellObjConfig vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
-   * @description: 渲染方式3(CellObjConfigFn vue组件，需要行列信息作为参数的):  (h, { col, colIndex, row, rowIndex }) => {
+   * @description: 渲染方式1(CellConfigFn 函数): (h, { col, colIndex, row, rowIndex }) => <div>{row[col.colKey]}</div>
+   * @description: 渲染方式2(CellConfigObj vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
+   * @description: 渲染方式3(CellConfigFn vue组件，需要行列信息作为参数的):  (h, { col, colIndex, row, rowIndex }) => {
                                                             return {
                                                               _component: 'Link',
                                                               onClick: () => {
@@ -84,7 +79,7 @@ export type TableCol = {
                                                                             },
    * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
-  cell?: CellObjConfig | CellObjConfigFn | CellRenderFn // todo 重新命名
+  cell?: CellConfigFn | CellConfigObj | string | TNodeFn // todo 重新命名
   /**
    * @description: 列的key，必须要存在，且唯一
    */
@@ -101,10 +96,6 @@ export type TableCol = {
    * @description: 列的显示与隐藏
    */
   visible?: boolean
-  /**
-   * @description: 列的宽度，宽度充裕时实际渲染的将比这个值大，可以看作列的最小宽度
-   */
-  width?: number
 } & Omit<
   _TableCol<TableRowData>,
   'cell' | 'colKey' | 'ellipsis' | 'ellipsisTitle' | 'render' | 'resize' | 'width'
@@ -152,6 +143,7 @@ export type TableProps = {
   | 'treeExpandAndFoldIcon' // 全局中定义
 >
 export type TableRowData = _TableRowData
+export type TNodeFn = TNode<CellRenderContext>
 </script>
 
 <script setup lang="ts">
@@ -307,28 +299,16 @@ const columns = computed<FinallyTableCol[]>(() => {
       const resize = getResize(column)
 
       return {
-        ellipsis: {
-          attach: 'body',
-          theme: 'light',
-        },
-        ellipsisTitle: {
-          attach: 'body',
-          theme: 'light',
-        },
+        stopPropagation: true,
+        ...column,
+        cell: getCellRender(column.cell),
+        ellipsis: false,
+        ellipsisTitle: false,
         fixed: isMdScreen.value
           ? undefined
           : (column.fixed ?? (column.colKey === '_operation' ? ('right' as const) : undefined)),
-        stopPropagation: true,
-        ...column,
-        attrs: (context: CellData<TableRowData>) => {
-          return {
-            ...(typeof column.attrs === 'function' ? column.attrs(context) : (column.attrs ?? {})),
-            'data-col-key': column.colKey,
-          }
-        },
-        cell: getCellRender(column.cell),
         resize,
-        width: (column.width ?? columnWidths.value[column.colKey])!,
+        width: columnWidths.value[column.colKey],
       }
     })
 
@@ -478,61 +458,6 @@ onMounted(() => {
   tbodyTagRef.value = tableParentRef.value!.querySelector('tbody')
   tfootTagRef.value = tableParentRef.value!.querySelector('tfoot')
   tableContentRef.value = tableParentRef.value!.querySelector('.t-table__content')
-  /**
-   * @description: col span 的暂时没考虑， footer 的没考虑
-   */
-  useMutationObserver(
-    tableParentRef,
-    (mutations) => {
-      mutations.forEach((item) => {
-        const target = item.target
-        let parent: HTMLElement | null = null
-
-        if (target instanceof HTMLElement) {
-          parent = target.closest('td') ?? target.closest('th')
-        } else if (target.parentElement instanceof HTMLElement) {
-          parent = target.parentElement.closest('td') ?? target.parentElement.closest('th')
-        }
-
-        if (parent === null) {
-          return
-        }
-
-        const ellipsis = parent.querySelector('.t-table__ellipsis') as HTMLElement | null
-
-        if (ellipsis === null) {
-          return
-        }
-
-        const key = parent.getAttribute('data-col-key')
-
-        if (key === null) {
-          return
-        }
-
-        const insertWidth = Math.ceil(Math.max(ellipsis.offsetWidth, ellipsis.scrollWidth) + 24 + 1)
-        const finallyInsertWidth = Math.max(
-          Math.min(insertWidth, columnMaxWidths[key]!),
-          columnMinWidths[key]!,
-        )
-
-        if (finallyInsertWidth > _columnWidths.value[key]!) {
-          if (finallyInsertWidth <= parent.offsetWidth) {
-            columnMinWidths[key] = finallyInsertWidth
-          } else {
-            _columnWidths.value[key] = finallyInsertWidth
-          }
-        }
-      })
-    },
-    {
-      attributeFilter: ['class', 'style', 'colspan'],
-      attributes: true,
-      characterData: true,
-      childList: true,
-      subtree: true,
-    },
-  )
 })
 
 function innerTableUpdated() {
@@ -579,6 +504,9 @@ watch(
     deep: 2,
   },
 )
+provide('columnMinWidths', columnMinWidths)
+provide('columnMaxWidths', columnMaxWidths)
+provide('_columnWidths', _columnWidths)
 defineExpose(
   {} as {
     rowKey: string
