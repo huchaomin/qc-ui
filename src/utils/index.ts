@@ -113,7 +113,7 @@ function formatSecondsToChinese(seconds: number): string {
  * @return {string}
  */
 function getFilenameFromUrl(url: string, withExt = false): string {
-  const name = url.split('/').pop()!.split('?')[0]!
+  const name = url.split('/').pop()!.split('?')[0]
 
   if (withExt) {
     return name
@@ -125,4 +125,43 @@ function getFilenameFromUrl(url: string, withExt = false): string {
   }
 }
 
-export { flatArrToTree, formatSecondsToChinese, getFilenameFromUrl }
+function treeToFlatArr(
+  tree: TreeNode[],
+  options?: {
+    idKey?: string
+    includeLevel?: boolean
+    includeParent?: boolean
+  },
+): Record<string, any>[] {
+  const { idKey = 'id', includeLevel = false, includeParent = false } = options ?? {}
+  const result: Record<string, any>[] = []
+
+  function traverse(nodes: TreeNode[], level = 0, parentId: null | string = null) {
+    if (!Array.isArray(nodes)) {
+      return
+    }
+
+    nodes.forEach((node) => {
+      const { children, ...rest } = node
+
+      if (includeLevel) {
+        rest.level = level
+      }
+
+      if (includeParent) {
+        rest.parentId = parentId
+      }
+
+      result.push(rest)
+
+      if (Array.isArray(children)) {
+        traverse(children, level + 1, node[idKey] as string)
+      }
+    })
+  }
+
+  traverse(tree)
+  return result
+}
+
+export { flatArrToTree, formatSecondsToChinese, getFilenameFromUrl, treeToFlatArr }

@@ -200,6 +200,8 @@ function handleSelectSearchType(): void {
         obj.authorLabel = formData.keyword
       }
 
+      currentSearchConfig.value = obj
+
       if (obj.type === '2') {
         await sendImageSearch({
           imageUrl: obj.imageUrl,
@@ -214,8 +216,6 @@ function handleSelectSearchType(): void {
           toolType: obj.toolType,
         })
       }
-
-      currentSearchConfig.value = obj
     },
     width: 430, // 730
   })
