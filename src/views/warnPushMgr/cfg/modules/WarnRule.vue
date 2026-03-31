@@ -52,8 +52,10 @@ const columns: TableCol[] = [
       }
     },
     colKey: 'ruleType',
+    resize: {
+      minWidth: 150,
+    },
     title: '规则类型',
-    width: 160,
   },
   {
     cell: (_, { row }) => {
@@ -147,8 +149,10 @@ const columns: TableCol[] = [
       }
     },
     colKey: 'ruleContent',
+    resize: {
+      minWidth: 590,
+    },
     title: '规则内容',
-    width: 590,
   },
   {
     cell: {

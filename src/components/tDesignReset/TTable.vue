@@ -7,9 +7,11 @@ import type {
   TNode,
 } from 'tdesign-vue-next'
 import type { CellConfigFn, CellConfigObj } from '@/plugins/tableRenders/cell'
+import type { TitleConfigFn, TitleConfigObj } from '@/plugins/tableRenders/title'
 import { mergeProps } from 'vue'
 import TCheckboxGroup from '@/components/tDesignReset/TCheckboxGroup.vue'
 import { getCellRender } from '@/plugins/tableRenders/cell'
+import { getTitleRender } from '@/plugins/tableRenders/title'
 
 export const tablePropsInit = {
   attach: 'body',
@@ -46,12 +48,13 @@ export interface CellRenderContext {
   row: TableRowData
   rowIndex: number
 }
-export type FinallyTableCol = Omit<TableCol, 'cell' | 'resize' | 'visible' | 'width'> & {
-  cell?: string | TNodeFn
+export type FinallyTableCol = Omit<TableCol, 'cell' | 'resize' | 'title' | 'visible' | 'width'> & {
+  cell: TNodeFn
   resize: {
     maxWidth: number
     minWidth: number
   }
+  title: TitleTNodeFn
   width: number
 }
 export type TableCol = {
@@ -77,9 +80,8 @@ export type TableCol = {
                                                                                 }),
                                                                               ],
                                                                             },
-   * @description: 如果想使用插槽的话请使用 colKey 作为插槽名, 注意插槽名称保持 kebab-case 或 camelCase 命名
    */
-  cell?: CellConfigFn | CellConfigObj | string | TNodeFn // todo 重新命名
+  cell?: CellConfigFn | CellConfigObj | TNodeFn
   /**
    * @description: 列的key，必须要存在，且唯一
    */
@@ -92,13 +94,14 @@ export type TableCol = {
     maxWidth?: number
     minWidth?: number
   }
+  title?: string | TitleConfigFn | TitleConfigObj | TitleTNodeFn
   /**
    * @description: 列的显示与隐藏
    */
   visible?: boolean
 } & Omit<
   _TableCol<TableRowData>,
-  'cell' | 'colKey' | 'ellipsis' | 'ellipsisTitle' | 'render' | 'resize' | 'width'
+  'cell' | 'colKey' | 'ellipsis' | 'ellipsisTitle' | 'render' | 'resize' | 'title' | 'width'
 >
 export type TableProps = {
   /**
@@ -143,6 +146,11 @@ export type TableProps = {
   | 'treeExpandAndFoldIcon' // 全局中定义
 >
 export type TableRowData = _TableRowData
+export interface TitleRenderContext {
+  col: FinallyTableCol
+  colIndex: number
+}
+export type TitleTNodeFn = TNode<TitleRenderContext>
 export type TNodeFn = TNode<CellRenderContext>
 </script>
 
@@ -308,6 +316,7 @@ const columns = computed<FinallyTableCol[]>(() => {
           ? undefined
           : (column.fixed ?? (column.colKey === '_operation' ? ('right' as const) : undefined)),
         resize,
+        title: getTitleRender(column.title),
         width: columnWidths.value[column.colKey],
       }
     })
@@ -651,14 +660,6 @@ defineExpose(
     > .t-table__affixed-header-elm {
       width: calc(100% - 1px) !important;
     }
-  }
-
-  /* 调整css,以便计算宽度 */
-  .t-table__ellipsis {
-    display: inline-block;
-    width: auto;
-    max-width: 100%;
-    vertical-align: bottom;
   }
 }
 

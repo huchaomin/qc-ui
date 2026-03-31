@@ -53,23 +53,15 @@ const compos: Record<string, Component> = import.meta.glob('./*.vue', {
   import: 'default',
 })
 
-export function getCellRender(_config: TableCol['cell']): string | TNodeFn {
+export function getCellRender(_config: TableCol['cell']): TNodeFn {
   // 值类型为 string 表示使用插槽渲染
   // todo 插槽渲染需要处理,没有计算宽度
-  if (typeof _config === 'string') {
-    return _config
-  }
+  // if (typeof _config === 'string') {
+  //   return _config
+  // }
 
-  let config: TableCol['cell']
-
-  if (_config === undefined) {
-    config = {
-      _component: 'Default',
-    }
-  } else {
-    // eslint-disable-next-line ts/no-unsafe-assignment
-    config = _config
-  }
+  // eslint-disable-next-line ts/no-unsafe-assignment
+  const config = _config === undefined ? { _component: 'Default' } : _config
 
   if (isCellObjConfig(config)) {
     // eslint-disable-next-line ts/no-unsafe-assignment
@@ -86,7 +78,8 @@ export function getCellRender(_config: TableCol['cell']): string | TNodeFn {
   }
 
   return (h: typeof import('vue').h, context: Parameters<TNodeFn>[1]) => {
-    // eslint-disable-next-line ts/no-unsafe-assignment, ts/no-unsafe-call
+    // @ts-expect-error 类型断言不准确
+    // eslint-disable-next-line ts/no-unsafe-assignment
     const result = config(h, context)
 
     if (isCellObjConfig(result)) {
@@ -100,9 +93,7 @@ export function getCellRender(_config: TableCol['cell']): string | TNodeFn {
         })
       })
     } else {
-      return h(Wrapper, context, () => {
-        return result
-      })
+      return h(Wrapper, context, () => result)
     }
   }
 }

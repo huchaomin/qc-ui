@@ -39,8 +39,10 @@ const columns: TableCol[] = [
       }
     },
     colKey: 'filed',
+    resize: {
+      minWidth: 280,
+    },
     title: '条件字段',
-    width: 280,
   },
   {
     cell: (_, { row }) => {
@@ -52,8 +54,10 @@ const columns: TableCol[] = [
       }
     },
     colKey: 'filterType',
+    resize: {
+      minWidth: 150,
+    },
     title: '条件类型',
-    width: 150,
   },
   {
     cell: (_, { row }) => {
@@ -67,8 +71,10 @@ const columns: TableCol[] = [
       }
     },
     colKey: 'keyWord',
+    resize: {
+      minWidth: 300,
+    },
     title: '关键词',
-    width: 300,
   },
   {
     cell: (_, { row, rowIndex }) => {

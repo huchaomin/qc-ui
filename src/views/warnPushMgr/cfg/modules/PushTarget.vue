@@ -38,8 +38,10 @@ const columns: TableCol[] = [
       options: pushPlatformOptions,
     }),
     colKey: 'pushPlatform',
+    resize: {
+      minWidth: 150,
+    },
     title: '目标类型',
-    width: 160,
   },
   {
     cell: (_, { row }) => {
@@ -50,8 +52,10 @@ const columns: TableCol[] = [
       }
     },
     colKey: 'targetAddress',
+    resize: {
+      minWidth: 590,
+    },
     title: '目标地址',
-    width: 590,
   },
   {
     cell: {
