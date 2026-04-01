@@ -199,7 +199,9 @@ const config: PageListProps = {
               watch(
                 formRef,
                 () => {
-                  formRef.value!.setFormData(row)
+                  formRef.value!.setFormData(row, {
+                    ignoreKeys: ['fieldConfig'],
+                  })
                 },
                 {
                   once: true,

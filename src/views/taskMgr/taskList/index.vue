@@ -138,11 +138,12 @@ const formItemMap = {
     model: 'targetDesc',
   },
   taskType: {
-    __others: (formData) => {
+    __others: (formData, exposed) => {
       return {
         onChange: (value: any) => {
           formData.monitorPhraseIds = []
           taskTypeChange(value)
+          exposed.value!.clearValidate(['monitorPhraseIds'])
         },
       }
     },

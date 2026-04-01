@@ -124,6 +124,7 @@ const config: PageListProps = {
                 formRef,
                 () => {
                   formRef.value!.setFormData(row, {
+                    ignoreKeys: ['fieldConfig'],
                     numberToStringKeys: ['status', 'ruleType'],
                   })
                 },
