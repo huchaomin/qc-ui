@@ -76,8 +76,10 @@ const config: PageListProps = {
         return JSON.stringify(row.data)
       },
       colKey: 'data',
+      resize: {
+        maxWidth: 300,
+      },
       title: '记录数据',
-      width: 300,
     },
     {
       colKey: 'ticket',

@@ -100,8 +100,10 @@ const config: PageListProps = {
     {
       colKey: 'deptName',
       fixed: 'left',
+      resize: {
+        minWidth: 280,
+      },
       title: '部门名称',
-      width: 280,
     },
     {
       colKey: 'orderNum',

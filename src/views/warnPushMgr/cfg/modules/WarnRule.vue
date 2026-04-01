@@ -217,7 +217,7 @@ watch(
     }))
   },
   {
-    deep: true,
+    deep: true, // deep 监听tableData数据, _ROW_KEY 属性会导致赋值后立即触发一次
   },
 )
 </script>

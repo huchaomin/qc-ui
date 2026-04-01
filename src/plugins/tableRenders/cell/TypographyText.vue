@@ -31,24 +31,25 @@ const attrs = useAttrs() as unknown as CellRenderContext
   </TTypographyText>
 </template>
 
-<style scoped>
-.t-typography {
-  :deep() {
-    .t-button {
-      position: absolute;
-      top: 7px;
-      right: 4px;
+<style>
+/* 不能写在scope里面 */
+.t-table {
+  .t-typography {
+    &:has(.t-button) {
+      line-height: 32px;
+
+      .t-button {
+        position: absolute;
+        right: 0;
+      }
     }
   }
-}
-</style>
 
-<style>
-.t-table {
-  td,
-  th {
-    &:has(.t-typography .t-button) {
-      padding-right: 30px;
+  /* stylelint-disable-next-line selector-class-pattern */
+  .text-ellipsis {
+    &:has(> .t-typography) {
+      position: relative;
+      padding-right: 32px;
     }
   }
 }

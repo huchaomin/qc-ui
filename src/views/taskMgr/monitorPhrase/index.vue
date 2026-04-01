@@ -123,18 +123,7 @@ const formItemMap = {
       return {
         onChange: () => {
           formData.monitorWord = ''
-          // 有好的方法吗？
-          nextTick(() => {
-            nextTick(() => {
-              nextTick(() => {
-                nextTick(() => {
-                  nextTick(() => {
-                    exposed.value!.clearValidate(['monitorWord'])
-                  })
-                })
-              })
-            })
-          })
+          exposed.value!.clearValidate(['monitorWord'])
         },
       }
     },

@@ -176,8 +176,10 @@ const config: PageListProps = {
     {
       colKey: 'menuName',
       fixed: 'left',
+      resize: {
+        minWidth: 280,
+      },
       title: '菜单名称',
-      width: 280,
     },
     {
       colKey: 'orderNum',

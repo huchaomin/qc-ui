@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import PushTarget from './modules/PushTarget.vue'
 import WarnRule from './modules/WarnRule.vue'
+import WarnTemplate from './modules/WarnTemplate.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   brandId: {
     __others: (formData: Record<string, any>) => {
       return {
-        show: formData.range === '1',
+        show: ['1', '3'].includes(formData.range),
       }
     },
     _label: '品牌',
@@ -78,15 +79,43 @@ const formItemMap = {
     model: 'warnRule',
     slot: 'warn_rule',
   },
+  warn_template: {
+    _class: 'col-span-full',
+    _label: '推送模板',
+    _required: true,
+    model: 'warnTemplate',
+    slot: 'warn_template',
+  },
 } satisfies Record<string, FormItem>
+
+function getSaveData(data: Record<string, any>): Promise<Record<string, any>> {
+  return new Promise((resolve) => {
+    if (data.range === '2') {
+      data.brandId = useList('task').value.find((item) => item.value === data.taskId)!.brandId
+    } else if (data.range === '3') {
+      if (data.warnRule.some((item: any) => item.ruleType !== '1')) {
+        $msg.warning('直播预告只能配置策略预警')
+        return
+      }
+    }
+
+    resolve(data)
+  })
+}
 
 function getSlotMap({
   pushTarget,
   warnRule,
-}: { pushTarget?: Array<Record<string, any>>; warnRule?: Array<Record<string, any>> } = {}) {
+  warnTemplate,
+}: {
+  pushTarget?: Array<Record<string, any>>
+  warnRule?: Array<Record<string, any>>
+  warnTemplate?: Array<Record<string, any>>
+} = {}) {
   return {
     push_target: () => h(PushTarget, { initData: pushTarget }),
     warn_rule: () => h(WarnRule, { initData: warnRule }),
+    warn_template: () => h(WarnTemplate, { initData: warnTemplate }),
   }
 }
 
@@ -162,6 +191,7 @@ const config: PageListProps = {
                 formRef,
                 () => {
                   formRef.value!.setFormData(row, {
+                    ignoreKeys: ['warnTemplate', 'warnRule', 'pushTarget'],
                     numberToStringKeys: ['status', 'pushType', 'range'],
                   })
                 },
@@ -174,6 +204,9 @@ const config: PageListProps = {
                   h(
                     TForm,
                     {
+                      data: reactive({
+                        range: String(row.range),
+                      }),
                       items: [
                         formItemMap.name,
                         formItemMap.range,
@@ -184,23 +217,22 @@ const config: PageListProps = {
                         formItemMap.status,
                         formItemMap.warn_rule,
                         formItemMap.push_target,
+                        formItemMap.warn_template,
                       ],
                       ref: formRef,
                     },
-                    getSlotMap({ pushTarget: row.pushTarget, warnRule: row.warnRule }),
+                    getSlotMap({
+                      pushTarget: row.pushTarget,
+                      warnRule: row.warnRule,
+                      warnTemplate: row.warnTemplate,
+                    }),
                   ),
                 header: '修改预警推送配置',
                 onConfirmCallback: async () => {
-                  const obj = await formRef.value!.validate()
-
-                  if (obj.range === '2') {
-                    obj.brandId = useList('task').value.find(
-                      (item) => item.value === obj.taskId,
-                    )!.brandId
-                  }
+                  const data = await getSaveData(await formRef.value!.validate())
 
                   await alovaInst.Put('yq/warnPushCfg', {
-                    ...obj,
+                    ...data,
                     id: row.id,
                   })
                   $msg.success('预警推送配置修改成功')
@@ -250,6 +282,7 @@ const config: PageListProps = {
                   formItemMap.status,
                   formItemMap.warn_rule,
                   formItemMap.push_target,
+                  formItemMap.warn_template,
                 ],
                 ref: formRef,
               },
@@ -257,13 +290,9 @@ const config: PageListProps = {
             ),
           header: '新增预警推送配置',
           onConfirmCallback: async () => {
-            const obj = await formRef.value!.validate()
+            const data = await getSaveData(await formRef.value!.validate())
 
-            if (obj.range === '2') {
-              obj.brandId = useList('task').value.find((item) => item.value === obj.taskId)!.brandId
-            }
-
-            await alovaInst.Post('yq/warnPushCfg', obj)
+            await alovaInst.Post('yq/warnPushCfg', data)
             $msg.success('预警推送配置新增成功')
             pageListRef.value!.query()
           },

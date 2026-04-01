@@ -70,6 +70,7 @@ export interface ComponentPropsMap {
   TTreeSelect: Omit<TreeSelectProps, 'modelValue'>
   TUpload: Omit<UploadProps, 'modelValue'>
 }
+export type FormExposed = (ComponentInternalInstance['exposed'] & FormInstance) | null
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   getFormData: GetFormData
   setFormData: SetFormData
@@ -140,7 +141,6 @@ type ComponentItemType = UnionToNestedXOR<
       : never
     : never
 >
-type FormExposed = (ComponentInternalInstance['exposed'] & FormInstance) | null
 type FormItemBase = {
   [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
 } & {
@@ -151,6 +151,10 @@ type GetFormData = () => FormPropsData
 type SetFormData = (
   data: FormPropsData,
   options?: {
+    /**
+     * @description: 需要忽略的key
+     */
+    ignoreKeys?: string[]
     /**
      * @description: 是否只回填非空值
      */
@@ -459,10 +463,34 @@ function compoRef(instance: any) {
       inst.validateOnly._alreadyReplace = true
     }
 
+    // @ts-expect-error 内部属性
+    if (!inst.clearValidate._alreadyReplace) {
+      const orgClearValidate = inst.clearValidate
+
+      inst.clearValidate = (...arg: Parameters<_FormInstanceFunctions['clearValidate']>) => {
+        // 有好的方法吗？
+        nextTick(() => {
+          nextTick(() => {
+            nextTick(() => {
+              nextTick(() => {
+                nextTick(() => {
+                  orgClearValidate(...arg)
+                })
+              })
+            })
+          })
+        })
+      }
+
+      // @ts-expect-error 内部属性
+      inst.clearValidate._alreadyReplace = true
+    }
+
     inst.getFormData = getFormData
 
     inst.setFormData = (data, options) => {
       const {
+        ignoreKeys = [],
         isNotFalsy = true,
         numberToStringKeys = [],
         override = {},
@@ -470,6 +498,10 @@ function compoRef(instance: any) {
       } = options ?? {}
 
       Object.keys(props.data).forEach((key) => {
+        if (ignoreKeys.includes(key)) {
+          return
+        }
+
         if (splitToArrKeys.includes(key)) {
           // eslint-disable-next-line vue/no-mutating-props
           props.data[key] =
@@ -544,6 +576,7 @@ function calcLabelWidth() {
 }
 
 provide('formData', reactive(props.data))
+provide('formExposed', dynamicVmExposed)
 defineExpose({} as FormInstance)
 </script>
 

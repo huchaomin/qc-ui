@@ -19,16 +19,16 @@ function calcWidth() {
   const scrollWidth = wrapperRef.value!.scrollWidth
   // eslint-disable-next-line prettier/prettier
   const parentWidth = (wrapperRef.value!.closest('td, th') as HTMLElement)!.getBoundingClientRect().width
+  const key = attrs.col.colKey
+  const maxWidth = columnMaxWidths[key]!
 
-  showTooltip.value = scrollWidth >= parentWidth - 25
+  showTooltip.value = Number.isFinite(maxWidth)
+    ? scrollWidth >= parentWidth - 25
+    : scrollWidth > parentWidth - 25
   tooltipContent.value = wrapperRef.value!.textContent ?? ''
 
-  const key = attrs.col.colKey
   const insertWidth = Math.ceil(Math.max(width, scrollWidth) + 25)
-  const finallyInsertWidth = Math.max(
-    Math.min(insertWidth, columnMaxWidths[key]!),
-    columnMinWidths[key]!,
-  )
+  const finallyInsertWidth = Math.max(Math.min(insertWidth, maxWidth), columnMinWidths[key]!)
 
   if (finallyInsertWidth > _columnWidths.value[key]!) {
     if (finallyInsertWidth <= parentWidth) {
