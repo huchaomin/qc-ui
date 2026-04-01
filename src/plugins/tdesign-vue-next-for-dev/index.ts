@@ -12,6 +12,7 @@ import _TDesign, {
   EnhancedTable as _EnhancedTable,
   Form as _Form,
   Image as _Image,
+  ImageViewer as _ImageViewer,
   Input as _Input,
   InputAdornment as _InputAdornment,
   InputNumber as _InputNumber,
@@ -68,6 +69,7 @@ const Popup = _Popup as (typeof import('tdesign-vue-next'))['Popup']
 const DatePicker = _DatePicker as (typeof import('tdesign-vue-next'))['DatePicker']
 const InputAdornment = _InputAdornment as (typeof import('tdesign-vue-next'))['InputAdornment']
 const Text = _Text as (typeof import('tdesign-vue-next'))['Text']
+const ImageViewer = _ImageViewer as (typeof import('tdesign-vue-next'))['ImageViewer']
 
 export {
   Button,
@@ -80,6 +82,7 @@ export {
   EnhancedTable,
   Form,
   Image,
+  ImageViewer,
   Input,
   InputAdornment,
   InputNumber,

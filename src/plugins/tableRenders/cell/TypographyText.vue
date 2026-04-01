@@ -30,3 +30,26 @@ const attrs = useAttrs() as unknown as CellRenderContext
     {{ _get(attrs.row, attrs.col.colKey) }}
   </TTypographyText>
 </template>
+
+<style scoped>
+.t-typography {
+  :deep() {
+    .t-button {
+      position: absolute;
+      top: 7px;
+      right: 4px;
+    }
+  }
+}
+</style>
+
+<style>
+.t-table {
+  td,
+  th {
+    &:has(.t-typography .t-button) {
+      padding-right: 30px;
+    }
+  }
+}
+</style>

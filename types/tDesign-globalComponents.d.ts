@@ -60,7 +60,7 @@ declare module 'vue' {
     // IconFont: typeof import('tdesign-icons-vue-next')['IconFont'];
     // Icon: typeof import('tdesign-icons-vue-next')['Icon'];
     // TImage: typeof import('tdesign-vue-next')['Image'];
-    TImageViewer: typeof import('tdesign-vue-next')['ImageViewer'];
+    // TImageViewer: typeof import('tdesign-vue-next')['ImageViewer'];
     // TInput: typeof import('tdesign-vue-next')['Input'];
     TInputAdornment: typeof import('tdesign-vue-next')['InputAdornment'];
     TInputGroup: typeof import('tdesign-vue-next')['InputGroup'];
@@ -153,6 +153,7 @@ declare module 'vue' {
     TRangeInput: (typeof import('@/components/tDesignReset/TRangeInput.vue'))['default']
     TPopup: (typeof import('@/components/tDesignReset/TPopup.vue'))['default']
     TDatePicker: (typeof import('@/components/tDesignReset/TDatePicker.vue'))['default']
+    TImageViewer: (typeof import('@/components/tDesignReset/TImageViewer.vue'))['default']
   }
 }
 

@@ -9,9 +9,11 @@ defineOptions({
 const props = withDefaults(defineProps<AvatarProps>(), {
   hideOnLoadFailed: true,
 })
-const otherProps = computed(() => {
+const attrs = useAttrs() as unknown as CellRenderContext
+const bindProps = computed(() => {
   const obj: Partial<AvatarProps> = {
     ...props,
+    image: isFalsy(props.image) ? _get(attrs.row, attrs.col.colKey) : props.image,
   }
 
   Object.keys(obj).forEach((key) => {
@@ -23,16 +25,11 @@ const otherProps = computed(() => {
 })
 
 export type AvatarProps = _AvatarProps
-
-const attrs = useAttrs() as unknown as CellRenderContext
 </script>
 
 <template>
   <TAvatar
-    v-bind="{
-      image: _get(attrs.row, attrs.col.colKey),
-      ...otherProps,
-    }"
-  >
-  </TAvatar>
+    v-if="!isFalsy(bindProps.image) || !isFalsy(bindProps.content) || !isFalsy(bindProps.default)"
+    v-bind="bindProps"
+  ></TAvatar>
 </template>

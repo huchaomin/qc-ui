@@ -1,13 +1,20 @@
-<script setup lang="ts">
-import type { ImageProps } from 'tdesign-vue-next'
+<script lang="ts">
+import type { ImageProps as _ImageProps } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
+export const imagePropsInit = {
+  lazy: true,
+} as const
+export type ImageProps = _ImageProps
+</script>
+
+<script setup lang="ts">
 defineOptions({
   inheritAttrs: false,
 })
 
 const props = withDefaults(defineProps<ImageProps>(), {
-  lazy: true,
+  ...imagePropsInit,
 })
 const otherProps = computed(() => {
   const obj: Partial<ImageProps> = {

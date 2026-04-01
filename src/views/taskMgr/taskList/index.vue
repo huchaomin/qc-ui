@@ -24,7 +24,7 @@ const { data: neWordsType2Data, send: neWordsType2Send } = useRequest(
 )
 
 function taskTypeChange(taskType: string) {
-  if (taskType === '2') {
+  if (['2', '3'].includes(taskType)) {
     if (wordsType2Data.value.length === 0) {
       wordsType2Send()
     }
@@ -57,7 +57,7 @@ const formItemMap = {
         disabled: isFalsy(formData.taskType),
         options: (isFalsy(formData.taskType)
           ? []
-          : formData.taskType === '2'
+          : ['2', '3'].includes(formData.taskType)
             ? wordsType2Data.value
             : neWordsType2Data.value
         ).map((item) => {

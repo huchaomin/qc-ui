@@ -1,4 +1,5 @@
 import type { TableCol } from '@/components/tDesignReset/TTable.vue'
+import LiveInfo from '../components/LiveInfo.vue'
 
 export function useAuthorNameColumn({ colKey = 'authorName', useLink = true } = {}): TableCol {
   const router = useRouter()
@@ -61,18 +62,40 @@ export function useTaskNameNameColumn({ colKey = 'name', useLink = true } = {}):
   const router = useRouter()
 
   return {
-    cell: (_, { row }) => {
-      if (useLink && router.hasRoute('TaskDetail')) {
-        return {
-          _component: 'Link',
-          onClick: () => {
-            void router.push({
-              name: 'TaskDetail',
-              query: {
-                id: (row as Record<string, any>).id as string,
-              },
-            })
-          },
+    cell: (_, { row: _row }) => {
+      const row = _row as Record<string, any>
+
+      if (useLink) {
+        // 直播监控任务
+        if (row.taskType === 3) {
+          return {
+            _component: 'Link',
+            onClick: () => {
+              $dialog({
+                body: () =>
+                  h(LiveInfo, {
+                    taskId: row.id ?? row.taskId,
+                  }),
+                footer: false,
+                header: `【${row[colKey]}】直播信息`,
+                width: 1500,
+              })
+            },
+          }
+        }
+
+        if (router.hasRoute('TaskDetail')) {
+          return {
+            _component: 'Link',
+            onClick: () => {
+              void router.push({
+                name: 'TaskDetail',
+                query: {
+                  id: row.id as string,
+                },
+              })
+            },
+          }
         }
       }
 

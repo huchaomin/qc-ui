@@ -159,6 +159,7 @@ export default defineConfig(({ command, mode }) => {
         defaultExportByFilename: true,
         dirs: [
           resolvePath('src/plugins/autoImport'),
+          resolvePath('src/bus/autoImport'),
           resolvePath('src/hooks'),
           resolvePath('src/utils/autoImport.ts'),
         ],

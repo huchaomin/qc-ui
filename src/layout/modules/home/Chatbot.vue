@@ -19,7 +19,7 @@ const defaultMessages: ChatMessagesData[] = markRaw([
   {
     content: [
       {
-        data: '我是环智品牌助手Agent集群，帮您获取公司品牌/产品的最新讯息，帮您分析、洞察品牌动态，规避品牌风险、助力商业决策\n 您可以试着问我：',
+        data: '我是炽瞳品牌助手Agent集群，帮您获取公司品牌/产品的最新讯息，帮您分析、洞察品牌动态，规避品牌风险、助力商业决策\n 您可以试着问我：',
         status: 'complete',
         type: 'text',
       },
