@@ -13,42 +13,66 @@ const attrs = useAttrs() as unknown as CellRenderContext | TitleRenderContext
 const wrapperRef = useTemplateRef('wrapperRef')
 const showTooltip = ref(false)
 const tooltipContent = ref('')
-
-function calcWidth() {
-  const width = wrapperRef.value!.getBoundingClientRect().width
-  const scrollWidth = wrapperRef.value!.scrollWidth
-  // eslint-disable-next-line prettier/prettier
-  const parentWidth = (wrapperRef.value!.closest('td, th') as HTMLElement)!.getBoundingClientRect().width
-  const key = attrs.col.colKey
-  const maxWidth = columnMaxWidths[key]!
-
-  showTooltip.value = Number.isFinite(maxWidth)
-    ? scrollWidth >= parentWidth - 25
-    : scrollWidth > parentWidth - 25
-  tooltipContent.value = wrapperRef.value!.textContent ?? ''
-
-  const insertWidth = Math.ceil(Math.max(width, scrollWidth) + 25)
-  const finallyInsertWidth = Math.max(Math.min(insertWidth, maxWidth), columnMinWidths[key]!)
-
-  if (finallyInsertWidth > _columnWidths.value[key]!) {
-    if (finallyInsertWidth <= parentWidth) {
-      columnMinWidths[key] = finallyInsertWidth
-    } else {
-      _columnWidths.value[key] = finallyInsertWidth + 2
+const padding = 25
+const calcWidth = useThrottleFn(
+  () => {
+    if (wrapperRef.value === null) {
+      return
     }
-  }
-}
+
+    const width = wrapperRef.value!.getBoundingClientRect().width
+    const scrollWidth = wrapperRef.value!.scrollWidth
+    // eslint-disable-next-line prettier/prettier
+  const parentWidth = (wrapperRef.value!.closest('td, th') as HTMLElement)!.getBoundingClientRect().width
+    const key = attrs.col.colKey
+    const maxWidth = columnMaxWidths[key]!
+
+    showTooltip.value = Number.isFinite(maxWidth)
+      ? scrollWidth >= parentWidth - padding
+      : scrollWidth > parentWidth - padding
+    tooltipContent.value = wrapperRef.value!.textContent.trim() ?? ''
+
+    const insertWidth = Math.ceil(Math.max(width, scrollWidth) + padding)
+    const finallyInsertWidth = Math.max(Math.min(insertWidth, maxWidth), columnMinWidths[key]!)
+
+    if (finallyInsertWidth > _columnWidths.value[key]!) {
+      if (finallyInsertWidth <= parentWidth) {
+        columnMinWidths[key] = finallyInsertWidth
+      } else {
+        _columnWidths.value[key] = finallyInsertWidth + 2
+      }
+    }
+  },
+  500,
+  true,
+)
 
 onMounted(calcWidth)
 onUpdated(calcWidth)
+useMutationObserver(
+  wrapperRef,
+  (mutations) => {
+    mutations.forEach(() => {
+      calcWidth()
+    })
+  },
+  {
+    characterData: true,
+    childList: true,
+    subtree: true,
+  },
+)
 </script>
 
 <template>
-  <TTooltip :content="tooltipContent" :disabled="!showTooltip || tooltipContent === ''">
-    <div class="inline-flex max-w-full">
+  <div class="inline-flex max-w-full">
+    <TTooltip v-if="showTooltip" :content="tooltipContent">
       <div ref="wrapperRef" class="overflow-hidden text-ellipsis whitespace-nowrap">
         <slot></slot>
       </div>
+    </TTooltip>
+    <div v-else ref="wrapperRef" class="overflow-hidden text-ellipsis whitespace-nowrap">
+      <slot></slot>
     </div>
-  </TTooltip>
+  </div>
 </template>

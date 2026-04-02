@@ -28,7 +28,7 @@ export const tablePropsInit = {
   scroll: () => ({
     isFixedRowHeight: true,
     rowHeight: 45,
-    threshold: 500,
+    threshold: 80,
     type: 'virtual' as const,
   }),
   selectOnRowClick: true,
@@ -359,6 +359,8 @@ const otherProps = computed(() => {
   delete obj.showToggleFullscreenBtn
   delete obj.showColumnConfigBtn
   delete obj.flexHeight
+  delete obj.showRowSelect
+  delete obj.showSerialNumber
   delete obj.checkSelectedOnDataChange
   // 解决点击row报错的问题
   Object.keys(obj).forEach((key) => {

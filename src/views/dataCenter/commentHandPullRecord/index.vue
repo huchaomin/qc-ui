@@ -74,7 +74,7 @@ const config: PageListProps = {
     {
       cell: {
         _component: 'DicLabel',
-        dicCode: 'status',
+        dicCode: 'pull_status',
       },
       colKey: 'status',
       title: '状态',
