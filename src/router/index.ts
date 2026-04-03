@@ -34,7 +34,7 @@ export function getTopRoute(): RouteRecordSingleView | RouteRecordSingleViewWith
         meta: {
           fullScreen: false,
           hidden: false,
-          icon: 'tabler:home',
+          icon: 'streamline-flex-color:home-2-flat',
           noCache: false,
           parentName: '',
           title: '首页',

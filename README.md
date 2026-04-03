@@ -88,7 +88,7 @@
 - TDateRangePicker 选择时间时没有触发 pick 事件
 - 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
 - 换一个时间日期选择插件，不要用 tdesign 的
-- tree node 列宽度计算
+- tree node 列宽度计算 (待验证)
 
 
 ## todo 项目对比

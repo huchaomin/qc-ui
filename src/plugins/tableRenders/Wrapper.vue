@@ -20,19 +20,36 @@ const calcWidth = useThrottleFn(
       return
     }
 
+    const parent = wrapperRef.value!.closest('td, th') as HTMLElement
     const width = wrapperRef.value!.getBoundingClientRect().width
     const scrollWidth = wrapperRef.value!.scrollWidth
-    // eslint-disable-next-line prettier/prettier
-  const parentWidth = (wrapperRef.value!.closest('td, th') as HTMLElement)!.getBoundingClientRect().width
+    const parentWidth = parent.getBoundingClientRect().width
     const key = attrs.col.colKey
     const maxWidth = columnMaxWidths[key]!
+    let treeIconSpace = 0
+    const treeIcon = parent.querySelector('.t-table__tree-op-icon') as HTMLElement | null
+
+    if (treeIcon) {
+      treeIconSpace =
+        treeIcon.getBoundingClientRect().width +
+        Number.parseFloat(getComputedStyle(treeIcon).marginRight)
+    }
+
+    let treeColPadding = 0
+    const treeCol = parent.querySelector('.t-table__tree-col') as HTMLElement | null
+
+    if (treeCol) {
+      treeColPadding = Number.parseFloat(getComputedStyle(treeCol).paddingLeft)
+    }
 
     showTooltip.value = Number.isFinite(maxWidth)
       ? scrollWidth >= parentWidth - padding
       : scrollWidth > parentWidth - padding
     tooltipContent.value = wrapperRef.value!.textContent.trim() ?? ''
 
-    const insertWidth = Math.ceil(Math.max(width, scrollWidth) + padding)
+    const insertWidth = Math.ceil(
+      Math.max(width, scrollWidth) + padding + treeIconSpace + treeColPadding,
+    )
     const finallyInsertWidth = Math.max(Math.min(insertWidth, maxWidth), columnMinWidths[key]!)
 
     if (finallyInsertWidth > _columnWidths.value[key]!) {
