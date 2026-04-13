@@ -34,7 +34,9 @@ const otherProps = computed(() => {
                 ),
               header: 'cron表达式',
               onConfirmCallback: async () => {
-                // await compoRef.value!.handleSubmit()
+                const result = await compoRef.value!.handleSubmit()
+
+                emit('update:modelValue', result)
               },
               width: 1000,
             })
@@ -42,7 +44,6 @@ const otherProps = computed(() => {
           variant: 'text',
         }),
     },
-    placeholder: '请暂时手动输入，组件后续补上',
   }
 
   return obj

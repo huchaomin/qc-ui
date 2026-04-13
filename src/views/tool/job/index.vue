@@ -25,6 +25,7 @@ const formItemMap = {
   cronExpression: {
     _label: 'cron表达式',
     _required: true,
+    component: 'Cron',
     model: 'cronExpression',
   },
   invokeTarget: {

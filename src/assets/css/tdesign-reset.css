@@ -114,9 +114,6 @@ body {
   }
 
   .t-tabs {
-    padding: 0 12px;
-    margin: 0 -12px;
-
     .t-tabs__nav-item {
       /* stylelint-disable-next-line selector-class-pattern */
       .remove-btn {
@@ -155,11 +152,6 @@ body {
     .t-tabs__operations--right {
       bottom: 0;
     }
-  }
-
-  .t-tabs__content {
-    padding: 0 12px;
-    margin: 0 -12px;
   }
 
   .t-dialog__ctx {

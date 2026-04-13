@@ -18,20 +18,23 @@ import Month from './Month.vue'
 import Second from './Second.vue'
 import 'cronstrue/locales/zh_CN'
 
-const innerModelValue = defineModel<string>('modelValue', {
-  required: true,
-})
+const props = withDefaults(
+  defineProps<{
+    modelValue: string
+  }>(),
+  {},
+)
 const defaultValue = '0 * * ? * *'
 
 function getInitCronArr(): string[] {
   let str = defaultValue
 
   // eslint-disable-next-line no-empty
-  if (innerModelValue.value === '') {
-  } else if (validateCronString(innerModelValue.value) === true) {
-    str = innerModelValue.value
+  if (props.modelValue === '') {
+  } else if (validateCronString(props.modelValue) === true) {
+    str = props.modelValue
   } else {
-    $msg.error(`${innerModelValue.value} 不是一个有效的 cron 表达式, 已使用默认值 ${defaultValue}`)
+    $msg.error(`${props.modelValue} 不是一个有效的 cron 表达式, 已使用默认值 ${defaultValue}`)
   }
 
   return str.split(' ')
@@ -101,8 +104,6 @@ watch(
           })
           .join('\n')
       }
-
-      innerModelValue.value = val
     } catch (error) {
       errorMessage.value = (error as Error).message ?? '解析失败'
     }
@@ -147,6 +148,22 @@ const cronstrueText = computed(() => {
   } catch (error) {
     return (error as Error).message ?? '解析失败'
   }
+})
+
+function handleSubmit(): Promise<string> {
+  return new Promise((resolve) => {
+    const result = validateCronString(cronText.value)
+
+    if (result === true) {
+      resolve(cronText.value)
+    } else {
+      $msg.error(result)
+    }
+  })
+}
+
+defineExpose({
+  handleSubmit,
 })
 </script>
 
