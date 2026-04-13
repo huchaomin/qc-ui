@@ -1,9 +1,9 @@
 <script lang="ts" setup>
+import type Picker from './Picker.vue'
 import type { InputProps } from '@/components/tDesignReset/TInput.vue'
 import { mergeProps } from 'vue'
 import TButton from '@/components/tDesignReset/TButton.vue'
 import { inputPropsInit } from '@/components/tDesignReset/TInput.vue'
-import Picker from './Picker.vue'
 
 defineOptions({
   inheritAttrs: false,
@@ -25,10 +25,13 @@ const otherProps = computed(() => {
 
             void $confirm({
               body: () =>
-                h(Picker, {
-                  modelValue: props.modelValue,
-                  ref: compoRef,
-                }),
+                h(
+                  defineAsyncComponent(() => import('./Picker.vue')),
+                  {
+                    modelValue: props.modelValue,
+                    ref: compoRef,
+                  },
+                ),
               header: 'cron表达式',
               onConfirmCallback: async () => {
                 // await compoRef.value!.handleSubmit()
