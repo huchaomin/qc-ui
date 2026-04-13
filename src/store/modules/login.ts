@@ -44,6 +44,7 @@ export default defineStore(
       useRouterStore().clear()
       useUserStore().clear()
       useClearDic()
+      useClearList()
     }
 
     // 用户手动跳转到登录
@@ -53,9 +54,6 @@ export default defineStore(
         if (route.name === 'Login') {
           void clearSession()
         }
-      },
-      {
-        immediate: true,
       },
     )
 

@@ -23,103 +23,116 @@ interface TreeListItem {
 const refMap = new Map<Partial<UseListAllKey>, Ref<ListItem[]>>()
 const loadingMap = new Map<Partial<UseListAllKey>, boolean>()
 const promiseMap = {
-  brand: alovaInst.Get<ListItem[]>('yq/brand/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.brandName as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
-  eventRule: alovaInst.Get<ListItem[]>('yq/eventRule/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.ruleName as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
-  follow: alovaInst.Get<ListItem[]>('yq/followManage/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.name as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
-  monitorPhrase: alovaInst.Get<ListItem[]>('yq/monitorPhrase/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.name as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
-  name: alovaInst.Get<ListItem[]>('yq/nameList/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.listName as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
-  systemDeptTree: alovaInst.Get<TreeListItem[]>('system/dept/list', {
-    transform: (res) => {
-      return flatArrToTree(
-        (res as Record<string, any>[]).map((item) => {
-          return {
-            ...item,
-            label: item.deptName as string,
-            value: item.deptId as string,
-          }
-        }),
-        {
-          idKey: 'value',
-        },
-      ) as TreeListItem[]
-    },
-  }),
-  systemMenuTree: alovaInst.Get<TreeListItem[]>('system/menu/list', {
-    transform: (res) => {
-      return flatArrToTree(
-        (res as Record<string, any>[]).map((item) => {
-          return {
-            ...item,
-            label: item.menuName as string,
-            value: item.menuId as string,
-          }
-        }),
-        {
-          idKey: 'value',
-        },
-      ) as TreeListItem[]
-    },
-  }),
-  task: alovaInst.Get<ListItem[]>('yq/task/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.name as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
-  warnPushRule: alovaInst.Get<ListItem[]>('yq/warnPushRule/getList', {
-    transform: (res) => {
-      return (res as Record<string, any>[]).map((item) => ({
-        label: item.ruleName as string,
-        value: item.id as string,
-        ...item,
-      }))
-    },
-  }),
+  brand: () =>
+    alovaInst.Get<ListItem[]>('yq/brand/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.brandName as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
+  eventRule: () =>
+    alovaInst.Get<ListItem[]>('yq/eventRule/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.ruleName as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
+  follow: () =>
+    alovaInst.Get<ListItem[]>('yq/followManage/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.name as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
+  monitorPhrase: () =>
+    alovaInst.Get<ListItem[]>('yq/monitorPhrase/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.name as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
+  name: () =>
+    alovaInst.Get<ListItem[]>('yq/nameList/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.listName as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
+  systemDeptTree: () =>
+    alovaInst.Get<TreeListItem[]>('system/dept/list', {
+      transform: (res) => {
+        return flatArrToTree(
+          (res as Record<string, any>[]).map((item) => {
+            return {
+              ...item,
+              label: item.deptName as string,
+              value: item.deptId as string,
+            }
+          }),
+          {
+            idKey: 'value',
+          },
+        ) as TreeListItem[]
+      },
+    }),
+  systemMenuTree: () =>
+    alovaInst.Get<TreeListItem[]>('system/menu/list', {
+      transform: (res) => {
+        return flatArrToTree(
+          (res as Record<string, any>[]).map((item) => {
+            return {
+              ...item,
+              label: item.menuName as string,
+              value: item.menuId as string,
+            }
+          }),
+          {
+            idKey: 'value',
+          },
+        ) as TreeListItem[]
+      },
+    }),
+  task: () =>
+    alovaInst.Get<ListItem[]>('yq/task/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.name as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
+  warnPushRule: () =>
+    alovaInst.Get<ListItem[]>('yq/warnPushRule/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.ruleName as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
 }
 
+export function useClearList() {
+  refMap.clear()
+  loadingMap.clear()
+}
 export function useList(key: UseListAllKey) {
   const arr = refMap.has(key) ? refMap.get(key)! : ref([])
 
@@ -130,7 +143,7 @@ export function useList(key: UseListAllKey) {
   if (arr.value.length === 0) {
     if (!loadingMap.has(key) || loadingMap.get(key) === false) {
       loadingMap.set(key, true)
-      void promiseMap[key]
+      void promiseMap[key]()
         .then((res) => {
           arr.value = res
         })
@@ -180,7 +193,7 @@ export function useListRefresh(key: UseListAllKey) {
   if (refMap.has(key)) {
     if (!loadingMap.has(key) || loadingMap.get(key) === false) {
       loadingMap.set(key, true)
-      void promiseMap[key]
+      void promiseMap[key]()
         .then((res) => {
           refMap.get(key)!.value = res
         })
