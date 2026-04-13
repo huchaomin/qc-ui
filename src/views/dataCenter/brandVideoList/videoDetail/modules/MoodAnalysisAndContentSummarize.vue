@@ -48,7 +48,7 @@ withDefaults(
       {{ analysisResult.coreWord }}
     </div>
     <div class="mt-1">
-      <label>内容品牌：</label>
+      <label>内容实体关联：</label>
       {{ analysisResult.brandProduct }}
     </div>
     <div class="mt-1">

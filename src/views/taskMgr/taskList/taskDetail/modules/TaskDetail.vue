@@ -18,7 +18,7 @@ const formItemMap = {
     model: 'authorName',
   },
   brandProduct: {
-    _label: '内容品牌',
+    _label: '内容实体关联',
     model: 'brandProduct',
   },
   contentType: {
@@ -163,7 +163,7 @@ const config: PageListProps = {
     },
     {
       colKey: 'brandProduct',
-      title: '内容品牌',
+      title: '内容实体关联',
     },
     {
       align: 'right',
