@@ -24,7 +24,7 @@ import type { TextareaProps } from './TTextarea.vue'
 import type { TreeProps } from './TTree.vue'
 import type { TreeSelectProps } from './TTreeSelect.vue'
 import type { UploadProps } from './TUpload.vue'
-import type { CronProps } from '@/components/autoImport/Cron.vue'
+import type { CronProps } from '@/components/autoImport/Cron/Index.vue'
 import { mergeProps } from 'vue'
 import TCheckbox from './TCheckbox.vue'
 import TCheckboxGroup from './TCheckboxGroup.vue'
@@ -263,7 +263,7 @@ function getComponent(compo: string | undefined): Component {
       if (!asyncComponentCache.has(compo)) {
         asyncComponentCache.set(
           compo,
-          defineAsyncComponent(() => import('@/components/autoImport/Cron.vue')),
+          defineAsyncComponent(() => import('@/components/autoImport/Cron/Index.vue')),
         )
       }
 

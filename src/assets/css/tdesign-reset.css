@@ -88,6 +88,10 @@ body {
   }
 
   .t-is-error {
+    &.t-input.t-input--focused {
+      box-shadow: 0 0 0 1px var(--td-error-color) inset;
+    }
+
     .t-form__controls-content {
       .t-range-input {
         .t-input--focused {
@@ -245,10 +249,6 @@ body {
     }
 
     left: calc(32px * var(--level) - 16px);
-  }
-
-  .t-input-adornment {
-    @apply flex-auto;
   }
 
   .t-input-adornment__append,

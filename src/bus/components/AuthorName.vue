@@ -3,10 +3,6 @@ import type { SelectInputProps } from 'tdesign-vue-next'
 import Icon from '@/components/autoImport/Icon.vue'
 import TButton from '@/components/tDesignReset/TButton.vue'
 
-defineOptions({
-  inheritAttrs: false,
-})
-
 const props = withDefaults(
   defineProps<{
     defaultInputValue?: string

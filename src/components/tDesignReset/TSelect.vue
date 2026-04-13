@@ -178,9 +178,8 @@ onMounted(() => {
   )
 })
 
-const attrs = useAttrs()
 const selectBindProps = computed(() => {
-  return mergeProps(attrs, {
+  return {
     ...otherProps.value,
     inputValue: innerInputValue.value,
     modelValue: innerModelValue.value,
@@ -211,23 +210,19 @@ const selectBindProps = computed(() => {
     },
     popupVisible: innerPopupVisible.value,
     ref: compoRef,
-  })
+  }
 })
 </script>
 
 <template>
   <component
     :is="
-      h(
-        TInputAdornment,
-        {},
-        {
-          ...adornment,
-          default: () => h(compo, selectBindProps, $slots),
-        },
-      )
+      h(TInputAdornment, $attrs, {
+        ...adornment,
+        default: () => h(compo, selectBindProps, $slots),
+      })
     "
     v-if="adornment"
   ></component>
-  <component :is="h(compo, selectBindProps, $slots)" v-else></component>
+  <component :is="h(compo, mergeProps($attrs, selectBindProps), $slots)" v-else></component>
 </template>

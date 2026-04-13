@@ -131,6 +131,10 @@ export default defineConfig(({ command, mode }) => {
         '@tdesign-vue-next/chat',
         'vue-echarts',
         'dompurify',
+        'cron-parser',
+        'cronstrue',
+        'cronstrue/locales/zh_CN',
+        'quartzcron',
       ],
     },
     plugins: [

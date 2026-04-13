@@ -66,4 +66,15 @@ function isFalsy(val: any): boolean {
   return ['', null, undefined].includes(val as null | string | undefined) || Number.isNaN(val)
 }
 
-export { formatNumber, isFalsy }
+/**
+ * @description: 判断是否为有效的数字字符串
+ */
+function isValidNumberString(str: string): boolean {
+  if (typeof str !== 'string' || str.trim() === '') {
+    return false
+  }
+
+  return Number.isFinite(Number(str)) // Number() 会忽略首尾空白字符。空字符串或纯空白字符串会被转换为 0
+}
+
+export { formatNumber, isFalsy, isValidNumberString }
