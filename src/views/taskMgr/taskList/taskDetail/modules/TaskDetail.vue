@@ -291,6 +291,9 @@ const config: PageListProps = {
     formItemMap.coreViewpoints,
     formItemMap.brandProduct,
   ],
+  initialFormData: reactive({
+    publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
+  }),
   operations: [
     {
       default: '手动添加视频',

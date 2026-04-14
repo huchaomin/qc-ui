@@ -178,6 +178,9 @@ const config: PageListProps = {
     formItemMap.authorName,
     formItemMap.moodLevel,
   ],
+  initialFormData: reactive({
+    publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
+  }),
   operations: [
     reactive({
       default: '添加原链接',

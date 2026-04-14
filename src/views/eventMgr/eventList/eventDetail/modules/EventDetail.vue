@@ -205,6 +205,9 @@ const config: PageListProps = {
     formItemMap.eventHitReason,
     formItemMap.eventHitCount,
   ],
+  initialFormData: reactive({
+    publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
+  }),
   operations: [
     reactive({
       default: '导出内容(旧)',
