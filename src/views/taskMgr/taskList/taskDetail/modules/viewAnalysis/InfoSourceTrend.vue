@@ -30,8 +30,10 @@ const { data } = useWatcher(
   {
     immediate: true,
     initialData: [],
-    sendable: () => {
-      return !!startEndTimeRange.value.length && chartDataType.value !== 1
+    middleware: async (_, next) => {
+      if (!!startEndTimeRange.value.length && chartDataType.value !== 1) {
+        next()
+      }
     },
   },
 )

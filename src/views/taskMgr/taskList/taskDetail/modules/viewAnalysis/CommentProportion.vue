@@ -39,8 +39,10 @@ const { data: commentCountMap } = useWatcher(
   {
     immediate: true,
     initialData: {},
-    sendable: () => {
-      return !!startEndTimeRange.value.length
+    middleware: async (_, next) => {
+      if (startEndTimeRange.value.length) {
+        next()
+      }
     },
   },
 )

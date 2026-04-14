@@ -40,8 +40,10 @@ const { data: authorMap } = useWatcher(
   {
     immediate: true,
     initialData: {},
-    sendable: () => {
-      return !!startEndTimeRange.value.length && platformType.value !== 'all'
+    middleware: async (_, next) => {
+      if (!!startEndTimeRange.value.length && platformType.value !== 'all') {
+        next()
+      }
     },
   },
 )

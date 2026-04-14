@@ -19,8 +19,10 @@ const { data } = useWatcher(
   {
     immediate: true,
     initialData: {},
-    sendable: () => {
-      return !!parentData.value?.contentId && !!parentData.value?.brandId
+    middleware: async (_, next) => {
+      if (!!parentData.value?.contentId && !!parentData.value?.brandId) {
+        next()
+      }
     },
   },
 )

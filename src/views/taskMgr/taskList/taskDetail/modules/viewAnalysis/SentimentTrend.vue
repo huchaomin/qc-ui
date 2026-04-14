@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import type { OptionType } from '@/plugins/echarts'
 import slider from 'img/slider.png?url'
 import VChart from '@/plugins/echarts'
@@ -28,8 +29,10 @@ const { data } = useWatcher(
   {
     immediate: true,
     initialData: [],
-    sendable: () => {
-      return !!startEndTimeRange.value.length && chartDataType.value !== 1
+    middleware: async (_, next) => {
+      if (!!startEndTimeRange.value.length && chartDataType.value !== 1) {
+        next()
+      }
     },
   },
 )
@@ -65,15 +68,15 @@ const chartData = computed(() => {
   } as const
 
   while (
-    dayjs(timeArr[timeArr.length - 1])
+    dayjs(timeArr.at(-1))
       .add(
         addMap[chartDataType.value as keyof typeof addMap][0],
         addMap[chartDataType.value as keyof typeof addMap][1],
       )
-      .isSameOrBefore(dayjs(sortAll[sortAll.length - 1]))
+      .isSameOrBefore(dayjs(sortAll.at(-1)))
   ) {
     timeArr.push(
-      dayjs(timeArr[timeArr.length - 1])
+      dayjs(timeArr.at(-1))
         .add(
           addMap[chartDataType.value as keyof typeof addMap][0],
           addMap[chartDataType.value as keyof typeof addMap][1],

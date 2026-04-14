@@ -21,12 +21,13 @@
       "  {",
       "    immediate: true,",
       "    initialData: [],",
-      "    sendable: () => {",
-      "      return !!props.id",
+      "    middleware: async (_, next) => {",
+      "      if (!isFalsy(brandId.value)) {",
+      "        next()",
+      "      }",
       "    },",
       "  },",
-      ")",
-      ""
+      ")"
     ],
     "description": "useWatcher alova"
   },

@@ -28,8 +28,10 @@ const { data: taskViewData } = useWatcher(
   [startEndTimeRange],
   {
     initialData: {},
-    sendable: () => {
-      return !!startEndTimeRange.value.length
+    middleware: async (_, next) => {
+      if (startEndTimeRange.value.length) {
+        next()
+      }
     },
   },
 )
