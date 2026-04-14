@@ -9,7 +9,7 @@ import type {
   FormItemProps,
   ValidateResultList,
 } from 'tdesign-vue-next'
-import type { AllowedComponentProps, ComponentInternalInstance, ComputedRef } from 'vue'
+import type { AllowedComponentProps, ComponentPublicInstance, Ref } from 'vue'
 import type { CheckboxProps } from './TCheckbox.vue'
 import type { CheckboxGroupProps } from './TCheckboxGroup.vue'
 import type { DatePickerProps } from './TDatePicker.vue'
@@ -70,7 +70,7 @@ export interface ComponentPropsMap {
   TTreeSelect: Omit<TreeSelectProps, 'modelValue'>
   TUpload: Omit<UploadProps, 'modelValue'>
 }
-export type FormExposed = (ComponentInternalInstance['exposed'] & FormInstance) | null
+export type FormExposed = (ComponentPublicInstance & FormInstance) | null
 export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
   getFormData: GetFormData
   setFormData: SetFormData
@@ -87,14 +87,14 @@ export type FormItem = XOR<
       FormItemBase & {
         __others?: (
           formData: FormPropsData,
-          exposed: ComputedRef<FormExposed>,
+          exposed: Ref<FormExposed>,
         ) => Partial<AllowedComponentProps & ComponentItemType & FormItemBase>
         model: string
       },
     FormItemBase & {
       __others?: (
         formData: FormPropsData,
-        exposed: ComputedRef<FormExposed>,
+        exposed: Ref<FormExposed>,
       ) => Partial<
         FormItemBase & {
           model?: string
@@ -186,14 +186,12 @@ export default {
 <script setup lang="ts">
 const props = withDefaults(defineProps<FormProps>(), formPropsInit)
 const vm = getCurrentInstance()!
-const dynamicVmExposed = computed(() => {
-  return vm === null ? null : (vm.exposed as FormExposed)
-})
+const formExposed = ref<FormExposed>(null)
 const formItemsConfig = computed(() => {
   return props.items.map((item) => {
     if (typeof item.__others === 'function') {
       const obj = {
-        ...item.__others(props.data, dynamicVmExposed),
+        ...item.__others(props.data, formExposed),
         ...item,
       }
 
@@ -528,6 +526,7 @@ function compoRef(instance: any) {
 
   const exposed = instance ?? {}
 
+  formExposed.value = exposed
   vm.exposed = exposed
 }
 
@@ -576,7 +575,7 @@ function calcLabelWidth() {
 }
 
 provide('formData', reactive(props.data))
-provide('formExposed', dynamicVmExposed)
+provide('formExposed', formExposed)
 defineExpose({} as FormInstance)
 </script>
 
@@ -638,6 +637,10 @@ defineExpose({} as FormInstance)
       .t-form__label {
         display: none;
       }
+    }
+
+    .t-input-adornment {
+      @apply flex-auto;
     }
   }
 

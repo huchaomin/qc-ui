@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
+
 const props = withDefaults(
   defineProps<{
     initData?: Array<Record<string, any>>
@@ -6,7 +8,7 @@ const props = withDefaults(
   {},
 )
 const formData = inject<Record<string, any>>('formData')!
-const formExposed = inject<ComputedRef<FormExposed | null>>('formExposed')!
+const formExposed = inject<Ref<FormExposed | null>>('formExposed')!
 const tableData = ref<Array<Record<string, any>>>(
   props.initData
     ? props.initData.map((item) => {

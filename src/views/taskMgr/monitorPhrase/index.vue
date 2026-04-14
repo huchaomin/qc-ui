@@ -1,4 +1,5 @@
 <script lang="ts">
+import type { Ref } from 'vue'
 import type { TableCol } from '@/components/tDesignReset/TTable.vue'
 import AuthorName from '@/bus/components/AuthorName.vue'
 import HoneycombSummaryPhrases from './modules/HoneycombSummaryPhrases.vue'
@@ -119,7 +120,7 @@ const formItemMap = {
     model: 'status',
   },
   wordsType: {
-    __others: (formData: Record<string, any>, exposed: ComputedRef<FormExposed>) => {
+    __others: (formData: Record<string, any>, exposed: Ref<FormExposed>) => {
       return {
         onChange: () => {
           formData.monitorWord = ''
