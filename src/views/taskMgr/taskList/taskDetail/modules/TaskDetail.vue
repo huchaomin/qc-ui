@@ -105,7 +105,9 @@ const config: PageListProps = {
     shadow: false,
   },
   columns: [
-    useVideoTitleColumn(),
+    useVideoTitleColumn({
+      funType: 1,
+    }),
     {
       cell: {
         _component: 'DicLabel',

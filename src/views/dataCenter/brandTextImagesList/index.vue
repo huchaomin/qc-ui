@@ -119,6 +119,7 @@ const config: PageListProps = {
   columns: [
     useVideoTitleColumn({
       bciIdKey: 'id',
+      funType: 4,
     }),
     {
       colKey: 'contentText',
