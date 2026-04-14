@@ -128,7 +128,6 @@ const exportProps = computed(() => {
   const postConfig = {
     meta: {
       useDownload: `${config.exportFileName ?? route.meta.title}_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
-      useEmptyData: true,
       useFormData: true,
       useResponseBlob: true,
     },

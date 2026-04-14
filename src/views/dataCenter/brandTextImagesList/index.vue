@@ -2,6 +2,8 @@
 import ContentSlice from './textImagesDetail/modules/ContentSlice.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
+const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
+const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
 const brandOptions = useList('brand')
 
 watch(
@@ -91,10 +93,6 @@ const config: PageListProps = {
     delete: {
       method: 'data/brandContentInfo',
       permission: 'data:brandContentInfo:remove',
-    },
-    export: {
-      method: 'data/brandContentInfo/export',
-      permission: 'data:brandContentInfo:export',
     },
     list: {
       method: (o: Record<string, any>) => {
@@ -356,6 +354,36 @@ const config: PageListProps = {
     publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
   }),
   isFirstQueryByParent: true,
+  operations: [
+    reactive({
+      default: '导出',
+      disabled: computed(() => finallyQueryParams.value === undefined),
+      permission: 'data:brandContentInfo:export',
+      popconfirm: {
+        content: '确定导出吗?',
+        onConfirm: async () => {
+          const data = {
+            ...finallyQueryParams.value,
+          }
+
+          if (selectedRows.value.length > 0) {
+            data.ids = selectedRows.value.map((item) => item.id).join(',')
+          }
+
+          await alovaInst.Post('data/brandContentInfo/export', data, {
+            meta: {
+              useDownload: `品牌图文_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+              useFormData: true,
+              useResponseBlob: true,
+            },
+          })
+        },
+      },
+    }),
+  ],
+  tableOtherProps: {
+    showRowSelect: 'multiple',
+  },
 }
 </script>
 

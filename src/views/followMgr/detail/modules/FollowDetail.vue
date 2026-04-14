@@ -197,7 +197,15 @@ const config: PageListProps = {
       popconfirm: {
         content: '确认要导出吗?',
         onConfirm: async () => {
-          await alovaInst.Post('yq/followDetail/export', finallyQueryParams.value!, {
+          const data = {
+            ...finallyQueryParams.value,
+          }
+
+          if (selectedRows.value.length > 0) {
+            data.ids = selectedRows.value.map((item) => item.id).join(',')
+          }
+
+          await alovaInst.Post('yq/followDetail/export', data, {
             meta: {
               useDownload: `关注详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
               useFormData: true,
@@ -215,7 +223,15 @@ const config: PageListProps = {
       popconfirm: {
         content: '确认要导出吗?',
         onConfirm: async () => {
-          await alovaInst.Post('yq/followDetail/exportNewFormat', finallyQueryParams.value!, {
+          const data = {
+            ...finallyQueryParams.value,
+          }
+
+          if (selectedRows.value.length > 0) {
+            data.ids = selectedRows.value.map((item) => item.id).join(',')
+          }
+
+          await alovaInst.Post('yq/followDetail/exportNewFormat', data, {
             meta: {
               useDownload: `关注详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
               useFormData: true,

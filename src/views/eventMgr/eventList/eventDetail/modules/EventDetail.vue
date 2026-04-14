@@ -213,7 +213,15 @@ const config: PageListProps = {
       popconfirm: {
         content: '确认要导出视频吗?',
         onConfirm: async () => {
-          await alovaInst.Post('yq/eventDetail/export', finallyQueryParams.value!, {
+          const data = {
+            ...finallyQueryParams.value,
+          }
+
+          if (selectedRows.value.length > 0) {
+            data.ids = selectedRows.value.map((item) => item.id).join(',')
+          }
+
+          await alovaInst.Post('yq/eventDetail/export', data, {
             meta: {
               useDownload: `事件视频详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
               useFormData: true,
@@ -230,7 +238,15 @@ const config: PageListProps = {
       popconfirm: {
         content: '确认要导出视频吗?',
         onConfirm: async () => {
-          await alovaInst.Post('yq/eventDetail/exportNewReport', finallyQueryParams.value!, {
+          const data = {
+            ...finallyQueryParams.value,
+          }
+
+          if (selectedRows.value.length > 0) {
+            data.ids = selectedRows.value.map((item) => item.id).join(',')
+          }
+
+          await alovaInst.Post('yq/eventDetail/exportNewReport', data, {
             meta: {
               useDownload: `事件视频详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
               useFormData: true,

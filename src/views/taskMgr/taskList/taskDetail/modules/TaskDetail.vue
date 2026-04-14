@@ -5,6 +5,7 @@ import AddVideoManual from './AddVideoManual.vue'
 const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
+const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
 const id = inject<string>('id')!
 const formItemMap = {
   analysisStatus: {
@@ -330,6 +331,31 @@ const config: PageListProps = {
         })
       },
       permission: 'task:taskContent:updateDealMark',
+    }),
+    reactive({
+      default: '导出',
+      disabled: computed(() => finallyQueryParams.value === undefined),
+      permission: 'task:taskContent:taskVideExport',
+      popconfirm: {
+        content: '确定导出吗?',
+        onConfirm: async () => {
+          const data = {
+            ...finallyQueryParams.value,
+          }
+
+          if (selectedRows.value.length > 0) {
+            data.ids = selectedRows.value.map((item) => item.id).join(',')
+          }
+
+          await alovaInst.Post('task/taskContent/taskVideExport', data, {
+            meta: {
+              useDownload: `任务详情_${dayjs().format('YYYY-MM-DD_HH:mm:ss')}.xlsx`,
+              useFormData: true,
+              useResponseBlob: true,
+            },
+          })
+        },
+      },
     }),
   ],
   tableOtherProps: {
