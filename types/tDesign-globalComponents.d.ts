@@ -112,7 +112,7 @@ declare module 'vue' {
     // TTabPanel: typeof import('tdesign-vue-next')['TabPanel'];
     TTabs: typeof import('tdesign-vue-next')['Tabs'];
     TTag: typeof import('tdesign-vue-next')['Tag'];
-    TTagInput: typeof import('tdesign-vue-next')['TagInput'];
+    // TTagInput: typeof import('tdesign-vue-next')['TagInput'];
     TTypographyText: typeof import('tdesign-vue-next')['Text'];
     // TTextarea: typeof import('tdesign-vue-next')['Textarea'];
     TTimeline: typeof import('tdesign-vue-next')['Timeline'];
@@ -154,6 +154,7 @@ declare module 'vue' {
     TPopup: (typeof import('@/components/tDesignReset/TPopup.vue'))['default']
     TDatePicker: (typeof import('@/components/tDesignReset/TDatePicker.vue'))['default']
     TImageViewer: (typeof import('@/components/tDesignReset/TImageViewer.vue'))['default']
+    TTagInput: (typeof import('@/components/tDesignReset/TTagInput.vue'))['default']
   }
 }
 

@@ -157,9 +157,17 @@ const slotMap = {
         formData.monitorWord += `${isFalsy(formData.monitorWord) ? '' : ','}${data.label}`
 
         if (isFalsy(data.id)) {
-          await alovaInst.Post('yq/author/saveAuthorInfo', {
-            authorName: data.label,
-          })
+          await alovaInst.Post(
+            'yq/author/saveAuthorInfo',
+            {
+              authorName: data.label,
+            },
+            {
+              meta: {
+                useLoading: false,
+              },
+            },
+          )
         }
       },
     }),

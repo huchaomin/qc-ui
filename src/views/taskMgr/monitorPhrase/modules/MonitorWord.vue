@@ -35,11 +35,10 @@ const monitorWordInputProps = computed(() => {
   const placeholderMap: Record<string, string> = {
     '0': '请输入监控词,多个以英文逗号分割',
     '1': '"()"表示分组，"|"表示或，"+"表示且',
-    '2': '请搜索作者',
   }
 
   return {
-    disabled: formData.wordsType === '2' || loading.value,
+    disabled: loading.value,
     maxlength: 500,
     onBlur: () => {
       if (formData.wordsType === '0') {
@@ -101,6 +100,19 @@ function handleGenerateMonitorWord(): void {
 
   send(brandOptions.value[0]!.value)
 }
+
+const monitorWordArr = computed({
+  get() {
+    if (formData.wordsType !== '2' || isFalsy(formData.monitorWord)) {
+      return []
+    }
+
+    return formData.monitorWord.split(',').filter(Boolean)
+  },
+  set(value: string[]) {
+    formData.monitorWord = value.join(',')
+  },
+})
 </script>
 
 <template>
@@ -119,5 +131,13 @@ function handleGenerateMonitorWord(): void {
       AI拓展
     </TButton>
   </TTooltip>
-  <TTextarea v-model="formData.monitorWord" v-bind="monitorWordInputProps"></TTextarea>
+  <TTagInput
+    v-if="formData.wordsType === '2'"
+    v-model="monitorWordArr"
+    :input-props="{
+      readonly: true,
+    }"
+    placeholder="请搜索作者"
+  ></TTagInput>
+  <TTextarea v-else v-model="formData.monitorWord" v-bind="monitorWordInputProps"></TTextarea>
 </template>

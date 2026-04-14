@@ -103,7 +103,6 @@ function append() {
   return h(
     TButton,
     {
-      class: 'ml-1!',
       onClick: () => {
         onEnter()
       },

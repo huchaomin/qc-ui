@@ -20,6 +20,7 @@ import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { RangeInputProps } from './TRangeInput.vue'
 import type { SelectProps } from './TSelect.vue'
 import type { SwitchProps } from './TSwitch.vue'
+import type { TagInputProps } from './TTagInput.vue'
 import type { TextareaProps } from './TTextarea.vue'
 import type { TreeProps } from './TTree.vue'
 import type { TreeSelectProps } from './TTreeSelect.vue'
@@ -36,6 +37,7 @@ import TRadioGroup from './TRadioGroup.vue'
 import TRangeInput from './TRangeInput.vue'
 import TSelect from './TSelect.vue'
 import TSwitch from './TSwitch.vue'
+import TTagInput from './TTagInput.vue'
 import TTextarea from './TTextarea.vue'
 import TTree from './TTree.vue'
 import TTreeSelect from './TTreeSelect.vue'
@@ -65,6 +67,7 @@ export interface ComponentPropsMap {
   TRangeInput: Omit<RangeInputProps, 'modelValue'>
   TSelect: Omit<SelectProps, 'modelValue'>
   TSwitch: Omit<SwitchProps, 'modelValue'>
+  TTagInput: Omit<TagInputProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>
   TTree: Omit<TreeProps, 'modelValue'>
   TTreeSelect: Omit<TreeSelectProps, 'modelValue'>
@@ -207,7 +210,7 @@ function setInitFormDataValues() {
   formItemsConfig.value.forEach((item) => {
     if (item.model !== undefined && !Object.hasOwn(props.data, item.model)) {
       const isArr =
-        ['TCheckboxGroup', 'TDateRangePicker', 'TRangeInput', 'TUpload'].includes(
+        ['TCheckboxGroup', 'TDateRangePicker', 'TRangeInput', 'TTagInput', 'TUpload'].includes(
           item.component as string,
         ) ||
         (item.multiple === true && item.component === 'TSelect')
@@ -249,6 +252,7 @@ const componentMapInReset = {
   TRangeInput,
   TSelect,
   TSwitch,
+  TTagInput,
   TTextarea,
   TTree,
   TTreeSelect,

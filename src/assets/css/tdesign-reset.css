@@ -288,6 +288,10 @@ body {
           border-radius: 0;
         }
       }
+
+      &:has(> .t-button.t-button--theme-primary) {
+        border: none;
+      }
     }
   }
 }

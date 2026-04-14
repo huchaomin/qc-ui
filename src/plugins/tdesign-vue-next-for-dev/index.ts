@@ -29,6 +29,7 @@ import _TDesign, {
   Select as _Select,
   Switch as _Switch,
   TabPanel as _TabPanel,
+  TagInput as _TagInput,
   Text as _Text,
   Textarea as _Textarea,
   Tree as _Tree,
@@ -70,6 +71,7 @@ const DatePicker = _DatePicker as (typeof import('tdesign-vue-next'))['DatePicke
 const InputAdornment = _InputAdornment as (typeof import('tdesign-vue-next'))['InputAdornment']
 const Text = _Text as (typeof import('tdesign-vue-next'))['Text']
 const ImageViewer = _ImageViewer as (typeof import('tdesign-vue-next'))['ImageViewer']
+const TagInput = _TagInput as (typeof import('tdesign-vue-next'))['TagInput']
 
 export {
   Button,
@@ -99,6 +101,7 @@ export {
   Select,
   Switch,
   TabPanel,
+  TagInput,
   TDesign,
   Text,
   Textarea,
