@@ -35,6 +35,7 @@ const { data: authorMap } = useWatcher(
         platform: platformType.value,
         startTime: startEndTimeRange.value[0],
       },
+      timeout: 0,
     }),
   [startEndTimeRange, platformType],
   {

@@ -25,6 +25,7 @@ const { data } = useWatcher(
         groupType: chartDataType.value,
         startTime: startEndTimeRange.value[0],
       },
+      timeout: 0,
     }),
   [startEndTimeRange, chartDataType],
   {

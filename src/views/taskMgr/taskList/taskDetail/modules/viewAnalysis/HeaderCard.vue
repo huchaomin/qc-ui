@@ -93,6 +93,7 @@ async function handleDataDownload(): Promise<void> {
         useDownload: `任务视图分析数据_${Date.now()}.xlsx`,
         useResponseBlob: true,
       },
+      timeout: 0,
     },
   )
 }

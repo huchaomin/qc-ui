@@ -24,6 +24,7 @@ const { data: taskViewData } = useWatcher(
         endTime: startEndTimeRange.value[1],
         startTime: startEndTimeRange.value[0],
       },
+      timeout: 0,
     }),
   [startEndTimeRange],
   {
