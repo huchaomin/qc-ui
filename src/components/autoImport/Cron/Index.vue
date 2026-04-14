@@ -29,7 +29,12 @@ const otherProps = computed(() => {
                   defineAsyncComponent(() => import('./Picker.vue')),
                   {
                     modelValue: props.modelValue,
-                    ref: compoRef,
+                    onVnodeMounted: (vnode) => {
+                      compoRef.value = vnode.component!.exposed as InstanceType<typeof Picker>
+                    },
+                    onVnodeUnmounted: () => {
+                      compoRef.value = null
+                    },
                   },
                 ),
               header: 'cron表达式',

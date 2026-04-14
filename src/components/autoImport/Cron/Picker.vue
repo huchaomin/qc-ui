@@ -2,6 +2,7 @@
 /**
  * @description: https://www.freeformatter.com/cron-expression-generator-quartz.html
  * @description: https://www.cnblogs.com/pugang/p/17126841.html
+ * @description: https://bradymholt.github.io/cRonstrue/#cronstrue-demo
  * @description: cron-expression-validator(validate quartz cron expressions) 可用 cron-validate 代替
  * @description: cron-parser 不支持 LW L-n nW 等表达式
  * @description: quartzcron 不支持 n#n 表达式, 也支持 校验 Quartz Cron 表达式
