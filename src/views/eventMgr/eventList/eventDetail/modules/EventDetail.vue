@@ -28,15 +28,6 @@ const formItemMap = {
     dicCode: 'data_type',
     model: 'contentType',
   },
-  eventHitCount: {
-    _label: '事件命中次数',
-    component: 'TRangeInput',
-    model: 'eventHitCount',
-  },
-  eventHitField: {
-    _label: '事件命中字段',
-    model: 'eventHitField',
-  },
   eventHitReason: {
     _label: '事件命中原因',
     model: 'eventHitReason',
@@ -68,9 +59,6 @@ const config: PageListProps = {
         return alovaInst.Get('yq/eventDetail/list', {
           params: {
             ...o,
-            eventHitCount: undefined,
-            eventHitCountMax: o.eventHitCount?.[1],
-            eventHitCountMin: o.eventHitCount?.[0],
             eventId: id,
             negativeCommentCount: undefined,
             negativeCommentCountMax: o.negativeCommentCount?.[1],
@@ -182,16 +170,8 @@ const config: PageListProps = {
       title: '视频内容',
     },
     {
-      colKey: 'eventHitField',
-      title: '事件命中字段',
-    },
-    {
       colKey: 'eventHitReason',
       title: '事件命中原因',
-    },
-    {
-      colKey: 'eventHitCount',
-      title: '事件命中次数',
     },
     {
       colKey: 'createBy',
@@ -214,9 +194,7 @@ const config: PageListProps = {
     formItemMap.title,
     formItemMap.contentEmotion,
     formItemMap.negativeCommentCount,
-    formItemMap.eventHitField,
     formItemMap.eventHitReason,
-    formItemMap.eventHitCount,
   ],
   initialFormData: reactive({
     publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
