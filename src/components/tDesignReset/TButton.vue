@@ -85,6 +85,7 @@ const autoIcon = computed(() => {
     'codicon:debug-rerun': ['重跑'],
     'ix:select-alt': ['选择'],
     'line-md:search': ['查询', '搜索'],
+    'material-symbols:cell-merge': ['合并'],
     'line-md:upload-outline': ['上传', '导入'],
     'mdi:delete-outline': ['删除'],
     'line-md:download-outline': ['下载', '导出'],
