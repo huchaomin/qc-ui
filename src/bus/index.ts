@@ -214,10 +214,47 @@ export async function updateColumnStatus(arr: Array<Record<string, any>>): Promi
   })
 }
 export async function warnByHand(data: Record<string, any>): Promise<void> {
-  await $confirm({
-    body: `确定对视频【${data.title}】手工预警吗？`,
-    width: 500,
+  const formRef = ref<FormInstance | null>(null)
+  const { data: _data } = useRequest(
+    alovaInst.Get<Array<Record<string, any>>>('yq/warnPushCfg/getList'),
+    {
+      initialData: [],
+    },
+  )
+
+  return new Promise((resolve) => {
+    void $confirm({
+      body: () =>
+        h(TForm, {
+          items: [
+            reactive({
+              _label: '预警推送配置',
+              _required: true,
+              component: 'TSelect' as const,
+              model: 'warnCfgId',
+              options: computed(() => {
+                return _data.value.map((item) => ({
+                  label: item.name,
+                  value: item.id,
+                }))
+              }),
+            }),
+          ],
+          labelAlign: 'right',
+          layout: 'vertical',
+
+          ref: formRef,
+        }),
+      header: '手工预警',
+      onConfirmCallback: async () => {
+        await alovaInst.Post('data/brandContentInfo/warnByHand', {
+          ...(await formRef.value!.validate()),
+          bciId: data.bciId ?? data.id,
+        })
+        void $msg('手工预警成功')
+        resolve()
+      },
+      width: 430, // 730
+    })
   })
-  await alovaInst.Put(`data/brandContentInfo/warnByHand/${data.bciId ?? data.id}`)
-  void $msg('手工预警成功')
 }

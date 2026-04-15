@@ -132,6 +132,10 @@ async function handleMerge(): Promise<void> {
 }
 
 function handleSelect(i: Record<string, any>): void {
+  if (isMerging.value === false) {
+    return
+  }
+
   if (selectedFollowItems.value.some((item) => item.id === i.id)) {
     selectedFollowItems.value = selectedFollowItems.value.filter((item) => item.id !== i.id)
   } else {
