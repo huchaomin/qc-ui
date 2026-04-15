@@ -26,6 +26,13 @@ export const columns: TableCol[] = [
     title: '监控词',
   },
   {
+    colKey: 'reFilterWords',
+    resize: {
+      maxWidth: 300,
+    },
+    title: '除外词',
+  },
+  {
     cell: {
       _component: 'DicLabel',
       dicCode: 'status',
@@ -111,6 +118,14 @@ const formItemMap = {
     _label: '监控词组名称',
     _required: true,
     model: 'name',
+  },
+  reFilterWords: {
+    _class: 'col-span-full',
+    _label: '除外词',
+    component: 'TTextarea',
+    maxlength: 500,
+    model: 'reFilterWords',
+    placeholder: '可使用逻辑运算符或","连接',
   },
   status: {
     _label: '词组状态',
@@ -222,6 +237,7 @@ const config: PageListProps = {
                         formItemMap.author_name,
                         formItemMap.monitor_word,
                         formItemMap.filterWords,
+                        formItemMap.reFilterWords,
                       ],
                       ref: formRef,
                     },
@@ -290,6 +306,7 @@ const config: PageListProps = {
                   formItemMap.author_name,
                   formItemMap.monitor_word,
                   formItemMap.filterWords,
+                  formItemMap.reFilterWords,
                 ],
                 ref: formRef,
               },
