@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { SortInfo } from 'tdesign-vue-next'
-import { addFollow, updateDealMark, warnByHand } from '@/bus'
+import { addFollow, updateColumnStatus, warnByHand } from '@/bus'
 import AddVideoManual from './AddVideoManual.vue'
 
 const router = useRouter()
@@ -281,11 +281,11 @@ const config: PageListProps = {
           ({ row }) => ({
             default: '标记',
             onClick: () => {
-              updateDealMark([row]).then(() => {
+              updateColumnStatus([row]).then(() => {
                 pageListRef.value!.query()
               })
             },
-            permission: 'task:taskContent:updateDealMark',
+            permission: 'data:brandContentInfo:updateColumnStatus',
           }),
         ],
       },
@@ -346,11 +346,11 @@ const config: PageListProps = {
       default: '批量标记',
       disabled: computed(() => selectedRows.value.length === 0),
       onClick: () => {
-        updateDealMark(selectedRows.value).then(() => {
+        updateColumnStatus(selectedRows.value).then(() => {
           pageListRef.value!.query()
         })
       },
-      permission: 'task:taskContent:updateDealMark',
+      permission: 'data:brandContentInfo:updateColumnStatus',
     }),
     reactive({
       default: '导出',

@@ -160,24 +160,39 @@ export function showCommentDetail(data: Record<string, any>): void {
     width: 1280,
   })
 }
-export async function updateDealMark(arr: Array<Record<string, any>>): Promise<void> {
-  const dealMarkArr = [...new Set(arr.map((item) => item.dealMark as number))]
+export async function updateColumnStatus(arr: Array<Record<string, any>>): Promise<void> {
   const formRef = ref<FormInstance | null>(null)
 
   return new Promise((resolve) => {
     void $confirm({
       body: () =>
         h(TForm, {
-          data: reactive({
-            dealMark: dealMarkArr.length === 1 ? dealMarkArr[0] : '',
-          }),
           items: [
             {
-              _label: '处理状态',
+              __others: (formData: Record<string, any>) => {
+                return {
+                  onChange: () => {
+                    formData.status = ''
+                  },
+                }
+              },
+              _label: '标记字段',
               _required: true,
               component: 'TSelect',
-              dicCode: 'deal_mark',
-              model: 'dealMark',
+              dicCode: 'update_status_column',
+              model: 'column',
+            },
+            {
+              __others: (formData: Record<string, any>) => {
+                return {
+                  dicCode: formData.column,
+                  disabled: isFalsy(formData.column),
+                }
+              },
+              _label: '标记状态',
+              _required: true,
+              component: 'TSelect',
+              model: 'status',
             },
           ],
           labelAlign: 'right',
@@ -187,9 +202,9 @@ export async function updateDealMark(arr: Array<Record<string, any>>): Promise<v
         }),
       header: '标记视频',
       onConfirmCallback: async () => {
-        await alovaInst.Put('task/taskContent/updateDealMark', {
+        await alovaInst.Post('data/brandContentInfo/updateColumnStatus', {
           ...(await formRef.value!.validate()),
-          bciIds: arr.map((item) => (item.bciId ?? item.id) as string),
+          ids: arr.map((item) => (item.bciId ?? item.id) as string),
         })
         void $msg('标记视频成功')
         resolve()
