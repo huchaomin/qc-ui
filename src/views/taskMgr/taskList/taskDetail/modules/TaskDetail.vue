@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SortInfo } from 'tdesign-vue-next'
 import { addFollow, updateDealMark, warnByHand } from '@/bus'
 import AddVideoManual from './AddVideoManual.vue'
 
@@ -7,6 +8,10 @@ const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
 const id = inject<string>('id')!
+const sort = ref<SortInfo | undefined>({
+  descending: true,
+  sortBy: 'publishTime',
+})
 const formItemMap = {
   analysisStatus: {
     _label: '分析状态',
@@ -96,6 +101,12 @@ const config: PageListProps = {
                 ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
             taskId: id,
+            ...(sort.value
+              ? {
+                  isAsc: sort.value!.descending ? 'desc' : 'asc',
+                  orderByColumn: `t.${_snakeCase(sort.value!.sortBy)}`,
+                }
+              : {}),
           },
         })
       },
@@ -155,7 +166,13 @@ const config: PageListProps = {
     },
     {
       colKey: 'publishTime',
+      sorter: true,
       title: '发布时间',
+    },
+    {
+      colKey: 'createTime',
+      sorter: true,
+      title: '创建时间',
     },
     {
       colKey: 'searchWords',
@@ -361,10 +378,15 @@ const config: PageListProps = {
       },
     }),
   ],
-  tableOtherProps: {
+  tableOtherProps: reactive({
     flexHeight: false,
-    showRowSelect: 'multiple',
-  },
+    onSortChange: (val: SortInfo | SortInfo[]) => {
+      sort.value = val as SortInfo
+      pageListRef.value!.query()
+    },
+    showRowSelect: 'multiple' as const,
+    sort,
+  }),
 }
 </script>
 

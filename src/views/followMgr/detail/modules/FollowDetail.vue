@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { SortInfo } from 'tdesign-vue-next'
 import type { Ref } from 'vue'
 import { fillOriginalUrl, handPullComments } from '@/bus'
 
@@ -7,6 +8,10 @@ const data = inject<Ref<Record<string, any> | undefined>>('data')!
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
+const sort = ref<SortInfo | undefined>({
+  descending: true,
+  sortBy: 'publishTime',
+})
 const formItemMap = {
   authorName: {
     _label: '作者',
@@ -62,6 +67,12 @@ const config: PageListProps = {
               o.publishTime?.[0] !== undefined
                 ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
+            ...(sort.value
+              ? {
+                  isAsc: sort.value!.descending ? 'desc' : 'asc',
+                  orderByColumn: _snakeCase(sort.value!.sortBy),
+                }
+              : {}),
           },
         })
       },
@@ -93,7 +104,13 @@ const config: PageListProps = {
     },
     {
       colKey: 'publishTime',
+      sorter: true,
       title: '发布时间',
+    },
+    {
+      colKey: 'createTime',
+      sorter: true,
+      title: '创建时间',
     },
     useAuthorNameColumn(),
     {
@@ -156,10 +173,6 @@ const config: PageListProps = {
     {
       colKey: 'createBy',
       title: '创建人',
-    },
-    {
-      colKey: 'createTime',
-      title: '创建时间',
     },
     {
       colKey: 'updateBy',
@@ -283,10 +296,15 @@ const config: PageListProps = {
       },
     }),
   ],
-  tableOtherProps: {
+  tableOtherProps: reactive({
     flexHeight: false,
-    showRowSelect: 'multiple',
-  },
+    onSortChange: (val: SortInfo | SortInfo[]) => {
+      sort.value = val as SortInfo
+      pageListRef.value!.query()
+    },
+    showRowSelect: 'multiple' as const,
+    sort,
+  }),
 }
 </script>
 

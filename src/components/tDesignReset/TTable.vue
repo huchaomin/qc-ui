@@ -20,6 +20,7 @@ export const tablePropsInit = {
   disableDataPage: true,
   disableSpaceInactiveRow: true,
   flexHeight: false,
+  hideSortTips: true,
   hover: true,
   lazyLoad: true, // 开启整个表格的懒加载
   maxHeight: 507,
@@ -34,6 +35,7 @@ export const tablePropsInit = {
   selectOnRowClick: true,
   showHeader: true,
   showSerialNumber: true,
+  showSortColumnBgColor: true,
   showToggleFullscreenBtn: false,
   stripe: true,
   tableLayout: 'fixed',
@@ -709,6 +711,38 @@ defineExpose(
     .t-table__content:has(.t-table__empty),
     td:has(.t-table__empty) {
       position: static;
+    }
+
+    .t-table__sort-column {
+      background-color: var(--td-brand-color-1);
+    }
+
+    .t-table__filter-icon-wrap {
+      width: auto;
+      height: auto;
+    }
+
+    .t-table__cell--sort-trigger {
+      display: flex;
+      flex-direction: row;
+
+      .iconify {
+        color: var(--td-font-gray-4);
+      }
+
+      .t-table__sort-icon--active {
+        .iconify {
+          color: var(--td-brand-color);
+        }
+      }
+
+      .t-table-sort-asc {
+        top: 0;
+      }
+
+      .t-table-sort-desc {
+        bottom: 0;
+      }
     }
   }
 }

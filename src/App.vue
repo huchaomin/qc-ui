@@ -5,6 +5,22 @@ import TButton from './components/tDesignReset/TButton.vue'
 
 const globalConfig: GlobalConfigProvider = {
   table: {
+    sortIcon: (h) => {
+      return h(
+        TButton,
+        {
+          shape: 'circle',
+          size: 'small',
+          variant: 'text',
+        },
+        {
+          icon: () =>
+            h(Icon, {
+              icon: 'heroicons-solid:sort-descending',
+            }),
+        },
+      )
+    },
     treeExpandAndFoldIcon: (h, { type }) => {
       return h(
         TButton,

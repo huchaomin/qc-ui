@@ -7,6 +7,7 @@ export {
   kebabCase as _kebabCase,
   pick as _pick,
   set as _set,
+  snakeCase as _snakeCase,
   uniqueId as _uniqueId,
 } from 'lodash-es'
 

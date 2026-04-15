@@ -42,13 +42,22 @@ const calcWidth = useThrottleFn(
       treeColPadding = Number.parseFloat(getComputedStyle(treeCol).paddingLeft)
     }
 
+    let thFilterIconSpace = 0
+    const thFilterIcon = parent.querySelector('.t-table__filter-icon-wrap') as HTMLElement | null
+
+    if (thFilterIcon) {
+      thFilterIconSpace =
+        thFilterIcon.getBoundingClientRect().width +
+        Number.parseFloat(getComputedStyle(thFilterIcon).marginLeft)
+    }
+
     showTooltip.value = Number.isFinite(maxWidth)
       ? scrollWidth >= parentWidth - padding
       : scrollWidth > parentWidth - padding
     tooltipContent.value = wrapperRef.value!.textContent.trim() ?? ''
 
     const insertWidth = Math.ceil(
-      Math.max(width, scrollWidth) + padding + treeIconSpace + treeColPadding,
+      Math.max(width, scrollWidth) + padding + treeIconSpace + treeColPadding + thFilterIconSpace,
     )
     const finallyInsertWidth = Math.max(Math.min(insertWidth, maxWidth), columnMinWidths[key]!)
 

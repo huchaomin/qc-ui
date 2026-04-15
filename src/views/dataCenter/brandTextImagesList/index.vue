@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import type { SortInfo } from 'tdesign-vue-next'
 import ContentSlice from './textImagesDetail/modules/ContentSlice.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
 const brandOptions = useList('brand')
+const sort = ref<SortInfo | undefined>({
+  descending: true,
+  sortBy: 'publishTime',
+})
 
 watch(
   () => brandOptions.value[0]?.value,
@@ -109,6 +114,12 @@ const config: PageListProps = {
               o.publishTime?.[0] !== undefined
                 ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
+            ...(sort.value
+              ? {
+                  isAsc: sort.value!.descending ? 'desc' : 'asc',
+                  orderByColumn: _snakeCase(sort.value!.sortBy),
+                }
+              : {}),
           },
         })
       },
@@ -145,7 +156,13 @@ const config: PageListProps = {
     useAuthorNameColumn(),
     {
       colKey: 'publishTime',
+      sorter: true,
       title: '发布时间',
+    },
+    {
+      colKey: 'createTime',
+      sorter: true,
+      title: '创建时间',
     },
     {
       cell: (_, { row }) => {
@@ -322,10 +339,6 @@ const config: PageListProps = {
       title: '创建人',
     },
     {
-      colKey: 'createTime',
-      title: '创建时间',
-    },
-    {
       colKey: 'updateBy',
       title: '更新人',
     },
@@ -381,9 +394,14 @@ const config: PageListProps = {
       },
     }),
   ],
-  tableOtherProps: {
-    showRowSelect: 'multiple',
-  },
+  tableOtherProps: reactive({
+    onSortChange: (val: SortInfo | SortInfo[]) => {
+      sort.value = val as SortInfo
+      pageListRef.value!.query()
+    },
+    showRowSelect: 'multiple' as const,
+    sort,
+  }),
 }
 </script>
 
