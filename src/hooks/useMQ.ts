@@ -5,7 +5,7 @@ const lg = 75
 const xl = 87.5
 const xxl = 117.5
 
-export default function useMQ() {
+export default () => {
   const isXs = useMediaQuery(`(max-width: ${xs}rem)`)
   const isSm = useMediaQuery(`(max-width: ${sm}rem)`)
   const isMd = useMediaQuery(`(max-width: ${md}rem)`)

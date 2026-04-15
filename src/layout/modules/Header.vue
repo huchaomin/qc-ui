@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { DropdownProps, TabsProps } from 'tdesign-vue-next'
-// import autoAnimate from '@formkit/auto-animate'
 import { getRoute } from '@/router/index'
 
 const route = useRoute()
@@ -8,7 +7,6 @@ const router = useRouter()
 const userStore = useUserStore()
 const commonStore = useCommonStore()
 const recentRoutersStore = useRecentRoutersStore()
-// const tabsRef = useTemplateRef('tabsRef')
 const handleRemove: TabsProps['onRemove'] = ({ value }) => {
   const name = value as string
 
@@ -25,10 +23,6 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
     useLoginStore().logout()
   }
 }
-
-// onMounted(() => {
-//   autoAnimate(tabsRef.value!.$el.querySelector('.t-tabs__nav-wrap'))
-// })
 </script>
 
 <template>

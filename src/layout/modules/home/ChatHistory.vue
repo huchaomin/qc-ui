@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { DropdownOption, TdListProps } from 'tdesign-vue-next'
-import autoAnimate from '@formkit/auto-animate'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
 
 const sessionId = defineModel<string>('sessionId', {
@@ -113,6 +112,7 @@ async function refreshData() {
 }
 
 const listRef = useTemplateRef('listRef')
+const { autoAnimate } = useAnimateAuto()
 
 watch(listRef, (val) => {
   if (val) {

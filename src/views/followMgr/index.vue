@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import autoAnimate from '@formkit/auto-animate'
 import { handPullComments } from '@/bus'
 
 const router = useRouter()
@@ -152,6 +151,7 @@ function handleSelect(i: Record<string, any>): void {
 }
 
 const listRef = useTemplateRef('listRef')
+const { autoAnimate } = useAnimateAuto()
 
 watch(
   () => data.value.length,
