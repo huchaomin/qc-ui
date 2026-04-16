@@ -10,7 +10,7 @@ const props = withDefaults(
 const formData = inject<Record<string, any>>('formData')!
 const formExposed = inject<Ref<FormExposed | null>>('formExposed')!
 const tableData = ref<Array<Record<string, any>>>(
-  props.initData
+  props.initData && props.initData.length > 0
     ? props.initData.map((item) => {
         return {
           columnName: String(item.columnName),
