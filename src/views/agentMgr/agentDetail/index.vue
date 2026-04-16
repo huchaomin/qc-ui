@@ -51,7 +51,11 @@ const formItems: FormItem[] = [
   },
 ]
 const { data: modelOptions, onSuccess } = useRequest(
-  alovaInst.Get<Array<Record<string, any>>>('yq/modelCfg/getList'),
+  alovaInst.Get<Array<Record<string, any>>>('yq/modelCfg/getList', {
+    params: {
+      status: 0,
+    },
+  }),
   {
     initialData: [],
     async middleware(_, next) {

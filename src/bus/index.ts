@@ -216,7 +216,11 @@ export async function updateColumnStatus(arr: Array<Record<string, any>>): Promi
 export async function warnByHand(data: Record<string, any>): Promise<void> {
   const formRef = ref<FormInstance | null>(null)
   const { data: _data } = useRequest(
-    alovaInst.Get<Array<Record<string, any>>>('yq/warnPushCfg/getList'),
+    alovaInst.Get<Array<Record<string, any>>>('yq/warnPushCfg/getList', {
+      params: {
+        status: 0,
+      },
+    }),
     {
       initialData: [],
     },
