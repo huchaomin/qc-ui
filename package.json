@@ -79,6 +79,7 @@
     "stylelint-order": "^8.1.1",
     "stylelint-use-nesting": "^6.0.2",
     "tinyglobby": "^0.2.15",
+    "type-fest": "^5.5.0",
     "typescript": "^5.9.3",
     "unplugin-auto-import": "^21.0.0",
     "unplugin-vue-components": "^32.0.0",

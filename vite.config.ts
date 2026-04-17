@@ -123,6 +123,8 @@ export default defineConfig(({ command, mode }) => {
         'dayjs',
         'dayjs/plugin/customParseFormat.js',
         'dayjs/plugin/isSameOrBefore.js',
+        'dayjs/plugin/timezone.js',
+        'dayjs/plugin/utc.js',
         'wordcloud',
         'echarts/charts',
         'echarts/components',

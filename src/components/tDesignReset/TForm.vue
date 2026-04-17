@@ -74,7 +74,7 @@ export interface ComponentPropsMap {
   TUpload: Omit<UploadProps, 'modelValue'>
 }
 export type FormExposed = (ComponentPublicInstance & FormInstance) | null
-export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> & {
+export interface FormInstance extends Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> {
   getFormData: GetFormData
   setFormData: SetFormData
   validate: (...arg: Parameters<_FormInstanceFunctions['validate']>) => Promise<FormPropsData>
@@ -83,23 +83,25 @@ export type FormInstance = Omit<_FormInstanceFunctions, 'validate' | 'validateOn
   ) => Promise<FormPropsData>
 }
 export type FormItem = XOR<
-  _FormItem,
+  ItemWithoutOthers,
   XOR<
     AllowedComponentProps &
-      ComponentItemType &
-      FormItemBase & {
+      ComponentItemXOR &
+      FormItemComponentPropsUnderlyingWithMeta & {
         __others?: (
           formData: FormPropsData,
           exposed: Ref<FormExposed>,
-        ) => Partial<AllowedComponentProps & ComponentItemType & FormItemBase>
+        ) => Partial<
+          AllowedComponentProps & ComponentItemXOR & FormItemComponentPropsUnderlyingWithMeta
+        >
         model: string
       },
-    FormItemBase & {
+    FormItemComponentPropsUnderlyingWithMeta & {
       __others?: (
         formData: FormPropsData,
         exposed: Ref<FormExposed>,
       ) => Partial<
-        FormItemBase & {
+        FormItemComponentPropsUnderlyingWithMeta & {
           model?: string
         }
       >
@@ -109,7 +111,7 @@ export type FormItem = XOR<
     }
   >
 >
-export type FormProps = {
+export interface FormProps extends Omit<_FormProps, 'data' | 'labelAlign' | 'labelWidth'> {
   /**
    * @description: 是否自动计算 label 宽度，默认 true
    */
@@ -121,36 +123,38 @@ export type FormProps = {
    * @description: 是否在验证失败时显示错误信息
    */
   msgErrorWhenValidate?: boolean
-} & Omit<_FormProps, 'data' | 'labelAlign' | 'labelWidth'>
+}
 
-type _FormItem = FormItemBase &
-  XOR<
-    AllowedComponentProps &
-      ComponentItemType & {
-        model: string
-      },
-    SlotItem
-  >
-type _FormItemProps = AllowedComponentProps &
-  Omit<FormItemProps, 'labelWidth' | 'name'> & {
-    required?: boolean
-  }
 type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] &
   (T extends 'TInput' ? { component?: T } : { component: T })
-type ComponentItemType = UnionToNestedXOR<
-  keyof ComponentPropsMap extends infer T
-    ? T extends keyof ComponentPropsMap
-      ? ComponentConfig<T>
-      : never
-    : never
+type ComponentItemXOR = UnionToNestedXOR<
+  {
+    [K in keyof ComponentPropsMap]: ComponentConfig<K>
+  }[keyof ComponentPropsMap]
 >
-type FormItemBase = {
-  [K in keyof _FormItemProps as `_${K}`]: _FormItemProps[K] // formItem 的属性以下划线开头
-} & {
-  show?: boolean // 是否显示
+type ComponentOrSlot = XOR<
+  AllowedComponentProps &
+    ComponentItemXOR & {
+      model: string
+    },
+  SlotItem
+>
+interface FormItemComponentProps
+  extends AllowedComponentProps, Omit<FormItemProps, 'labelWidth' | 'name'> {
+  required?: boolean
+}
+type FormItemComponentPropsUnderlying = {
+  [K in keyof FormItemComponentProps as `_${K}`]: FormItemComponentProps[K]
+}
+interface FormItemComponentPropsUnderlyingWithMeta extends FormItemComponentPropsUnderlying {
+  /**
+   * @description: 是否显示
+   */
+  show?: boolean
 }
 type FormPropsData = Record<string, any>
 type GetFormData = () => FormPropsData
+type ItemWithoutOthers = ComponentOrSlot & FormItemComponentPropsUnderlyingWithMeta
 type SetFormData = (
   data: FormPropsData,
   options?: {
@@ -199,7 +203,7 @@ const formItemsConfig = computed(() => {
       }
 
       delete obj.__others
-      return obj as _FormItem
+      return obj as ItemWithoutOthers
     }
 
     return item
@@ -278,24 +282,24 @@ function getComponent(compo: string | undefined): Component {
   return TInput
 }
 
-function getComponentProps(item: _FormItem): Record<string, any> {
+function getComponentProps(item: ItemWithoutOthers): Record<string, any> {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (!key.startsWith('_') && !['component', 'model', 'show'].includes(key)) {
-      obj[key] = item[key as keyof _FormItem]
+      obj[key] = item[key as keyof ItemWithoutOthers]
     }
   }
 
   return obj
 }
 
-function getFormItemProps(item: _FormItem): FormItemProps {
+function getFormItemProps(item: ItemWithoutOthers): FormItemProps {
   const obj: Record<string, any> = {}
 
   for (const key in item) {
     if (key.startsWith('_')) {
-      obj[key.slice(1)] = item[key as keyof _FormItem]
+      obj[key.slice(1)] = item[key as keyof ItemWithoutOthers]
     }
   }
 
@@ -578,7 +582,7 @@ function calcLabelWidth() {
   })
 }
 
-provide('formData', reactive(props.data))
+provide('formData', props.data)
 provide('formExposed', formExposed)
 defineExpose({} as FormInstance)
 </script>
