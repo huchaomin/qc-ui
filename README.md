@@ -81,7 +81,6 @@
 - 注册FormItems
 - 开发 （使用adornment）numberRange 小数
 - hooks 一部分清理到 bus, bus 的eslint 有问题
-- cron 表达式
 - useList 去除缓存 拆开
 - TDateRangePicker 没有改变值也触发了 change 事件 issue
 - TDateRangePicker popupProps?.onVisibleChange 关闭时没有触发

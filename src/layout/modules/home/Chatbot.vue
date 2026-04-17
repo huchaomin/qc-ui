@@ -6,6 +6,7 @@ import type {
   SSEChunkData,
   TdChatbotApi,
   TdChatMessageConfig,
+  ThinkingContent,
 } from '@tdesign-vue-next/chat'
 import { getMessageContentForCopy, Chatbot as TChatbot } from '@tdesign-vue-next/chat'
 import robotOutlineUrl from 'img/robot-outline.svg?url'
@@ -227,9 +228,22 @@ async function handleCopy(data: any): Promise<void> {
 }
 
 onMounted(() => {
-  chatRef.value!.registerMergeStrategy('thinking', (chunk: AIMessageContent) => {
-    return chunk
-  })
+  chatRef.value!.registerMergeStrategy(
+    'thinking',
+    (chunk: ThinkingContent, existing?: ThinkingContent) => {
+      if (existing) {
+        return {
+          ...chunk,
+          data: {
+            ...chunk.data,
+            text: `${existing.data.text}\n${chunk.data.text}`,
+          },
+        }
+      }
+
+      return chunk
+    },
+  )
 })
 defineExpose({
   setMessageList,
