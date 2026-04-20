@@ -223,9 +223,7 @@ defineExpose({
 <style scoped>
 :deep() {
   .t-radio-group {
-    flex-direction: column;
     row-gap: 12px;
-    align-items: flex-start;
     width: 100%;
     margin-top: 16px;
 

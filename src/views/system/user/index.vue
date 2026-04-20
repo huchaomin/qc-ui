@@ -30,7 +30,6 @@ const formItemMap = {
     _rules: [
       {
         email: true,
-        message: '请填写正确的邮箱', // TODO
       },
     ],
     model: 'email',

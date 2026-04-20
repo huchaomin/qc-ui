@@ -65,8 +65,6 @@
 - vue-skills
 - [https://juejin.cn/post/7263810695459438653]
 - (泛型的联合类型分发)[https://juejin.cn/post/7228833037743915067#heading-18]
-- TDESIGN 错误邮箱提示语
-- FormItem 类型问题
 - $fileView
 - 头部菜单导航
 - 添加视频插件
@@ -85,9 +83,7 @@
 - TDateRangePicker 没有改变值也触发了 change 事件 issue
 - TDateRangePicker popupProps?.onVisibleChange 关闭时没有触发
 - TDateRangePicker 选择时间时没有触发 pick 事件
-- 10.角色管理：角色管理中，勾选主菜单时，无法同步全选其下所有子功能。
 - 换一个时间日期选择插件，不要用 tdesign 的
-- tree node 列宽度计算 (待验证)
 - 开发环境去掉全局注册组件
 
 

@@ -118,7 +118,7 @@ function handleRangeStartChange() {
 </script>
 
 <template>
-  <TRadioGroup v-model="configObject.type">
+  <TRadioGroup v-model="configObject.type" direction="vertical">
     <TRadio value="every">每{{ unit }}</TRadio>
     <TRadio value="range"
       >区间

@@ -195,7 +195,7 @@ watch(
 </script>
 
 <template>
-  <TRadioGroup v-model="configObject.type">
+  <TRadioGroup v-model="configObject.type" direction="vertical">
     <TRadio value="every">每天</TRadio>
     <TRadio value="weekLoop"
       >循环(按星期)

@@ -14,7 +14,6 @@ const formItemMap = {
     _rules: [
       {
         email: true,
-        message: '请填写正确的邮箱', // TODO
       },
     ],
     model: 'email',
@@ -100,9 +99,6 @@ const config: PageListProps = {
     {
       colKey: 'deptName',
       fixed: 'left',
-      resize: {
-        minWidth: 280,
-      },
       title: '部门名称',
     },
     {
