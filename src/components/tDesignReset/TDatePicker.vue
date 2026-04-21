@@ -1,4 +1,14 @@
 <script setup lang="ts">
+/**
+ * @description: onFocus onBlur picker 里面的年月时分秒confirm(能点的地方)都会触发， 不能滥用
+ * @description: clear 时, change 事件【抛出空字符串】在 clear 事件之前触发
+ * @description: pick 时, change 事件在 pick 事件之前触发
+ * @description: 多选时，每一个pick都会触发change事件
+ * @description: pick 时，与原值相同也会触发change事件
+ * @description: 时间控件也会触发pick事件
+ * @description: presetClick 时，change 事件在 presetClick 事件之前触发
+ * @return {*}
+ */
 import type {
   DatePickerProps as _DatePickerProps,
   DateMultipleValue,
@@ -27,7 +37,10 @@ const emit = defineEmits<{
   'update:modelValue': [value: DateMultipleValue | DateValue]
 }>()
 
-export type DatePickerProps = Omit<_DatePickerProps, 'defaultValue' | 'modelValue' | 'value'> & {
+export type DatePickerProps = Omit<
+  _DatePickerProps,
+  'defaultValue' | 'modelValue' | 'panelActiveDate' | 'range' | 'value'
+> & {
   modelValue: DateMultipleValue | DateValue
 }
 

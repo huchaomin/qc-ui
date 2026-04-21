@@ -217,7 +217,8 @@ function setInitFormDataValues() {
         ['TCheckboxGroup', 'TDateRangePicker', 'TRangeInput', 'TTagInput', 'TUpload'].includes(
           item.component as string,
         ) ||
-        (item.multiple === true && item.component === 'TSelect')
+        (item.multiple === true && item.component === 'TSelect') ||
+        (item.multiple === true && item.component === 'TDatePicker')
 
       // eslint-disable-next-line vue/no-mutating-props
       props.data[item.model] = isArr

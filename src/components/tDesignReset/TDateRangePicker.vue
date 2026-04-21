@@ -1,9 +1,14 @@
 <script setup lang="ts">
+/**
+ * @description: presetClick 时，change 事件在 presetClick 事件之前触发
+ * @description: pick 时, change 事件在 pick 事件之后触发，与 TDatePicker 不一样
+ * @description: confirm 时，change 事件在 confirm 事件之后触发
+ * @description: 时间控件不会触发 pick 事件，与 TDatePicker 不一样
+ * @return {*}
+ */
 import type {
   DateRangePickerProps as _DateRangePickerProps,
-  DateRangePickerPartial,
   DateRangeValue,
-  PopupProps,
   PresetRange,
 } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
@@ -13,6 +18,7 @@ defineOptions({
 })
 
 const props = withDefaults(defineProps<DateRangePickerProps>(), {
+  cancelRangeSelectLimit: true,
   clearable: true,
   disabled: undefined,
   firstDayOfWeek: 7,
@@ -42,9 +48,6 @@ export type DateRangePickerProps = Omit<
 }
 
 type OnChangeParams = Parameters<NonNullable<_DateRangePickerProps['onChange']>>
-type OnConfirmParams = Parameters<NonNullable<DateRangePickerProps['onConfirm']>>
-type OnPickParams = Parameters<NonNullable<DateRangePickerProps['onPick']>>
-type OnPopupVisibleChangeParams = Parameters<NonNullable<PopupProps['onVisibleChange']>>
 
 const otherProps = computed(() => {
   const obj: Partial<DateRangePickerProps> = {
@@ -66,10 +69,6 @@ function compoRef(instance: any) {
 
   vm.exposed = exposed
 }
-
-const hasPick = ref(false)
-const hasConfirm = ref(false)
-const partialArr = ref<DateRangePickerPartial[]>([])
 </script>
 
 <template>
@@ -80,47 +79,12 @@ const partialArr = ref<DateRangePickerPartial[]>([])
         mergeProps($attrs, {
           ...otherProps,
           onChange: (...args: OnChangeParams) => {
-            const trigger = args[1].trigger
-            if (
-              (hasPick || hasConfirm) &&
-              partialArr.length < 2 &&
-              ['confirm', 'pick'].includes(trigger as string)
-            ) {
-              return
-            }
             const value = args[0]
             if (value[0] === otherProps.modelValue![0] && value[1] === otherProps.modelValue![1]) {
               return
             }
             emit('update:modelValue', value)
             otherProps.onChange?.(...args)
-          },
-          onPick: (...args: OnPickParams) => {
-            hasPick = true
-            const partial = args[1].partial
-            if (!partialArr.includes(partial)) {
-              partialArr.push(partial)
-            }
-            otherProps.onPick?.(...args)
-          },
-          onConfirm: (...args: OnConfirmParams) => {
-            hasConfirm = true
-            const partial = args[0].partial
-            if (!partialArr.includes(partial)) {
-              partialArr.push(partial)
-            }
-            otherProps.onConfirm?.(...args)
-          },
-          popupProps: {
-            ...(otherProps.popupProps ?? {}),
-            onVisibleChange: (...args: OnPopupVisibleChangeParams) => {
-              if (args[0]) {
-                hasPick = false
-                hasConfirm = false
-                partialArr = []
-              }
-              otherProps.popupProps?.onVisibleChange?.(...args)
-            },
           },
           ref: compoRef,
         }),
