@@ -3,6 +3,27 @@ import Icon from '@/components/autoImport/Icon.vue'
 import TButton from '@/components/tDesignReset/TButton.vue'
 import { flatArrToTree } from '@/utils'
 
+const { data: menuTreeList, send: menuTreeListSend } = useRequest(
+  alovaInst.Get<Record<string, any>[]>('system/menu/list', {
+    transform: (res) => {
+      return flatArrToTree(
+        (res as Record<string, any>[]).map((item) => {
+          return {
+            ...item,
+            label: item.menuName as string,
+            value: item.menuId as string,
+          }
+        }),
+        {
+          idKey: 'value',
+        },
+      )
+    },
+  }),
+  {
+    initialData: [],
+  },
+)
 const pageListRef = useTemplateRef('pageListRef')
 const expandedTreeNodes = ref<Array<number | string>>([])
 const formItemMap = {
@@ -98,10 +119,15 @@ const formItemMap = {
     theme: 'row',
   },
   parentId: {
+    __others: () => {
+      return {
+        data: menuTreeList.value,
+      }
+    },
     _class: 'col-span-full',
     _label: '上级菜单',
     component: 'TTreeSelect',
-    data: 'systemMenuTree',
+    data: [],
     model: 'parentId',
     placeholder: '请选择上级菜单, 不选择的话, 默认为顶级菜单',
   },
@@ -269,7 +295,7 @@ const config: PageListProps = {
                     menuId: row.menuId,
                     parentId: isFalsy(formData.parentId) ? '0' : formData.parentId,
                   })
-                  useListRefresh('systemMenuTree')
+                  menuTreeListSend()
                   $msg.success('菜单修改成功')
                   pageListRef.value!.query()
                 },
@@ -314,7 +340,7 @@ const config: PageListProps = {
                 header: '新增菜单',
                 onConfirmCallback: async () => {
                   await alovaInst.Post('system/menu', await formRef.value!.validate())
-                  useListRefresh('systemMenuTree')
+                  menuTreeListSend()
                   $msg.success('菜单修改成功')
                   pageListRef.value!.query()
                 },
@@ -374,7 +400,7 @@ const config: PageListProps = {
               ...formData,
               parentId: isFalsy(formData.parentId) ? '0' : formData.parentId,
             })
-            useListRefresh('systemMenuTree')
+            menuTreeListSend()
             $msg.success('菜单添加成功')
             pageListRef.value!.query()
           },

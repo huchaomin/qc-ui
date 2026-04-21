@@ -198,8 +198,8 @@ const formItemsConfig = computed(() => {
   return props.items.map((item) => {
     if (typeof item.__others === 'function') {
       const obj = {
-        ...item.__others(props.data, formExposed),
         ...item,
+        ...item.__others(props.data, formExposed),
       }
 
       delete obj.__others

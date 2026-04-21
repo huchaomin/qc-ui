@@ -1,5 +1,5 @@
 import type { ComputedRef, Ref } from 'vue'
-import { flatArrToTree } from '@/utils'
+// import { flatArrToTree } from '@/utils'
 
 export type UseListAllKey = keyof typeof promiseMap
 export type UseListKey = Exclude<UseListAllKey, UseListTreeKey>
@@ -13,12 +13,12 @@ interface ListItem {
 type TreeKeys<T> = {
   [K in keyof T]: K extends `${string}Tree` ? K : never
 }[keyof T]
-interface TreeListItem {
-  [key: string]: any
-  children?: TreeListItem[]
-  label: string
-  value: string
-}
+// interface TreeListItem {
+//   [key: string]: any
+//   children?: TreeListItem[]
+//   label: string
+//   value: string
+// }
 
 const refMap = new Map<Partial<UseListAllKey>, Ref<ListItem[]>>()
 const loadingMap = new Map<Partial<UseListAllKey>, boolean>()
@@ -73,40 +73,23 @@ const promiseMap = {
         }))
       },
     }),
-  systemDeptTree: () =>
-    alovaInst.Get<TreeListItem[]>('system/dept/list', {
-      transform: (res) => {
-        return flatArrToTree(
-          (res as Record<string, any>[]).map((item) => {
-            return {
-              ...item,
-              label: item.deptName as string,
-              value: item.deptId as string,
-            }
-          }),
-          {
-            idKey: 'value',
-          },
-        ) as TreeListItem[]
-      },
-    }),
-  systemMenuTree: () =>
-    alovaInst.Get<TreeListItem[]>('system/menu/list', {
-      transform: (res) => {
-        return flatArrToTree(
-          (res as Record<string, any>[]).map((item) => {
-            return {
-              ...item,
-              label: item.menuName as string,
-              value: item.menuId as string,
-            }
-          }),
-          {
-            idKey: 'value',
-          },
-        ) as TreeListItem[]
-      },
-    }),
+  // systemMenuTree: () =>
+  //   alovaInst.Get<TreeListItem[]>('system/menu/list', {
+  //     transform: (res) => {
+  //       return flatArrToTree(
+  //         (res as Record<string, any>[]).map((item) => {
+  //           return {
+  //             ...item,
+  //             label: item.menuName as string,
+  //             value: item.menuId as string,
+  //           }
+  //         }),
+  //         {
+  //           idKey: 'value',
+  //         },
+  //       ) as TreeListItem[]
+  //     },
+  //   }),
   task: () =>
     alovaInst.Get<ListItem[]>('yq/task/getList', {
       transform: (res) => {

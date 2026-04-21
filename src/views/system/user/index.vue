@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TTable from '@/components/tDesignReset/TTable.vue'
 import { passwordReg, passwordRegMessage } from '@/utils/config'
+import { deptTreeList } from '../dept/utils'
 
 const { send } = useRequest(
   (id) =>
@@ -16,10 +17,15 @@ const { send } = useRequest(
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   deptId: {
+    __others: () => {
+      return {
+        data: deptTreeList.value,
+      }
+    },
     _label: '归属部门',
     _required: true,
     component: 'TTreeSelect',
-    data: 'systemDeptTree',
+    data: [],
     model: 'deptId',
     treeProps: {
       expandAll: true,

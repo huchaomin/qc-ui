@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { flatArrToTree } from '@/utils'
+import { deptTreeList, deptTreeListSend } from './utils'
 
 const pageListRef = useTemplateRef('pageListRef')
 const expandedTreeNodes = ref<Array<number | string>>([])
@@ -34,13 +35,14 @@ const formItemMap = {
   parentId: {
     __others: (formData) => {
       return {
+        data: deptTreeList.value,
         show: formData.parentId !== '0',
       }
     },
     _label: '上级部门',
     _required: true,
     component: 'TTreeSelect',
-    data: 'systemDeptTree',
+    data: [],
     model: 'parentId',
     treeProps: {
       expandAll: true,
@@ -173,7 +175,7 @@ const config: PageListProps = {
                     ...formData,
                     deptId: row.deptId,
                   })
-                  useListRefresh('systemDeptTree')
+                  deptTreeListSend()
                   $msg.success('部门修改成功')
                   pageListRef.value!.query()
                 },
@@ -211,7 +213,7 @@ const config: PageListProps = {
                 header: '新增部门',
                 onConfirmCallback: async () => {
                   await alovaInst.Post('system/dept', await formRef.value!.validate())
-                  useListRefresh('systemDeptTree')
+                  deptTreeListSend()
                   $msg.success('部门添加成功')
                   pageListRef.value!.query()
                 },
@@ -227,7 +229,7 @@ const config: PageListProps = {
               content: '确认删除吗',
               onConfirm: async () => {
                 await alovaInst.Delete(`system/dept/${row.deptId}`)
-                useListRefresh('systemDeptTree')
+                deptTreeListSend()
                 $msg('删除成功')
                 pageListRef.value!.query()
               },
@@ -273,7 +275,7 @@ const config: PageListProps = {
           header: '添加部门',
           onConfirmCallback: async () => {
             await alovaInst.Post('system/dept', await formRef.value!.validate())
-            useListRefresh('systemDeptTree')
+            deptTreeListSend()
             $msg.success('部门添加成功')
             pageListRef.value!.query()
           },
