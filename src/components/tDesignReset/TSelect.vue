@@ -6,7 +6,7 @@ import type {
   SelectOptionGroup,
   SelectValue,
 } from 'tdesign-vue-next'
-import type { UseListKey } from '@/hooks/useList'
+import type { UseListKey } from '@/bus/autoImport/useList.ts'
 import { mergeProps } from 'vue'
 
 export const selectPropsInit = {

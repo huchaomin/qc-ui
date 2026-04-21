@@ -4,7 +4,7 @@ import type {
   TreeOptionData,
   TreeSelectValue,
 } from 'tdesign-vue-next'
-import type { UseListTreeKey } from '@/hooks/useList'
+import type { UseListTreeKey } from '@/bus/autoImport/useList.ts'
 import { mergeProps } from 'vue'
 import { treePropsInit } from './TTree.vue'
 

@@ -138,9 +138,11 @@ const pageListRef = useTemplateRef('pageListRef')
 const config: PageListProps = {
   apis: {
     delete: {
+      callback: () => {
+        useListRefresh('eventRule')
+      },
       method: 'yq/eventRule',
       permission: 'yq:eventRule:remove',
-      useListRefreshKey: 'eventRule',
     },
     list: {
       method: 'yq/eventRule/list',

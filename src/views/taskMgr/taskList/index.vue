@@ -163,9 +163,11 @@ const formItemMap = {
 const config: PageListProps = {
   apis: {
     delete: {
+      callback: () => {
+        useListRefresh('task')
+      },
       method: 'yq/task',
       permission: 'yq:task:remove',
-      useListRefreshKey: 'task',
     },
     export: {
       method: 'yq/task/export',

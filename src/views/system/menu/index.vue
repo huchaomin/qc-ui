@@ -174,9 +174,11 @@ const formItemMap = {
 const config: PageListProps = {
   apis: {
     delete: {
+      callback: () => {
+        menuTreeListSend()
+      },
       method: 'system/menu',
       permission: 'system:menu:remove',
-      useListRefreshKey: 'systemMenuTree',
     },
     list: {
       method: (o: Record<string, any>) => {

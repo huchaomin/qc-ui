@@ -51,9 +51,11 @@ function getSlotMap({ fieldConfig }: { fieldConfig?: Array<Record<string, any>> 
 const config: PageListProps = {
   apis: {
     delete: {
+      callback: () => {
+        useListRefresh('warnPushRule')
+      },
       method: 'yq/warnPushRule',
       permission: 'yq:warnPushRule:remove',
-      useListRefreshKey: 'warnPushRule',
     },
     list: {
       method: 'yq/warnPushRule/list',

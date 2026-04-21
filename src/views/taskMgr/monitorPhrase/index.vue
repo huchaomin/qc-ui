@@ -191,9 +191,11 @@ const slotMap = {
 const config: PageListProps = {
   apis: {
     delete: {
+      callback: () => {
+        useListRefresh('monitorPhrase')
+      },
       method: 'yq/monitorPhrase',
       permission: 'yq:monitorPhrase:remove',
-      useListRefreshKey: 'monitorPhrase',
     },
     export: {
       method: 'yq/monitorPhrase/export',

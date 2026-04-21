@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { RadioGroupProps as _RadioGroupProps, RadioValue } from 'tdesign-vue-next'
-import type { UseListKey } from '@/hooks/useList'
+import type { UseListKey } from '@/bus/autoImport/useList.ts'
 import { mergeProps } from 'vue'
 
 export type RadioGroupProps = Omit<_RadioGroupProps, 'defaultValue' | 'options' | 'value'> & {

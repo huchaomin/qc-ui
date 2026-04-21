@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import type { UseListKey } from '@/bus/autoImport/useList.ts'
 import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
-import type { UseListKey } from '@/hooks/useList'
 
 defineOptions({
   inheritAttrs: false,

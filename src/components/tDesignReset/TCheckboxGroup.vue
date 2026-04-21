@@ -3,7 +3,7 @@ import type {
   CheckboxGroupProps as _CheckboxGroupProps,
   CheckboxGroupValue,
 } from 'tdesign-vue-next'
-import type { UseListKey } from '@/hooks/useList'
+import type { UseListKey } from '@/bus/autoImport/useList.ts'
 import { mergeProps } from 'vue'
 
 export type CheckboxGroupProps = Omit<_CheckboxGroupProps, 'defaultValue' | 'options' | 'value'> & {
