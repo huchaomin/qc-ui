@@ -105,7 +105,6 @@ const columns: TableCol[] = [
         return {
           _component: 'Select',
           clearable: false,
-          filterable: false,
           options: [
             {
               label: '+',

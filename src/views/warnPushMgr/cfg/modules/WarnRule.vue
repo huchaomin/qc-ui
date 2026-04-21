@@ -76,7 +76,6 @@ const columns: TableCol[] = [
           [
             h(TSelect, {
               clearable: false,
-              filterable: false,
               modelValue: row.ruleContent[0],
               onChange: (value) => {
                 row.ruleContent[0] = value
@@ -105,7 +104,6 @@ const columns: TableCol[] = [
             }),
             h(TSelect, {
               clearable: false,
-              filterable: false,
               modelValue: row.ruleContent[3],
               onChange: (value) => {
                 row.ruleContent[3] = value

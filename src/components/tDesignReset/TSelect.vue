@@ -12,7 +12,7 @@ import { mergeProps } from 'vue'
 export const selectPropsInit = {
   clearable: true,
   disabled: undefined,
-  filterable: true,
+  filterable: undefined,
   inputValue: undefined,
   keys: () => ({
     disabled: 'disabled',
@@ -91,7 +91,7 @@ const finallyOptions = computed(() => {
 
     arr = useDicOptions(props.dicCode).value
   } else {
-    arr = typeof props.options === 'string' ? useList(props.options).value : props.options
+    arr = typeof props.options === 'string' ? useList(props.options).value : props.options!
   }
 
   if (props.showCheckAll) {
@@ -146,6 +146,7 @@ const innerModelValue = computed(() => {
 const otherProps = computed(() => {
   const obj: Partial<SelectProps> = {
     ...props,
+    filterable: props.filterable ?? finallyOptions.value.length > 8,
   }
 
   delete obj.dicCode
