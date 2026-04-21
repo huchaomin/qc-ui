@@ -1,15 +1,15 @@
 import type { LoadingInstance } from 'tdesign-vue-next'
 import type { Ref } from 'vue'
 import type { CreateMessageFnType } from './$msg'
-import { useNProgress } from '@vueuse/integrations/useNProgress'
-import 'nprogress/nprogress.css'
-
-const { done, start } = useNProgress(undefined, {
-  showSpinner: false,
-  trickleSpeed: 100,
-})
+import { BProgress } from '@bprogress/core'
+// @ts-expect-error css 文件
+import '@bprogress/core/css'
 
 type LoadingText = Parameters<CreateMessageFnType>[0]
+BProgress.configure({
+  // indeterminate: true,
+  showSpinner: false,
+})
 
 class LoadingService {
   public isLoading = ref(false)
@@ -37,7 +37,10 @@ class LoadingService {
             })
           },
         })
-        start()
+
+        if (!BProgress.isStarted()) {
+          BProgress.start()
+        }
       }
     } else {
       this.isLoading.value = false
@@ -49,7 +52,7 @@ class LoadingService {
       this.loadingInstance!.hide()
       this.loadingInstance = null
       this.loadingText.value = undefined
-      done()
+      BProgress.done()
     }
   }
 

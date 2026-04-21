@@ -106,7 +106,6 @@ export default defineConfig(({ command, mode }) => {
     optimizeDeps: {
       include: [
         'tdesign-vue-next/dist/tdesign.min.js',
-        'nprogress',
         'path-browserify',
         'file-saver',
         'lodash-es',
@@ -115,8 +114,6 @@ export default defineConfig(({ command, mode }) => {
         'alova',
         'alova/fetch',
         'alova/vue',
-        '@vueuse/integrations/useNProgress',
-        '@vueuse/integrations/useCookies',
         '@iconify/vue',
         '@formkit/auto-animate',
         '@formkit/auto-animate/vue',
