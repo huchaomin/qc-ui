@@ -128,33 +128,6 @@ declare module 'vue' {
     TTypography: typeof import('tdesign-vue-next')['Typography'];
     // TUpload: typeof import('tdesign-vue-next')['Upload'];
     TWatermark: typeof import('tdesign-vue-next')['Watermark'];
-
-    TCard: (typeof import('@/components/tDesignReset/TCard.vue'))['default'];
-    TCheckboxGroup: (typeof import('@/components/tDesignReset/TCheckboxGroup.vue'))['default'];
-    TForm: (typeof import('@/components/tDesignReset/TForm.vue'))['default']
-    TImage: (typeof import('@/components/tDesignReset/TImage.vue'))['default']
-    TInput: (typeof import('@/components/tDesignReset/TInput.vue'))['default']
-    TRadioGroup: (typeof import('@/components/tDesignReset/TRadioGroup.vue'))['default']
-    TSelect: (typeof import('@/components/tDesignReset/TSelect.vue'))['default']
-    TTabPanel: (typeof import('@/components/tDesignReset/TTabPanel.vue'))['default']
-    TTable: (typeof import('@/components/tDesignReset/TTable.vue'))['default']
-    TButton: (typeof import('@/components/tDesignReset/TButton.vue'))['default']
-    TDateRangePicker: (typeof import('@/components/tDesignReset/TDateRangePicker.vue'))['default']
-    TPagination: (typeof import('@/components/tDesignReset/TPagination.vue'))['default']
-    TLink: (typeof import('@/components/tDesignReset/TLink.vue'))['default']
-    TTextarea: (typeof import('@/components/tDesignReset/TTextarea.vue'))['default']
-    TPopconfirm: (typeof import('@/components/tDesignReset/TPopconfirm.vue'))['default']
-    TCheckbox: (typeof import('@/components/tDesignReset/TCheckbox.vue'))['default']
-    TInputNumber: (typeof import('@/components/tDesignReset/TInputNumber.vue'))['default']
-    TSwitch: (typeof import('@/components/tDesignReset/TSwitch.vue'))['default']
-    TTreeSelect: (typeof import('@/components/tDesignReset/TTreeSelect.vue'))['default']
-    TUpload: (typeof import('@/components/tDesignReset/TUpload.vue'))['default']
-    TTree: (typeof import('@/components/tDesignReset/TTree.vue'))['default']
-    TRangeInput: (typeof import('@/components/tDesignReset/TRangeInput.vue'))['default']
-    TPopup: (typeof import('@/components/tDesignReset/TPopup.vue'))['default']
-    TDatePicker: (typeof import('@/components/tDesignReset/TDatePicker.vue'))['default']
-    TImageViewer: (typeof import('@/components/tDesignReset/TImageViewer.vue'))['default']
-    TTagInput: (typeof import('@/components/tDesignReset/TTagInput.vue'))['default']
   }
 }
 

@@ -1,5 +1,23 @@
 # readme
 
+## 开发环境 vs 生产环境
+
+开发环境
+- 入口文件 main.dev.ts
+- 没有reset的使用tdesign.min.js里面导出的组件,并注册为全局组件
+- 有reset使用自定义 resolvers自动导入
+- _${compo} 从@/plugins/tdesign-vue-next-for-dev引入
+- h(${compo}) 从@/plugins/tdesign-vue-next-for-dev引入
+- h(TForm) 从reset引入
+
+生产环境
+- 入口文件 main.prod.ts
+- 没有reset使用TDesignResolver自动导入
+- 有reset使用自定义 resolvers自动导入
+- _${compo} 从tdesign-vue-next引入
+- h(${compo}) 从tdesign-vue-next引入
+- h(TForm) 从reset引入
+
 ## 库
 
 - `@prettier/plugin-xml` 格式化xml、svg文件
@@ -80,7 +98,6 @@
 - 开发 （使用adornment）numberRange 小数
 - hooks 一部分清理到 bus, bus 的eslint 有问题
 - useList 去除缓存 拆开
-- 开发环境去掉全局注册组件
 
 
 ## todo 项目对比
@@ -100,31 +117,10 @@
 - 删除 system/user/deptTree 接口
 - monitor/job/index --> tool/job/index
 
-### 分析包大小
+## 分析包大小
 
 ```text
 // exclude
 **/*runtime-core.esm-bundler.js,**/*vue-router.mjs,**/*reactivity.esm-bundler.js
 ```
 
-- `tdesign-vue-next` 依赖 lodash-es
-
-### Lint Staged
-
-```bash
-npm i -D lint-staged simple-git-hooks
-
-// to active the hooks
-npx simple-git-hooks
-```
-
-```json
-{
-  "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
-  },
-  "lint-staged": {
-    "*": "eslint --fix",
-  },
-}
-```

@@ -20,6 +20,5 @@ Object.keys(compos).forEach((key) => {
 
   // 取消注册组件
   delete app._context.components[name]
-  app.component(name, compos[key]!)
 })
 app.mount('#app')

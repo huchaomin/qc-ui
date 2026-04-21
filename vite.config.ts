@@ -179,7 +179,7 @@ export default defineConfig(({ command, mode }) => {
           'vue-router',
           'pinia',
           '@vueuse/core',
-          ...tDesignAutoImport(isProduction), // const xxx = _${compo} 自动导入
+          ...tDesignAutoImport(isProduction),
           {
             from: 'alova/client',
             imports: ['useRequest', 'useWatcher', 'usePagination'],
@@ -261,18 +261,16 @@ export default defineConfig(({ command, mode }) => {
                   },
                   type: 'component' as const,
                 },
-
-                (componentName: string) => {
-                  if (tDesignResetComponentsName.includes(componentName)) {
-                    return {
-                      from: `@/components/tDesignReset/${componentName}.vue`,
-                      name: 'default',
-                    }
-                  }
-                },
               ]
             : []),
           (componentName) => {
+            if (tDesignResetComponentsName.includes(componentName)) {
+              return {
+                from: `@/components/tDesignReset/${componentName}.vue`,
+                name: 'default',
+              }
+            }
+
             if (autoImportComponentsSubFolderEntryName.includes(componentName)) {
               return {
                 from: `@/components/autoImport/${componentName}/Index.vue`,
@@ -281,7 +279,6 @@ export default defineConfig(({ command, mode }) => {
             }
           },
         ],
-        syncMode: 'overwrite',
       }),
       ...vitePlugins[isProduction ? 'production' : 'development'],
     ],

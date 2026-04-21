@@ -87,7 +87,8 @@
     "Popconfirm",
     "quartzcron",
     "secondarycontainer",
-    "tdesign"
+    "tdesign",
+    "wordcloud"
   ],
   "vue.inlayHints.vBindShorthand": true,
   "vue.inlayHints.destructuredProps": true,
