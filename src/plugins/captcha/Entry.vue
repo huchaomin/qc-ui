@@ -224,7 +224,7 @@ function refresh() {
         }"
       >
         <div
-          class="hover:text-white absolute top-0 left-0 flex -translate-x-px -translate-y-px cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-[var(--td-brand-color)]"
+          class="hover:text-white absolute top-0 left-0 flex -translate-x-px -translate-y-px cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-(--td-brand-color)"
           :style="{
             width: `${sizeConfig.barHeight}px`,
             height: `${sizeConfig.barHeight}px`,

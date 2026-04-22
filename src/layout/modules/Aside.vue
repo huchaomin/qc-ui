@@ -63,7 +63,7 @@ const width = computed(() => {
   }
 
   .t-menu {
-    @apply !py-0;
+    @apply py-0!;
   }
 
   .t-default-menu {

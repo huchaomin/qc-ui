@@ -1,5 +1,6 @@
 <!-- https://wordcloud2-js.timdream.org/#love -->
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import WordCloud from 'wordcloud'
 import { saveAs } from '@/utils/tool'
 
