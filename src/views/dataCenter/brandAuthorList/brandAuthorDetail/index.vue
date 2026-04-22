@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AuthorName from '@/bus/components/AuthorName.vue'
 import Weight from './modules/Weight.vue'
 
 const route = useRoute()
@@ -44,13 +43,21 @@ const formItemMap = {
     model: 'listId',
     options: 'name',
   },
-  nick_name: {
+  nickName: {
+    __others: (formData: Record<string, any>) => {
+      return {
+        onChange: (value: null | { id: null | string; label: string; value: string }) => {
+          formData.accName = value?.value ?? ''
+          formData.nickName = value?.label ?? ''
+        },
+      }
+    },
     _label: '账号名称',
     _required: true,
+    component: 'AuthorName',
     model: 'nickName',
-    slot: 'nick_name',
   },
-  nickName: {
+  nickNameInput: {
     _label: '账号名称',
     model: 'nickName',
   },
@@ -73,19 +80,8 @@ const formItemMap = {
   },
 } satisfies Record<string, FormItem>
 
-function getSlotMap(nickName: string = '') {
+function getSlotMap() {
   return {
-    nick_name: () =>
-      h(AuthorName, {
-        defaultInputValue: nickName,
-        onChange: (
-          value: null | { id: null | string; label: string; value: string },
-          formData: Record<string, any>,
-        ) => {
-          formData.accName = value?.value ?? ''
-          formData.nickName = value?.label ?? ''
-        },
-      }),
     weight: () => h(Weight),
   }
 }
@@ -226,13 +222,16 @@ const config: PageListProps = {
                       }),
                       items: [
                         formItemMap.listId,
-                        formItemMap.nick_name,
+                        {
+                          ...formItemMap.nickName,
+                          defaultInputValue: row.nickName,
+                        },
                         formItemMap.platform,
                         formItemMap.weight,
                       ],
                       ref: formRef,
                     },
-                    getSlotMap(row.nickName),
+                    getSlotMap(),
                   ),
                 header: '修改名单作者',
                 onConfirmCallback: async () => {
@@ -259,7 +258,7 @@ const config: PageListProps = {
     formItemMap.brandId,
     formItemMap.platform,
     formItemMap.type,
-    formItemMap.nickName,
+    formItemMap.nickNameInput,
     formItemMap.accName,
   ],
   initialFormData: {
@@ -279,7 +278,7 @@ const config: PageListProps = {
               {
                 items: [
                   formItemMap.listId,
-                  formItemMap.nick_name,
+                  formItemMap.nickName,
                   formItemMap.platform,
                   formItemMap.weight,
                 ],

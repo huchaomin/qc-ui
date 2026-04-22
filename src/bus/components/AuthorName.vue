@@ -3,25 +3,29 @@ import type { SelectInputProps } from 'tdesign-vue-next'
 import Icon from '@/components/autoImport/Icon.vue'
 import TButton from '@/components/tDesignReset/TButton.vue'
 
-const props = withDefaults(
-  defineProps<{
-    defaultInputValue?: string
-  }>(),
-  {
-    defaultInputValue: '',
-  },
-)
+defineOptions({
+  inheritAttrs: false,
+})
+
+const props = withDefaults(defineProps<AuthorNameProps>(), {
+  defaultInputValue: '',
+})
 const emit = defineEmits<{
-  change: [value: ListItem | null, formData: Record<string, any>]
+  change: [value: ChangeParams]
 }>()
 
+export interface AuthorNameProps {
+  defaultInputValue?: string
+  onChange?: (value: ChangeParams) => void
+}
+
+type ChangeParams = ListItem | null
 interface ListItem {
   id: null | string
   label: string
   value: string
 }
 
-const formData = inject<Record<string, any>>('formData')!
 const inputValue = ref(props.defaultInputValue)
 const selectValue = ref<ListItem | undefined>()
 const popupVisible = ref(false)
@@ -78,7 +82,7 @@ function onOptionClick(item: ListItem) {
   selectValue.value = item
   inputValue.value = item.label
   popupVisible.value = false
-  emit('change', item, formData)
+  emit('change', item)
 }
 
 const onPopupVisibleChange: SelectInputProps['onPopupVisibleChange'] = (val, context) => {
@@ -96,7 +100,7 @@ const onInputChange: SelectInputProps['onInputChange'] = (val) => {
   selectValue.value = undefined
   popupVisible.value = false
   options.value = []
-  emit('change', null, formData)
+  emit('change', null)
 }
 
 function append() {

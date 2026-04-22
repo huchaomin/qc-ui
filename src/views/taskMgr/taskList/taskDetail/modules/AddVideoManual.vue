@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import AuthorName from '@/bus/components/AuthorName.vue'
-
 const props = withDefaults(
   defineProps<{
     taskId: string
@@ -79,110 +77,101 @@ function handleSelectSearchType(): void {
 
   $confirm({
     body: () =>
-      h(
-        TForm,
-        {
-          data: reactive({
-            toolType: '1',
-            type: '1',
-          }),
-          items: [
-            {
-              __others: (formData: Record<string, any>) => {
-                return {
-                  onChange: () => {
-                    formData.keyword = ''
+      h(TForm, {
+        data: reactive({
+          toolType: '1',
+          type: '1',
+        }),
+        items: [
+          {
+            __others: (formData: Record<string, any>) => {
+              return {
+                onChange: () => {
+                  formData.keyword = ''
+                },
+              }
+            },
+            _label: '搜索类型',
+            component: 'TRadioGroup',
+            model: 'type',
+            options: [
+              {
+                label: '文字',
+                value: '1',
+              },
+              {
+                label: '图片',
+                value: '2',
+              },
+              {
+                label: '作者名称',
+                value: '3',
+              },
+            ],
+          },
+          {
+            __others: (formData: Record<string, any>) => {
+              return {
+                show: formData.type !== '3',
+              }
+            },
+            _label: '工具类型',
+            component: 'TRadioGroup',
+            dicCode: 'tool_type',
+            model: 'toolType',
+          },
+          {
+            __others: (formData: Record<string, any>) => {
+              return {
+                onChange: (value: null | { label: string; value: string }) => {
+                  formRef.value!.setFormData({
+                    keyword: value?.label ?? '',
+                    keywordValue: value?.value ?? '',
+                  })
+                },
+                show: formData.type === '3',
+              }
+            },
+            _label: '作者名称',
+            model: 'keywordValue',
+          },
+          {
+            __others: (formData: Record<string, any>) => {
+              return {
+                _rules: [
+                  {
+                    message: '请输入搜索词',
+                    required: ['1', '3'].includes(formData.type),
+                    trigger: 'blur' as const,
                   },
-                }
-              },
-              _label: '搜索类型',
-              component: 'TRadioGroup',
-              model: 'type',
-              options: [
-                {
-                  label: '文字',
-                  value: '1',
-                },
-                {
-                  label: '图片',
-                  value: '2',
-                },
-                {
-                  label: '作者名称',
-                  value: '3',
-                },
-              ],
+                ],
+                disabled: formData.type === '3',
+              }
             },
-            {
-              __others: (formData: Record<string, any>) => {
-                return {
-                  show: formData.type !== '3',
-                }
-              },
-              _label: '工具类型',
-              component: 'TRadioGroup',
-              dicCode: 'tool_type',
-              model: 'toolType',
+            _label: '搜索词',
+            model: 'keyword',
+          },
+          {
+            __others: (formData: Record<string, any>) => {
+              return {
+                show: formData.type === '2',
+              }
             },
-            {
-              __others: (formData: Record<string, any>) => {
-                return {
-                  show: formData.type === '3',
-                }
-              },
-              _label: '作者名称',
-              model: 'keywordValue',
-              slot: 'author_name',
+            _label: '上传图片',
+            _required: true,
+            autoUpload: true,
+            component: 'TUpload',
+            model: 'imageUrl',
+            requestMethod: {
+              biz: 'taskVideo/imageSearch',
             },
-            {
-              __others: (formData: Record<string, any>) => {
-                return {
-                  _rules: [
-                    {
-                      message: '请输入搜索词',
-                      required: ['1', '3'].includes(formData.type),
-                      trigger: 'blur' as const,
-                    },
-                  ],
-                  disabled: formData.type === '3',
-                }
-              },
-              _label: '搜索词',
-              model: 'keyword',
-            },
-            {
-              __others: (formData: Record<string, any>) => {
-                return {
-                  show: formData.type === '2',
-                }
-              },
-              _label: '上传图片',
-              _required: true,
-              autoUpload: true,
-              component: 'TUpload',
-              model: 'imageUrl',
-              requestMethod: {
-                biz: 'taskVideo/imageSearch',
-              },
-              theme: 'image',
-            },
-          ],
-          labelAlign: 'right',
-          layout: 'vertical',
-          ref: formRef,
-        },
-        {
-          author_name: () =>
-            h(AuthorName, {
-              onChange: (value: null | { label: string; value: string }) => {
-                formRef.value!.setFormData({
-                  keyword: value?.label ?? '',
-                  keywordValue: value?.value ?? '',
-                })
-              },
-            }),
-        },
-      ),
+            theme: 'image',
+          },
+        ],
+        labelAlign: 'right',
+        layout: 'vertical',
+        ref: formRef,
+      }),
     header: '选择搜索类型',
     onConfirmCallback: async () => {
       const formData = await formRef.value!.validate()

@@ -1,7 +1,6 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import type { TableCol } from '@/components/tDesignReset/TTable.d.ts'
-import AuthorName from '@/bus/components/AuthorName.vue'
 import HoneycombSummaryPhrases from './modules/HoneycombSummaryPhrases.vue'
 import MonitorWord from './modules/MonitorWord.vue'
 
@@ -73,14 +72,44 @@ const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
 const monitorWordReg =
   /^(?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\))(?:[+|](?:[^+|() ]+|\([^()|+ ]+(?:[|+][^()|+ ]+)*\)))*$/
 const formItemMap = {
-  author_name: {
+  authorName: {
     __others: (formData: Record<string, any>) => {
       return {
+        onChange: async (data: null | { id: null | string; label: string; value: string }) => {
+          if (data === null) {
+            return
+          }
+
+          if (
+            !isFalsy(formData.monitorWord) &&
+            formData.monitorWord.split(',').includes(data.label)
+          ) {
+            $msg.error('该作者已添加')
+            return
+          }
+
+          formData.monitorWord += `${isFalsy(formData.monitorWord) ? '' : ','}${data.label}`
+
+          if (isFalsy(data.id)) {
+            await alovaInst.Post(
+              'yq/author/saveAuthorInfo',
+              {
+                authorName: data.label,
+              },
+              {
+                meta: {
+                  useLoading: false,
+                },
+              },
+            )
+          }
+        },
         show: formData.wordsType === '2',
       }
     },
     _label: '作者名称',
-    slot: 'author_name',
+    component: 'AuthorName',
+    model: '',
   },
   filterWords: {
     __others: (formData: Record<string, any>) => {
@@ -151,41 +180,6 @@ const formItemMap = {
   },
 } satisfies Record<string, FormItem>
 const slotMap = {
-  author_name: () =>
-    h(AuthorName, {
-      onChange: async (
-        data: null | { id: null | string; label: string; value: string },
-        formData: Record<string, any>,
-      ) => {
-        if (data === null) {
-          return
-        }
-
-        if (
-          !isFalsy(formData.monitorWord) &&
-          formData.monitorWord.split(',').includes(data.label)
-        ) {
-          $msg.error('该作者已添加')
-          return
-        }
-
-        formData.monitorWord += `${isFalsy(formData.monitorWord) ? '' : ','}${data.label}`
-
-        if (isFalsy(data.id)) {
-          await alovaInst.Post(
-            'yq/author/saveAuthorInfo',
-            {
-              authorName: data.label,
-            },
-            {
-              meta: {
-                useLoading: false,
-              },
-            },
-          )
-        }
-      },
-    }),
   monitor_word: () => h(MonitorWord),
 }
 const config: PageListProps = {
@@ -236,7 +230,7 @@ const config: PageListProps = {
                         formItemMap.name,
                         formItemMap.status,
                         formItemMap.wordsType,
-                        formItemMap.author_name,
+                        formItemMap.authorName,
                         formItemMap.monitor_word,
                         formItemMap.filterWords,
                         formItemMap.reFilterWords,
@@ -305,7 +299,7 @@ const config: PageListProps = {
                   formItemMap.name,
                   formItemMap.status,
                   formItemMap.wordsType,
-                  formItemMap.author_name,
+                  formItemMap.authorName,
                   formItemMap.monitor_word,
                   formItemMap.filterWords,
                   formItemMap.reFilterWords,
