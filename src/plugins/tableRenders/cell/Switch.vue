@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { SwitchValue } from 'tdesign-vue-next'
 import type { SwitchProps as _SwitchProps } from '@/components/tDesignReset/TSwitch.vue'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 import { switchPropsInit } from '@/components/tDesignReset/TSwitch.vue'
 
 defineOptions({

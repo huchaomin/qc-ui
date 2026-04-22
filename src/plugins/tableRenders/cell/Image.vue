@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ImageProps as _ImageProps } from '@/components/tDesignReset/TImage.vue'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 import { imagePropsInit } from '@/components/tDesignReset/TImage.vue'
 
 defineOptions({

@@ -1,7 +1,3 @@
-/* eslint-disable ts/no-unsafe-member-access */
-/* eslint-disable ts/no-unsafe-call */
-/* eslint-disable ts/no-unsafe-argument */
-/* eslint-disable ts/no-unsafe-assignment */
 import type { DialogInstance } from 'tdesign-vue-next'
 import { ChatMarkdown } from '@tdesign-vue-next/chat'
 import CommentDetail from './components/commentDetail/Index.vue'
@@ -104,7 +100,7 @@ export function showAiHandlingSuggestions(props: Record<string, any>): void {
           id,
           reqContent: `标题：${props.title ?? ''}
 内容核心观点：${props.coreViewpoints ?? ''}
-内容情绪：${useDicLabel('mood_level', props.moodLevel).value}`, // mood_level 在外面已经请求出来了
+内容情绪：${useDicLabel('mood_level', props.moodLevel as string).value}`, // mood_level 在外面已经请求出来了
         },
         {
           meta: {

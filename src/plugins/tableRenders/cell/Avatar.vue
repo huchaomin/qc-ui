@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AvatarProps as _AvatarProps } from 'tdesign-vue-next'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 
 defineOptions({
   inheritAttrs: false,

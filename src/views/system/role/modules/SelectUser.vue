@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableCol } from '@/components/tDesignReset/TTable.vue'
+import type { TableCol } from '@/components/tDesignReset/TTable.d.ts'
 
 const props = withDefaults(
   defineProps<{

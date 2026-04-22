@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 
 export interface DicLabelProps {
   dicCode: string

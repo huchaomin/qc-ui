@@ -10,8 +10,8 @@ const { data: menuTreeList, send: menuTreeListSend } = useRequest(
         (res as Record<string, any>[]).map((item) => {
           return {
             ...item,
-            label: item.menuName as string,
-            value: item.menuId as string,
+            label: item.menuName,
+            value: item.menuId,
           }
         }),
         {

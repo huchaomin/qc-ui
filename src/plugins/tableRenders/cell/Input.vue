@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { InputValue } from 'tdesign-vue-next'
 import type { InputProps as _InputProps } from '@/components/tDesignReset/TInput.vue'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 import { inputPropsInit } from '@/components/tDesignReset/TInput.vue'
 
 defineOptions({

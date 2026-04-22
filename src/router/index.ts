@@ -3,6 +3,7 @@
  * hasNecessaryRoute 与 hasRoute
  */
 import type { RouteRecordSingleView, RouteRecordSingleViewWithChildren } from 'vue-router'
+import type { RouteRecordRaw } from '@/store/modules/router.ts'
 import {
   createRouter,
   createWebHistory,

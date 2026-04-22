@@ -192,28 +192,18 @@ export default defineConfig(({ command, mode }) => {
             '@/plugins/alova/index.ts': [['default', 'alovaInst']],
           },
           {
-            from: '@/components/tDesignReset/TForm.vue',
-            imports: ['FormItem', 'FormInstance', 'FormProps', 'FormExposed'],
+            from: '@/components/tDesignReset/TForm.d.ts',
+            imports: ['FormItem', 'FormInstance', 'FormExposed'],
             type: true,
           },
           {
-            from: '@/components/tDesignReset/TTable.vue',
-            imports: ['TableRowData', 'TableCol'],
-            type: true,
-          },
-          {
-            from: '@/components/tDesignReset/TUpload.vue',
-            imports: ['UploadFile', 'UploadInstanceFunctions'],
+            from: '@/components/tDesignReset/TTable.d.ts',
+            imports: ['TableCol'],
             type: true,
           },
           {
             from: '@/components/autoImport/PageList/Index.vue',
-            imports: ['PageListProps'],
-            type: true,
-          },
-          {
-            from: '@/store/modules/router.ts',
-            imports: ['RouteRecordRaw'],
+            imports: ['PageListProps'], // 如果想要在ts文件中使用，还是提取到.d.ts文件中比较好
             type: true,
           },
           autoImportStoreList,

@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { Ref } from 'vue'
-import type { TableCol } from '@/components/tDesignReset/TTable.vue'
+import type { TableCol } from '@/components/tDesignReset/TTable.d.ts'
 import AuthorName from '@/bus/components/AuthorName.vue'
 import HoneycombSummaryPhrases from './modules/HoneycombSummaryPhrases.vue'
 import MonitorWord from './modules/MonitorWord.vue'

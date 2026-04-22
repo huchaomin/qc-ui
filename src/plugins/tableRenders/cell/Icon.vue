@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { IconProps as _IconProps } from '@/components/autoImport/Icon.vue'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 import Icon from '@/components/autoImport/Icon.vue'
 
 defineOptions({

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 
 defineOptions({
   inheritAttrs: false,

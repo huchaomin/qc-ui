@@ -1,20 +1,20 @@
-import type { TableCol } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext, TableCol } from '@/components/tDesignReset/TTable.d.ts'
 import LiveInfo from '../components/LiveInfo.vue'
 
 export function useAuthorNameColumn({ colKey = 'authorName', useLink = true } = {}): TableCol {
   const router = useRouter()
 
   return {
-    cell: (_, { row }) => {
+    cell: (_, { row }: CellRenderContext) => {
       if (useLink && router.hasRoute('BrandAuthorDetail')) {
         return {
-          _component: 'Link',
+          _component: 'Link' as const,
           disabled: isFalsy(_get(row, 'authorCode')),
           onClick: () => {
             void router.push({
               name: 'BrandAuthorDetail',
               query: {
-                authorCode: (row as Record<string, any>).authorCode as string,
+                authorCode: row.authorCode as string,
               },
             })
           },
@@ -22,7 +22,7 @@ export function useAuthorNameColumn({ colKey = 'authorName', useLink = true } = 
       }
 
       return {
-        _component: 'Default',
+        _component: 'Default' as const,
       }
     },
     colKey,
@@ -33,7 +33,7 @@ export function useEventNameColumn({ colKey = 'eventName', useLink = true } = {}
   const router = useRouter()
 
   return {
-    cell: (_, { row }) => {
+    cell: (_, { row }: CellRenderContext) => {
       if (useLink && router.hasRoute('EventDetail')) {
         return {
           _component: 'Link',
@@ -41,7 +41,7 @@ export function useEventNameColumn({ colKey = 'eventName', useLink = true } = {}
             const url = router.resolve({
               name: 'EventDetail',
               query: {
-                id: (row as Record<string, any>).id as string,
+                id: row.id as string,
               },
             })
 
@@ -62,9 +62,7 @@ export function useTaskNameNameColumn({ colKey = 'name', useLink = true } = {}):
   const router = useRouter()
 
   return {
-    cell: (_, { row: _row }) => {
-      const row = _row as Record<string, any>
-
+    cell: (_, { row }: CellRenderContext) => {
       if (useLink) {
         // 直播监控任务
         if (row.taskType === 3) {
@@ -117,8 +115,7 @@ export function useVideoTitleColumn(option?: {
   const router = useRouter()
 
   return {
-    cell: (_, { row: _row }) => {
-      const row = _row as Record<string, any>
+    cell: (_, { row }: CellRenderContext) => {
       const contentType = _get(row, 'contentType') as number
 
       if (useLink && !isFalsy(contentType)) {

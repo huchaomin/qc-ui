@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FormProps } from '@/components/tDesignReset/TForm.vue'
+import type { FormProps } from '@/components/tDesignReset/TForm.d.ts'
 import { mergeProps } from 'vue'
 import { formPropsInit } from '@/components/tDesignReset/TForm.vue'
 

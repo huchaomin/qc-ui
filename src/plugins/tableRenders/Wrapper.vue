@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import type { CellRenderContext, TitleRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext, TitleRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 
 defineOptions({
   inheritAttrs: false,

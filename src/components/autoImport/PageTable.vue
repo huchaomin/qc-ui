@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { AlovaGenerics, Method } from 'alova'
-import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
+import type { TableProps } from '@/components/tDesignReset/TTable.d.ts'
 import { tablePropsInit } from '@/components/tDesignReset/TTable.vue'
 import { getFilterEmptyParamsObj, getParamsString } from '@/plugins/alova/index'
 
@@ -13,7 +13,7 @@ export type PageTableProps = {
     | ((params: Record<string, any>) => Method<
         Omit<AlovaGenerics, 'Responded'> & {
           Responded: {
-            rows: TableRowData[]
+            rows: Record<string, any>[]
             total: number
           }
         }
@@ -50,7 +50,7 @@ const listMethod = computed(() => {
   if (typeof props.method === 'string') {
     return (params: Record<string, any>) =>
       alovaInst.Get<{
-        rows: TableRowData[]
+        rows: Record<string, any>[]
         total: number
       }>(props.method as string, {
         params,

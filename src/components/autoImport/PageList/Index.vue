@@ -3,8 +3,8 @@ import type { Method } from 'alova'
 import type { PageTableProps } from '@/components/autoImport/PageTable.vue'
 import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
 import type { CardProps } from '@/components/tDesignReset/TCard.vue'
-import type { FormProps } from '@/components/tDesignReset/TForm.vue'
-import type { TableProps, TableRowData } from '@/components/tDesignReset/TTable.vue'
+import type { FormProps } from '@/components/tDesignReset/TForm.d.ts'
+import type { TableProps } from '@/components/tDesignReset/TTable.d.ts'
 import type { CellConfigObj } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import PageQuery from './PageQuery.vue'
@@ -13,7 +13,7 @@ export interface PageListProps {
   apis: {
     delete?: {
       callback?: () => void
-      method: ((rows: TableRowData[]) => Method) | string
+      method: ((rows: Record<string, any>[]) => Method) | string
       permission?: string
       showBatch?: boolean
     }
@@ -148,7 +148,7 @@ const finallyColumns = computed(() => {
   if (deleteConfig !== undefined) {
     const _operationColumnIndex = props.columns.findIndex((c) => c.colKey === '_operation')
     const copyColumns = [...props.columns]
-    const rowDelete = ({ row }: { row: TableRowData }) => ({
+    const rowDelete = ({ row }: { row: Record<string, any> }) => ({
       default: '删除',
       permission: deleteConfig.permission,
       popconfirm: {

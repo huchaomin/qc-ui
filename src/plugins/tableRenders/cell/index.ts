@@ -15,7 +15,7 @@ import type { SelectProps } from './Select.vue'
 import type { SwitchProps } from './Switch.vue'
 import type { TypographyTextProps } from './TypographyText.vue'
 import type { TypographyTextLinkProps } from './TypographyTextLink.vue'
-import type { CellRenderContext, TableCol, TNodeFn } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext, TableCol, TNodeFn } from '@/components/tDesignReset/TTable.d.ts'
 import Wrapper from '../Wrapper.vue'
 
 export type CellConfigFn = (

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ImageViewerProps as _ImageViewerProps } from '@/components/tDesignReset/TImageViewer.vue'
-import type { CellRenderContext } from '@/components/tDesignReset/TTable.vue'
+import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
 import { imageViewerPropsInit } from '@/components/tDesignReset/TImageViewer.vue'
 
 defineOptions({

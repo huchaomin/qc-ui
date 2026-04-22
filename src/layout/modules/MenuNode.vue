@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { RouteRecordRaw } from '@/store/modules/router.ts'
+
 const { level = 0 } = defineProps<{
   level?: number
   model: RouteRecordRaw[]

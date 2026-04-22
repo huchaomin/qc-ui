@@ -87,6 +87,7 @@ export default antfu(
       },
       // type checked rules
       overridesTypeAware: {
+        'ts/no-unsafe-assignment': 'off',
         'ts/promise-function-async': 'off',
         'ts/strict-boolean-expressions': [
           'error',

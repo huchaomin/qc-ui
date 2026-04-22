@@ -4,7 +4,7 @@ import type {
   TableCol,
   TitleRenderContext,
   TitleTNodeFn,
-} from '@/components/tDesignReset/TTable.vue'
+} from '@/components/tDesignReset/TTable.d.ts'
 import Wrapper from '../Wrapper.vue'
 
 export type TitleConfigFn = (
