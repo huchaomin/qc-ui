@@ -17,6 +17,7 @@ import type {
   SlotItem,
 } from './TForm.d.ts'
 import { mergeProps } from 'vue'
+import busFormItems from '@/bus/busFormItems.ts'
 import TCheckbox from './TCheckbox.vue'
 import TCheckboxGroup from './TCheckboxGroup.vue'
 import TDatePicker from './TDatePicker.vue'
@@ -126,12 +127,9 @@ const componentMapInReset = {
 
 function getComponent(compo: string | undefined): Component {
   if (typeof compo === 'string') {
-    if (compo === 'Cron') {
+    if (busFormItems.has(compo)) {
       if (!asyncComponentCache.has(compo)) {
-        asyncComponentCache.set(
-          compo,
-          defineAsyncComponent(() => import('@/components/autoImport/Cron/Index.vue')),
-        )
+        asyncComponentCache.set(compo, defineAsyncComponent(busFormItems.get(compo)!))
       }
 
       return asyncComponentCache.get(compo)!

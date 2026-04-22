@@ -19,7 +19,7 @@ import type { TextareaProps } from './TTextarea.vue'
 import type { TreeProps } from './TTree.vue'
 import type { TreeSelectProps } from './TTreeSelect.vue'
 import type { UploadProps } from './TUpload.vue'
-import type { CronProps } from '@/components/autoImport/Cron/Index.vue'
+import type { busComponentPropsMap } from '@/bus/busFormItems.ts'
 
 export type FormExposed = (ComponentPublicInstance & FormInstance) | null
 export interface FormInstance extends Omit<_FormInstanceFunctions, 'validate' | 'validateOnly'> {
@@ -87,8 +87,7 @@ type ComponentOrSlot = XOR<
     },
   SlotItem
 >
-interface ComponentPropsMap {
-  Cron: Omit<CronProps, 'modelValue'>
+interface ComponentPropsMap extends busComponentPropsMap {
   TCheckbox: Omit<CheckboxProps, 'modelValue'>
   TCheckboxGroup: Omit<CheckboxGroupProps, 'modelValue'>
   TDatePicker: Omit<DatePickerProps, 'modelValue'>
