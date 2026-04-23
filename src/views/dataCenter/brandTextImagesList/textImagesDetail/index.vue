@@ -22,10 +22,7 @@ const tab = ref(tabs[0]!.value)
 provide('data', data)
 
 function showAiHandlingSuggestions(): void {
-  _showAiHandlingSuggestions({
-    ...data.value!,
-    contentId: data.value!.textId,
-  })
+  _showAiHandlingSuggestions(data.value!)
 }
 </script>
 

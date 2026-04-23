@@ -106,6 +106,7 @@ export function showAiHandlingSuggestions(props: Record<string, any>): void {
           meta: {
             useLoading: '处理建议生成中...',
           },
+          timeout: 0,
         },
       ),
     {
