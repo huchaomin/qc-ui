@@ -29,6 +29,7 @@ import _TDesign, {
   Select as _Select,
   Switch as _Switch,
   TabPanel as _TabPanel,
+  Tag as _Tag,
   TagInput as _TagInput,
   Text as _Text,
   Textarea as _Textarea,
@@ -72,6 +73,7 @@ const InputAdornment = _InputAdornment as (typeof import('tdesign-vue-next'))['I
 const Text = _Text as (typeof import('tdesign-vue-next'))['Text']
 const ImageViewer = _ImageViewer as (typeof import('tdesign-vue-next'))['ImageViewer']
 const TagInput = _TagInput as (typeof import('tdesign-vue-next'))['TagInput']
+const Tag = _Tag as (typeof import('tdesign-vue-next'))['Tag']
 
 export {
   Button,
@@ -101,6 +103,7 @@ export {
   Select,
   Switch,
   TabPanel,
+  Tag,
   TagInput,
   TDesign,
   Text,

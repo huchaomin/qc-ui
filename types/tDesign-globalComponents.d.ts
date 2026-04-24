@@ -111,7 +111,7 @@ declare module 'vue' {
     // TTable: typeof import('tdesign-vue-next')['Table'];
     // TTabPanel: typeof import('tdesign-vue-next')['TabPanel'];
     TTabs: typeof import('tdesign-vue-next')['Tabs'];
-    TTag: typeof import('tdesign-vue-next')['Tag'];
+    // TTag: typeof import('tdesign-vue-next')['Tag'];
     // TTagInput: typeof import('tdesign-vue-next')['TagInput'];
     TTypographyText: typeof import('tdesign-vue-next')['Text'];
     // TTextarea: typeof import('tdesign-vue-next')['Textarea'];
