@@ -146,8 +146,8 @@ function handleReportGenerate(): void {
       <TButton class="ml-3!" theme="default" @click="handleDataDownload">下载分析数据</TButton>
       <TButton theme="default" @click="handleReportGenerate">舆情报告生成</TButton>
     </div>
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
-      <TCard title="热度" :header-bordered="false" body-class-name="pt-0!" class="ml-1!">
+    <div class="ml-1 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-4">
+      <TCard title="热度" :header-bordered="false" body-class-name="pt-0!">
         <TStatistic :value="Number(taskViewData.hotCount ?? 0)"></TStatistic>
       </TCard>
       <TCard title="互动量" :header-bordered="false" body-class-name="pt-0!">

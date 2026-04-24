@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const router = useRouter()
 const formItemMap = {
   brandId: {
     _label: '品牌',
@@ -45,19 +46,19 @@ const config: PageListProps = {
     },
     {
       colKey: 'totalCount',
-      title: '批次内总条数',
-    },
-    {
-      colKey: 'unlabeledCount',
-      title: '未打标条数',
+      title: '总数据量',
     },
     {
       colKey: 'dictLabeledCount',
-      title: '字典标签已写入条数',
+      title: '已聚类',
+    },
+    {
+      colKey: 'unlabeledCount',
+      title: '未聚类',
     },
     {
       colKey: 'distinctCategoryCount',
-      title: '去重后的类别数量',
+      title: '类别数量',
     },
     {
       colKey: 'secondLayerLabeledCount',
@@ -110,11 +111,32 @@ const config: PageListProps = {
       colKey: 'updateTime',
       title: '更新时间',
     },
+    {
+      cell: {
+        _component: 'Buttons',
+        buttons: [
+          ({ row }) => ({
+            default: '详情',
+            onClick: () => {
+              router.push({
+                name: 'ClusterDataDetail',
+                query: {
+                  id: row.id as string,
+                },
+              })
+            },
+            permission: 'yq:labelBatch:query',
+          }),
+        ],
+      },
+      colKey: '_operation',
+      title: '操作',
+    },
   ],
   formItems: [formItemMap.brandId, formItemMap.publishTime],
 }
 </script>
 
 <template>
-  <PageList ref="pageListRef" v-bind="config"></PageList>
+  <PageList v-bind="config"></PageList>
 </template>

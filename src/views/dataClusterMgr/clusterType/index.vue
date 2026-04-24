@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   sortOrder: {
@@ -50,7 +51,30 @@ const config: PageListProps = {
       colKey: 'typeCode',
       title: '类型编码',
     },
-    useClusterTypeNameColumn(),
+    {
+      cell: (_, { row }) => {
+        if (router.hasRoute('ClusterCategoryMgr')) {
+          return {
+            _component: 'Link',
+            onClick: () => {
+              useExcludeKPnameStore().add('ClusterCategoryMgr')
+              void router.push({
+                name: 'ClusterCategoryMgr',
+                query: {
+                  typeId: row.id as string,
+                },
+              })
+            },
+          }
+        }
+
+        return {
+          _component: 'Default',
+        }
+      },
+      colKey: 'typeName',
+      title: '类型名称',
+    },
     {
       colKey: 'typeDesc',
       title: '类型描述',

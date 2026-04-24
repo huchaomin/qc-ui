@@ -29,34 +29,6 @@ export function useAuthorNameColumn({ colKey = 'authorName', useLink = true } = 
     title: '作者名称',
   }
 }
-export function useClusterTypeNameColumn({ colKey = 'typeName', useLink = true } = {}): TableCol {
-  const router = useRouter()
-
-  return {
-    cell: (_, { row }: CellRenderContext) => {
-      if (useLink && router.hasRoute('ClusterCategoryMgr')) {
-        return {
-          _component: 'Link' as const,
-          onClick: () => {
-            useExcludeKPnameStore().add('ClusterCategoryMgr')
-            void router.push({
-              name: 'ClusterCategoryMgr',
-              query: {
-                typeId: row.id as string,
-              },
-            })
-          },
-        }
-      }
-
-      return {
-        _component: 'Default' as const,
-      }
-    },
-    colKey,
-    title: '类型名称',
-  }
-}
 export function useEventNameColumn({ colKey = 'eventName', useLink = true } = {}): TableCol {
   const router = useRouter()
 

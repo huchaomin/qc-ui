@@ -104,6 +104,7 @@ function compoRef(instance: any) {
     display: flex;
     align-items: center;
     min-height: 32px;
+    color: inherit;
   }
 }
 </style>

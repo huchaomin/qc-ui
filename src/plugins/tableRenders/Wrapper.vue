@@ -91,7 +91,7 @@ useMutationObserver(
 </script>
 
 <template>
-  <div class="inline-flex max-w-full">
+  <div class="inline-flex max-w-full align-middle">
     <TTooltip v-if="showTooltip" :content="tooltipContent">
       <div ref="wrapperRef" class="overflow-hidden text-ellipsis whitespace-nowrap">
         <slot></slot>
