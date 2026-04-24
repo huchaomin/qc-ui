@@ -1,7 +1,30 @@
 <script setup lang="ts">
 import type { SortInfo } from 'tdesign-vue-next'
 import { addFollow, fillOriginalUrl, updateColumnStatus, warnByHand } from '@/bus'
+import {
+  clusterCategoryList,
+  clusterCategoryListSend,
+} from '@/views/dataClusterMgr/clusterCategory/utils'
 import ContentSlice from './videoDetail/modules/ContentSlice.vue'
+
+const props = withDefaults(
+  defineProps<{
+    brandId?: string
+    isInClusterDataDetail?: boolean
+    publishTime?: [string, string]
+  }>(),
+  {
+    isInClusterDataDetail: false,
+  },
+)
+
+onActivated(() => {
+  clusterCategoryListSend()
+})
+
+if (props.isInClusterDataDetail) {
+  clusterCategoryListSend()
+}
 
 const router = useRouter()
 const pageListRef = useTemplateRef('pageListRef')
@@ -13,19 +36,25 @@ const sort = ref<SortInfo | undefined>({
   sortBy: 'publishTime',
 })
 
-watch(
-  () => brandOptions.value[0]?.value,
-  (brandId) => {
-    if (brandId) {
-      nextTick(() => {
-        pageListRef.value!.query()
-      })
-    }
-  },
-  {
-    immediate: true,
-  },
-)
+if (props.isInClusterDataDetail) {
+  nextTick(() => {
+    pageListRef.value!.query()
+  })
+} else {
+  watch(
+    () => brandOptions.value[0]?.value,
+    (brandId) => {
+      if (brandId) {
+        nextTick(() => {
+          pageListRef.value!.query()
+        })
+      }
+    },
+    {
+      immediate: true,
+    },
+  )
+}
 
 const formItemMap = {
   analysisModel: {
@@ -98,6 +127,14 @@ const formItemMap = {
   },
 } satisfies Record<string, FormItem>
 const config: PageListProps = {
+  ...(props.isInClusterDataDetail
+    ? {
+        cardProps: {
+          bodyClassName: 'p-0!',
+          shadow: false,
+        },
+      }
+    : {}),
   apis: {
     delete: {
       method: 'data/brandContentInfo',
@@ -109,19 +146,26 @@ const config: PageListProps = {
           params: {
             ...o,
             contentType: '1',
-            endTime:
-              o.publishTime?.[1] !== undefined
+            endTime: props.isInClusterDataDetail
+              ? props.publishTime![1]
+              : o.publishTime?.[1] !== undefined
                 ? dayjs(o.publishTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
             publishTime: undefined,
-            startTime:
-              o.publishTime?.[0] !== undefined
+            startTime: props.isInClusterDataDetail
+              ? props.publishTime![0]
+              : o.publishTime?.[0] !== undefined
                 ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
                 : '',
             ...(sort.value
               ? {
                   isAsc: sort.value!.descending ? 'desc' : 'asc',
                   orderByColumn: _snakeCase(sort.value!.sortBy),
+                }
+              : {}),
+            ...(props.isInClusterDataDetail
+              ? {
+                  brandId: props.brandId,
                 }
               : {}),
           },
@@ -160,6 +204,15 @@ const config: PageListProps = {
       colKey: 'createTime',
       sorter: true,
       title: '创建时间',
+    },
+    {
+      cell: reactive({
+        _component: 'OptionLabel' as const,
+        multiple: true,
+        options: clusterCategoryList,
+      }),
+      colKey: 'clusterTags',
+      title: '聚类标签',
     },
     {
       cell: (_, { row }) => {
@@ -468,12 +521,12 @@ const config: PageListProps = {
   ],
   formItems: [
     formItemMap.title,
-    formItemMap.brandId,
+    ...(props.isInClusterDataDetail ? [] : [formItemMap.brandId]),
     formItemMap.platform,
     formItemMap.authorName,
     formItemMap.dealMark,
     formItemMap.relationType,
-    formItemMap.publishTime,
+    ...(props.isInClusterDataDetail ? [] : [formItemMap.publishTime]),
     formItemMap.handAdd,
     formItemMap.markModel,
     formItemMap.analysisStatus,
@@ -481,10 +534,17 @@ const config: PageListProps = {
     formItemMap.moodScore,
     formItemMap.moodLevel,
   ],
-  initialFormData: reactive({
-    brandId: computed(() => brandOptions.value[0]?.value),
-    publishTime: [dayjs().subtract(1, 'month').format('YYYY-MM-DD'), dayjs().format('YYYY-MM-DD')],
-  }),
+  initialFormData: reactive(
+    props.isInClusterDataDetail
+      ? {}
+      : {
+          brandId: computed(() => brandOptions.value[0]?.value),
+          publishTime: [
+            dayjs().subtract(1, 'month').format('YYYY-MM-DD'),
+            dayjs().format('YYYY-MM-DD'),
+          ],
+        },
+  ),
   isFirstQueryByParent: true,
   operations: [
     reactive({
@@ -542,6 +602,13 @@ const config: PageListProps = {
     }),
   ],
   tableOtherProps: reactive({
+    ...(props.isInClusterDataDetail
+      ? {
+          flexHeight: false,
+          showColumnConfigBtn: false,
+          showToggleFullscreenBtn: false,
+        }
+      : {}),
     onSortChange: (val: SortInfo | SortInfo[]) => {
       sort.value = val as SortInfo
       pageListRef.value!.query()

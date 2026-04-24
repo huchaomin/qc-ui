@@ -16,7 +16,7 @@ const title = computed(() => {
 const tabs = [
   {
     component: markRaw(DetailList),
-    label: '事件详情列表',
+    label: '聚类数据批次详情',
     value: 'detailList',
   },
   // {
@@ -28,6 +28,7 @@ const tabs = [
 const tab = ref(tabs[0]!.value)
 
 provide('id', id)
+provide('data', data)
 </script>
 
 <template>

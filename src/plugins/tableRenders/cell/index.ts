@@ -64,11 +64,9 @@ export function getCellRender(_config: TableCol['cell']): TNodeFn {
   //   return _config
   // }
 
-  // eslint-disable-next-line ts/no-unsafe-assignment
-  const config = _config === undefined ? { _component: 'Default' } : _config
+  const config = _config === undefined ? ({ _component: 'Default' } as CellConfigObj) : _config
 
   if (isCellObjConfig(config)) {
-    // eslint-disable-next-line ts/no-unsafe-assignment
     const { _component, ...restConfig } = config
 
     return (h: typeof import('vue').h, context: Parameters<TNodeFn>[1]) => {
@@ -82,12 +80,9 @@ export function getCellRender(_config: TableCol['cell']): TNodeFn {
   }
 
   return (h: typeof import('vue').h, context: Parameters<TNodeFn>[1]) => {
-    // @ts-expect-error 类型断言不准确
-    // eslint-disable-next-line ts/no-unsafe-assignment
     const result = config(h, context)
 
     if (isCellObjConfig(result)) {
-      // eslint-disable-next-line ts/no-unsafe-assignment
       const { _component, ...restConfig } = result
 
       return h(Wrapper, context, () => {
