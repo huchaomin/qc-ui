@@ -133,6 +133,7 @@ function handleSelectSearchType(): void {
               }
             },
             _label: '作者名称',
+            component: 'AuthorName',
             model: 'keywordValue',
           },
           {
