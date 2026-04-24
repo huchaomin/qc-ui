@@ -2,6 +2,8 @@
 import { flatArrToTree } from '@/utils'
 import { deptTreeList, deptTreeListSend } from './utils'
 
+deptTreeListSend()
+
 const pageListRef = useTemplateRef('pageListRef')
 const expandedTreeNodes = ref<Array<number | string>>([])
 const formItemMap = {

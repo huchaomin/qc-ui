@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import TTable from '@/components/tDesignReset/TTable.vue'
 import { passwordReg, passwordRegMessage } from '@/utils/config'
-import { deptTreeList } from '../dept/utils'
+import { deptTreeList, deptTreeListSend } from '../dept/utils'
+
+onActivated(() => {
+  deptTreeListSend()
+})
 
 const { send } = useRequest(
   (id) =>

@@ -71,8 +71,31 @@ const pageTableRef = useTemplateRef('pageTableRef')
 const queryParams = ref<Record<string, any>>({})
 
 function doQuery() {
-  queryParams.value = _cloneDeep(pageQueryRef.value?.formData ?? {})
+  if (pageQueryRef.value === null) {
+    queryParams.value = {}
+    pageTableRef.value!.query()
+  } else {
+    pageQueryRef.value!.query()
+  }
+}
+
+function doReset() {
+  if (pageQueryRef.value === null) {
+    queryParams.value = {}
+    pageTableRef.value!.reset()
+  } else {
+    pageQueryRef.value!.reset()
+  }
+}
+
+function onQuery(formData: Record<string, any>) {
+  queryParams.value = _cloneDeep(formData)
   pageTableRef.value!.query()
+}
+
+function onReset(formData: Record<string, any>) {
+  queryParams.value = _cloneDeep(formData)
+  pageTableRef.value!.reset()
 }
 
 if (!props.isFirstQueryByParent) {
@@ -81,14 +104,10 @@ if (!props.isFirstQueryByParent) {
   })
 }
 
-function doReset() {
-  queryParams.value = _cloneDeep(pageQueryRef.value?.formData ?? {})
-  pageTableRef.value!.reset()
-}
-
 const selectedRows = computed(() => pageTableRef.value?.selectedRows ?? [])
 const selectedRowKeys = computed(() => pageTableRef.value?.selectedRowKeys ?? [])
 const finallyQueryParams = computed(() => pageTableRef.value?.finallyQueryParams)
+const currentQueryParams = computed(() => pageQueryRef.value?.formData)
 const batchDeleteProps = computed(() => {
   const config = props.apis.delete
 
@@ -211,6 +230,7 @@ const finallyFormItems = computed(() => {
 })
 
 defineExpose({
+  currentQueryParams,
   finallyQueryParams,
   query: doQuery,
   reset: doReset,
@@ -243,8 +263,8 @@ defineExpose({
       :data="initialFormData"
       :items="finallyFormItems"
       v-bind="formOtherProps"
-      @query="doQuery"
-      @reset="doReset"
+      @query="onQuery"
+      @reset="onReset"
     >
       <template
         v-for="k in Object.keys($slots).filter((key) => !key.startsWith('table-'))"

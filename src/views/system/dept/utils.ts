@@ -18,6 +18,7 @@ const { data: deptTreeList, send: deptTreeListSend } = useRequest(
     },
   }),
   {
+    immediate: false,
     initialData: [],
   },
 )
