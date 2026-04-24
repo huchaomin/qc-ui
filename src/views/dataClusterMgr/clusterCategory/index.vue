@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { clusterTypeList, clusterTypeListSend } from '../clusterTypeMgr/utils'
+import { clusterTypeList, clusterTypeListSend } from '../clusterType/utils'
 
 const route = useRoute()
 const pageListRef = useTemplateRef('pageListRef')
