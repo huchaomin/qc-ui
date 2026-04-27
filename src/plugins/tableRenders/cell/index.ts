@@ -4,6 +4,7 @@ import type { ButtonsProps } from './Buttons.vue'
 import type { DefaultProps } from './Default.vue'
 import type { DicLabelProps } from './DicLabel.vue'
 import type { FormatDateProps } from './FormatDate.vue'
+import type { FormatNumberProps } from './FormatNumber.vue'
 import type { IconProps } from './Icon.vue'
 import type { ImageProps } from './Image.vue'
 import type { ImageViewerProps } from './ImageViewer.vue'
@@ -40,6 +41,7 @@ interface ComponentPropsMap {
   Default: DefaultProps
   DicLabel: DicLabelProps
   FormatDate: FormatDateProps
+  FormatNumber: FormatNumberProps
   Icon: IconProps
   Image: ImageProps
   ImageViewer: ImageViewerProps

@@ -26,6 +26,14 @@ const formItemMap = {
     ],
     model: 'contactsPhone',
   },
+  dataLimitNum: {
+    _label: '品牌数据量上限(条)',
+    _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
+    min: 1,
+    model: 'dataLimitNum',
+  },
   dataMonth: {
     _label: '数据限制月数',
     _required: true,
@@ -34,6 +42,14 @@ const formItemMap = {
     min: 1,
     model: 'dataMonth',
   },
+  dataSaveTime: {
+    _label: '数据存储时间(月)',
+    _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
+    min: 1,
+    model: 'dataSaveTime',
+  },
   eventNum: {
     _label: '品牌事件数',
     _required: true,
@@ -41,6 +57,15 @@ const formItemMap = {
     decimalPlaces: 0,
     min: 1,
     model: 'eventNum',
+  },
+  phraseLimitNum: {
+    _label: '事件词组数',
+    _required: true,
+    component: 'TInputNumber',
+    decimalPlaces: 0,
+    max: 100,
+    min: 1,
+    model: 'phraseLimitNum',
   },
   remark: {
     _class: 'col-span-full',
@@ -83,12 +108,33 @@ const config: PageListProps = {
       title: '品牌名称',
     },
     {
+      cell: {
+        _component: 'FormatNumber',
+      },
       colKey: 'eventNum',
       title: '品牌事件数',
     },
     {
+      cell: {
+        _component: 'FormatNumber',
+      },
+      colKey: 'phraseLimitNum',
+      title: '事件词组数',
+    },
+    {
       colKey: 'dataMonth',
       title: '数据限制月数',
+    },
+    {
+      colKey: 'dataSaveTime',
+      title: '数据存储时间(月)',
+    },
+    {
+      cell: {
+        _component: 'FormatNumber',
+      },
+      colKey: 'dataLimitNum',
+      title: '品牌数据量上限(条)',
     },
     {
       colKey: 'remark',
@@ -196,7 +242,10 @@ const config: PageListProps = {
                       formItemMap.screenData,
                       formItemMap.contactsEmail,
                       formItemMap.eventNum,
+                      formItemMap.phraseLimitNum,
                       formItemMap.dataMonth,
+                      formItemMap.dataSaveTime,
+                      formItemMap.dataLimitNum,
                       formItemMap.remark,
                     ],
                     ref: formRef,
@@ -253,7 +302,10 @@ const config: PageListProps = {
                 formItemMap.screenData,
                 formItemMap.contactsEmail,
                 formItemMap.eventNum,
+                formItemMap.phraseLimitNum,
                 formItemMap.dataMonth,
+                formItemMap.dataSaveTime,
+                formItemMap.dataLimitNum,
                 formItemMap.remark,
               ],
               ref: formRef,

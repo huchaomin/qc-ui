@@ -16,7 +16,7 @@ export default antfu(
       markdown: true, // 使用 prettier 格式化 markdown 文件,搭配 davidAnson.vscode-markdownlint 插件一起使用
       prettierOptions, // 配置 prettier 的配置,这里不会读 ignorePath 这个配置,否则 ignorePath 里面配置的文件都不会被 prettier 格式化了
       svg: true,
-      xml: true, // 这一项配置了 vscode 的 eslint 插件会报错, 需要 @prettier/plugin-xml 插件
+      xml: true,
     },
     // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
     // GLOB_EXCLUDE 已经包括了大部分的忽略文件，遵守 gitignore 规则

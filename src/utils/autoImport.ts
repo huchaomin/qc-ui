@@ -10,8 +10,7 @@ export {
   snakeCase as _snakeCase,
   uniqueId as _uniqueId,
 } from 'lodash-es'
-
-type FormatNumberConfig = ConstructorParameters<typeof Intl.NumberFormat>[1] & {
+export type FormatNumberConfig = ConstructorParameters<typeof Intl.NumberFormat>[1] & {
   roundingMode?:
     | 'ceil'
     | 'expand'
