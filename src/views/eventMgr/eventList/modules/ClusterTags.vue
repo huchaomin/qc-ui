@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const formData = inject<Record<string, any>>('formData')!
 const { data: parentList } = useRequest(
-  alovaInst.Get<Array<Record<string, any>>>('yq/type/getList'),
+  alovaInst.Get<Array<Record<string, any>>>('yq/clusterType/getList'),
   {
     initialData: [],
   },
 )
 const { data: subList } = useRequest(
-  alovaInst.Get<Array<Record<string, any>>>('yq/category/getList'),
+  alovaInst.Get<Array<Record<string, any>>>('yq/clusterCategory/getList'),
   {
     initialData: [],
   },

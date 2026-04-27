@@ -13,6 +13,7 @@ import type { LinkProps } from './Link.vue'
 import type { OptionLabelProps } from './OptionLabel.vue'
 import type { SelectProps } from './Select.vue'
 import type { SwitchProps } from './Switch.vue'
+import type { TagsProps } from './Tags.vue'
 import type { TypographyTextProps } from './TypographyText.vue'
 import type { TypographyTextLinkProps } from './TypographyTextLink.vue'
 import type { CellRenderContext, TableCol, TNodeFn } from '@/components/tDesignReset/TTable.d.ts'
@@ -48,6 +49,7 @@ interface ComponentPropsMap {
   OptionLabel: OptionLabelProps
   Select: SelectProps
   Switch: SwitchProps
+  Tags: TagsProps
   TypographyText: TypographyTextProps
   TypographyTextLink: TypographyTextLinkProps
 }

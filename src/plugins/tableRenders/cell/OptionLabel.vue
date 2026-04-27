@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { UseListKey } from '@/bus/autoImport/useList.ts'
 import type { CellRenderContext } from '@/components/tDesignReset/TTable.d.ts'
+import type { TagProps } from '@/components/tDesignReset/TTag.vue'
+import { getSplitSymbolCellValue } from '../utils'
 
 defineOptions({
   inheritAttrs: false,
@@ -9,7 +11,9 @@ defineOptions({
 const props = withDefaults(defineProps<OptionLabelProps>(), {
   labelKey: 'label',
   multiple: false,
+  renderToTag: false,
   splitSymbol: ',',
+  tag: () => ({}),
   valueKey: 'value',
 })
 
@@ -24,9 +28,17 @@ export interface OptionLabelProps {
   multiple?: boolean
   options: Array<Record<string, any>> | UseListKey
   /**
+   * @description: 是否渲染为标签组件
+   */
+  renderToTag?: boolean
+  /**
    * @description: 多个值之间的分隔符, 默认是逗号
    */
   splitSymbol?: string
+  /**
+   * @description: 标签组件的属性
+   */
+  tag?: TagProps
   /**
    * @description: 值的键名
    */
@@ -34,39 +46,30 @@ export interface OptionLabelProps {
 }
 
 const attrs = useAttrs() as unknown as CellRenderContext
-const cellValue = computed(() => {
-  let v = _get(attrs.row, attrs.col.colKey)
-
-  if (typeof v === 'number') {
-    v = String(v)
-  }
-
-  if (typeof v !== 'string') {
-    return []
-  }
-
-  if (props.multiple) {
-    return v.split(props.splitSymbol).filter(Boolean)
-  }
-
-  return [v]
-})
-const label = computed(() => {
+const labelArr = computed(() => {
   const options = typeof props.options === 'string' ? useList(props.options).value : props.options
 
   if (options.length === 0) {
-    return ''
+    return []
   }
 
-  return cellValue.value
+  const cellValueArr = getSplitSymbolCellValue({ attrs, props })
+
+  return cellValueArr
     .map(
       (item) => options.find((option) => option[props.valueKey] === item)?.[props.labelKey] ?? item,
     )
     .filter(Boolean)
-    .join(props.splitSymbol)
 })
 </script>
 
 <template>
-  {{ label }}
+  <div v-if="renderToTag" class="flex gap-1">
+    <TTag v-for="item in labelArr" :key="item" v-bind="tag">
+      {{ item }}
+    </TTag>
+  </div>
+  <span v-else>
+    {{ labelArr.join(splitSymbol) }}
+  </span>
 </template>

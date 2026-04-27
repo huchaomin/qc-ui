@@ -210,6 +210,7 @@ const config: PageListProps = {
         _component: 'OptionLabel' as const,
         multiple: true,
         options: clusterCategoryList,
+        renderToTag: true,
       }),
       colKey: 'clusterTags',
       title: '聚类标签',
@@ -290,6 +291,10 @@ const config: PageListProps = {
       title: '互动量',
     },
     {
+      cell: {
+        _component: 'Tags',
+        multiple: true,
+      },
       colKey: 'contentLabel',
       resize: {
         maxWidth: 300,

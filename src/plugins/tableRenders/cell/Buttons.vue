@@ -16,7 +16,7 @@ const attrs = useAttrs() as unknown as CellRenderContext
 </script>
 
 <template>
-  <div class="no_mw_in_tooltip flex">
+  <div class="flex">
     <TButton
       v-for="(child, index) in props.buttons"
       :key="index"

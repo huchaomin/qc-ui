@@ -208,6 +208,10 @@ const config: PageListProps = {
       title: '互动量',
     },
     {
+      cell: {
+        _component: 'Tags',
+        multiple: true,
+      },
       colKey: 'contentLabel',
       resize: {
         maxWidth: 300,
