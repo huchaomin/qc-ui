@@ -44,6 +44,7 @@ export default defineStore(
       useRouterStore().clear()
       useUserStore().clear()
       useClearDic()
+      useClearSysUser()
       useClearList()
     }
 

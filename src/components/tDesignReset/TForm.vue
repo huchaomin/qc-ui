@@ -17,7 +17,7 @@ import type {
   SlotItem,
 } from './TForm.d.ts'
 import { mergeProps } from 'vue'
-import busFormItems from '@/bus/busFormItems.ts'
+import busFormItems, { busComponentInitialValueMap } from '@/bus/busFormItems.ts'
 import TCheckbox from './TCheckbox.vue'
 import TCheckboxGroup from './TCheckboxGroup.vue'
 import TDatePicker from './TDatePicker.vue'
@@ -74,6 +74,14 @@ const formItemsConfig = computed(() => {
 function setInitFormDataValues() {
   formItemsConfig.value.forEach((item) => {
     if (item.model !== undefined && !Object.hasOwn(props.data, item.model)) {
+      if (busComponentInitialValueMap.has(item.component as string)) {
+        const initialValue = busComponentInitialValueMap.get(item.component as string)
+
+        // eslint-disable-next-line vue/no-mutating-props
+        props.data[item.model] = initialValue(item)
+        return
+      }
+
       const isArr =
         ['TCheckboxGroup', 'TDateRangePicker', 'TRangeInput', 'TTagInput', 'TUpload'].includes(
           item.component as string,

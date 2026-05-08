@@ -93,6 +93,7 @@
 - 左侧菜单 active 展开
 - svg 文件格式化
 - 开发 （使用adornment）numberRange 小数
+- `Send } from` 整理
 
 
 
@@ -110,9 +111,9 @@
 - 删除 系统工具-定时任务-调度日志 这个菜单
 - 菜单表 图标字段
 - 添加 角色权限范围 role_data_scope 这个字典
-- 菜单表 查看、新增、编辑智能体 agentMgr/agentDetail/index
 - 删除 system/user/deptTree 接口
 - monitor/job/index --> tool/job/index
+- 新增 /system/user/listByIds 接口
 
 ## 分析包大小
 

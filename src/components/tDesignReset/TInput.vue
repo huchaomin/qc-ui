@@ -13,13 +13,13 @@ export type InputProps = Omit<_InputProps, 'defaultValue' | 'value'> & {
   adornment?: InputAdornmentProps
   modelValue: InputValue
 }
+export default {
+  inheritAttrs: false,
+}
 </script>
 
 <script setup lang="ts">
 type OnChangeParams = Parameters<NonNullable<_InputProps['onChange']>>
-defineOptions({
-  inheritAttrs: false,
-})
 
 const props = withDefaults(defineProps<InputProps>(), inputPropsInit)
 const emit = defineEmits<{

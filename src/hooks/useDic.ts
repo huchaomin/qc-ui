@@ -1,6 +1,7 @@
 import type { ComputedRef, Ref } from 'vue'
 
 export interface DicItem {
+  cssClass: string
   dictType: string
   label: string
   remark: string
@@ -18,6 +19,7 @@ function setPromise(codeArr: string[]): void {
     })
     .then((res) =>
       res.map((item) => ({
+        cssClass: item.cssClass,
         dictType: item.dictType,
         label: item.dictLabel,
         remark: item.remark,

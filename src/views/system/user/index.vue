@@ -295,6 +295,7 @@ const config: PageListProps = {
                     userId: data.userId,
                     userName: data.userName,
                   })
+                  useRefreshSysUser(data.userId)
                   $msg.success('用户修改成功')
                   pageListRef.value!.query()
                 },
