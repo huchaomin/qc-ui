@@ -28,6 +28,10 @@ const columns: TableCol[] = [
     title: '积分状态',
   },
   {
+    colKey: 'remark',
+    title: '备注',
+  },
+  {
     colKey: 'createBy',
     title: '创建人',
   },

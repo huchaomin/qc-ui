@@ -12,7 +12,7 @@ const { data, send } = useRequest(
 )
 const _pointsChangeTypeList = useDicOptions('points_change_type')
 const pointsChangeTypeList = computed(() => {
-  return _pointsChangeTypeList.value.filter((item) => !isFalsy(item.cssClass))
+  return _pointsChangeTypeList.value.filter((item) => !isFalsy(item.remark))
 })
 const tabs = [
   {
@@ -108,12 +108,12 @@ const tab = ref(tabs[0]!.value)
           :bordered="true"
           :title="item.label"
           :shadow="false"
-          :subtitle="item.remark"
+          :subtitle="item.cssClass"
           :header-bordered="false"
           header-class-name="items-center!"
         >
           <template #actions>
-            <TTag shape="round" color="#000000">{{ item.value }} 积分</TTag>
+            <TTag shape="round" color="#000000">{{ item.remark }} 积分</TTag>
           </template>
         </TCard>
       </div>
