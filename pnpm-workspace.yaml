@@ -1,21 +1,21 @@
-shellEmulator: true
+engineStrict: true
+autoInstallPeers: false
+pmOnFail: 'error'
 
-# eslint-disable-next-line pnpm/yaml-enforce-settings
-trustPolicy: audit
+allowBuilds:
+  cwebp-bin: true
+  esbuild: true
+  gifsicle: true
+  jpegtran-bin: true
+  mozjpeg: true
+  optipng-bin: true
+  pngquant-bin: true
+  vite-plugin-vue-tailwind-auto-reference: true
 
-packages:
-  - 'projects/*'
-onlyBuiltDependencies:
-  - '@tailwindcss/oxide'
-  - cwebp-bin
-  - esbuild
-  - gifsicle
-  - jpegtran-bin
-  - mozjpeg
-  - optipng-bin
-  - pngquant-bin
-  - unrs-resolver
-  - vite-plugin-vue-tailwind-auto-reference
-peerDependencyRules:
-  ignoreMissing:
-    - '@typescript-eslint/rule-tester'
+publicHoistPattern:
+  - 'eslint-plugin-perfectionist'
+  - 'eslint-flat-config-utils'
+  - 'lightningcss'
+  - 'lodash-es' # tdesign-vue-next 依赖 lodash-es
+  - '@types/lodash-es'
+  - 'dayjs' # tdesign-vue-next 依赖 dayjs
