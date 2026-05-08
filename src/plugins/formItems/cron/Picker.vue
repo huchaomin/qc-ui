@@ -223,19 +223,16 @@ defineExpose({
 <style scoped>
 :deep() {
   .t-radio-group {
-    row-gap: 12px;
+    row-gap: 12px !important;
     width: 100%;
     margin-top: 16px;
 
     .t-radio {
       display: inline-flex;
-      align-items: start;
       width: 100%;
-      margin-right: 0;
 
       .t-radio__input {
         top: 6px;
-        flex-shrink: 0;
       }
 
       .t-radio__label {

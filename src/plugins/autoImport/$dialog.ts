@@ -60,6 +60,12 @@ function create(
     body: () => bodyCache.value,
   }
   const isCustomDragEnabled = options.draggable === true && options.mode === 'modal'
+
+  // 不使用官方的拖拽功能，文字复制不到
+  if (isCustomDragEnabled) {
+    options.draggable = false
+  }
+
   const id = `${isCustomDragEnabled ? 'drag' : 'normal'}-dialog-${++index.value}`
   let instance: DialogInstance | undefined
   const obj = {
