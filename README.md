@@ -3,18 +3,20 @@
 ## 开发环境 vs 生产环境
 
 开发环境
+
 - 入口文件 main.dev.ts
 - 没有reset的使用tdesign.min.js里面导出的组件,并注册为全局组件
 - 有reset使用自定义 resolvers自动导入
-- _${compo} 从@/plugins/tdesign-vue-next-for-dev引入
+- \_${compo} 从@/plugins/tdesign-vue-next-for-dev引入
 - h(${compo}) 从@/plugins/tdesign-vue-next-for-dev引入
 - h(TForm) 从reset引入
 
 生产环境
+
 - 入口文件 main.prod.ts
 - 没有reset使用TDesignResolver自动导入
 - 有reset使用自定义 resolvers自动导入
-- _${compo} 从tdesign-vue-next引入
+- \_${compo} 从tdesign-vue-next引入
 - h(${compo}) 从tdesign-vue-next引入
 - h(TForm) 从reset引入
 
@@ -55,9 +57,9 @@
 - vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
 - @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
 - useWatcher sendable、transform(middleware)
-- use*** transform(middleware)
+- use\*\*\* transform(middleware)
 - method localCache(cacheFor) transformData(transform)
-- 不要手动导入非类型  from 'tdesign-vue-next' 会引入额外的重复文件
+- 不要手动导入非类型 from 'tdesign-vue-next' 会引入额外的重复文件
 
 ## todo
 
@@ -91,11 +93,7 @@
 - v-memo
 - 右键菜单
 - 左侧菜单 active 展开
-- svg 文件格式化
 - 开发 （使用adornment）numberRange 小数
-
-
-
 
 ## todo 项目对比
 
@@ -120,4 +118,3 @@
 // exclude
 **/*runtime-core.esm-bundler.js,**/*vue-router.mjs,**/*reactivity.esm-bundler.js
 ```
-
