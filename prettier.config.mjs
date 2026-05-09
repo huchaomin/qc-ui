@@ -31,8 +31,8 @@ export default {
   trailingComma: 'all',
   useTabs: false, // 使用空格代替tab缩进
   vueIndentScriptAndStyle: false, // 不对vue中的script及style标签缩进
-  xmlQuoteAttributes: 'as-needed', // 仅在必需时为XML属性添加引号
+  xmlQuoteAttributes: 'preserve',
   xmlSelfClosingSpace: true, // 在自闭合标签之间添加空格
   xmlSortAttributesByKey: true, // 按属性键排序XML元素
-  xmlWhitespaceSensitivity: 'strict', // 对XML全局空白敏感
+  xmlWhitespaceSensitivity: 'ignore', // 对XML全局空白敏感
 }

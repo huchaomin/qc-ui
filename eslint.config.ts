@@ -29,9 +29,7 @@ export default antfu(
       'types/tDesign-globalComponents.d.ts',
     ],
     jsonc: {
-      overrides: {
-        'jsonc/comma-dangle': 'off', // 与 prettier 保持一致
-      },
+      overrides: {},
     },
     // jsonc: true, // 配合 vscode.json-language-features 一起使用 (默认为true) [jsonc: true 排序， vscode.json-language-features 截断好一点]
     // markdown: true, // 1、 Enable linting for **code snippets** in Markdown. 2. 也会把上面的 formatters.markdown 设置为true 3. 默认为true
@@ -152,7 +150,7 @@ export default antfu(
     },
   })
   .append({
-    ignores: ['**/*.md', '**/*.html', '**/*.xml', '**/*.svg'],
+    ignores: ['**/*.md', '**/*.html', '**/*.xml', '**/*.svg', '**/*.jsonc'],
     // https://github.com/prettier/eslint-plugin-prettier
     ...eslintPluginPrettierRecommended,
   })

@@ -14,7 +14,7 @@ allowBuilds:
 publicHoistPattern:
   - eslint-plugin-perfectionist
   - eslint-flat-config-utils
-  - lightningcss
+  - lightningcss # @tailwindcss/vite
   - lodash-es # tdesign-vue-next 依赖 lodash-es
   - '@types/lodash-es'
   - dayjs # tdesign-vue-next 依赖 dayjs

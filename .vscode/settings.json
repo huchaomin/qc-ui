@@ -6,7 +6,21 @@
   "editor.quickSuggestions": {
     "strings": "on"
   },
-  "cssVariables.blacklistFolders": ["**/build", "**/.vscode", "**/types"],
+  "cssVariables.blacklistFolders": [
+    "**/.git",
+    "**/.svn",
+    "**/.hg",
+    "**/CVS",
+    "**/.DS_Store",
+    "**/node_modules",
+    "**/bower_components",
+    "**/tmp",
+    "**/dist",
+    "**/tests",
+    "**/build",
+    "**/.vscode",
+    "**/types"
+  ],
   "cssVariables.lookupFiles": [
     "node_modules/tdesign-vue-next/esm/common/style/web/theme/**/*.less",
     "node_modules/tdesign-vue-next/esm/common/style/web/_global.less"
@@ -43,6 +57,7 @@
     "jsonc",
     "yaml",
     "toml",
+    "svg",
     "xml",
     "gql",
     "graphql",
@@ -64,6 +79,9 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[html]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[svg]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[xml]": {
