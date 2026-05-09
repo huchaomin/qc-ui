@@ -1,10 +1,24 @@
 <script setup lang="ts">
+import BrandProducts from './modules/BrandProducts.vue'
+
 const pageListRef = useTemplateRef('pageListRef')
 const formItemMap = {
   brandName: {
     _label: '品牌名称',
     _required: true,
     model: 'brandName',
+  },
+  brandProducts: {
+    _class: 'col-span-full',
+    _label: '品牌产品匹配规则',
+    _rules: [
+      {
+        message: '请填写完整的品牌产品匹配规则',
+        required: true,
+      },
+    ],
+    model: 'brandProducts',
+    slot: 'brandProducts',
   },
   contacts: {
     _label: '联系人',
@@ -230,26 +244,36 @@ const config: PageListProps = {
               )
               $confirm({
                 body: () =>
-                  h(TForm, {
-                    items: [
-                      formItemMap.brandName,
-                      formItemMap.contacts,
-                      formItemMap.contactsPhone,
-                      {
-                        ...formItemMap.status,
-                        component: 'TRadioGroup',
-                      },
-                      formItemMap.screenData,
-                      formItemMap.contactsEmail,
-                      formItemMap.eventNum,
-                      formItemMap.phraseLimitNum,
-                      formItemMap.dataMonth,
-                      formItemMap.dataSaveTime,
-                      formItemMap.dataLimitNum,
-                      formItemMap.remark,
-                    ],
-                    ref: formRef,
-                  }),
+                  h(
+                    TForm,
+                    {
+                      items: [
+                        formItemMap.brandName,
+                        formItemMap.contacts,
+                        formItemMap.contactsPhone,
+                        {
+                          ...formItemMap.status,
+                          component: 'TRadioGroup',
+                        },
+                        formItemMap.screenData,
+                        formItemMap.contactsEmail,
+                        formItemMap.eventNum,
+                        formItemMap.phraseLimitNum,
+                        formItemMap.dataMonth,
+                        formItemMap.dataSaveTime,
+                        formItemMap.dataLimitNum,
+                        formItemMap.remark,
+                        formItemMap.brandProducts,
+                      ],
+                      ref: formRef,
+                    },
+                    {
+                      brandProducts: () =>
+                        h(BrandProducts, {
+                          initData: row.brandProducts,
+                        }),
+                    },
+                  ),
                 header: '修改品牌',
                 onConfirmCallback: async () => {
                   await alovaInst.Put('yq/brand', {
@@ -260,7 +284,7 @@ const config: PageListProps = {
                   $msg.success('品牌修改成功')
                   pageListRef.value!.query()
                 },
-                width: 730,
+                width: 1250,
               })
             },
             permission: 'yq:brand:edit',
@@ -286,30 +310,37 @@ const config: PageListProps = {
 
         $confirm({
           body: () =>
-            h(TForm, {
-              data: reactive({
-                screenData: 'N',
-                status: '0',
-              }),
-              items: [
-                formItemMap.brandName,
-                formItemMap.contacts,
-                formItemMap.contactsPhone,
-                {
-                  ...formItemMap.status,
-                  component: 'TRadioGroup',
-                },
-                formItemMap.screenData,
-                formItemMap.contactsEmail,
-                formItemMap.eventNum,
-                formItemMap.phraseLimitNum,
-                formItemMap.dataMonth,
-                formItemMap.dataSaveTime,
-                formItemMap.dataLimitNum,
-                formItemMap.remark,
-              ],
-              ref: formRef,
-            }),
+            h(
+              TForm,
+              {
+                data: reactive({
+                  screenData: 'N',
+                  status: '0',
+                }),
+                items: [
+                  formItemMap.brandName,
+                  formItemMap.contacts,
+                  formItemMap.contactsPhone,
+                  {
+                    ...formItemMap.status,
+                    component: 'TRadioGroup',
+                  },
+                  formItemMap.screenData,
+                  formItemMap.contactsEmail,
+                  formItemMap.eventNum,
+                  formItemMap.phraseLimitNum,
+                  formItemMap.dataMonth,
+                  formItemMap.dataSaveTime,
+                  formItemMap.dataLimitNum,
+                  formItemMap.remark,
+                  formItemMap.brandProducts,
+                ],
+                ref: formRef,
+              },
+              {
+                brandProducts: () => h(BrandProducts),
+              },
+            ),
           header: '新增品牌',
           onConfirmCallback: async () => {
             await alovaInst.Post('yq/brand', await formRef.value!.validate())
@@ -317,7 +348,7 @@ const config: PageListProps = {
             $msg.success('品牌新增成功')
             pageListRef.value!.query()
           },
-          width: 730,
+          width: 1250,
         })
       },
       permission: 'yq:brand:add',
