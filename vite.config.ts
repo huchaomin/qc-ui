@@ -141,9 +141,10 @@ export default defineConfig(({ command, mode }) => {
       //   dtsPath: resolvePath('types/env.d.ts'),
       // }),
       createHtmlPlugin({
-        entry: `../src/main.${isProduction ? 'prod' : 'dev'}.ts`,
+        // entry: `../src/main.${isProduction ? 'prod' : 'dev'}.ts`, // system/log/operlog 打不开
         inject: {
           data: {
+            mode: isProduction ? 'prod' : 'dev',
             title: VITE_APP_NAME,
           },
         },
