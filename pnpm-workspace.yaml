@@ -1,6 +1,5 @@
 engineStrict: true
-autoInstallPeers: false
-pmOnFail: 'error'
+pmOnFail: error
 
 allowBuilds:
   cwebp-bin: true
@@ -13,9 +12,12 @@ allowBuilds:
   vite-plugin-vue-tailwind-auto-reference: true
 
 publicHoistPattern:
-  - 'eslint-plugin-perfectionist'
-  - 'eslint-flat-config-utils'
-  - 'lightningcss'
-  - 'lodash-es' # tdesign-vue-next 依赖 lodash-es
+  - eslint-plugin-perfectionist
+  - eslint-flat-config-utils
+  - lightningcss
+  - lodash-es # tdesign-vue-next 依赖 lodash-es
   - '@types/lodash-es'
-  - 'dayjs' # tdesign-vue-next 依赖 dayjs
+  - dayjs # tdesign-vue-next 依赖 dayjs
+shellEmulator: true
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 10080 # 忽略超过 7 天（10080 分钟）的版本检测

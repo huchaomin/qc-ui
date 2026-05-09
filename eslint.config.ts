@@ -145,6 +145,7 @@ export default antfu(
   },
 )
   .override(perfectionistConfig[0].name!, {
+    ignores: ['**/*.md'],
     rules: {
       ...perfectionist.configs['recommended-natural'].rules,
       ...perfectionistConfig[0].rules,

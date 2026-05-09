@@ -15,8 +15,8 @@
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/",
-    "inspectEslintConfig": "pnpx @eslint/config-inspector",
-    "nodeModulesInspector": "pnpx node-modules-inspector"
+    "inspectEslintConfig": "pnpm dlx @eslint/config-inspector",
+    "nodeModulesInspector": "pnpm dlx node-modules-inspector"
   },
   "dependencies": {
     "@bprogress/core": "^1.3.4",
