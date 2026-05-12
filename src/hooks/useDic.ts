@@ -86,7 +86,7 @@ export function useDicLabel(
       }
 
       return value.map(
-        (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? '',
+        (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? v,
       )
     }
 
@@ -100,7 +100,6 @@ export function useDicLabel(
       if (splitArr.length > 0) {
         return splitArr
           .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? value)
-          .filter(Boolean)
           .join(',')
       }
     }
