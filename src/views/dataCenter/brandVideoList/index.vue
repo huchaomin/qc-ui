@@ -122,7 +122,7 @@ const formItemMap = {
     model: 'relationType',
   },
   thumbOcrContent: {
-    _label: '对OCR识别内容',
+    _label: 'OCR识别内容',
     model: 'thumbOcrContent',
   },
   title: {
@@ -252,7 +252,10 @@ const config: PageListProps = {
     },
     {
       colKey: 'thumbOcrContent',
-      title: '对OCR识别内容',
+      title: 'OCR识别内容',
+      resize: {
+        maxWidth: 300,
+      },
     },
     {
       colKey: 'commentNumDiff',
