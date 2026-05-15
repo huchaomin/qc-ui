@@ -251,6 +251,10 @@ const config: PageListProps = {
       title: '内容切片',
     },
     {
+      colKey: 'thumbOcrContent',
+      title: '对OCR识别内容',
+    },
+    {
       colKey: 'commentNumDiff',
       title: '评论数量差值',
     },
