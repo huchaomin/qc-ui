@@ -19,7 +19,6 @@ export function getFilterEmptyParamsObj(params: Arg, useEmptyParams = true): Arg
       !useEmptyParams ||
       (Array.isArray(params[key]) ? params[key].length > 0 : !isFalsy(params[key]))
     ) {
-      // eslint-disable-next-line ts/no-unsafe-assignment
       obj[key] = params[key]
     }
   })
@@ -109,7 +108,6 @@ export default createAlova({
 
       Object.keys(data).forEach((key: string) => {
         if (!isFalsy(data[key])) {
-          // eslint-disable-next-line ts/no-unsafe-assignment
           obj[key] = data[key]
         }
       })
@@ -251,7 +249,6 @@ export default createAlova({
       let resData: any
 
       try {
-        // eslint-disable-next-line ts/no-unsafe-assignment
         resData = await response.json()
       } catch (e) {
         void $notify.error('返回的 response 不能被json() 方法所解析')
@@ -260,7 +257,6 @@ export default createAlova({
 
       // eslint-disable-next-line ts/no-unsafe-member-access
       if (resData?.code !== undefined) {
-        // eslint-disable-next-line ts/no-unsafe-assignment
         const { code, data, msg } = resData as {
           code: number
           data?: any

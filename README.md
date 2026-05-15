@@ -56,10 +56,82 @@
 - 若依 新建同级同名称的菜单才会校验报错，但是name不会校验
 - vue-component-type-helpers 作用 [泛型](https://cn.vuejs.org/api/sfc-script-setup#generics)
 - @formkit/auto-animate dom元素里面 不能使用 v-auto-animate，要不然会内存泄露
-- useWatcher sendable、transform(middleware)
-- use\*\*\* transform(middleware)
-- method localCache(cacheFor) transformData(transform)
 - 不要手动导入非类型 from 'tdesign-vue-next' 会引入额外的重复文件
+
+  ```ts
+  // v2
+  useWatcher(() => method, [xxx], { sendable: () => sendable });
+
+  // v3
+  useWatcher(() => method, [xxx], {
+    async middleware(_, next) {
+      if (sendable) {
+        return next();
+      }
+    }
+  });
+  ```
+
+- method.transformData 简化为 method.transform
+
+  ```ts
+  // v2
+  alova.Get('/api/profile', {
+    transformData(data) {
+      return data.detail;
+    }
+  });
+
+  // v3
+  alova.Get('/api/profile', {
+    transform(data) {
+      return data.detail;
+    }
+  });
+  ```
+
+- method.localCache 更改为 method.cacheFor:
+
+  ```ts
+  // v2
+  alova.Get('/api/profile', {
+    localCache: 1000 * 60 * 60
+  });
+
+  // v3
+  alova.Get('/api/profile', {
+    cacheFor: 1000 * 60 * 60
+  });
+  ```
+
+- 所有的 sendArgs 更改为 args
+
+  ```ts
+  // v2
+  onSuccess(({ sendArgs }) => {
+    // ...
+  });
+
+  // v3
+  onSuccess(({ args }) => {
+    // ...
+  });
+  ```
+
+- 事件绑定函数返回自身对象,支持链式调用
+
+  ```ts
+  // v2
+  const { onSuccess, loading, data } = useRequest(method);
+  onSuccess(() => {
+    /*...*/
+  });
+
+  // v3
+  const { loading, data } = useRequest(method).onSuccess(() => {
+    /*...*/
+  });
+  ```
 
 ## todo
 
@@ -94,6 +166,7 @@
 - 右键菜单
 - 左侧菜单 active 展开
 - 开发 （使用adornment）numberRange 小数
+- fromItem 添加空占位元素
 
 ## todo 项目对比
 

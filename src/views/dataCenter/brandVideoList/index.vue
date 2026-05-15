@@ -121,6 +121,10 @@ const formItemMap = {
     dicCode: 'product_relate_type',
     model: 'relationType',
   },
+  thumbOcrContent: {
+    _label: '对OCR识别内容',
+    model: 'thumbOcrContent',
+  },
   title: {
     _label: '标题',
     model: 'title',
@@ -527,6 +531,7 @@ const config: PageListProps = {
     formItemMap.authorName,
     formItemMap.dealMark,
     formItemMap.relationType,
+    formItemMap.thumbOcrContent,
     ...(props.isInClusterDataDetail ? [] : [formItemMap.publishTime]),
     formItemMap.handAdd,
     formItemMap.markModel,
