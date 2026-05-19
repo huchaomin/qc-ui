@@ -15,28 +15,7 @@ const defaultImg = new URL('./default.jpg', import.meta.url).href
 const backImgBase64 = ref<null | string>('')
 const blockBackImgBase64 = ref<null | string>('')
 const tipWords = ref('') // 图片下面的提示语
-const moveBlockLeft = ref(0)
-
-function getEx(e: MouseEvent | TouchEvent) {
-  let x = 0
-
-  if ((e as TouchEvent).touches) {
-    // 兼容移动端
-    x = (e as TouchEvent).touches[0]!.clientX
-  } else {
-    // 兼容PC端
-    x = (e as MouseEvent).clientX
-  }
-
-  return x
-}
-
 const barAreaRef = useTemplateRef('barArea')
-
-function getBarAreaLeft() {
-  return barAreaRef.value!.getBoundingClientRect().left
-}
-
 const checkState = ref<'default' | 'doing' | 'fail' | 'success'>('default')
 const styleByState = computed(() => {
   if (checkState.value === 'default') {
@@ -65,36 +44,33 @@ const styleByState = computed(() => {
     }
   }
 })
-const startLeft = ref(0)
 const startMoveTime = ref(0)
 const backToken = ref<string>('')
 const secretKey = ref<string>('')
-
-function start(e: MouseEvent | TouchEvent): void {
-  if (secretKey.value === '') {
-    return
-  }
-
-  const x = getEx(e)
-
-  startLeft.value = x - getBarAreaLeft()
-  startMoveTime.value = Date.now() // 开始滑动的时间
-  checkState.value = 'doing'
-  e.stopPropagation()
-}
-
-const { send: checkCaptchaSend } = useRequest(checkCaptcha, {
-  immediate: false,
+const dragBlockRef = useTemplateRef('dragBlock')
+const { width: barAreaWidth } = useElementSize(barAreaRef, undefined, {
+  box: 'border-box',
 })
+const { x: _x } = useDraggable(dragBlockRef, {
+  axis: 'x',
+  containerElement: barAreaRef,
+  onEnd: async ({ x }) => {
+    console.log(x)
 
-async function end() {
-  if (checkState.value === 'doing') {
-    const moveLeftDistance = moveBlockLeft.value
     const endMoveTime = Date.now()
-    const res = await checkCaptchaSend({
-      pointJson: await aesEncrypt(JSON.stringify({ x: moveLeftDistance, y: 5.0 }), secretKey.value),
-      token: backToken.value,
-    })
+    const res = await alovaInst.Post<Record<string, any>>(
+      'captcha/check',
+      {
+        pointJson: await aesEncrypt(JSON.stringify({ x, y: 5.0 }), secretKey.value),
+        token: backToken.value,
+      },
+      {
+        meta: {
+          useLoading: false,
+          useToken: false,
+        },
+      },
+    )
 
     if (res.repCode === '0000') {
       checkState.value = 'success'
@@ -103,7 +79,7 @@ async function end() {
         emit(
           'success',
           await aesEncrypt(
-            `${backToken.value}---${JSON.stringify({ x: moveLeftDistance, y: 5.0 })}`,
+            `${backToken.value}---${JSON.stringify({ x, y: 5.0 })}`,
             secretKey.value,
           ),
         )
@@ -115,12 +91,35 @@ async function end() {
         refresh()
       }, 1000)
     }
-  }
-}
+  },
+  onStart: () => {
+    if (secretKey.value === '') {
+      return false
+    }
 
-const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(getCaptcha, {
-  immediate: false,
+    startMoveTime.value = Date.now() // 开始滑动的时间
+    checkState.value = 'doing'
+  },
+  stopPropagation: true,
 })
+const x = computed(() => {
+  return Math.min(_x.value, barAreaWidth.value - sizeConfig.barHeight)
+})
+const { loading: getCaptchaLoading, send: getCaptchaSend } = useRequest(
+  alovaInst.Post<Record<string, any>>(
+    'captcha/get',
+    {},
+    {
+      meta: {
+        useLoading: false,
+        useToken: false,
+      },
+    },
+  ),
+  {
+    immediate: false,
+  },
+)
 
 async function getPicture() {
   const res = await getCaptchaSend()
@@ -132,51 +131,20 @@ async function getPicture() {
     secretKey.value = res.repData.secretKey
   } else {
     tipWords.value = res.repMsg
-  }
-
-  // 判断接口请求次数是否失效
-  if (res.repCode === '6201') {
     backImgBase64.value = null
     blockBackImgBase64.value = null
-  }
-}
-
-function move(e: MouseEvent | TouchEvent): void {
-  if (checkState.value === 'doing') {
-    const x = getEx(e)
-    let moveLeft = x - getBarAreaLeft()
-
-    if (moveLeft >= sizeConfig.imgWidth - 40 + startLeft.value) {
-      moveLeft = sizeConfig.imgWidth - 40 + startLeft.value
-    }
-
-    if (moveLeft <= startLeft.value) {
-      moveLeft = startLeft.value
-    }
-
-    // 拖动后小方块的left值
-    moveBlockLeft.value = moveLeft - startLeft.value
+    backToken.value = ''
+    secretKey.value = ''
   }
 }
 
 onMounted(() => {
   getPicture()
-  window.addEventListener('touchmove', move)
-  window.addEventListener('mousemove', move)
-  // 鼠标松开
-  window.addEventListener('touchend', end)
-  window.addEventListener('mouseup', end)
-})
-onUnmounted(() => {
-  window.removeEventListener('touchmove', move)
-  window.removeEventListener('mousemove', move)
-  window.removeEventListener('touchend', end)
-  window.removeEventListener('mouseup', end)
 })
 
 function refresh() {
   tipWords.value = ''
-  moveBlockLeft.value = 0
+  _x.value = 0
   checkState.value = 'default'
   secretKey.value = ''
   getPicture()
@@ -218,21 +186,20 @@ function refresh() {
       <div
         class="absolute top-0 left-0 -translate-x-px -translate-y-px border bg-[#f0fff0]"
         :style="{
-          width: moveBlockLeft === 0 ? `${sizeConfig.barHeight}px` : `${moveBlockLeft}px`,
+          width: x === 0 ? `${sizeConfig.barHeight}px` : `${x + 1}px`,
           height: `${sizeConfig.barHeight}px`,
           'border-color': styleByState.bgColor,
         }"
       >
         <div
+          ref="dragBlock"
           class="hover:text-white absolute top-0 left-0 flex -translate-x-px -translate-y-px cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-(--td-brand-color)"
           :style="{
             width: `${sizeConfig.barHeight}px`,
             height: `${sizeConfig.barHeight}px`,
             'background-color': styleByState.bgColor,
-            left: `${moveBlockLeft}px`,
+            left: `${x}px`,
           }"
-          @touchstart.prevent="start"
-          @mousedown="start"
         >
           <Icon
             v-if="styleByState.icon === 'icon-check'"
@@ -256,7 +223,7 @@ function refresh() {
             width: `${(sizeConfig.imgWidth * 47) / 310}px`,
             height: `${sizeConfig.imgHeight}px`,
             top: `-${sizeConfig.imgHeight + 4}px`,
-            left: `${moveBlockLeft}px`,
+            left: `${x}px`,
           }"
         >
           <img :src="`data:image/png;base64,${blockBackImgBase64}`" class="block h-full w-full" />
