@@ -99,7 +99,7 @@ export function useDicLabel(
 
       if (splitArr.length > 0) {
         return splitArr
-          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? value)
+          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? v)
           .join(',')
       }
     }

@@ -153,9 +153,17 @@ export function useListLabel(
     }
 
     if (Array.isArray(value)) {
+      if (arr.value.length === 0) {
+        return []
+      }
+
       return value.map(
-        (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? '',
+        (v) => arr.value.find((item) => String(item.value) === String(v))?.label ?? v,
       )
+    }
+
+    if (arr.value.length === 0) {
+      return ''
     }
 
     if (typeof value === 'string') {
@@ -163,13 +171,12 @@ export function useListLabel(
 
       if (splitArr.length > 0) {
         return splitArr
-          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? '')
-          .filter(Boolean)
+          .map((v) => arr.value.find((item) => String(item.value) === v)?.label ?? v)
           .join(',')
       }
     }
 
-    return arr.value.find((item) => String(item.value) === String(value))?.label ?? ''
+    return arr.value.find((item) => String(item.value) === String(value))?.label ?? value
   })
 }
 export function useListRefresh(key: UseListAllKey) {
