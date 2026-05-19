@@ -84,7 +84,7 @@ function compoRef(instance: any) {
 const finallyOptions = computed(() => {
   let arr
 
-  if (props.dicCode) {
+  if (props.dicCode !== undefined) {
     if (props.options) {
       $notify.error('TSelect: dicCode and options cannot be used together')
     }

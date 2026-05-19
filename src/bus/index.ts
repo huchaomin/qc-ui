@@ -189,6 +189,7 @@ export async function updateColumnStatus(arr: Array<Record<string, any>>): Promi
               _label: '标记状态',
               _required: true,
               component: 'TSelect',
+              dicCode: '',
               model: 'status',
             },
           ],
