@@ -91,6 +91,7 @@ const autoIcon = computed(() => {
     'line-md:download-outline': ['下载', '导出'],
     'line-md:alert-circle': ['预警'],
     'line-md:document-report': ['报告'],
+    'icon-park-outline:setting-config': ['配置'],
     'subway:mark-1': ['标记'],
     'tdesign:summary': ['汇总'],
     'ph:open-ai-logo': ['AI'],

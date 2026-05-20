@@ -27,7 +27,8 @@ export const tablePropsInit = {
   resizable: true,
   rowSelectionAllowUncheck: false, // 行选中单选场景，是否允许取消选中
   scroll: () => ({
-    isFixedRowHeight: true,
+    // isFixedRowHeight: true, // reflow
+    bufferSize: 10,
     rowHeight: 45,
     threshold: 80,
     type: 'virtual' as const,

@@ -72,6 +72,18 @@ const formItemMap = {
     min: 1,
     model: 'eventNum',
   },
+  eventTaskFlag: {
+    _label: '事件关联任务',
+    component: 'TRadioGroup',
+    dicCode: 'sys_yes_no',
+    model: 'eventTaskFlag',
+  },
+  extraType: {
+    _label: '抽帧类型',
+    component: 'TSelect',
+    dicCode: 'extra_cfg',
+    model: 'extraType',
+  },
   phraseLimitNum: {
     _label: '事件词组数',
     _required: true,
@@ -149,6 +161,22 @@ const config: PageListProps = {
       },
       colKey: 'dataLimitNum',
       title: '品牌数据量上限(条)',
+    },
+    {
+      cell: {
+        _component: 'DicLabel',
+        dicCode: 'extra_cfg',
+      },
+      colKey: 'extraType',
+      title: '抽帧类型',
+    },
+    {
+      cell: {
+        _component: 'DicLabel',
+        dicCode: 'sys_yes_no',
+      },
+      colKey: 'eventTaskFlag',
+      title: '事件关联任务',
     },
     {
       colKey: 'remark',
@@ -229,6 +257,49 @@ const config: PageListProps = {
         _component: 'Buttons',
         buttons: [
           ({ row }) => ({
+            default: '品牌配置',
+            onClick: () => {
+              const formRef = ref<FormInstance | null>(null)
+
+              watch(
+                formRef,
+                () => {
+                  formRef.value!.setFormData(row)
+                },
+                {
+                  once: true,
+                },
+              )
+              $confirm({
+                body: () =>
+                  h(TForm, {
+                    items: [
+                      formItemMap.eventNum,
+                      formItemMap.phraseLimitNum,
+                      formItemMap.dataMonth,
+                      formItemMap.dataSaveTime,
+                      formItemMap.dataLimitNum,
+                      formItemMap.eventTaskFlag,
+                      formItemMap.extraType,
+                    ],
+                    ref: formRef,
+                  }),
+                header: '品牌配置',
+                onConfirmCallback: async () => {
+                  await alovaInst.Put('yq/brand', {
+                    ...(await formRef.value!.validate()),
+                    id: row.id,
+                  })
+                  useListRefresh('brand')
+                  $msg.success('品牌配置成功')
+                  pageListRef.value!.query()
+                },
+                width: 730,
+              })
+            },
+            permission: 'yq:brand:cfg',
+          }),
+          ({ row }) => ({
             default: '编辑',
             onClick: () => {
               const formRef = ref<FormInstance | null>(null)
@@ -257,11 +328,6 @@ const config: PageListProps = {
                         },
                         formItemMap.screenData,
                         formItemMap.contactsEmail,
-                        formItemMap.eventNum,
-                        formItemMap.phraseLimitNum,
-                        formItemMap.dataMonth,
-                        formItemMap.dataSaveTime,
-                        formItemMap.dataLimitNum,
                         formItemMap.remark,
                         formItemMap.brandProducts,
                       ],
