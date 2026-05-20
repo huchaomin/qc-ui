@@ -33,7 +33,7 @@
 
 - Ignored build scripts \*\* Run "pnpm approve-builds" to pick which dependencies should be allowed to run scripts
 
-  ```md
+  ```bash
   pnpm approve-builds
   ```
 
@@ -187,7 +187,4 @@
 
 ## 分析包大小
 
-```text
-// exclude
-**/*runtime-core.esm-bundler.js,**/*vue-router.mjs,**/*reactivity.esm-bundler.js
-```
+`**/*runtime-core.esm-bundler.js,**/*vue-router.mjs,**/*reactivity.esm-bundler.js`

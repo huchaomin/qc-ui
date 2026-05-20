@@ -189,15 +189,10 @@ body {
         @apply pt-0;
       }
     }
-  }
 
-  [id^='drag-dialog'] {
-    .t-dialog {
-      cursor: move;
-
-      [class^='t-dialog__body'],
-      .t-dialog__footer {
-        cursor: initial;
+    .t-dialog--draggable {
+      .t-dialog__header-content {
+        cursor: move;
       }
     }
   }

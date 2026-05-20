@@ -5,7 +5,7 @@ import perfectionist from 'eslint-plugin-perfectionist'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import prettierOptions from './prettier.config.mjs'
 
-const perfectionistConfig = await perfectionistConfigFn()
+const perfectionistConfig = await perfectionistConfigFn({})
 
 export default antfu(
   {
@@ -32,7 +32,11 @@ export default antfu(
       overrides: {},
     },
     // jsonc: true, // 配合 vscode.json-language-features 一起使用 (默认为true) [jsonc: true 排序， vscode.json-language-features 截断好一点]
-    // markdown: true, // 1、 Enable linting for **code snippets** in Markdown. 2. 也会把上面的 formatters.markdown 设置为true 3. 默认为true
+    // 1、 Enable linting for **code snippets** in Markdown.
+    // 2. 也会把上面的 formatters.markdown 设置为true
+    // 3. 默认为true
+    // 4. 这里设置为false 是因为 现在格式化错误 https://github.com/antfu/eslint-config/discussions/851
+    markdown: false,
     // https://eslint.style/packages/default#rules
     stylistic: {
       indent: 2,
@@ -137,7 +141,6 @@ export default antfu(
           allowed: ['crypto-js'],
         },
       ],
-      'e18e/prefer-static-regex': 'off',
       'no-console': 'off',
     },
   },

@@ -134,6 +134,7 @@ export default defineConfig(({ command, mode }) => {
         'cronstrue',
         'cronstrue/locales/zh_CN',
         'quartzcron',
+        '@bprogress/core',
       ],
     },
     plugins: [

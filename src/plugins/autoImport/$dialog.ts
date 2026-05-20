@@ -31,7 +31,6 @@ type CreateDialogType = CreateDialogFnType &
     closeAll: () => void
   }
 
-const index = ref(0)
 const dialogs = new Set<DialogInstance>()
 
 /**
@@ -59,80 +58,13 @@ function create(
     ...(_options ?? {}),
     body: () => bodyCache.value,
   }
-  const isCustomDragEnabled = options.draggable === true && options.mode === 'modal'
 
-  // 不使用官方的拖拽功能，文字复制不到
-  if (isCustomDragEnabled) {
-    options.draggable = false
-  }
-
-  const id = `${isCustomDragEnabled ? 'drag' : 'normal'}-dialog-${++index.value}`
   let instance: DialogInstance | undefined
   const obj = {
     ...options,
-    id,
     onClosed: () => {
       options.onClosed?.()
-      el.value = null
       dialogs.delete(instance!)
-    },
-    onOpened: () => {
-      options.onOpened?.()
-      el.value = document.getElementById(id) as HTMLDivElement
-
-      const targetRef: Ref<HTMLElement | null> = computed(
-        () => el.value?.querySelector('.t-dialog') ?? null,
-      )
-      const containerRef: Ref<HTMLElement | null> = computed(
-        () => el.value?.querySelector('.t-dialog__position') ?? null,
-      )
-      const bodyRef: Ref<HTMLElement | null> = computed(
-        () => el.value?.querySelector('[class^="t-dialog__body"]') ?? null,
-      )
-      const footerRef: Ref<HTMLElement | null> = computed(
-        () => el.value?.querySelector('.t-dialog__footer') ?? null,
-      )
-      const { height: containerHeight, width: containerWidth } = useElementSize(
-        containerRef,
-        undefined,
-        {
-          box: 'border-box',
-        },
-      )
-      const { height: targetHeight, width: targetWidth } = useElementSize(targetRef, undefined, {
-        box: 'border-box',
-      })
-      const gap = 10
-      const maxX = computed(() => containerWidth.value - targetWidth.value - gap)
-      const maxY = computed(() => containerHeight.value - targetHeight.value - gap)
-
-      useDraggable(targetRef, {
-        disabled: !isCustomDragEnabled,
-        onMove(_position) {
-          const position = {
-            x: Math.max(gap, Math.min(maxX.value, _position.x)),
-            y: Math.max(gap, Math.min(maxY.value, _position.y)),
-          }
-
-          if (targetRef.value !== null) {
-            targetRef.value.style.transform = `translate(${position.x - targetRef.value.offsetLeft}px, ${position.y - targetRef.value.offsetTop}px)`
-          }
-        },
-        onStart(_, event) {
-          // body 和 footer 不能拖动
-          if (
-            (bodyRef.value !== null && bodyRef.value.contains(event.target as Node)) ||
-            (footerRef.value !== null && footerRef.value.contains(event.target as Node))
-          ) {
-            return false
-          }
-
-          document.body.dispatchEvent(new Event('mousedown')) // 关闭popup
-        },
-        // exact: true, // 必须为target,不能为其子元素
-        preventDefault: true,
-        stopPropagation: true,
-      })
     },
   }
 

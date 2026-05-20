@@ -106,5 +106,15 @@ function compoRef(instance: any) {
     min-height: 32px;
     color: inherit;
   }
+
+  .t-loading__parent {
+    /* stylelint-disable-next-line selector-class-pattern */
+    &:has(.t-card__body.flex-1) {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+  }
 }
 </style>
