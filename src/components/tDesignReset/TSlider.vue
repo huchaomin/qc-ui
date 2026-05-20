@@ -1,13 +1,12 @@
 <script lang="ts">
-import type { SwitchProps as _SwitchProps, SwitchValue } from 'tdesign-vue-next'
+import type { SliderProps as _SliderProps, SliderValue } from 'tdesign-vue-next'
 import { mergeProps } from 'vue'
 
-export const switchPropsInit = {
+export const sliderPropsInit = {
   disabled: undefined,
-  size: 'large',
 } as const
-export type SwitchProps = Omit<_SwitchProps, 'defaultValue' | 'value'> & {
-  modelValue: SwitchValue
+export type SliderProps = Omit<_SliderProps, 'defaultValue' | 'value'> & {
+  modelValue: SliderValue
 }
 </script>
 
@@ -16,15 +15,15 @@ defineOptions({
   inheritAttrs: false,
 })
 
-const props = withDefaults(defineProps<SwitchProps>(), switchPropsInit)
+const props = withDefaults(defineProps<SliderProps>(), sliderPropsInit)
 const emit = defineEmits<{
-  'update:modelValue': [value: SwitchValue]
+  'update:modelValue': [value: SliderValue]
 }>()
 
-type OnChangeParams = Parameters<NonNullable<_SwitchProps['onChange']>>
+type OnChangeParams = Parameters<NonNullable<_SliderProps['onChange']>>
 
 const otherProps = computed(() => {
-  const obj: Partial<SwitchProps> = {
+  const obj: Partial<SliderProps> = {
     ...props,
   }
 
@@ -35,7 +34,7 @@ const otherProps = computed(() => {
   })
   return obj
 })
-const compo = _Switch
+const compo = _Slider
 const vm = getCurrentInstance()!
 
 function compoRef(instance: any) {

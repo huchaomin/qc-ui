@@ -13,6 +13,7 @@ import type { InputNumberProps } from './TInputNumber.vue'
 import type { RadioGroupProps } from './TRadioGroup.vue'
 import type { RangeInputProps } from './TRangeInput.vue'
 import type { SelectProps } from './TSelect.vue'
+import type { SliderProps } from './TSlider.vue'
 import type { SwitchProps } from './TSwitch.vue'
 import type { TagInputProps } from './TTagInput.vue'
 import type { TextareaProps } from './TTextarea.vue'
@@ -97,6 +98,7 @@ interface ComponentPropsMap extends busComponentPropsMap {
   TRadioGroup: Omit<RadioGroupProps, 'modelValue'>
   TRangeInput: Omit<RangeInputProps, 'modelValue'>
   TSelect: Omit<SelectProps, 'modelValue'>
+  TSlider: Omit<SliderProps, 'modelValue'>
   TSwitch: Omit<SwitchProps, 'modelValue'>
   TTagInput: Omit<TagInputProps, 'modelValue'>
   TTextarea: Omit<TextareaProps, 'modelValue'>

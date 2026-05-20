@@ -27,6 +27,7 @@ import TInputNumber from './TInputNumber.vue'
 import TRadioGroup from './TRadioGroup.vue'
 import TRangeInput from './TRangeInput.vue'
 import TSelect from './TSelect.vue'
+import TSlider from './TSlider.vue'
 import TSwitch from './TSwitch.vue'
 import TTagInput from './TTagInput.vue'
 import TTextarea from './TTextarea.vue'
@@ -87,7 +88,8 @@ function setInitFormDataValues() {
           item.component as string,
         ) ||
         (item.multiple === true && item.component === 'TSelect') ||
-        (item.multiple === true && item.component === 'TDatePicker')
+        (item.multiple === true && item.component === 'TDatePicker') ||
+        (item.range === true && item.component === 'TSlider')
 
       // eslint-disable-next-line vue/no-mutating-props
       props.data[item.model] = isArr
@@ -125,6 +127,7 @@ const componentMapInReset = {
   TRadioGroup,
   TRangeInput,
   TSelect,
+  TSlider,
   TSwitch,
   TTagInput,
   TTextarea,

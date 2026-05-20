@@ -27,6 +27,7 @@ import _TDesign, {
   RadioGroup as _RadioGroup,
   RangeInput as _RangeInput,
   Select as _Select,
+  Slider as _Slider,
   Switch as _Switch,
   TabPanel as _TabPanel,
   Tag as _Tag,
@@ -74,6 +75,7 @@ const Text = _Text as (typeof import('tdesign-vue-next'))['Text']
 const ImageViewer = _ImageViewer as (typeof import('tdesign-vue-next'))['ImageViewer']
 const TagInput = _TagInput as (typeof import('tdesign-vue-next'))['TagInput']
 const Tag = _Tag as (typeof import('tdesign-vue-next'))['Tag']
+const Slider = _Slider as (typeof import('tdesign-vue-next'))['Slider']
 
 export {
   Button,
@@ -101,6 +103,7 @@ export {
   RadioGroup,
   RangeInput,
   Select,
+  Slider,
   Switch,
   TabPanel,
   Tag,

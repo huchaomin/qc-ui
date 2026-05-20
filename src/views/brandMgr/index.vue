@@ -78,12 +78,6 @@ const formItemMap = {
     dicCode: 'sys_yes_no',
     model: 'eventTaskFlag',
   },
-  extraType: {
-    _label: '抽帧类型',
-    component: 'TSelect',
-    dicCode: 'extra_cfg',
-    model: 'extraType',
-  },
   phraseLimitNum: {
     _label: '事件词组数',
     _required: true,
@@ -161,14 +155,6 @@ const config: PageListProps = {
       },
       colKey: 'dataLimitNum',
       title: '品牌数据量上限(条)',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'extra_cfg',
-      },
-      colKey: 'extraType',
-      title: '抽帧类型',
     },
     {
       cell: {
@@ -280,7 +266,6 @@ const config: PageListProps = {
                       formItemMap.dataSaveTime,
                       formItemMap.dataLimitNum,
                       formItemMap.eventTaskFlag,
-                      formItemMap.extraType,
                     ],
                     ref: formRef,
                   }),

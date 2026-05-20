@@ -75,7 +75,7 @@ function compoRef(instance: any) {
         mergeProps($attrs, {
           ...otherProps,
           onChange: (...args: OnChangeParams) => {
-            emit('update:modelValue', args[0] ?? '')
+            emit('update:modelValue', args[0])
             props.onChange?.(...args)
           },
           ref: compoRef,

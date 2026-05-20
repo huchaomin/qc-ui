@@ -37,6 +37,7 @@ export default antfu(
     // 3. 默认为true
     // 4. 这里设置为false 是因为 现在格式化错误 https://github.com/antfu/eslint-config/discussions/851
     markdown: false,
+    perfectionist: true,
     // https://eslint.style/packages/default#rules
     stylistic: {
       indent: 2,
@@ -146,7 +147,6 @@ export default antfu(
   },
 )
   .override(perfectionistConfig[0].name!, {
-    ignores: ['**/*.md'],
     rules: {
       ...perfectionist.configs['recommended-natural'].rules,
       ...perfectionistConfig[0].rules,
