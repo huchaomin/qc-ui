@@ -41,11 +41,10 @@ function create(
   _options: Parameters<CreateDialogFnType>[0],
   context: Parameters<CreateDialogFnType>[1],
 ) {
-  const el = ref<HTMLDivElement | null>(null)
   const bodyCache = computed(() => {
     return typeof _options.body === 'function' ? _options.body(h) : _options.body
   })
-  const options = {
+  const options: Parameters<CreateDialogFnType>[0] = {
     closeOnEscKeydown: false,
     closeOnOverlayClick: false,
     closeWhenCloseAll: true,
@@ -58,7 +57,6 @@ function create(
     ...(_options ?? {}),
     body: () => bodyCache.value,
   }
-
   let instance: DialogInstance | undefined
   const obj = {
     ...options,
@@ -68,6 +66,7 @@ function create(
     },
   }
 
+  delete obj.closeWhenCloseAll
   instance = type === undefined ? DialogPlugin(obj, context) : DialogPlugin[type](obj, context)
 
   if (options.closeWhenCloseAll) {
