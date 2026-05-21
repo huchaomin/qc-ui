@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { SortInfo } from 'tdesign-vue-next'
 import { addFollow, fillOriginalUrl, handPullComments } from '@/bus'
+import FrameExtraCheck from './modules/FrameExtraCheck.vue'
 
 const pageListRef = useTemplateRef('pageListRef')
 const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
@@ -305,6 +306,27 @@ const config: PageListProps = {
         addFollow(selectedRows.value)
       },
       permission: 'yq:followDetail:add',
+    }),
+    reactive({
+      default: '抽帧检查',
+      disabled: computed(() => selectedRows.value.length === 0),
+      onClick: () => {
+        const compoRef = ref<InstanceType<typeof FrameExtraCheck> | null>(null)
+
+        void $confirm({
+          body: () =>
+            h(FrameExtraCheck, {
+              ref: compoRef,
+              rows: selectedRows.value,
+            }),
+          header: '抽帧检查',
+          onConfirmCallback: async () => {
+            await compoRef.value!.handleSubmit()
+          },
+          width: 1030,
+        })
+      },
+      permission: 'yq:frameExtraRecord:startFrameExtra',
     }),
   ],
   tableOtherProps: reactive({
