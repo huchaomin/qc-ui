@@ -552,9 +552,12 @@ defineExpose({} as FormInstance)
 }
 
 .t-form-inline {
+  --repeat-min-width: 220px;
+  --repeat-gap: 24px;
+
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 0 24px;
+  grid-template-columns: repeat(auto-fill, minmax(var(--repeat-min-width), 1fr));
+  gap: 0 var(--repeat-gap);
 
   :deep() {
     .no_label_item {
@@ -565,6 +568,14 @@ defineExpose({} as FormInstance)
       display: block;
       min-width: auto;
       margin-right: 0;
+
+      &.grid_item {
+        .t-form__controls-content {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(var(--repeat-min-width), 1fr));
+          gap: 0 var(--repeat-gap);
+        }
+      }
     }
   }
 }

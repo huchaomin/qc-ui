@@ -166,7 +166,6 @@
 - 右键菜单
 - 左侧菜单 active 展开
 - 开发 （使用adornment）numberRange 小数
-- fromItem 添加空占位元素
 
 ## todo 项目对比
 
