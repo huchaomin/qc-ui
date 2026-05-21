@@ -70,7 +70,10 @@ function formatNumber(n: any, config?: FormatNumberConfig): string {
  * @example 0 和 false 是合法值
  */
 function isFalsy(val: any): val is '' | null | undefined {
-  return ['', null, undefined].includes(val as null | string | undefined) || Number.isNaN(val)
+  return (
+    ['', null, undefined].includes(val as null | string | undefined) ||
+    (typeof val === 'string' && val.trim() === '')
+  )
 }
 
 /**
