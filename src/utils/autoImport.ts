@@ -26,12 +26,19 @@ export type FormatNumberConfig = ConstructorParameters<typeof Intl.NumberFormat>
 }
 
 function formatNumber(n: any, config?: FormatNumberConfig): string {
-  const number = Number(n)
-
-  if (Number.isFinite(number) === false) {
+  if (typeof n !== 'number' && typeof n !== 'string') {
     return ''
   }
 
+  if (typeof n === 'string' && isValidNumberString(n) === false) {
+    return ''
+  }
+
+  if (typeof n === 'number' && Number.isFinite(n) === false) {
+    return ''
+  }
+
+  const number = Number(n)
   const obj: ConstructorParameters<typeof Intl.NumberFormat>[1] = {
     currency: 'CNY', // 用于货币格式化的货币, 果 style 是 "currency"，则必须提供 currency 属性
     currencyDisplay: 'symbol', // 货币符号的显示方式
@@ -68,6 +75,9 @@ function isFalsy(val: any): val is '' | null | undefined {
 
 /**
  * @description: 判断是否为有效的数字字符串
+ * @example 二进制/八进制/十六进制的字符串:true
+ * @example 科学计数法:true
+ * @example "Infinity" 和 "-Infinity":false
  */
 function isValidNumberString(str: string): boolean {
   if (typeof str !== 'string' || str.trim() === '') {
