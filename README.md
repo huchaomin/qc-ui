@@ -164,7 +164,6 @@
 - Cannot read properties of undefined (reading 'messageIds')
 - v-memo
 - 右键菜单
-- 左侧菜单 active 展开
 - 开发 （使用adornment）numberRange 小数
 
 ## todo 项目对比

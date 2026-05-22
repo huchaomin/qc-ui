@@ -12,9 +12,24 @@ const logoUrl = Object.values(
   }),
 )[0] as string
 const routerStore = useRouterStore()
-const defaultExpanded = computed(() => {
-  return route.matched.map((item) => item.name as string)
-})
+const expanded = ref<string[]>([])
+
+watch(
+  () => route.name,
+  () => {
+    const matched = route.matched.map((item) => item.name as string)
+
+    matched.forEach((item) => {
+      if (!expanded.value.includes(item)) {
+        expanded.value.push(item)
+      }
+    })
+  },
+  {
+    immediate: true,
+  },
+)
+
 const value = computed(() => {
   const meta = route.meta
   const { hidden, parentName } = meta
@@ -28,7 +43,7 @@ const value = computed(() => {
 </script>
 
 <template>
-  <TMenu :value="value" :default-expanded="defaultExpanded" class="w-full!">
+  <TMenu v-model:expanded="expanded" :value="value" class="w-full!">
     <template #logo>
       <div class="ml-2! flex items-center">
         <TImage :src="logoUrl" class="logo" style="width: 28px; height: 28px"></TImage>
