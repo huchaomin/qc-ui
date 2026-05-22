@@ -178,7 +178,7 @@ watch(
   },
 )
 
-const isMdScreen = useMQ().isMd
+const isMdScreen = useMQ.isMd
 /**
  * @description: className 添加 class
  * @description: attrs 添加 style

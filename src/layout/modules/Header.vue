@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { DropdownProps, TabsProps } from 'tdesign-vue-next'
+import type { DrawerInstance, DropdownProps, TabsProps } from 'tdesign-vue-next'
 import { getRoute } from '@/router/index'
+import Aside from './Aside.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -23,6 +24,37 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
     useLoginStore().logout()
   }
 }
+
+function getDynamicDrawerOptions(visible: boolean, isMd: boolean) {
+  return {
+    mode: isMd ? ('overlay' as const) : ('push' as const),
+    showOverlay: !!isMd,
+    visible,
+  }
+}
+
+const drawerInstance = ref<DrawerInstance | null>(null)
+
+onMounted(() => {
+  drawerInstance.value = $drawer({
+    attach: '#appLayout',
+    body: () => h(Aside, { class: 'no_drawer_body_padding' }),
+    destroyOnClose: false,
+    footer: false,
+    lazy: false,
+    onOverlayClick: () => {
+      commonStore.drawerOpen = false
+    },
+    placement: 'left',
+    size: '250px',
+  })
+})
+watchEffect(() => {
+  drawerInstance.value?.update!(getDynamicDrawerOptions(commonStore.drawerOpen, useMQ.isMd.value))
+})
+onBeforeUnmount(() => {
+  drawerInstance.value?.destroy!()
+})
 </script>
 
 <template>

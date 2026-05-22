@@ -7,17 +7,17 @@ type Options = Omit<DrawerOptions, 'default' | 'onConfirm'> & {
     | DrawerOptions['onConfirm']
 }
 
-export default function create(_options: Options, context: AppContext) {
+export default function create(_options: Options, context?: AppContext) {
   const bodyCache = computed(() => {
     return typeof _options.body === 'function' ? _options.body(h) : _options.body
   })
   const options: Options = {
+    attach: '#app', // 不能放到 body 上，push 模式会干扰其他弹窗
     closeOnEscKeydown: false,
     closeOnOverlayClick: false,
     destroyOnClose: true,
     header: false,
     lazy: true,
-    size: 'medium',
     sizeDraggable: true,
     ...(_options ?? {}),
     body: () => bodyCache.value,

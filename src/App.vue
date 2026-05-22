@@ -45,7 +45,7 @@ const userStore = useUserStore()
   <TConfigProvider :global-config="globalConfig">
     <RouterView class="relative z-0"></RouterView>
     <TWatermark
-      class="pointer-events-none absolute! top-0 z-[calc(Infinity)] h-full"
+      class="pointer-events-none fixed! top-0 right-0 bottom-0 left-0 z-[calc(Infinity)]"
       :watermark-content="[
         { text: userStore.userInfo.userName ?? '' },
         {

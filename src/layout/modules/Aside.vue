@@ -25,28 +25,23 @@ const value = computed(() => {
 
   return route.name as string
 })
-const width = computed(() => {
-  return commonStore.drawerOpen ? (useMQ().isMd.value ? '175px' : undefined) : '0px'
-})
 </script>
 
 <template>
-  <TAside :width="width" class="overflow-hidden border-r border-r-(--td-border-level-2-color)">
-    <TMenu :value="value" :default-expanded="defaultExpanded" class="w-full!">
-      <template #logo>
-        <div class="ml-2! flex items-center">
-          <TImage :src="logoUrl" class="logo" style="width: 28px; height: 28px"></TImage>
-          <GradientText
-            :text="appName"
-            :animation-speed="8"
-            :show-border="false"
-            class-name="ml-2 text-xl !font-bold"
-          />
-        </div>
-      </template>
-      <MenuNode :model="routerStore.routersRaw[0]!.children!"></MenuNode>
-    </TMenu>
-  </TAside>
+  <TMenu :value="value" :default-expanded="defaultExpanded" class="w-full!">
+    <template #logo>
+      <div class="ml-2! flex items-center">
+        <TImage :src="logoUrl" class="logo" style="width: 28px; height: 28px"></TImage>
+        <GradientText
+          :text="appName"
+          :animation-speed="8"
+          :show-border="false"
+          class-name="ml-2 text-xl !font-bold"
+        />
+      </div>
+    </template>
+    <MenuNode :model="routerStore.routersRaw[0]?.children! ?? []"></MenuNode>
+  </TMenu>
 </template>
 
 <style scoped>
@@ -65,8 +60,10 @@ const width = computed(() => {
   .t-menu {
     @apply py-0!;
   }
+}
 
-  .t-default-menu {
+.t-default-menu {
+  :deep() {
     .t-menu__item {
       height: var(--td-comp-size-xl);
       padding: 0 10px;

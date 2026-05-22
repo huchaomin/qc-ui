@@ -24,6 +24,7 @@
   --td-shadow-1: 0px 0px 6px rgb(0 0 0 / 8%);
   --td-shadow-2: 0px 0px 12px rgb(0 0 0 / 12%);
   --td-shadow-3: 0px 0px 18px rgb(0 0 0 / 24%);
+  --td-mask-active: rgb(58 53 65 / 32%);
 }
 
 body {
@@ -280,6 +281,14 @@ body {
 
       &:has(> .t-button.t-button--theme-primary) {
         border: none;
+      }
+    }
+  }
+
+  .t-drawer {
+    .t-drawer__body {
+      &:has(.no_drawer_body_padding) {
+        padding: 0;
       }
     }
   }

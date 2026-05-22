@@ -46,7 +46,7 @@ const [contentRef] = useAutoAnimate((el, action) => {
   return new KeyframeEffect(el, keyframes, { duration: 400, easing: 'ease-in-out' })
 })
 const contentPadding = computed(() => {
-  if (useMQ().isMd.value) {
+  if (useMQ.isMd.value) {
     return {
       'p-2!': !noMainPadding.value,
     }
@@ -59,23 +59,20 @@ const contentPadding = computed(() => {
 </script>
 
 <template>
-  <TLayout class="h-full">
-    <Aside>Aside</Aside>
-    <TLayout class="flex-1! overflow-x-auto">
-      <Header></Header>
-      <TContent
-        ref="contentRef"
-        :class="{ ...contentPadding, 'pt-8!': hasBreadcrumb }"
-        class="relative overflow-x-auto"
-      >
-        <Breadcrumb ref="breadcrumb"></Breadcrumb>
-        <RouterView v-slot="{ Component }">
-          <KeepAlive :include="recentRoutersNames" :exclude="excludeKPnameStore.excludeKPname">
-            <Component :is="Component" class="min-h-full" style="min-width: 1200px"></Component>
-          </KeepAlive>
-        </RouterView>
-      </TContent>
-    </TLayout>
+  <TLayout id="appLayout" class="h-full">
+    <Header></Header>
+    <TContent
+      ref="contentRef"
+      :class="{ ...contentPadding, 'pt-8!': hasBreadcrumb }"
+      class="relative overflow-x-auto"
+    >
+      <Breadcrumb ref="breadcrumb"></Breadcrumb>
+      <RouterView v-slot="{ Component }">
+        <KeepAlive :include="recentRoutersNames" :exclude="excludeKPnameStore.excludeKPname">
+          <Component :is="Component" class="min-h-full" style="min-width: 1200px"></Component>
+        </KeepAlive>
+      </RouterView>
+    </TContent>
   </TLayout>
 </template>
 
