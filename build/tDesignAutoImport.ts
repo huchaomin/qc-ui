@@ -13,6 +13,7 @@ export default (
       from: isProduction ? 'tdesign-vue-next' : '@/plugins/tdesign-vue-next-for-dev',
       imports: [
         'DialogPlugin',
+        'DrawerPlugin',
         'LoadingPlugin',
         'MessagePlugin',
         'NotifyPlugin',

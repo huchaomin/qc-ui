@@ -1,6 +1,7 @@
 import type { LoadingPluginType, MessagePluginType, NotificationPluginType } from 'tdesign-vue-next'
 import type _default from 'tdesign-vue-next'
 import type { DialogPluginType } from 'tdesign-vue-next/es/dialog/plugin.d.ts'
+import type { DrawerPluginType } from 'tdesign-vue-next/es/drawer/plugin.d.ts'
 import _TDesign, {
   Button as _Button,
   Card as _Card,
@@ -9,6 +10,7 @@ import _TDesign, {
   DatePicker as _DatePicker,
   DateRangePicker as _DateRangePicker,
   DialogPlugin as _DialogPlugin,
+  DrawerPlugin as _DrawerPlugin,
   EnhancedTable as _EnhancedTable,
   Form as _Form,
   Image as _Image,
@@ -44,6 +46,7 @@ const DialogPlugin = _DialogPlugin as DialogPluginType
 const LoadingPlugin = _LoadingPlugin as LoadingPluginType
 const MessagePlugin = _MessagePlugin as MessagePluginType
 const NotifyPlugin = _NotifyPlugin as NotificationPluginType
+const DrawerPlugin = _DrawerPlugin as DrawerPluginType
 const TDesign = _TDesign as typeof _default
 const Message = _Message as (typeof import('tdesign-vue-next'))['Message']
 const Card = _Card as (typeof import('tdesign-vue-next'))['Card']
@@ -85,6 +88,7 @@ export {
   DatePicker,
   DateRangePicker,
   DialogPlugin,
+  DrawerPlugin,
   EnhancedTable,
   Form,
   Image,
