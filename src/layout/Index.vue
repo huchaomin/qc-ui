@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { DrawerInstance } from 'tdesign-vue-next'
 import { useAutoAnimate } from '@formkit/auto-animate/vue'
 import { getRoute } from '@/router/index'
 import Aside from './modules/Aside.vue'
@@ -6,6 +7,7 @@ import Breadcrumb from './modules/Breadcrumb.vue'
 import Header from './modules/Header.vue'
 
 const route = useRoute()
+const commonStore = useCommonStore()
 const recentRoutersStore = useRecentRoutersStore()
 const excludeKPnameStore = useExcludeKPnameStore()
 const recentRoutersNames = computed(() =>
@@ -55,6 +57,47 @@ const contentPadding = computed(() => {
   return {
     'p-3!': !noMainPadding.value,
   }
+})
+const drawerInstance = ref<DrawerInstance | null>(null)
+
+onMounted(() => {
+  drawerInstance.value = $drawer({
+    body: () => h(Aside, { class: 'no_drawer_body_padding' }),
+    closeWhenCloseAll: false,
+    destroyOnClose: false,
+    footer: false,
+    lazy: false,
+    onOverlayClick: () => {
+      commonStore.drawerOpen = false
+    },
+    placement: 'left',
+    size: '250px',
+  })
+})
+watch(
+  [() => commonStore.drawerOpen, useMQ.isMd],
+  ([visible, isMd]) => {
+    nextTick(() => {
+      drawerInstance.value!.update!({
+        mode: isMd ? 'overlay' : 'push',
+        showOverlay: !!isMd,
+        // visible, 不要使用visible, 否则 destroy 时不会恢复push 的margin
+      })
+      nextTick(() => {
+        if (visible) {
+          drawerInstance.value!.show!()
+        } else {
+          drawerInstance.value!.hide!()
+        }
+      })
+    })
+  },
+  {
+    immediate: true,
+  },
+)
+onBeforeUnmount(() => {
+  drawerInstance.value!.destroy!()
 })
 </script>
 

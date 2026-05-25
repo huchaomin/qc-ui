@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import type { DrawerInstance, DropdownProps } from 'tdesign-vue-next'
+import type { DropdownProps } from 'tdesign-vue-next'
 import { getRoute } from '@/router/index'
-import Aside from './Aside.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -29,54 +28,7 @@ const handleDropdownClick: DropdownProps['onClick'] = async (data) => {
     useLoginStore().logout()
   }
 }
-const drawerInstance = ref<DrawerInstance | null>(null)
-
-onMounted(() => {
-  drawerInstance.value = $drawer({
-    body: () => h(Aside, { class: 'no_drawer_body_padding' }),
-    closeWhenCloseAll: false,
-    destroyOnClose: false,
-    footer: false,
-    lazy: false,
-    onOverlayClick: () => {
-      commonStore.drawerOpen = false
-    },
-    placement: 'left',
-    size: '250px',
-  })
-})
-watch(
-  () => commonStore.drawerOpen,
-  (val) => {
-    nextTick(() => {
-      if (val) {
-        drawerInstance.value!.show!()
-      } else {
-        drawerInstance.value!.hide!()
-      }
-    })
-  },
-  {
-    immediate: true,
-  },
-)
-watch(
-  useMQ.isMd,
-  (isMd) => {
-    nextTick(() => {
-      drawerInstance.value!.update!({
-        mode: isMd ? 'overlay' : 'push',
-        showOverlay: !!isMd,
-      })
-    })
-  },
-  {
-    immediate: true,
-  },
-)
-onBeforeUnmount(() => {
-  drawerInstance.value!.destroy!()
-})
+const isMd = useMQ.isMd
 </script>
 
 <template>
@@ -137,7 +89,12 @@ onBeforeUnmount(() => {
           trigger="click"
           @click="handleDropdownClick"
         >
-          <TButton variant="text">
+          <TButton v-if="isMd" variant="text" shape="square">
+            <template #icon>
+              <Icon icon="material-symbols:account-circle" />
+            </template>
+          </TButton>
+          <TButton v-else variant="text">
             <template #icon>
               <Icon icon="material-symbols:account-circle" class="mr-2!" />
             </template>
