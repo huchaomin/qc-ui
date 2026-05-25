@@ -111,6 +111,7 @@ router.beforeEach(async (to) => {
 })
 router.afterEach((to, from, failure) => {
   $dialog.closeAll()
+  $drawer.closeAll()
 
   const { meta, name } = to as RouteRecordRaw
   const { fullScreen, parentName, title } = meta

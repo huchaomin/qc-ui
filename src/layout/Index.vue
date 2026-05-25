@@ -59,7 +59,7 @@ const contentPadding = computed(() => {
 </script>
 
 <template>
-  <TLayout id="appLayout" class="h-full">
+  <TLayout class="h-full">
     <Header></Header>
     <TContent
       ref="contentRef"

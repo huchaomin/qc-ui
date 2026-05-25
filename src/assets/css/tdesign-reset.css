@@ -198,11 +198,6 @@ body {
     }
   }
 
-  .t-popup__content {
-    border: 1px solid var(--td-border-level-2-color);
-    box-shadow: var(--td-shadow-2);
-  }
-
   .t-link {
     display: inline;
 
@@ -291,5 +286,22 @@ body {
         padding: 0;
       }
     }
+  }
+
+  .t-popup {
+    &.t-is-head-menu {
+      .t-menu__item {
+        --td-comp-paddingLR-l: var(--td-size-4);
+
+        .t-menu__content {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .t-popup__content {
+    border: 1px solid var(--td-border-level-2-color);
+    box-shadow: var(--td-shadow-2);
   }
 }
