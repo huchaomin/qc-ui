@@ -54,8 +54,6 @@ const { x: _x } = useDraggable(dragBlockRef, {
   axis: 'x',
   containerElement: barAreaRef,
   onEnd: async ({ x }) => {
-    console.log(x)
-
     const endMoveTime = Date.now()
     const res = await alovaInst.Post<Record<string, any>>(
       'captcha/check',
@@ -99,6 +97,7 @@ const { x: _x } = useDraggable(dragBlockRef, {
     startMoveTime.value = Date.now() // 开始滑动的时间
     checkState.value = 'doing'
   },
+  preventDefault: true,
   stopPropagation: true,
 })
 const x = computed(() => {
@@ -192,7 +191,7 @@ function refresh() {
       >
         <div
           ref="dragBlock"
-          class="hover:text-white absolute top-0 left-0 flex -translate-x-px -translate-y-px cursor-pointer items-center justify-center border border-transparent bg-clip-content hover:bg-(--td-brand-color)"
+          class="hover:text-white absolute top-0 left-0 flex -translate-x-px -translate-y-px cursor-pointer touch-none items-center justify-center border border-transparent bg-clip-content hover:bg-(--td-brand-color)"
           :style="{
             width: `${sizeConfig.barHeight}px`,
             height: `${sizeConfig.barHeight}px`,
