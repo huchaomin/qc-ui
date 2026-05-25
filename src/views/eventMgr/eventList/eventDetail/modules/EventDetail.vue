@@ -322,6 +322,7 @@ const config: PageListProps = {
           header: '抽帧检查',
           onConfirmCallback: async () => {
             await compoRef.value!.handleSubmit()
+            pageListRef.value!.query()
           },
           width: 1030,
         })

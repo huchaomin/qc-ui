@@ -8,7 +8,11 @@ const props = withDefaults(
   }>(),
   {},
 )
-const selectedRowKeys = ref<Array<string>>([])
+const selectedRowKeysY = ref<Array<string>>([])
+const selectedRowKeysN = ref<Array<string>>([])
+const selectedRowKeys = computed(() => {
+  return [...selectedRowKeysY.value, ...selectedRowKeysN.value]
+})
 const columns: TableCol[] = [
   {
     ...useVideoTitleColumn({
@@ -26,14 +30,20 @@ const columns: TableCol[] = [
     useLink: false,
   }),
 ]
+const extraFlagYArr = computed(() => {
+  return props.rows.filter((item) => item.extraFlag === 'Y')
+})
+const extraFlagNArr = computed(() => {
+  return props.rows.filter((item) => item.extraFlag === 'N')
+})
 const extraNumTypeOptions = useDicOptions('extra_num_type')
 const formData = reactive<Record<string, any>>({})
 const initExtraCfgList = ref<Array<Record<string, any>>>([])
 
 watch(extraNumTypeOptions, (val) => {
-  formData.extraNum = val.find((item) => item.value === '0')?.remark ?? ''
+  formData.extraNum = val.find((item) => item.value === '1')?.remark ?? ''
 
-  const str = val.find((item) => item.value === '1')?.remark ?? ''
+  const str = val.find((item) => item.value === '2')?.remark ?? ''
 
   try {
     initExtraCfgList.value = JSON.parse(str)
@@ -72,7 +82,7 @@ const formItems: FormItem[] = [
   {
     __others: (formData: Record<string, any>) => {
       return {
-        show: formData.extraNumType === '0',
+        show: formData.extraNumType === '1',
       }
     },
     _label: '固定帧数',
@@ -84,7 +94,7 @@ const formItems: FormItem[] = [
   {
     __others: (formData: Record<string, any>) => {
       return {
-        show: formData.extraNumType === '1',
+        show: formData.extraNumType === '2',
       }
     },
     _class: 'col-span-full',
@@ -104,12 +114,14 @@ function handleSubmit(): Promise<void> {
     }
 
     formRef.value!.validate().then((data) => {
+      const params = {
+        bciIds: selectedRowKeys.value,
+        eventId: props.rows[0].eventId,
+        ...data,
+      }
+
       alovaInst
-        .Post<Record<string, any>>('yq/frameExtraRecord/frameExtraCheck', {
-          bciIds: selectedRowKeys.value,
-          eventId: props.rows[0].eventId,
-          ...data,
-        })
+        .Post<Record<string, any>>('yq/frameExtraRecord/frameExtraCheck', params)
         .then((result) => {
           const compoRef = ref<InstanceType<typeof FrameExtraCheckDetail> | null>(null)
 
@@ -121,10 +133,11 @@ function handleSubmit(): Promise<void> {
               }),
             header: '抽帧检查确认',
             onConfirmCallback: async () => {
-              await compoRef.value!.handleSubmit()
+              await alovaInst.Post('yq/frameExtraRecord/startFrameExtra', params)
+              $msg('抽帧检查成功')
               resolve()
             },
-            width: 600,
+            width: 680,
           })
         })
     })
@@ -137,21 +150,26 @@ defineExpose({
 </script>
 
 <template>
-  <!-- <div v-if="hasOriginalUrlArr.length > 0" class="mb-4">
-    以下选项已经添加原链接，无需再添加：
-    <TTable :columns="columns" :data="hasOriginalUrlArr"></TTable>
+  <div v-if="extraFlagYArr.length > 0" class="mb-4">
+    以下选项已抽帧检查过：
+    <TTable
+      v-model:selected-row-keys="selectedRowKeysY"
+      row-key="bciId"
+      show-row-select="multiple"
+      :columns="columns"
+      :data="extraFlagYArr"
+    ></TTable>
   </div>
-  <div v-if="noneOriginalUrlArr.length > 0">
-    确定要继续添加原链接的视频：
-    <TTable :columns="columns" :data="noneOriginalUrlArr"></TTable>
-  </div> -->
-  <TTable
-    v-model:selected-row-keys="selectedRowKeys"
-    :columns="columns"
-    :data="rows"
-    row-key="bciId"
-    show-row-select="multiple"
-  ></TTable>
+  <div v-if="extraFlagNArr.length > 0">
+    以下选项暂未抽帧检查过：
+    <TTable
+      v-model:selected-row-keys="selectedRowKeysN"
+      row-key="bciId"
+      show-row-select="multiple"
+      :columns="columns"
+      :data="extraFlagNArr"
+    ></TTable>
+  </div>
   <TForm ref="formRef" class="mt-4!" :data="formData" :items="formItems">
     <template #extraCfgList>
       <ExtraCfgList :initial-data="initExtraCfgList" />

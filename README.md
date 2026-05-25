@@ -158,7 +158,6 @@
 - [https://juejin.cn/post/7263810695459438653]
 - (泛型的联合类型分发)[https://juejin.cn/post/7228833037743915067#heading-18]
 - $fileView
-- 头部菜单导航
 - 添加视频插件
 - markdown 渲染字体文件 regenerrarter 按钮
 - Cannot read properties of undefined (reading 'messageIds')

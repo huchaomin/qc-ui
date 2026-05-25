@@ -184,6 +184,10 @@ body {
         &:has(> div:is(:first-child) > div:is(:first-child) > .t-typography:is(:first-child)) {
           padding-top: 0;
         }
+
+        &:has(.no_dialog_pt) {
+          padding-top: 0;
+        }
       }
 
       .t-dialog__footer {
