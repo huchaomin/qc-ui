@@ -40,17 +40,23 @@ const extraNumTypeOptions = useDicOptions('extra_num_type')
 const formData = reactive<Record<string, any>>({})
 const initExtraCfgList = ref<Array<Record<string, any>>>([])
 
-watch(extraNumTypeOptions, (val) => {
-  formData.extraNum = val.find((item) => item.value === '1')?.remark ?? ''
+watch(
+  extraNumTypeOptions,
+  (val) => {
+    formData.extraNum = val.find((item) => item.value === '1')?.remark ?? ''
 
-  const str = val.find((item) => item.value === '2')?.remark ?? ''
+    const str = val.find((item) => item.value === '2')?.remark ?? ''
 
-  try {
-    initExtraCfgList.value = JSON.parse(str)
-  } catch {
-    initExtraCfgList.value = []
-  }
-})
+    try {
+      initExtraCfgList.value = JSON.parse(str)
+    } catch {
+      initExtraCfgList.value = []
+    }
+  },
+  {
+    immediate: true,
+  },
+)
 
 const formItems: FormItem[] = [
   {
@@ -73,7 +79,7 @@ const formItems: FormItem[] = [
         show: formData.extraType === '2',
       }
     },
-    _label: '数量抽帧配置',
+    _label: '抽帧数量配置',
     _required: true,
     component: 'TSelect',
     dicCode: 'extra_num_type',
@@ -121,7 +127,11 @@ function handleSubmit(): Promise<void> {
       }
 
       alovaInst
-        .Post<Record<string, any>>('yq/frameExtraRecord/frameExtraCheck', params)
+        .Post<Record<string, any>>('yq/frameExtraRecord/frameExtraCheck', params, {
+          meta: {
+            useLoading: '检查中...',
+          },
+        })
         .then((result) => {
           const compoRef = ref<InstanceType<typeof FrameExtraCheckDetail> | null>(null)
 

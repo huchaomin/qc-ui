@@ -88,10 +88,9 @@ function handleView(id: string): void {
       </div>
     </template>
     <TList class="-m-3! p-3!">
-      <TListItem v-for="(item, index) in [{}, ...data]" :key="item.id">
+      <TListItem>
         <template #default>
           <TButton
-            v-if="index === 0"
             class="min-h-[117px]"
             :class="{
               'absolute! top-0 bottom-0 h-auto!': data.length > 0,
@@ -103,8 +102,11 @@ function handleView(id: string): void {
           >
             新增
           </TButton>
+        </template>
+      </TListItem>
+      <TListItem v-for="item in data" :key="item.id">
+        <template #default>
           <TCard
-            v-else
             class="flex h-full w-full flex-col justify-between"
             :title="item.agentName"
             :subtitle="item.agentDesc"
