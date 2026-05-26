@@ -2,10 +2,13 @@
 const props = withDefaults(
   defineProps<{
     initialData: Array<Record<string, any>>
+    type?: 'update' | 'view'
   }>(),
-  {},
+  {
+    type: 'update',
+  },
 )
-const formData = inject<Record<string, any>>('formData')!
+const formData = inject<Record<string, any>>('formData')
 const tableData = ref<Array<Record<string, any>>>([])
 
 watch(
@@ -28,6 +31,10 @@ watch(
 watch(
   tableData,
   () => {
+    if (formData === undefined) {
+      return
+    }
+
     if (tableData.value.some((item) => isFalsy(item.extraNum))) {
       if (formData.extraCfgList.length > 0) {
         formData.extraCfgList = []
@@ -62,7 +69,7 @@ const columns: TableCol[] = [
       return {
         _component: 'InputNumber',
         decimalPlaces: 0,
-        disabled: rowIndex === tableData.value.length - 1,
+        disabled: rowIndex === tableData.value.length - 1 || props.type === 'view',
         max: isFalsy(tableData.value[rowIndex + 1]?.endMin)
           ? Infinity
           : tableData.value[rowIndex + 1]!.endMin - 1,
@@ -80,6 +87,7 @@ const columns: TableCol[] = [
       return {
         _component: 'InputNumber',
         decimalPlaces: 0,
+        disabled: props.type === 'view',
         status: isFalsy(row.extraNum) ? 'error' : 'default',
       }
     },
@@ -117,6 +125,7 @@ const columns: TableCol[] = [
     },
     colKey: '_operation',
     title: '操作',
+    visible: computed(() => props.type === 'update').value,
   }),
 ]
 </script>

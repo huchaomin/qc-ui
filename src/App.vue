@@ -5,6 +5,21 @@ import TButton from './components/tDesignReset/TButton.vue'
 
 const globalConfig: GlobalConfigProvider = {
   table: {
+    expandIcon: (h) => {
+      return h(
+        TButton,
+        {
+          shape: 'circle',
+          variant: 'text',
+        },
+        {
+          icon: () =>
+            h(Icon, {
+              icon: 'line-md:chevron-right',
+            }),
+        },
+      )
+    },
     sortIcon: (h) => {
       return h(
         TButton,

@@ -1,35 +1,24 @@
 <script setup lang="ts">
-const pageListRef = useTemplateRef('pageListRef')
+import ExtraCfgList from '@/views/eventMgr/eventList/eventDetail/modules/modules/ExtraCfgList.vue'
+import Details from './modules/Details.vue'
+
 const formItemMap = {
-  adminAcc: {
-    _label: '管理员账号',
-    model: 'adminAcc',
+  brandId: {
+    _label: '品牌',
+    component: 'TSelect',
+    model: 'brandId',
+    options: 'brand',
   },
-  adminName: {
-    _label: '法人',
-    model: 'adminName',
-  },
-  contactPhone: {
-    _label: '联系电话',
-    _rules: [
-      {
-        telnumber: true,
-      },
-    ],
-    model: 'contactPhone',
-  },
-  idNo: {
-    _label: '法人身份证',
-    model: 'idNo',
-  },
-  orgName: {
-    _label: '机构名称',
-    model: 'orgName',
+  extraType: {
+    _label: '抽帧类型',
+    component: 'TSelect',
+    dicCode: 'extra_type',
+    model: 'extraType',
   },
   status: {
     _label: '状态',
-    component: 'TRadioGroup',
-    dicCode: 'status',
+    component: 'TSelect',
+    dicCode: 'extra_record_status',
     model: 'status',
   },
 } satisfies Record<string, FormItem>
@@ -65,9 +54,34 @@ const config: PageListProps = {
       title: '抽帧类型',
     },
     {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'extra_num_type',
+      cell: (_, { row }) => {
+        if (row.extraNumType === 1) {
+          return {
+            _component: 'DicLabel',
+            dicCode: 'extra_num_type',
+          }
+        } else if (row.extraNumType === 2) {
+          return {
+            _component: 'Link',
+            default: useDicLabel('extra_num_type', row.extraNumType).value,
+            onClick: () => {
+              void $confirm({
+                body: () =>
+                  h(ExtraCfgList, {
+                    initialData: row.extraNumCfg,
+                    type: 'view',
+                  }),
+                confirmBtn: null,
+                header: '抽帧数量配置',
+                width: 730,
+              })
+            },
+          }
+        } else {
+          return {
+            _component: 'Default',
+          }
+        }
       },
       colKey: 'extraNumType',
       title: '抽帧数量配置',
@@ -133,45 +147,20 @@ const config: PageListProps = {
         _component: 'Buttons',
         buttons: [
           ({ row }) => ({
-            default: '编辑',
+            default: '详情',
             onClick: () => {
-              const formRef = ref<FormInstance | null>(null)
-
-              watch(
-                formRef,
-                () => {
-                  formRef.value!.setFormData(row)
-                },
-                {
-                  once: true,
-                },
-              )
-              $confirm({
+              void $confirm({
                 body: () =>
-                  h(TForm, {
-                    items: [
-                      formItemMap.orgName,
-                      formItemMap.adminAcc,
-                      formItemMap.adminName,
-                      formItemMap.idNo,
-                      formItemMap.contactPhone,
-                      formItemMap.status,
-                    ],
-                    ref: formRef,
+                  h(Details, {
+                    recordId: row.id,
                   }),
-                header: '修改机构',
-                onConfirmCallback: async () => {
-                  await alovaInst.Put('yq/frameExtraRecord', {
-                    ...(await formRef.value!.validate()),
-                    id: row.id,
-                  })
-                  $msg.success('机构修改成功')
-                  pageListRef.value!.query()
-                },
-                width: 730,
+                cancelBtn: '关闭',
+                confirmBtn: null,
+                header: '抽帧详情',
+                width: 1080,
               })
             },
-            permission: 'yq:frameExtraRecord:edit',
+            permission: 'yq:frameExtraDetail:list',
           }),
         ],
       },
@@ -179,16 +168,10 @@ const config: PageListProps = {
       title: '操作',
     },
   ],
-  formItems: [
-    formItemMap.orgName,
-    {
-      ...formItemMap.status,
-      component: 'TSelect',
-    },
-  ],
+  formItems: [formItemMap.brandId, formItemMap.extraType, formItemMap.status],
 }
 </script>
 
 <template>
-  <PageList ref="pageListRef" v-bind="config"></PageList>
+  <PageList v-bind="config"></PageList>
 </template>

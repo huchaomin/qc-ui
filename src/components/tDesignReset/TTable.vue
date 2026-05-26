@@ -19,6 +19,7 @@ export const tablePropsInit = {
   checkSelectedOnDataChange: true,
   disableDataPage: true,
   disableSpaceInactiveRow: true,
+  expandOnRowClick: true,
   flexHeight: false,
   hideSortTips: true,
   hover: true,

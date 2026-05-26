@@ -5,6 +5,7 @@ export {
   groupBy as _groupBy,
   isPlainObject as _isPlainObject,
   kebabCase as _kebabCase,
+  omit as _omit,
   pick as _pick,
   set as _set,
   snakeCase as _snakeCase,
