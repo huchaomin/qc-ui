@@ -442,6 +442,36 @@ const config: PageListProps = {
             permission: 'yq:task:updateDataSources',
           }),
           ({ row }) => ({
+            default: '查看清博数据量',
+            onClick: async () => {
+              const result = await alovaInst.Get<string>(`yq/task/getTaskQbTotalCount/${row.id}`, {
+                meta: {
+                  useLoading: '查询中...',
+                },
+              })
+
+              void $confirm({
+                body: `任务【${row.name}】的清博数据量为：${result}条`,
+                confirmBtn: null,
+              })
+            },
+            permission: 'yq:task:getTaskQbTotalCount',
+            show: row.dataSources.includes('5'),
+          }),
+          ({ row }) => ({
+            default: '清除清博搜索时间',
+            permission: 'yq:task:clearQbSearchTime',
+            popconfirm: {
+              content: `确认要清除【${row.name}】任务的清博搜索时间吗？`,
+              onConfirm: async () => {
+                await alovaInst.Get(`yq/task/clearQbSearchTime/${row.id}`)
+                $msg.success(`任务 ${row.name}】清博搜索时间清除成功`)
+                pageListRef.value!.query()
+              },
+            },
+            show: row.dataSources.includes('5'),
+          }),
+          ({ row }) => ({
             default: '开启',
             permission: 'yq:task:runTask',
             popconfirm: {

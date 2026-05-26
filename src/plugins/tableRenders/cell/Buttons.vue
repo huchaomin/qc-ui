@@ -30,3 +30,13 @@ const attrs = useAttrs() as unknown as CellRenderContext
     </TButton>
   </div>
 </template>
+
+<style scoped>
+:deep() {
+  .t-button {
+    + .t-button {
+      margin-left: 0;
+    }
+  }
+}
+</style>
