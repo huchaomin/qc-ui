@@ -15,7 +15,7 @@ const formItemMap = {
     slot: 'event_condition',
   },
   ruleDesc: {
-    _class: 'col-span-3',
+    _class: 'col-span-full',
     _label: '策略说明',
     model: 'ruleDesc',
   },

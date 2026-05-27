@@ -1,5 +1,6 @@
 import type { DrawerCloseContext, DrawerInstance, DrawerOptions } from 'tdesign-vue-next'
 import type { AppContext } from 'vue'
+import { getCurrentInstance } from 'vue'
 
 enum DrawerCreateType {
   closeAll = 'closeAll',
@@ -29,6 +30,7 @@ function create(
   _options: Parameters<CreateDrawerFnType>[0],
   context: Parameters<CreateDrawerFnType>[1],
 ) {
+  const currentAppContext = getCurrentInstance()?.appContext
   const bodyCache = computed(() => {
     return typeof _options.body === 'function' ? _options.body(h) : _options.body
   })
@@ -54,7 +56,9 @@ function create(
   }
 
   delete obj.closeWhenCloseAll
-  instance = DrawerPlugin(obj, context)
+  // In production we don't always install TDesign globally,
+  // so pass the current component appContext as a fallback.
+  instance = DrawerPlugin(obj, context ?? currentAppContext)
 
   if (options.closeWhenCloseAll) {
     drawers.add(instance)

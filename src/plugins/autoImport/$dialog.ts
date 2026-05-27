@@ -1,5 +1,6 @@
 import type { DialogInstance, DialogOptions } from 'tdesign-vue-next'
 import type { AppContext } from 'vue'
+import { getCurrentInstance } from 'vue'
 
 enum DialogCreateType {
   alert = 'alert',
@@ -41,6 +42,7 @@ function create(
   _options: Parameters<CreateDialogFnType>[0],
   context: Parameters<CreateDialogFnType>[1],
 ) {
+  const currentAppContext = getCurrentInstance()?.appContext
   const bodyCache = computed(() => {
     return typeof _options.body === 'function' ? _options.body(h) : _options.body
   })
@@ -67,7 +69,12 @@ function create(
   }
 
   delete obj.closeWhenCloseAll
-  instance = type === undefined ? DialogPlugin(obj, context) : DialogPlugin[type](obj, context)
+  // In production we don't always install TDesign globally,
+  // so pass the current component appContext as a fallback.
+  instance =
+    type === undefined
+      ? DialogPlugin(obj, context ?? currentAppContext)
+      : DialogPlugin[type](obj, context ?? currentAppContext)
 
   if (options.closeWhenCloseAll) {
     dialogs.add(instance)

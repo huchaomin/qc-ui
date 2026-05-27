@@ -313,3 +313,14 @@ body {
     @apply flex flex-col justify-center;
   }
 }
+
+@media (width <= 540px) {
+  .t-dialog {
+    .t-form__item {
+      /* stylelint-disable-next-line selector-class-pattern */
+      &[class*='col-span-'] {
+        @apply col-span-full;
+      }
+    }
+  }
+}
