@@ -87,6 +87,7 @@ const autoIcon = computed(() => {
     'line-md:search': ['查询', '搜索'],
     'material-symbols:cell-merge': ['合并'],
     'line-md:upload-outline': ['上传', '导入'],
+    'carbon:inspection': ['检查'],
     'mdi:delete-outline': ['删除'],
     'line-md:download-outline': ['下载', '导出'],
     'line-md:alert-circle': ['预警'],

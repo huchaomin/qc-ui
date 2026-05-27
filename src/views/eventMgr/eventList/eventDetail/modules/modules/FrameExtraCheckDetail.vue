@@ -27,8 +27,9 @@ const columns: TableCol[] = [
 
 <template>
   <div class="no_dialog_pt">
-    <TDescriptions>
+    <TDescriptions :column="3" :colon="true">
       <TDescriptionsItem label="所需总积分">{{ result.needPoints }}</TDescriptionsItem>
+      <TDescriptionsItem label="用户当前积分">{{ result.userPoints }}</TDescriptionsItem>
       <TDescriptionsItem label="总抽帧数">{{ result.totalExtraNum }}</TDescriptionsItem>
     </TDescriptions>
     <TTable :columns="columns" :data="result.videoExtraDetails" row-key="bciId"></TTable>

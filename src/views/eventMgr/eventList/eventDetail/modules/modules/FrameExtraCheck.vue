@@ -147,7 +147,7 @@ function handleSubmit(): Promise<void> {
               $msg('抽帧检查成功')
               resolve()
             },
-            width: 680,
+            width: 750,
           })
         })
     })
