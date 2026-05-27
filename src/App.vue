@@ -3,6 +3,8 @@ import type { GlobalConfigProvider } from 'tdesign-vue-next'
 import Icon from './components/autoImport/Icon.vue'
 import TButton from './components/tDesignReset/TButton.vue'
 
+useAppContext()
+
 const globalConfig: GlobalConfigProvider = {
   table: {
     expandIcon: (h) => {

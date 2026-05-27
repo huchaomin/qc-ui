@@ -42,7 +42,6 @@ function create(
   _options: Parameters<CreateDialogFnType>[0],
   context: Parameters<CreateDialogFnType>[1],
 ) {
-  const currentAppContext = getCurrentInstance()?.appContext
   const bodyCache = computed(() => {
     return typeof _options.body === 'function' ? _options.body(h) : _options.body
   })
@@ -69,12 +68,13 @@ function create(
   }
 
   delete obj.closeWhenCloseAll
-  // In production we don't always install TDesign globally,
-  // so pass the current component appContext as a fallback.
+
+  const appContext = useAppContext()
+
   instance =
     type === undefined
-      ? DialogPlugin(obj, context ?? currentAppContext)
-      : DialogPlugin[type](obj, context ?? currentAppContext)
+      ? DialogPlugin(obj, context ?? appContext)
+      : DialogPlugin[type](obj, context ?? appContext)
 
   if (options.closeWhenCloseAll) {
     dialogs.add(instance)
