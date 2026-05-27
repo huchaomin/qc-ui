@@ -178,6 +178,7 @@ const config: PageListProps = {
               body: () =>
                 h(ContentSlice, {
                   bodyClassName: 'p-0!',
+                  class: 'no_dialog_pt',
                   data,
                   headerBordered: false,
                   'onUpdate:originalUrl': () => {
@@ -186,14 +187,14 @@ const config: PageListProps = {
                   shadow: false,
                   title: undefined,
                 }),
-              header: '内容切片总结',
+              header: '内容详情',
               width: 650,
             })
           },
         }
       },
       colKey: 'aiContent',
-      title: '内容切片',
+      title: '内容详情',
     },
     {
       colKey: 'commentCount',

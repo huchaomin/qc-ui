@@ -122,7 +122,7 @@ const formItemMap = {
     model: 'relationType',
   },
   thumbOcrContent: {
-    _label: 'OCR识别内容',
+    _label: '首帧OCR',
     model: 'thumbOcrContent',
   },
   title: {
@@ -233,6 +233,7 @@ const config: PageListProps = {
               body: () =>
                 h(ContentSlice, {
                   bodyClassName: 'p-0!',
+                  class: 'no_dialog_pt',
                   data,
                   headerBordered: false,
                   'onUpdate:originalUrl': () => {
@@ -241,21 +242,21 @@ const config: PageListProps = {
                   shadow: false,
                   title: undefined,
                 }),
-              header: '内容切片总结',
+              header: 'OCR识别内容',
               width: 1400,
             })
           },
         }
       },
       colKey: 'aiContent',
-      title: '内容切片',
+      title: 'OCR识别内容',
     },
     {
       colKey: 'thumbOcrContent',
-      title: 'OCR识别内容',
       resize: {
         maxWidth: 300,
       },
+      title: '首帧OCR',
     },
     {
       colKey: 'commentNumDiff',

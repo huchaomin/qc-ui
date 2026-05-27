@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// import { fillOriginalUrl as fillOriginalUrlApi, getContentInfoById } from '@/api/alova/data'
-// import CVideo from '@/components/global/CVideo.vue'
+import DOMPurify from 'dompurify'
+import OcrImageContents from '@/views/eventMgr/frameExtraRecord/modules/OcrImageContents.vue'
 
 const props = withDefaults(
   defineProps<{
@@ -15,7 +15,7 @@ const sliceData = computed(() => {
   let arr
 
   try {
-    arr = JSON.parse(props.data.aiText || props.data.contentText)
+    arr = JSON.parse(props.data.contentTextWithTime)
   } catch (error) {
     console.log(error)
     arr = []
@@ -66,7 +66,7 @@ const finallyOriginalUrl = computed(() => {
 </script>
 
 <template>
-  <TCard title="内容切片总结">
+  <TCard title="OCR识别内容">
     <template #actions>
       <TLink v-if="finallyOriginalUrl" v-copy="finallyOriginalUrl" class="mr-4!">
         复制原链接
@@ -81,16 +81,7 @@ const finallyOriginalUrl = computed(() => {
       <TLink v-if="data.url" :href="data.url" download>下载视频</TLink>
     </template>
     <div class="grid grid-cols-2 gap-4" style="height: 360px">
-      <TTable
-        :columns="[
-          { colKey: 'line', title: '视频段' },
-          { colKey: 'startEndTime', title: '内容时间段' },
-          { colKey: 'duration', title: '时长' },
-          { colKey: 'short_content', title: 'Ai切片总结', resize: { maxWidth: 600 } },
-        ]"
-        :data="tableData"
-        flex-height
-      ></TTable>
+      <OcrImageContents :data="data" :is-inner-table="false" flex-height></OcrImageContents>
       <video
         v-if="data.url"
         class="mx-auto"
@@ -100,6 +91,31 @@ const finallyOriginalUrl = computed(() => {
       >
         <source :src="data.url" type="video/mp4" />
       </video>
+    </div>
+    <div class="mt-4 grid grid-cols-2 gap-4" style="height: 360px">
+      <TTable
+        :show-serial-number="false"
+        :columns="[
+          { colKey: 'line', align: 'center', title: '视频段' },
+          { colKey: 'startEndTime', title: '内容时间段' },
+          { colKey: 'duration', title: '时长' },
+          {
+            colKey: 'text',
+            title: '音频识别别容',
+            cell: {
+              _component: 'TypographyText',
+            },
+            resize: { maxWidth: 300 },
+          },
+        ]"
+        :data="tableData"
+        flex-height
+      ></TTable>
+      <div
+        v-if="data.bodyContent"
+        v-html="DOMPurify.sanitize(data.bodyContent, { USE_PROFILES: { html: true } })"
+      ></div>
+      <TEmpty v-else title="暂无文本内容"></TEmpty>
     </div>
   </TCard>
 </template>

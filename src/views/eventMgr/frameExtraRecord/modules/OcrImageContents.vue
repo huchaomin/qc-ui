@@ -2,8 +2,11 @@
 const props = withDefaults(
   defineProps<{
     data: Record<string, any>
+    isInnerTable?: boolean
   }>(),
-  {},
+  {
+    isInnerTable: true,
+  },
 )
 const tableData = computed(() => {
   const arr: Array<Record<string, any>> = []
@@ -33,7 +36,7 @@ const columns: TableCol[] = [
     },
     colKey: 'ocrContent',
     resize: {
-      maxWidth: 720,
+      maxWidth: 400,
     },
     title: 'OCR内容',
   },
@@ -42,13 +45,13 @@ const columns: TableCol[] = [
 
 <template>
   <TTable
-    :show-serial-number="false"
-    :show-header="false"
-    :bordered="false"
+    :show-serial-number="!isInnerTable"
+    :show-header="!isInnerTable"
+    :bordered="!isInnerTable"
     :max-height="Infinity"
     :columns="columns"
     :data="tableData"
-    class="table_border_none"
+    :class="{ table_border_none: isInnerTable }"
   ></TTable>
 </template>
 
