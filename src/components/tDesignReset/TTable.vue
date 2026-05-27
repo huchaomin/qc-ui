@@ -633,6 +633,10 @@ defineExpose(
         bottom: 0;
       }
     }
+
+    .t-table__tree-op-icon:empty {
+      display: none;
+    }
   }
 }
 
@@ -676,32 +680,34 @@ defineExpose(
   }
 
   :deep() {
-    /* 最下面的边框 */
-    tfoot > tr:last-child > td,
-    tbody > tr:last-child:not(.t-table__empty-row) > td {
-      border-bottom: 1px solid var(--td-component-border);
-    }
-
-    tfoot {
-      /* stylelint-disable-next-line no-descending-specificity */
-      > tr:first-child > td {
-        border-top: none;
-      }
-
-      &::before {
-        position: absolute;
-        top: -1px;
-        left: 0;
-        z-index: 1;
-        width: 100%;
-        content: '';
-        border-bottom: 1px solid var(--td-component-border);
-      }
-    }
-
     /* stylelint-disable-next-line no-descending-specificity */
-    .t-table__content {
+    > .t-table__content {
       border-bottom-color: transparent;
+
+      > table {
+        /* 最下面的边框 */
+        > tfoot > tr:last-child > td,
+        > tbody > tr:last-child:not(.t-table__empty-row) > td {
+          border-bottom: 1px solid var(--td-component-border);
+        }
+
+        > tfoot {
+          /* stylelint-disable-next-line no-descending-specificity */
+          > tr:first-child > td {
+            border-top: none;
+          }
+
+          &::before {
+            position: absolute;
+            top: -1px;
+            left: 0;
+            z-index: 1;
+            width: 100%;
+            content: '';
+            border-bottom: 1px solid var(--td-component-border);
+          }
+        }
+      }
     }
   }
 }

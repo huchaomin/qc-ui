@@ -448,6 +448,7 @@ const config: PageListProps = {
                 meta: {
                   useLoading: '查询中...',
                 },
+                timeout: 0,
               })
 
               void $confirm({

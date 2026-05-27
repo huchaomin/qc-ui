@@ -8,7 +8,7 @@ const props = withDefaults(
     type: 'update',
   },
 )
-const formData = inject<Record<string, any>>('formData')
+const formData = inject<Record<string, any> | undefined>('formData', undefined)
 const tableData = ref<Array<Record<string, any>>>([])
 
 watch(

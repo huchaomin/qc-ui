@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import OcrImageContents from './OcrImageContents.vue'
+
 const props = withDefaults(
   defineProps<{
     recordId: string
@@ -15,6 +17,17 @@ const config: PageListProps = {
             ...o,
             recordId: props.recordId,
           },
+          transform: (res) => {
+            return {
+              rows: res.rows.map((item: Record<string, any>) => {
+                return {
+                  ...item,
+                  contentType: 1,
+                }
+              }),
+              total: res.total,
+            }
+          },
         })
       },
     },
@@ -24,13 +37,7 @@ const config: PageListProps = {
     shadow: false,
   },
   columns: [
-    {
-      colKey: 'title',
-      resize: {
-        maxWidth: 400,
-      },
-      title: '标题',
-    },
+    useVideoTitleColumn(),
     {
       cell: {
         _component: 'DicLabel',
@@ -111,13 +118,27 @@ const config: PageListProps = {
     },
   ],
   tableOtherProps: {
+    expandIcon: true,
     flexHeight: false,
     showColumnConfigBtn: false,
+    showSerialNumber: false,
     showToggleFullscreenBtn: false,
   },
 }
 </script>
 
 <template>
-  <PageList v-bind="config"> </PageList>
+  <PageList v-bind="config">
+    <template #table-expandedRow="{ row }">
+      <OcrImageContents :data="row" />
+    </template>
+  </PageList>
 </template>
+
+<style scoped>
+:deep() {
+  .t-table__row-full-element {
+    padding: 0;
+  }
+}
+</style>
