@@ -138,8 +138,10 @@ function handleSubmit(): Promise<void> {
           void $confirm({
             body: () =>
               h(FrameExtraCheckDetail, {
+                columns,
                 ref: compoRef,
                 result,
+                rows: props.rows,
               }),
             header: '抽帧检查确认',
             onConfirmCallback: async () => {
@@ -147,7 +149,7 @@ function handleSubmit(): Promise<void> {
               $msg('抽帧检查成功')
               resolve()
             },
-            width: 750,
+            width: 1080,
           })
         })
     })
