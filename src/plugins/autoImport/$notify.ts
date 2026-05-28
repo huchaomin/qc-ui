@@ -31,13 +31,16 @@ async function create(
     ...(options ?? {}),
   }
 
-  return NotifyPlugin[type]({
-    closeBtn: true,
-    content,
-    duration: 1000 * 15,
-    title: '提示',
-    ...obj,
-  })
+  return NotifyPlugin[type](
+    {
+      closeBtn: true,
+      content,
+      duration: 1000 * 15,
+      title: '提示',
+      ...obj,
+    },
+    useAppContext(),
+  )
 }
 
 const createNotification: CreateNotificationType = async function (...arg) {

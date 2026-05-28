@@ -22,21 +22,24 @@ class LoadingService {
       this.isLoading.value = true
 
       if (this.loadingInstance === null) {
-        this.loadingInstance = LoadingPlugin({
-          fullscreen: true,
-          indicator: false,
-          text: (h) => {
-            if (this.loadingText.value === undefined) {
-              return null
-            }
+        this.loadingInstance = LoadingPlugin(
+          {
+            fullscreen: true,
+            indicator: false,
+            text: (h) => {
+              if (this.loadingText.value === undefined) {
+                return null
+              }
 
-            return h(TMessage, {
-              content: this.loadingText.value,
-              duration: 0,
-              theme: 'loading',
-            })
+              return h(TMessage, {
+                content: this.loadingText.value,
+                duration: 0,
+                theme: 'loading',
+              })
+            },
           },
-        })
+          useAppContext(),
+        )
 
         if (!BProgress.isStarted()) {
           BProgress.start()

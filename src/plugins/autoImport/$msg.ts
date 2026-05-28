@@ -31,11 +31,15 @@ async function create(
     ...(options ?? {}),
   }
 
-  return MessagePlugin[type]({
-    content,
-    duration: type === 'loading' ? 0 : 3000,
-    ...obj,
-  })
+  return MessagePlugin[type](
+    {
+      content,
+      duration: type === 'loading' ? 0 : 3000,
+      ...obj,
+    },
+    undefined,
+    useAppContext(),
+  )
 }
 
 const createMessage: CreateMessageType = async function (...arg) {
