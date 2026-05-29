@@ -7,6 +7,7 @@ import '@/plugins/others'
 
 const app = createApp(App)
 
+app.config.throwUnhandledErrorInProduction = true
 app.use(store)
 app.use(router)
 app.use(directives)

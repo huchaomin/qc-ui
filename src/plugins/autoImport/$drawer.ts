@@ -1,10 +1,6 @@
 import type { DrawerCloseContext, DrawerInstance, DrawerOptions } from 'tdesign-vue-next'
 import type { AppContext } from 'vue'
 
-enum DrawerCreateType {
-  closeAll = 'closeAll',
-}
-
 export type CreateDrawerFnType = (
   options: {
     /**
@@ -63,16 +59,14 @@ function create(
   return instance
 }
 
-const createDrawer: CreateDrawerType = function (...arg) {
+const createDrawer = function (...arg) {
   return create(...arg)
 } as CreateDrawerType
 
-Object.values(DrawerCreateType).forEach((type) => {
-  createDrawer[type] = () => {
-    drawers.forEach((drawer) => {
-      drawer.hide?.()
-    })
-  }
-})
+createDrawer.closeAll = () => {
+  drawers.forEach((drawer) => {
+    drawer.hide?.()
+  })
+}
 
 export default createDrawer

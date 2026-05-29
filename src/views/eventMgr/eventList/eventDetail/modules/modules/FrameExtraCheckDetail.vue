@@ -9,23 +9,6 @@ const props = withDefaults(
   }>(),
   {},
 )
-// const columns: TableCol[] = [
-//   {
-//     colKey: 'title',
-//     resize: {
-//       maxWidth: 400,
-//     },
-//     title: '标题',
-//   },
-//   {
-//     colKey: 'totalExtraNum',
-//     title: '抽帧数',
-//   },
-//   {
-//     colKey: 'needPoints',
-//     title: '所需积分',
-//   },
-// ]
 const successColumns = computed(() => {
   return [
     ...props.columns,
