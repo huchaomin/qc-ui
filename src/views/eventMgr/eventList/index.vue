@@ -126,6 +126,9 @@ function getSaveData(formData: Record<string, any>) {
 const config: PageListProps = {
   apis: {
     delete: {
+      callback: () => {
+        useListRefresh('eventManage')
+      },
       method: 'yq/eventManage',
       permission: 'yq:eventManage:remove',
     },
@@ -247,6 +250,7 @@ const config: PageListProps = {
                     ...getSaveData(await formRef.value!.validate()),
                     id: row.id,
                   })
+                  useListRefresh('eventManage')
                   $msg.success('事件修改成功')
                   pageListRef.value!.query()
                 },
@@ -334,6 +338,7 @@ const config: PageListProps = {
           header: '添加事件',
           onConfirmCallback: async () => {
             await alovaInst.Post('yq/eventManage', getSaveData(await formRef.value!.validate()))
+            useListRefresh('eventManage')
             $msg.success('事件添加成功')
             pageListRef.value!.query()
           },

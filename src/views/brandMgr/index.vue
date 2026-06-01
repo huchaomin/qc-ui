@@ -414,6 +414,7 @@ const config: PageListProps = {
             h(TForm, {
               data: reactive({
                 brandIds: [],
+                dataType: '3',
                 days: 1,
                 reportType: '1',
               }),
@@ -443,18 +444,54 @@ const config: PageListProps = {
                   options: 'brand',
                 },
                 {
+                  _label: '数据来源',
+                  allowUncheck: true,
+                  component: 'TRadioGroup',
+                  model: 'dataType',
+                  options: [
+                    {
+                      label: '品牌',
+                      value: '3',
+                    },
+                    {
+                      label: '任务',
+                      value: '1',
+                    },
+                    {
+                      label: '事件',
+                      value: '2',
+                    },
+                  ],
+                },
+                {
                   __others: (formData) => {
                     return {
                       disabled: formData.brandIds.length === 0,
                       options: useList('task').value.filter((item) =>
                         formData.brandIds.includes(item.brandId),
                       ),
+                      show: formData.dataType === '1',
                     }
                   },
                   _label: '任务',
+                  _required: true,
                   component: 'TSelect',
                   model: 'taskIds',
                   multiple: true,
+                  placeholder: '请先选择品牌',
+                },
+                {
+                  __others: (formData) => {
+                    return {
+                      show: formData.dataType === '2',
+                    }
+                  },
+                  _label: '事件',
+                  _required: true,
+                  component: 'TSelect',
+                  model: 'eventIds',
+                  multiple: true,
+                  options: 'eventManage',
                 },
                 {
                   _label: '日报类型',

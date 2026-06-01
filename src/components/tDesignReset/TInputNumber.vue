@@ -77,7 +77,7 @@ function compoRef(instance: any) {
           onChange: (...args: OnChangeParams) => {
             const [_v, ...rest] = args
             const v = _v ?? ''
-            emit('update:modelValue', v ?? '')
+            emit('update:modelValue', v)
             props.onChange?.(v, ...rest)
           },
           ref: compoRef,

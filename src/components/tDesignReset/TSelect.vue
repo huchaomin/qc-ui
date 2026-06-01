@@ -1,4 +1,5 @@
 <script lang="ts">
+// 开启虚拟滚动 请为select的panel设定好height 通过popupProps进行透传 https://stackblitz.com/edit/kjqcr8tf?file=package.json,src%2Fdemo.vue
 import type {
   SelectProps as _SelectProps,
   InputAdornmentProps,
@@ -68,9 +69,7 @@ defineOptions({
 
 const props = withDefaults(defineProps<SelectProps>(), selectPropsInit)
 const emit = defineEmits<{
-  'update:inputValue': [value: string]
   'update:modelValue': [value: SelectValue]
-  'update:popupVisible': [value: boolean]
 }>()
 const compo = _Select
 const vm = getCurrentInstance()!
@@ -179,6 +178,15 @@ onMounted(() => {
   )
 })
 
+const overlayInnerStyleHeight = computed(() => {
+  if (otherProps.value.scroll?.type === 'virtual') {
+    if (finallyOptions.value.length > (otherProps.value.scroll?.threshold ?? 150)) {
+      return '300px'
+    }
+  }
+
+  return undefined
+})
 const selectBindProps = computed(() => {
   return {
     ...otherProps.value,
@@ -201,6 +209,7 @@ const selectBindProps = computed(() => {
       ...(otherProps.value.popupProps ?? {}),
       overlayInnerStyle: (triggerElement: HTMLElement, popupElement: HTMLElement) => {
         return {
+          height: overlayInnerStyleHeight.value,
           minWidth: `${width.value}px`,
           width: 'auto',
           ...(typeof otherProps.value.popupProps?.overlayInnerStyle === 'function'
