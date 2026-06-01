@@ -20,21 +20,17 @@ import type { TypographyTextLinkProps } from './TypographyTextLink.vue'
 import type { CellRenderContext, TableCol, TNodeFn } from '@/components/tDesignReset/TTable.d.ts'
 import Wrapper from '../Wrapper.vue'
 
+export type CellComponentConfig = {
+  [K in keyof ComponentPropsMap]: ComponentConfig<K>
+}[keyof ComponentPropsMap]
 export type CellConfigFn = (
   h: typeof import('vue').h,
   context: CellRenderContext,
-) => CellConfigObj | SlotReturnValue
-export type CellConfigObj = UnionToNestedXOR<
-  keyof ComponentPropsMap extends infer T
-    ? T extends keyof ComponentPropsMap
-      ? ComponentConfig<T>
-      : never
-    : never
->
-
-type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] & {
+) => CellComponentConfig | SlotReturnValue
+export type ComponentConfig<T extends keyof ComponentPropsMap> = ComponentPropsMap[T] & {
   _component: T
 }
+
 interface ComponentPropsMap {
   Avatar: AvatarProps
   Buttons: ButtonsProps
@@ -62,13 +58,12 @@ const compos: Record<string, Component> = import.meta.glob('./*.vue', {
 })
 
 export function getCellRender(_config: TableCol['cell']): TNodeFn {
-  // 值类型为 string 表示使用插槽渲染
-  // todo 插槽渲染需要处理,没有计算宽度
-  // if (typeof _config === 'string') {
-  //   return _config
-  // }
+  if (typeof _config === 'string') {
+    void $notify.error('cell 值类型为 string 表示使用插槽渲染, 没有计算宽度, 所以暂不支持')
+    return () => null
+  }
 
-  const config = _config === undefined ? ({ _component: 'Default' } as CellConfigObj) : _config
+  const config = _config === undefined ? { _component: 'Default' as const } : _config
 
   if (isCellObjConfig(config)) {
     const { _component, ...restConfig } = config
@@ -101,7 +96,8 @@ export function getCellRender(_config: TableCol['cell']): TNodeFn {
   }
 }
 
-function isCellObjConfig(value: any): value is CellConfigObj {
-  // eslint-disable-next-line ts/no-unsafe-member-access
-  return value?._component !== undefined
+function isCellObjConfig(
+  value: CellComponentConfig | CellConfigFn | SlotReturnValue,
+): value is CellComponentConfig {
+  return typeof value === 'object' && value !== null && '_component' in value
 }

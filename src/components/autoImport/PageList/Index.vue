@@ -5,7 +5,7 @@ import type { ButtonProps } from '@/components/tDesignReset/TButton.vue'
 import type { CardProps } from '@/components/tDesignReset/TCard.vue'
 import type { FormProps } from '@/components/tDesignReset/TForm.d.ts'
 import type { TableProps } from '@/components/tDesignReset/TTable.d.ts'
-import type { CellConfigObj } from '@/plugins/tableRenders/cell'
+import type { ComponentConfig } from '@/plugins/tableRenders/cell'
 import { mergeProps } from 'vue'
 import PageQuery from './PageQuery.vue'
 
@@ -174,7 +174,7 @@ const finallyColumns = computed(() => {
         content: '确认删除吗',
         onConfirm: async () => {
           await (typeof deleteConfig.method === 'string'
-            ? alovaInst.Delete(`${deleteConfig.method}/${row[pageTableRef.value?.rowKey ?? '']}`)
+            ? alovaInst.Delete(`${deleteConfig.method}/${row[pageTableRef.value!.rowKey]}`)
             : deleteConfig.method([row]))
           deleteConfig.callback?.()
           $msg.success('删除成功')
@@ -195,7 +195,8 @@ const finallyColumns = computed(() => {
       return copyColumns
     }
 
-    const buttonsArr = (props.columns[_operationColumnIndex]?.cell as CellConfigObj)?.buttons
+    const buttonsArr = (props.columns[_operationColumnIndex]?.cell as ComponentConfig<'Buttons'>)
+      ?.buttons
 
     if (Array.isArray(buttonsArr)) {
       copyColumns[_operationColumnIndex] = {
@@ -210,6 +211,8 @@ const finallyColumns = computed(() => {
         },
       }
       return copyColumns
+    } else {
+      $notify.warning('操作列必须使用数组形式')
     }
   }
 

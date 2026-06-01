@@ -4,7 +4,7 @@ import type {
   EnhancedTableProps,
   TNode,
 } from 'tdesign-vue-next'
-import type { CellConfigFn, CellConfigObj } from '@/plugins/tableRenders/cell'
+import type { CellComponentConfig, CellConfigFn } from '@/plugins/tableRenders/cell'
 import type { TitleConfigFn, TitleConfigObj } from '@/plugins/tableRenders/title'
 
 export interface CellRenderContext {
@@ -28,7 +28,7 @@ export type TableCol = {
   /**
    * @description: 单元格渲染
    * @description: 渲染方式1(CellConfigFn 函数): (h, { col, colIndex, row, rowIndex }) => <div>{row[col.colKey]}</div>
-   * @description: 渲染方式2(CellConfigObj vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
+   * @description: 渲染方式2(CellComponentConfig vue组件): { _component: 'DicLabel', dicCode: 'sys_normal_disable' }
    * @description: 渲染方式3(CellConfigFn vue组件，需要行列信息作为参数的):  (h, { col, colIndex, row, rowIndex }) => {
                                                             return {
                                                               _component: 'Link',
@@ -48,7 +48,7 @@ export type TableCol = {
                                                                               ],
                                                                             },
    */
-  cell?: CellConfigFn | CellConfigObj | TNodeFn
+  cell?: CellComponentConfig | CellConfigFn | TNodeFn
   /**
    * @description: 列的key，必须要存在，且唯一
    */
