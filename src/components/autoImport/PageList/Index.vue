@@ -90,7 +90,7 @@ function doReset() {
 
 function onQuery(formData: Record<string, any>) {
   queryParams.value = _cloneDeep(formData)
-  pageTableRef.value!.query()
+  pageTableRef.value!.query(true)
 }
 
 function onReset(formData: Record<string, any>) {

@@ -161,7 +161,6 @@
 - 添加视频插件
 - markdown 渲染字体文件 regenerrarter 按钮
 - Cannot read properties of undefined (reading 'messageIds')
-- v-memo
 - 右键菜单
 - 开发 （使用adornment）numberRange 小数
 

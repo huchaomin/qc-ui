@@ -108,7 +108,11 @@ watch(
   },
 )
 
-function query() {
+function query(resetPageNum = false) {
+  if (resetPageNum) {
+    pageNum.value = 1
+  }
+
   queryParamsChangeTimer.value++
 }
 
