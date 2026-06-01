@@ -10,6 +10,12 @@ const formItemMap = {
     model: 'brandId',
     options: 'brand',
   },
+  checkVideoFlag: {
+    _label: '是否检查视频',
+    component: 'TRadioGroup',
+    dicCode: 'check_video_flag',
+    model: 'checkVideoFlag',
+  },
   name: {
     _label: '组名称',
     _required: true,
@@ -29,7 +35,10 @@ function handleAdd(): void {
   $confirm({
     body: () =>
       h(TForm, {
-        items: [formItemMap.name, formItemMap.brandId],
+        data: reactive({
+          checkVideoFlag: '0',
+        }),
+        items: [formItemMap.name, formItemMap.brandId, formItemMap.checkVideoFlag],
         labelAlign: 'right',
         layout: 'vertical',
         ref: formRef,
@@ -82,6 +91,7 @@ function handleEdit(row: Record<string, any>): void {
             ...formItemMap.brandId,
             disabled: true,
           },
+          formItemMap.checkVideoFlag,
         ],
         labelAlign: 'right',
         layout: 'vertical',
