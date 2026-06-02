@@ -3,6 +3,7 @@
 import type { Ref } from 'vue'
 import WordCloud from 'wordcloud'
 import { saveAs } from '@/utils/tool'
+import shapeArr from './shape'
 
 const parentData = inject<Ref<null | Record<string, any>>>('data')!
 const wordCloudRef = ref<HTMLCanvasElement | null>(null)
@@ -41,64 +42,43 @@ function wordcloudstop(): void {
   ctx.fillText('关键词云', padding + 4, padding + 4)
 }
 
+const shape = ref('cloud')
+
 watchThrottled(
-  [width, chartData],
+  [width, chartData, shape],
   () => {
     nextTick(() => {
       WordCloud(wordCloudRef.value as unknown as HTMLElement, {
         backgroundColor: bgColor,
-        color: () => {
-          const arr = ['#147FA0', '#3FC3E3', '#AFCA58']
+        color: (word) => {
+          const weightArr = chartData.value.map((item) => item[1])
+          const max = Math.max(...weightArr)
+          const min = Math.min(...weightArr)
+          const range = max - min + 1
+          const separate1 = min + range / 3
+          const separate2 = min + (range * 2) / 3
+          const wordWeight = chartData.value.find((item) => item[0] === word)![1]
 
-          return arr[Math.floor(Math.random() * arr.length)]!
+          if (Number(wordWeight) < separate1) {
+            return '#F29920'
+          } else if (Number(wordWeight) < separate2) {
+            return '#3378C8'
+          } else {
+            return '#19457F'
+          }
         },
         fontFamily: '"Microsoft YaHei", sans-serif',
-        list: chartData.value.sort((a, b) => (b[1] - a[1] > 0 ? 1 : -1)),
+        list: chartData.value.sort((a, b) => (b[1] - a[1] > 0 ? 1 : -1)), // 大字体先渲染
         rotateRatio: 0,
         // https://wordcloud2-js.timdream.org/shape-generator.html
         shape: (theta: number) => {
-          const max = 91
-          const leng = [
-            /* eslint-disable antfu/consistent-list-newline */
-            76, 76, 75, 74, 75, 73, 72, 71, 70, 68, 69, 65, 66, 62, 63, 60, 56, 55, 55, 57, 56, 57,
-            56, 57, 56, 56, 55, 56, 57, 56, 57, 56, 57, 57, 57, 58, 57, 58, 58, 57, 58, 57, 58, 59,
-            58, 57, 58, 59, 58, 59, 58, 59, 58, 59, 58, 59, 59, 59, 58, 59, 60, 59, 58, 59, 60, 59,
-            60, 59, 59, 59, 58, 59, 60, 59, 60, 60, 59, 60, 59, 60, 59, 60, 60, 59, 60, 59, 60, 61,
-            59, 60, 60, 59, 60, 59, 60, 61, 59, 59, 60, 59, 60, 59, 59, 59, 60, 58, 59, 59, 60, 59,
-            60, 59, 58, 59, 58, 59, 58, 59, 58, 58, 59, 58, 59, 58, 59, 57, 57, 58, 58, 59, 58, 57,
-            58, 57, 58, 57, 58, 57, 57, 57, 56, 57, 56, 56, 57, 56, 57, 56, 57, 56, 57, 56, 55, 56,
-            55, 56, 55, 56, 55, 55, 56, 54, 55, 54, 55, 54, 55, 53, 54, 53, 54, 52, 53, 52, 53, 51,
-            52, 52, 52, 51, 52, 51, 52, 50, 51, 50, 50, 50, 51, 50, 49, 51, 49, 50, 49, 48, 50, 48,
-            50, 49, 48, 49, 48, 47, 48, 47, 48, 50, 47, 46, 47, 46, 45, 47, 46, 45, 46, 46, 45, 44,
-            45, 45, 44, 45, 46, 44, 44, 43, 44, 44, 43, 44, 42, 43, 44, 42, 44, 44, 46, 47, 48, 48,
-            49, 49, 51, 51, 52, 53, 54, 55, 56, 55, 55, 56, 57, 57, 57, 58, 59, 58, 59, 60, 59, 60,
-            61, 60, 60, 61, 61, 62, 61, 62, 62, 63, 64, 62, 63, 64, 63, 63, 63, 63, 64, 64, 64, 63,
-            64, 64, 64, 65, 63, 64, 65, 64, 65, 66, 67, 67, 68, 69, 70, 70, 72, 73, 73, 74, 75, 75,
-            76, 77, 77, 78, 79, 80, 81, 81, 81, 82, 82, 83, 84, 83, 84, 84, 84, 85, 85, 85, 86, 87,
-            87, 87, 87, 87, 87, 87, 88, 88, 88, 89, 88, 89, 89, 89, 89, 90, 89, 89, 90, 90, 89, 90,
-            90, 89, 90, 90, 89, 89, 89, 89, 89, 89, 89, 89, 88, 88, 88, 88, 87, 88, 87, 87, 87, 86,
-            86, 85, 86, 85, 84, 84, 83, 83, 82, 83, 82, 81, 81, 81, 80, 79, 78, 77, 77, 77, 76, 77,
-            75, 74, 73, 73, 72, 73, 71, 70, 71, 69, 69, 68, 68, 67, 68, 66, 67, 65, 65, 66, 64, 64,
-            63, 63, 64, 62, 62, 63, 61, 61, 62, 60, 60, 61, 60, 59, 59, 60, 59, 58, 59, 58, 59, 57,
-            57, 58, 57, 58, 57, 56, 57, 56, 57, 56, 57, 56, 56, 56, 55, 56, 55, 55, 56, 55, 56, 55,
-            56, 55, 56, 55, 55, 56, 55, 56, 55, 56, 55, 56, 55, 55, 56, 55, 56, 55, 56, 55, 55, 56,
-            55, 56, 55, 56, 55, 56, 55, 56, 57, 56, 57, 56, 57, 56, 57, 58, 57, 57, 58, 57, 59, 58,
-            58, 59, 58, 59, 60, 59, 60, 60, 60, 61, 61, 61, 62, 61, 62, 62, 63, 64, 63, 64, 65, 64,
-            65, 65, 66, 67, 66, 67, 68, 68, 69, 70, 70, 70, 71, 71, 72, 73, 73, 74, 75, 75, 76, 77,
-            77, 78, 79, 79, 80, 80, 81, 82, 82, 83, 83, 84, 85, 85, 85, 86, 86, 86, 87, 88, 87, 88,
-            88, 89, 88, 89, 90, 89, 90, 89, 90, 89, 90, 91, 90, 90, 91, 90, 91, 90, 91, 90, 90, 90,
-            90, 91, 90, 91, 90, 89, 89, 89, 89, 88, 88, 88, 88, 87, 87, 87, 88, 86, 87, 86, 85, 84,
-            84, 83, 83, 82, 82, 81, 82, 81, 80, 79, 78, 79, 78,
-            /* eslint-enable antfu/consistent-list-newline */
-          ]
-
-          return leng[((theta / (2 * Math.PI)) * leng.length) | 0]! / max
+          return shapeArr.find((item) => item.value === shape.value)!.shape(theta)
         },
         weightFactor(size) {
           const radio = width.value / 600
           // 定义最小和最大字体大小
-          const minFontSize = 12 * radio
-          const maxFontSize = 50 * radio
+          const minFontSize = 11 * radio
+          const maxFontSize = 32 * radio
           // 计算字体大小范围
           const fontSizeRange = maxFontSize - minFontSize
           const weightRatio =
@@ -150,6 +130,13 @@ const columns: TableCol[] = [
   <div class="chart_border grid grid-cols-2">
     <div style="position: relative; height: fit-content">
       <div class="operation">
+        <TSelect
+          v-model="shape"
+          style="width: 100px"
+          class="mr-3!"
+          :clearable="false"
+          :options="shapeArr"
+        ></TSelect>
         <TButton theme="default" @click="handleDownloadImage">下载图片</TButton>
       </div>
       <div
