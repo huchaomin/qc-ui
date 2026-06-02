@@ -290,6 +290,12 @@ body {
         padding: 0;
       }
     }
+
+    .t-drawer__content-wrapper {
+      &:has(.no_drawer_content_shadow) {
+        box-shadow: none;
+      }
+    }
   }
 
   .t-popup {

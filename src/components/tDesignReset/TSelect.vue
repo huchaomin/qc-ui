@@ -209,7 +209,9 @@ const selectBindProps = computed(() => {
       ...(otherProps.value.popupProps ?? {}),
       overlayInnerStyle: (triggerElement: HTMLElement, popupElement: HTMLElement) => {
         return {
-          height: overlayInnerStyleHeight.value,
+          ...(overlayInnerStyleHeight.value === undefined
+            ? {}
+            : { height: overlayInnerStyleHeight.value }),
           minWidth: `${width.value}px`,
           width: 'auto',
           ...(typeof otherProps.value.popupProps?.overlayInnerStyle === 'function'

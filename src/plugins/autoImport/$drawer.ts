@@ -7,7 +7,7 @@ export type CreateDrawerFnType = (
      * @description: 关闭所有的时候是不是也关闭这个
      */
     closeWhenCloseAll?: boolean
-  } & Omit<DrawerOptions, 'default' | 'onConfirm'> & {
+  } & Omit<DrawerOptions, 'default' | 'onConfirm' | 'visible'> & {
       onConfirm?:
         | ((...args: Parameters<NonNullable<DrawerOptions['onConfirm']>>) => Promise<void>)
         | DrawerOptions['onConfirm']

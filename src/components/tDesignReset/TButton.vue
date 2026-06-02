@@ -100,6 +100,7 @@ const autoIcon = computed(() => {
     'hugeicons:view': ['预览', '查看'],
     'majesticons:checkbox-list-detail-line': ['详情', '详细'],
     'line-md:account': ['角色', '用户'],
+    'material-symbols:folder-outline': ['文件夹'],
     'line-md:file-document': ['文件'],
     'bi:journal-text': ['日志'],
     'line-md:security': ['权限'],

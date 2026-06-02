@@ -81,7 +81,6 @@ watch(
       drawerInstance.value!.update!({
         mode: isMd ? 'overlay' : 'push',
         showOverlay: !!isMd,
-        // visible, 不要使用visible, 否则 destroy 时不会恢复push 的margin
       })
       nextTick(() => {
         if (visible) {
