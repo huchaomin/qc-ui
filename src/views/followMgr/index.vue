@@ -181,7 +181,12 @@ const visible = ref(false)
 <template>
   <TCard body-full-height class="h-full" body-class-name="!flex flex-col overflow-y-auto">
     <div class="mb-4">
-      <TButton permission="yq:followFolder:list" @click="visible = !visible"> 文件夹管理 </TButton>
+      <TButton permission="yq:followFolder:list" @click="visible = !visible">
+        文件夹管理
+        <template #icon>
+          <Icon :icon="visible ? 'hugeicons:folder-01' : 'hugeicons:folder-02'"></Icon>
+        </template>
+      </TButton>
       <TButton permission="yq:followManage:add" @click="handleAdd"> 新增组 </TButton>
       <TButton
         :theme="isMerging ? 'primary' : 'default'"
