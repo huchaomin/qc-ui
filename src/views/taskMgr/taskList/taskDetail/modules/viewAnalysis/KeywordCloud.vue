@@ -67,18 +67,18 @@ watchThrottled(
             return '#19457F'
           }
         },
+        drawOutOfBound: false,
         fontFamily: '"Microsoft YaHei", sans-serif',
         list: chartData.value.sort((a, b) => (b[1] - a[1] > 0 ? 1 : -1)), // 大字体先渲染
-        rotateRatio: 0,
+        // rotateRatio: 0,
         // https://wordcloud2-js.timdream.org/shape-generator.html
-        shape: (theta: number) => {
-          return shapeArr.find((item) => item.value === shape.value)!.shape(theta)
-        },
+        shape: shapeArr.find((item) => item.value === shape.value)!.shape,
+        shrinkToFit: true,
         weightFactor(size) {
           const radio = width.value / 600
           // 定义最小和最大字体大小
-          const minFontSize = 11 * radio
-          const maxFontSize = 32 * radio
+          const minFontSize = 10 * radio
+          const maxFontSize = 60 * radio
           // 计算字体大小范围
           const fontSizeRange = maxFontSize - minFontSize
           const weightRatio =
