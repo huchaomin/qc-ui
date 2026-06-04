@@ -1,88 +1,11 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { SortInfo } from 'tdesign-vue-next'
 import type { Ref } from 'vue'
+import type { TableCol } from '@/components/tDesignReset/TTable.d.ts'
 import { fillOriginalUrl, handPullComments } from '@/bus'
 
-const id = inject<string>('id')!
-const data = inject<Ref<Record<string, any> | undefined>>('data')!
-const pageListRef = useTemplateRef('pageListRef')
-const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
-const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
-const sort = ref<SortInfo | undefined>({
-  descending: true,
-  sortBy: 'publishTime',
-})
-const formItemMap = {
-  authorName: {
-    _label: '作者',
-    model: 'authorName',
-  },
-  contentType: {
-    _label: '内容类型',
-    component: 'TSelect',
-    dicCode: 'data_type',
-    model: 'contentType',
-  },
-  moodLevel: {
-    _label: '内容情绪',
-    component: 'TSelect',
-    dicCode: 'mood_level',
-    model: 'moodLevel',
-  },
-  platform: {
-    _label: '平台',
-    model: 'platform',
-  },
-  publishTime: {
-    _class: 'col-span-2',
-    _label: '发布时间',
-    component: 'TDateRangePicker',
-    enableTimePicker: true,
-    model: 'publishTime',
-  },
-  title: {
-    _label: '标题',
-    model: 'title',
-  },
-} satisfies Record<string, FormItem>
-const config: PageListProps = {
-  apis: {
-    delete: {
-      method: 'yq/followDetail',
-      permission: 'yq:followDetail:remove',
-      showBatch: true,
-    },
-    list: {
-      method: (o: Record<string, any>) => {
-        return alovaInst.Get('yq/followDetail/list', {
-          params: {
-            ...o,
-            endTime:
-              o.publishTime?.[1] !== undefined
-                ? dayjs(o.publishTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
-                : '',
-            followId: id,
-            publishTime: undefined,
-            startTime:
-              o.publishTime?.[0] !== undefined
-                ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
-                : '',
-            ...(sort.value
-              ? {
-                  isAsc: sort.value!.descending ? 'desc' : 'asc',
-                  orderByColumn: _snakeCase(sort.value!.sortBy),
-                }
-              : {}),
-          },
-        })
-      },
-    },
-  },
-  cardProps: {
-    bodyClassName: 'p-0!',
-    shadow: false,
-  },
-  columns: [
+export function useColumns(): TableCol[] {
+  return [
     useVideoTitleColumn({
       funType: 2,
     }),
@@ -182,7 +105,91 @@ const config: PageListProps = {
       colKey: 'updateTime',
       title: '更新时间',
     },
-  ],
+  ]
+}
+export const formItemMap = {
+  authorName: {
+    _label: '作者',
+    model: 'authorName',
+  },
+  contentType: {
+    _label: '内容类型',
+    component: 'TSelect',
+    dicCode: 'data_type',
+    model: 'contentType',
+  },
+  moodLevel: {
+    _label: '内容情绪',
+    component: 'TSelect',
+    dicCode: 'mood_level',
+    model: 'moodLevel',
+  },
+  platform: {
+    _label: '平台',
+    model: 'platform',
+  },
+  publishTime: {
+    _class: 'col-span-2',
+    _label: '发布时间',
+    component: 'TDateRangePicker',
+    enableTimePicker: true,
+    model: 'publishTime',
+  },
+  title: {
+    _label: '标题',
+    model: 'title',
+  },
+} satisfies Record<string, FormItem>
+</script>
+
+<script setup lang="ts">
+const id = inject<string>('id')!
+const data = inject<Ref<Record<string, any> | undefined>>('data')!
+const pageListRef = useTemplateRef('pageListRef')
+const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
+const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
+const sort = ref<SortInfo | undefined>({
+  descending: true,
+  sortBy: 'publishTime',
+})
+const config: PageListProps = {
+  apis: {
+    delete: {
+      method: 'yq/followDetail',
+      permission: 'yq:followDetail:remove',
+      showBatch: true,
+    },
+    list: {
+      method: (o: Record<string, any>) => {
+        return alovaInst.Get('yq/followDetail/list', {
+          params: {
+            ...o,
+            endTime:
+              o.publishTime?.[1] !== undefined
+                ? dayjs(o.publishTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
+                : '',
+            followId: id,
+            publishTime: undefined,
+            startTime:
+              o.publishTime?.[0] !== undefined
+                ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
+                : '',
+            ...(sort.value
+              ? {
+                  isAsc: sort.value!.descending ? 'desc' : 'asc',
+                  orderByColumn: _snakeCase(sort.value!.sortBy),
+                }
+              : {}),
+          },
+        })
+      },
+    },
+  },
+  cardProps: {
+    bodyClassName: 'p-0!',
+    shadow: false,
+  },
+  columns: useColumns(),
   formItems: [
     formItemMap.title,
     formItemMap.contentType,
