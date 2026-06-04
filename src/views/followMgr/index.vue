@@ -3,6 +3,7 @@ import { handPullComments } from '@/bus'
 import FolderList from './modules/FolderList.vue'
 
 const router = useRouter()
+const folderOptions = ref<Array<Record<string, any>>>([])
 const formItemMap = {
   brandId: {
     _label: '品牌',
@@ -17,18 +18,40 @@ const formItemMap = {
     dicCode: 'check_video_flag',
     model: 'checkVideoFlag',
   },
+  folderId: reactive({
+    _label: '文件夹',
+    component: 'TSelect',
+    model: 'folderId',
+    options: folderOptions,
+  }),
   name: {
     _label: '组名称',
     _required: true,
     model: 'name',
   },
 } satisfies Record<string, FormItem>
-const { data, send } = useRequest(
+const activeFolder = ref('all')
+const { data: _data, send } = useRequest(
   alovaInst.Get<Array<Record<string, any>>>('yq/followManage/getList'),
   {
     initialData: [],
   },
 )
+const data = computed(() => {
+  if (activeFolder.value === 'all') {
+    return _data.value
+  }
+
+  if (activeFolder.value === 'unclassified') {
+    return _data.value.filter((item) => {
+      return item.folderId === null
+    })
+  }
+
+  return _data.value.filter((item) => {
+    return item.folderId === activeFolder.value
+  })
+})
 
 function handleAdd(): void {
   const formRef = ref<FormInstance | null>(null)
@@ -39,7 +62,12 @@ function handleAdd(): void {
         data: reactive({
           checkVideoFlag: '0',
         }),
-        items: [formItemMap.name, formItemMap.brandId, formItemMap.checkVideoFlag],
+        items: [
+          formItemMap.name,
+          formItemMap.brandId,
+          formItemMap.checkVideoFlag,
+          formItemMap.folderId,
+        ],
         labelAlign: 'right',
         layout: 'vertical',
         ref: formRef,
@@ -93,6 +121,7 @@ function handleEdit(row: Record<string, any>): void {
             disabled: true,
           },
           formItemMap.checkVideoFlag,
+          formItemMap.folderId,
         ],
         labelAlign: 'right',
         layout: 'vertical',
@@ -176,6 +205,17 @@ watch(
 )
 
 const visible = ref(false)
+
+function handleFolderActiveChange(active: string): void {
+  activeFolder.value = active
+}
+
+function handleFolderListChange(list: Record<string, any>[]): void {
+  folderOptions.value = list.map((item) => ({
+    label: item.name,
+    value: item.id,
+  }))
+}
 </script>
 
 <template>
@@ -200,7 +240,12 @@ const visible = ref(false)
       </TButton>
     </div>
     <div class="relative flex flex-1 flex-col overflow-y-auto">
-      <div class="flex flex-1 flex-col overflow-y-auto">
+      <div
+        class="flex flex-1 flex-col overflow-y-auto"
+        :class="{
+          'justify-center': data.length === 0,
+        }"
+      >
         <TList
           v-if="data.length > 0"
           ref="listRef"
@@ -306,6 +351,7 @@ const visible = ref(false)
             </template>
           </TListItem>
         </TList>
+        <TEmpty v-else></TEmpty>
         <TDrawer
           v-model:visible="visible"
           placement="left"
@@ -314,7 +360,12 @@ const visible = ref(false)
           mode="push"
           show-in-attached-element
         >
-          <FolderList class="no_drawer_content_shadow no_drawer_body_padding" />
+          <FolderList
+            class="no_drawer_content_shadow no_drawer_body_padding"
+            :all-data="_data"
+            @active-change="handleFolderActiveChange"
+            @folder-list-change="handleFolderListChange"
+          />
         </TDrawer>
       </div>
     </div>

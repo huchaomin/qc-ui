@@ -77,12 +77,18 @@ const innerActived = defineModel<TreeNodeValue[]>('actived', {
 const innerExpanded = defineModel<TreeNodeValue[]>('expanded', {
   default: () => [],
 })
+const slots = useSlots()
 const otherProps = computed(() => {
   const obj: Partial<TreeProps> = {
     ...props,
   }
 
   obj.expandOnClickNode = obj.expandOnClickNode ?? !obj.checkable
+
+  if (slots.icon) {
+    delete obj.icon
+  }
+
   Object.keys(obj).forEach((key) => {
     if (obj[key as keyof typeof obj] === undefined) {
       delete obj[key as keyof typeof obj]

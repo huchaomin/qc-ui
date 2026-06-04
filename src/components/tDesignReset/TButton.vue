@@ -213,5 +213,9 @@ const buttonBindProps = computed(() => {
 
 .t-button + .t-button {
   margin-left: var(--td-comp-margin-m);
+
+  &.t-size-s {
+    margin-left: var(--td-comp-margin-xs);
+  }
 }
 </style>

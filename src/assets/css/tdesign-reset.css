@@ -217,7 +217,9 @@ body {
   }
 
   .t-tree__icon {
-    width: 32px;
+    &:has(> .t-button) {
+      width: 32px;
+    }
 
     &:empty {
       display: none;
