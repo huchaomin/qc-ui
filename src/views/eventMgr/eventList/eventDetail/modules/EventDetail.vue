@@ -1,94 +1,11 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { SortInfo } from 'tdesign-vue-next'
+import type { TableCol } from '@/components/tDesignReset/TTable.d.ts'
 import { addFollow, fillOriginalUrl, handPullComments } from '@/bus'
 import FrameExtraCheck from './modules/FrameExtraCheck.vue'
 
-const pageListRef = useTemplateRef('pageListRef')
-const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
-const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
-const id = inject<string>('id')!
-const data = inject<ComputedRef<Record<string, any> | undefined>>('data')!
-const sort = ref<SortInfo | undefined>({
-  descending: true,
-  sortBy: 'publishTime',
-})
-const formItemMap = {
-  authorName: {
-    _label: '发布账号',
-    model: 'authorName',
-  },
-  contentEmotion: {
-    _label: '内容情绪',
-    component: 'TSelect',
-    dicCode: 'mood_level',
-    model: 'contentEmotion',
-  },
-  contentType: {
-    _label: '内容类型',
-    component: 'TSelect',
-    dicCode: 'data_type',
-    model: 'contentType',
-  },
-  eventHitReason: {
-    _label: '事件命中原因',
-    model: 'eventHitReason',
-  },
-  negativeCommentCount: {
-    _label: '负面评论数',
-    component: 'TRangeInput',
-    model: 'negativeCommentCount',
-  },
-  platform: {
-    _label: '来源',
-    model: 'platform',
-  },
-  publishTime: {
-    _class: 'col-span-2',
-    _label: '发布时间',
-    component: 'TDateRangePicker',
-    model: 'publishTime',
-  },
-  title: {
-    _label: '标题',
-    model: 'title',
-  },
-} satisfies Record<string, FormItem>
-const config: PageListProps = {
-  apis: {
-    list: {
-      method: (o: Record<string, any>) => {
-        return alovaInst.Get('yq/eventDetail/list', {
-          params: {
-            ...o,
-            eventId: id,
-            negativeCommentCount: undefined,
-            negativeCommentCountMax: o.negativeCommentCount?.[1],
-            negativeCommentCountMin: o.negativeCommentCount?.[0],
-            publishTime: undefined,
-            publishTimeEnd:
-              o.publishTime?.[1] !== undefined
-                ? dayjs(o.publishTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
-                : '',
-            publishTimeStart:
-              o.publishTime?.[0] !== undefined
-                ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
-                : '',
-            ...(sort.value
-              ? {
-                  isAsc: sort.value!.descending ? 'desc' : 'asc',
-                  orderByColumn: _snakeCase(sort.value!.sortBy),
-                }
-              : {}),
-          },
-        })
-      },
-    },
-  },
-  cardProps: {
-    bodyClassName: 'p-0!',
-    shadow: false,
-  },
-  columns: [
+export function useColumns(): TableCol[] {
+  return [
     useVideoTitleColumn({
       funType: 3,
     }),
@@ -186,7 +103,97 @@ const config: PageListProps = {
       colKey: 'updateTime',
       title: '更新时间',
     },
-  ],
+  ]
+}
+export const formItemMap = {
+  authorName: {
+    _label: '发布账号',
+    model: 'authorName',
+  },
+  contentEmotion: {
+    _label: '内容情绪',
+    component: 'TSelect',
+    dicCode: 'mood_level',
+    model: 'contentEmotion',
+  },
+  contentType: {
+    _label: '内容类型',
+    component: 'TSelect',
+    dicCode: 'data_type',
+    model: 'contentType',
+  },
+  eventHitReason: {
+    _label: '事件命中原因',
+    model: 'eventHitReason',
+  },
+  negativeCommentCount: {
+    _label: '负面评论数',
+    component: 'TRangeInput',
+    model: 'negativeCommentCount',
+  },
+  platform: {
+    _label: '来源',
+    model: 'platform',
+  },
+  publishTime: {
+    _class: 'col-span-2',
+    _label: '发布时间',
+    component: 'TDateRangePicker',
+    model: 'publishTime',
+  },
+  title: {
+    _label: '标题',
+    model: 'title',
+  },
+} satisfies Record<string, FormItem>
+</script>
+
+<script setup lang="ts">
+const pageListRef = useTemplateRef('pageListRef')
+const selectedRows = computed(() => pageListRef.value?.selectedRows ?? [])
+const finallyQueryParams = computed(() => pageListRef.value?.finallyQueryParams)
+const id = inject<string>('id')!
+const data = inject<ComputedRef<Record<string, any> | undefined>>('data')!
+const sort = ref<SortInfo | undefined>({
+  descending: true,
+  sortBy: 'publishTime',
+})
+const config: PageListProps = {
+  apis: {
+    list: {
+      method: (o: Record<string, any>) => {
+        return alovaInst.Get('yq/eventDetail/list', {
+          params: {
+            ...o,
+            eventId: id,
+            negativeCommentCount: undefined,
+            negativeCommentCountMax: o.negativeCommentCount?.[1],
+            negativeCommentCountMin: o.negativeCommentCount?.[0],
+            publishTime: undefined,
+            publishTimeEnd:
+              o.publishTime?.[1] !== undefined
+                ? dayjs(o.publishTime[1]).endOf('day').format('YYYY-MM-DD HH:mm:ss')
+                : '',
+            publishTimeStart:
+              o.publishTime?.[0] !== undefined
+                ? dayjs(o.publishTime[0]).startOf('day').format('YYYY-MM-DD HH:mm:ss')
+                : '',
+            ...(sort.value
+              ? {
+                  isAsc: sort.value!.descending ? 'desc' : 'asc',
+                  orderByColumn: _snakeCase(sort.value!.sortBy),
+                }
+              : {}),
+          },
+        })
+      },
+    },
+  },
+  cardProps: {
+    bodyClassName: 'p-0!',
+    shadow: false,
+  },
+  columns: useColumns(),
   formItems: [
     formItemMap.contentType,
     formItemMap.platform,
