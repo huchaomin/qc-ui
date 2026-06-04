@@ -63,6 +63,16 @@ const promiseMap = {
         }))
       },
     }),
+  followFolder: () =>
+    alovaInst.Get<ListItem[]>('yq/followFolder/getList', {
+      transform: (res) => {
+        return (res as Record<string, any>[]).map((item) => ({
+          label: item.name as string,
+          value: item.id as string,
+          ...item,
+        }))
+      },
+    }),
   monitorPhrase: () =>
     alovaInst.Get<ListItem[]>('yq/monitorPhrase/getList', {
       transform: (res) => {

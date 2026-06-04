@@ -3,7 +3,6 @@ import { handPullComments } from '@/bus'
 import FolderList from './modules/FolderList.vue'
 
 const router = useRouter()
-const folderOptions = ref<Array<Record<string, any>>>([])
 const formItemMap = {
   brandId: {
     _label: '品牌',
@@ -18,12 +17,12 @@ const formItemMap = {
     dicCode: 'check_video_flag',
     model: 'checkVideoFlag',
   },
-  folderId: reactive({
+  folderId: {
     _label: '文件夹',
     component: 'TSelect',
     model: 'folderId',
-    options: folderOptions,
-  }),
+    options: 'followFolder',
+  },
   name: {
     _label: '组名称',
     _required: true,
@@ -209,13 +208,6 @@ const visible = ref(false)
 function handleFolderActiveChange(active: string): void {
   activeFolder.value = active
 }
-
-function handleFolderListChange(list: Record<string, any>[]): void {
-  folderOptions.value = list.map((item) => ({
-    label: item.name,
-    value: item.id,
-  }))
-}
 </script>
 
 <template>
@@ -364,7 +356,6 @@ function handleFolderListChange(list: Record<string, any>[]): void {
             class="no_drawer_content_shadow no_drawer_body_padding"
             :all-data="_data"
             @active-change="handleFolderActiveChange"
-            @folder-list-change="handleFolderListChange"
           />
         </TDrawer>
       </div>

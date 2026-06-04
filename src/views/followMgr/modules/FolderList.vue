@@ -9,13 +9,8 @@ const props = withDefaults(
 )
 const emit = defineEmits<{
   activeChange: [active: string]
-  folderListChange: [folderList: Record<string, any>[]]
 }>()
-const { data, send } = useRequest(alovaInst.Get<Record<string, any>[]>('yq/followFolder/getList'), {
-  initialData: [],
-}).onSuccess(() => {
-  emit('folderListChange', data.value)
-})
+const data = useList('followFolder')
 const treeData = computed(() => {
   return [
     {
@@ -25,7 +20,7 @@ const treeData = computed(() => {
     },
     ...data.value.map((item) => ({
       ...item,
-      length: props.allData.filter((i) => i.folderId === item.id).length,
+      length: props.allData.filter((i) => i.folderId === item.value).length,
     })),
     {
       id: 'unclassified',
@@ -54,7 +49,7 @@ function add(): void {
     onConfirmCallback: async () => {
       await alovaInst.Post('yq/followFolder', await formRef.value!.validate())
       $msg('文件夹新增成功')
-      send()
+      useListRefresh('followFolder')
     },
   })
 }
@@ -80,7 +75,7 @@ async function togglePin(node: Record<string, any>, topFlag: number): Promise<vo
     topFlag,
   })
   $msg(`文件夹${node.label}${topFlag === 1 ? '置顶' : '取消置顶'}成功`)
-  send()
+  useListRefresh('followFolder')
 }
 
 const actived = ref(['all'])
@@ -94,7 +89,7 @@ async function handleActions(e: DropdownOption, node: Record<string, any>) {
     await $confirm(`确定要删除${node.label}文件夹吗？`)
     await alovaInst.Delete(`yq/followFolder/${node.value}`)
     $msg('文件夹删除成功')
-    send()
+    useListRefresh('followFolder')
 
     if (node.actived) {
       actived.value = ['all']
@@ -136,7 +131,7 @@ async function handleActions(e: DropdownOption, node: Record<string, any>) {
           id: node.value,
         })
         $msg('文件夹修改成功')
-        send()
+        useListRefresh('followFolder')
       },
     })
   }
