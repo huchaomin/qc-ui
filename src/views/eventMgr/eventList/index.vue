@@ -1,18 +1,82 @@
-<script setup lang="ts">
+<script lang="ts">
 import type { DateValue } from 'tdesign-vue-next'
+import type { TableCol } from '@/components/tDesignReset/TTable.d.ts'
 import { handPullComments } from '@/bus'
 import { viewEventStrategy } from '../eventStrategy/index.vue'
 import ClusterTags from './modules/ClusterTags.vue'
 import EventRule from './modules/EventRule.vue'
-// import RelatedTask from './modules/RelatedTask.vue'
 
-const pageListRef = useTemplateRef('pageListRef')
-const slotMap = {
-  cluster_tags: () => h(ClusterTags),
-  event_rule: () => h(EventRule),
-  // related_task: () => h(RelatedTask),
+// import RelatedTask from './modules/RelatedTask.vue'
+export function useColumns(): TableCol[] {
+  return [
+    {
+      colKey: 'id',
+      title: '事件编号',
+    },
+    useEventNameColumn(),
+    {
+      cell: (_, { row }) => {
+        return {
+          _component: 'Link',
+          default: '查看',
+          onClick: () => {
+            viewEventStrategy(row.eventRule)
+          },
+        }
+      },
+      colKey: 'eventRule',
+      title: '事件策略',
+    },
+    {
+      colKey: 'publishTimeStart',
+      title: '发布开始时间',
+    },
+    {
+      cell: (_, { row }) => {
+        return row.dataScope === '0' ? row.publishTimeEnd : '当天'
+      },
+      colKey: 'publishTimeEnd',
+      title: '发布结束时间',
+    },
+    {
+      colKey: 'totalCount',
+      title: '分析内容数',
+    },
+    {
+      colKey: 'eventCount',
+      title: '命中内容数',
+    },
+    {
+      cell: {
+        _component: 'DicLabel',
+        dicCode: 'event_execution_status',
+      },
+      colKey: 'executionStatus',
+      title: '执行状态',
+    },
+    {
+      colKey: 'executionTime',
+      title: '执行时间',
+    },
+    {
+      colKey: 'createBy',
+      title: '创建人',
+    },
+    {
+      colKey: 'createTime',
+      title: '创建时间',
+    },
+    {
+      colKey: 'updateBy',
+      title: '更新人',
+    },
+    {
+      colKey: 'updateTime',
+      title: '更新时间',
+    },
+  ]
 }
-const formItemMap = {
+export const formItemMap = {
   cluster_tags: reactive({
     _class: 'col-span-full',
     _label: '聚类标签',
@@ -112,6 +176,15 @@ const formItemMap = {
     readonly: true,
   },
 } satisfies Record<string, FormItem>
+</script>
+
+<script setup lang="ts">
+const pageListRef = useTemplateRef('pageListRef')
+const slotMap = {
+  cluster_tags: () => h(ClusterTags),
+  event_rule: () => h(EventRule),
+  // related_task: () => h(RelatedTask),
+}
 
 function getSaveData(formData: Record<string, any>) {
   const obj: Record<string, any> = {
@@ -137,71 +210,7 @@ const config: PageListProps = {
     },
   },
   columns: [
-    {
-      colKey: 'id',
-      title: '事件编号',
-    },
-    useEventNameColumn(),
-    {
-      cell: (_, { row }) => {
-        return {
-          _component: 'Link',
-          default: '查看',
-          onClick: () => {
-            viewEventStrategy(row.eventRule)
-          },
-        }
-      },
-      colKey: 'eventRule',
-      title: '事件策略',
-    },
-    {
-      colKey: 'publishTimeStart',
-      title: '发布开始时间',
-    },
-    {
-      cell: (_, { row }) => {
-        return row.dataScope === '0' ? row.publishTimeEnd : '当天'
-      },
-      colKey: 'publishTimeEnd',
-      title: '发布结束时间',
-    },
-    {
-      colKey: 'totalCount',
-      title: '分析内容数',
-    },
-    {
-      colKey: 'eventCount',
-      title: '命中内容数',
-    },
-    {
-      cell: {
-        _component: 'DicLabel',
-        dicCode: 'event_execution_status',
-      },
-      colKey: 'executionStatus',
-      title: '执行状态',
-    },
-    {
-      colKey: 'executionTime',
-      title: '执行时间',
-    },
-    {
-      colKey: 'createBy',
-      title: '创建人',
-    },
-    {
-      colKey: 'createTime',
-      title: '创建时间',
-    },
-    {
-      colKey: 'updateBy',
-      title: '更新人',
-    },
-    {
-      colKey: 'updateTime',
-      title: '更新时间',
-    },
+    ...useColumns(),
     {
       cell: {
         _component: 'Buttons',
