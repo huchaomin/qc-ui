@@ -16,10 +16,12 @@ const config: PageListProps = {
         buttons: [
           ({ row }) => ({
             default: '恢复',
+            permission: 'yq:eventManage:restore',
             popconfirm: {
               content: `确定要恢复【${row.eventName}】吗？`,
               onConfirm: async () => {
                 await alovaInst.Put(`yq/eventManage/restore/${row.id}`)
+                useListRefresh('eventManage')
                 $msg('恢复成功')
                 pageListRef.value!.query()
               },

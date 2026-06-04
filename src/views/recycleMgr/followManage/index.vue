@@ -81,6 +81,7 @@ const config: PageListProps = {
         buttons: [
           ({ row }) => ({
             default: '恢复',
+            permission: 'yq:followManage:restore',
             popconfirm: {
               content: `确定要恢复【${row.name}】关注组吗？`,
               onConfirm: async () => {
